@@ -3,6 +3,7 @@ import { TitleBar } from "@/components/layout/TitleBar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SettingsModal } from "@/components/settings/SettingsModal";
 import { useAppStore } from "@/store/useAppStore";
+import { ContextView } from "@/components/features/context/ContextView";
 
 // 引入新视图
 import { PromptView } from "@/components/features/prompts/PromptView";
@@ -28,11 +29,7 @@ function App() {
           {/* 路由分发 */}
           {currentView === 'prompts' && <PromptView />}
           
-          {currentView === 'context' && (
-             <div className="h-full flex items-center justify-center text-muted-foreground">
-                🚧 Context Forge 开发中...
-             </div>
-          )}
+          {currentView === 'context' && <ContextView />}
           
           {currentView === 'patch' && (
              <div className="h-full flex items-center justify-center text-muted-foreground">

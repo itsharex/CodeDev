@@ -1,14 +1,54 @@
-// src/store/useContextStore.ts
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { fileStorage } from '@/lib/storage';
 import { IgnoreConfig, DEFAULT_IGNORE_CONFIG, FileNode } from '@/types/context';
 
+// --- 辅助函数：递归处理勾选逻辑 ---
+
+/**
+ * 将指定节点及其所有子孙节点的 isSelected 状态强制设为目标值
+ */
+const setAllChildren = (node: FileNode, isSelected: boolean): FileNode => {
+  // 创建节点副本
+  const newNode = { ...node, isSelected };
+  
+  // 如果有子节点，递归处理
+  if (newNode.children) {
+    newNode.children = newNode.children.map(child => setAllChildren(child, isSelected));
+  }
+  return newNode;
+};
+
+/**
+ * 在树中查找目标 ID，并更新其状态（向下级联）
+ */
+const updateNodeState = (nodes: FileNode[], targetId: string, isSelected: boolean): FileNode[] => {
+  return nodes.map(node => {
+    // 1. 找到目标节点：应用级联更新
+    if (node.id === targetId) {
+      return setAllChildren(node, isSelected);
+    }
+    
+    // 2. 未找到目标，但当前节点有子节点：递归向下查找
+    if (node.children) {
+      return {
+        ...node,
+        children: updateNodeState(node.children, targetId, isSelected)
+      };
+    }
+    
+    // 3. 无关节点：保持原样
+    return node;
+  });
+};
+
+// --- Store 定义 ---
+
 interface ContextState {
-  // --- 设置 (持久化) ---
+  // --- 持久化设置 ---
   ignoreConfig: IgnoreConfig;
   
-  // --- 运行时数据 (不持久化) ---
+  // --- 运行时状态 (不持久化) ---
   projectRoot: string | null;
   fileTree: FileNode[]; 
   isScanning: boolean;
@@ -23,22 +63,25 @@ interface ContextState {
   removeIgnoreItem: (type: keyof IgnoreConfig, value: string) => void;
   resetIgnoreConfig: () => void;
 
-  // 树操作 (勾选/展开) - 后面 UI 开发时会用到
+  // 树操作
   toggleSelect: (nodeId: string, checked: boolean) => void;
 }
 
 export const useContextStore = create<ContextState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
+      // 初始状态
       ignoreConfig: DEFAULT_IGNORE_CONFIG,
       projectRoot: null,
       fileTree: [],
       isScanning: false,
 
+      // 基础 Setters
       setProjectRoot: (path) => set({ projectRoot: path }),
       setFileTree: (tree) => set({ fileTree: tree }),
       setIsScanning: (status) => set({ isScanning: status }),
 
+      // 黑名单操作
       addIgnoreItem: (type, value) => set((state) => ({
         ignoreConfig: {
           ...state.ignoreConfig,
@@ -55,14 +98,15 @@ export const useContextStore = create<ContextState>()(
       
       resetIgnoreConfig: () => set({ ignoreConfig: DEFAULT_IGNORE_CONFIG }),
 
-      // 这里的 toggleSelect 逻辑比较复杂(涉及递归勾选子节点)，
-      // 我们在 UI 开发阶段再详细实现，先留个空位
-      toggleSelect: (nodeId, checked) => { console.log('Todo: toggle', nodeId, checked) },
+      // 核心：递归勾选
+      toggleSelect: (nodeId, checked) => set((state) => ({
+        fileTree: updateNodeState(state.fileTree, nodeId, checked)
+      })),
     }),
     {
-      name: 'context-config',
+      name: 'context-config', // 对应 context-config.json
       storage: createJSONStorage(() => fileStorage),
-      // 只持久化黑名单设置，文件树和当前路径重启后重置
+      // 过滤：只持久化 ignoreConfig，其他状态重启后重置
       partialize: (state) => ({
         ignoreConfig: state.ignoreConfig
       }),
