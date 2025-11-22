@@ -252,7 +252,7 @@ export function ContextView() {
               </button>
               
               {showFilters && (
-                  <div className="h-56 p-3 bg-secondary/5 overflow-hidden border-t border-border/50 animate-in slide-in-from-bottom-2">
+                  <div className="h-64 p-3 bg-secondary/5 overflow-hidden border-t border-border/50 animate-in slide-in-from-bottom-2">
                       <FilterManager 
                           localConfig={projectIgnore}
                           globalConfig={globalIgnore} // ✨ 传入全局配置，触发锁定逻辑
