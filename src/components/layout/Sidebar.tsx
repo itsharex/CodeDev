@@ -22,7 +22,7 @@ export function Sidebar() {
     <aside
       className={cn(
         // 修改颜色：使用语义化变量 bg-background, border-border
-        "bg-background border-r border-border flex flex-col relative select-none transition-[width] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] overflow-hidden",
+        "bg-background border-r border-border flex flex-col relative select-none transition-[width] duration-300 ease-in-out overflow-hidden",
         isSidebarOpen ? "w-48" : "w-16"
       )}
     >
