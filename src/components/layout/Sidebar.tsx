@@ -86,7 +86,7 @@ export function Sidebar() {
         ))}
       </nav>
 
-      {/* Footer - 只有设置按钮了 */}
+      {/* Footer - 只有设置按钮 */}
       <div className="border-t border-border shrink-0 flex flex-col overflow-hidden whitespace-nowrap py-2">
         <button 
           onClick={() => setSettingsOpen(true)} // 点击打开设置弹窗
