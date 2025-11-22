@@ -1,0 +1,119 @@
+import { useState } from 'react';
+import { Copy, Edit3, Trash2, Star, Hash, Terminal, Folder, FileCode } from 'lucide-react';
+import { Prompt } from '@/types/prompt';
+import { cn } from '@/lib/utils';
+import { usePromptStore } from '@/store/usePromptStore';
+
+interface PromptCardProps {
+  prompt: Prompt;
+  onEdit: (prompt: Prompt) => void;
+  onTrigger: (prompt: Prompt) => void; // 核心：触发智能填充或直接复制
+}
+
+export function PromptCard({ prompt, onEdit, onTrigger }: PromptCardProps) {
+  const { deletePrompt, toggleFavorite } = usePromptStore();
+  const [isHovered, setIsHovered] = useState(false);
+
+  // 处理点击卡片或复制按钮
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onTrigger(prompt);
+  };
+
+  // 根据分类名称返回不同颜色/图标
+  const getGroupStyle = (group: string) => {
+    switch (group) {
+      case 'Git': return 'bg-orange-500/10 text-orange-500';
+      case 'SQL': return 'bg-blue-500/10 text-blue-500';
+      case 'Docker': return 'bg-cyan-500/10 text-cyan-500';
+      case 'Javascript': 
+      case 'TypeScript': return 'bg-yellow-500/10 text-yellow-500';
+      default: return 'bg-primary/10 text-primary';
+    }
+  };
+
+  return (
+    <div 
+      className="group relative border border-border bg-card hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 rounded-xl transition-all duration-300 flex flex-col h-[180px] overflow-hidden cursor-pointer"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={handleClick}
+    >
+      {/* Header */}
+      <div className="p-4 pb-2 flex justify-between items-start shrink-0">
+        <div className="flex items-center gap-2 overflow-hidden">
+            <div className={cn(
+              "p-1.5 rounded-md shrink-0 transition-colors",
+              getGroupStyle(prompt.group)
+            )}>
+               <Terminal size={14} />
+            </div>
+            <h3 className="font-semibold text-foreground truncate text-sm" title={prompt.title}>
+                {prompt.title}
+            </h3>
+        </div>
+        
+        {/* 收藏按钮 */}
+        <button 
+          onClick={(e) => { e.stopPropagation(); toggleFavorite(prompt.id); }}
+          className={cn(
+            "transition-colors p-1 hover:bg-secondary rounded-md",
+            prompt.isFavorite ? "text-yellow-500" : "text-muted-foreground opacity-0 group-hover:opacity-100"
+          )}
+        >
+            <Star size={16} fill={prompt.isFavorite ? "currentColor" : "none"} />
+        </button>
+      </div>
+
+      {/* Body: Content Preview */}
+      <div className="px-4 flex-1 overflow-hidden relative">
+        <code className="text-xs text-muted-foreground/80 font-mono break-all whitespace-pre-wrap leading-relaxed">
+            {prompt.content.slice(0, 150)}
+            {prompt.content.length > 150 && "..."}
+        </code>
+        
+        {/* 底部渐变遮罩 */}
+        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-card to-transparent pointer-events-none" />
+      </div>
+
+      {/* Footer: Meta info & Actions */}
+      <div className="px-4 py-3 border-t border-border/50 bg-secondary/20 flex items-center justify-between text-xs text-muted-foreground shrink-0">
+        <span className="flex items-center gap-1 opacity-70">
+            <Hash size={12} /> {prompt.group}
+        </span>
+
+        {/* Actions Area - Hover Only */}
+        <div className={cn(
+            "flex items-center gap-1 transition-all duration-200 translate-y-8 opacity-0",
+            isHovered && "translate-y-0 opacity-100"
+        )}>
+           <ActionButton icon={<Edit3 size={14} />} onClick={() => onEdit(prompt)} title="编辑" />
+           <ActionButton icon={<Trash2 size={14} />} onClick={() => deletePrompt(prompt.id)} title="删除" danger />
+           <div className="w-px h-3 bg-border mx-1" />
+           <button 
+             className="flex items-center gap-1 bg-primary/90 hover:bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-medium transition-colors active:scale-95"
+             onClick={handleClick}
+           >
+             <Copy size={12} /> 复制
+           </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// 辅助小组件：图标按钮
+function ActionButton({ icon, onClick, title, danger }: any) {
+    return (
+        <button 
+            onClick={(e) => { e.stopPropagation(); onClick(); }}
+            className={cn(
+                "p-1.5 rounded hover:bg-background border border-transparent hover:border-border transition-all active:scale-90",
+                danger ? "hover:text-destructive" : "hover:text-foreground"
+            )}
+            title={title}
+        >
+            {icon}
+        </button>
+    )
+}
