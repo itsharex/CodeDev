@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Lock, Plus, Trash2, Folder, File, FileCode } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { IgnoreConfig } from '@/types/context';
+import { useAppStore } from '@/store/useAppStore';
+import { getText } from '@/lib/i18n';
 
 type FilterType = keyof IgnoreConfig;
 
@@ -14,6 +16,7 @@ interface FilterManagerProps {
 export function FilterManager({ localConfig, globalConfig, onUpdate }: FilterManagerProps) {
   const [activeTab, setActiveTab] = useState<FilterType>('dirs');
   const [inputValue, setInputValue] = useState('');
+  const { language } = useAppStore();
 
   // 渲染列表项
   const renderList = () => {
@@ -64,10 +67,16 @@ export function FilterManager({ localConfig, globalConfig, onUpdate }: FilterMan
           );
         })}
         {allItems.length === 0 && (
-            <div className="text-xs text-muted-foreground text-center py-4 opacity-50">No filters active</div>
+            <div className="text-xs text-muted-foreground text-center py-4 opacity-50">{getText('context', 'noFilters', language)}</div>
         )}
       </div>
     );
+  };
+
+  const getPlaceholder = () => {
+      if (activeTab === 'dirs') return getText('context', 'filterPlaceholder', language, { type: getText('context', 'filterDirs', language) });
+      if (activeTab === 'files') return getText('context', 'filterPlaceholder', language, { type: getText('context', 'filterFiles', language) });
+      return getText('context', 'filterPlaceholder', language, { type: getText('context', 'filterExts', language) });
   };
 
   const handleAdd = () => {
@@ -80,16 +89,16 @@ export function FilterManager({ localConfig, globalConfig, onUpdate }: FilterMan
     <div className="flex flex-col h-full overflow-hidden">
       {/* Tabs */}
       <div className="flex items-center gap-1 bg-secondary/20 p-1 rounded-lg mb-3 shrink-0">
-        <TabButton active={activeTab === 'dirs'} onClick={() => setActiveTab('dirs')} icon={<Folder size={12} />} label="Folders" />
-        <TabButton active={activeTab === 'files'} onClick={() => setActiveTab('files')} icon={<File size={12} />} label="Files" />
-        <TabButton active={activeTab === 'extensions'} onClick={() => setActiveTab('extensions')} icon={<FileCode size={12} />} label="Exts" />
+        <TabButton active={activeTab === 'dirs'} onClick={() => setActiveTab('dirs')} icon={<Folder size={12} />} label={getText('context', 'filterDirs', language)} />
+        <TabButton active={activeTab === 'files'} onClick={() => setActiveTab('files')} icon={<File size={12} />} label={getText('context', 'filterFiles', language)} />
+        <TabButton active={activeTab === 'extensions'} onClick={() => setActiveTab('extensions')} icon={<FileCode size={12} />} label={getText('context', 'filterExts', language)} />
       </div>
 
       {/* Input */}
       <div className="flex gap-2 mb-2 shrink-0">
         <input 
           className="flex-1 bg-secondary/30 border border-border/50 rounded px-2 py-1 text-xs outline-none focus:border-primary/50"
-          placeholder={`Ignore ${activeTab === 'extensions' ? 'extension (e.g. pdf)' : 'name...'}`}
+          placeholder={getPlaceholder()}
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
           onKeyDown={e => e.key === 'Enter' && handleAdd()}

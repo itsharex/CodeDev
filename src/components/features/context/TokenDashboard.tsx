@@ -8,6 +8,8 @@ import { analyzeContext } from '@/lib/context_analytics';
 import { FileNode } from '@/types/context';
 import { AIModelConfig } from '@/types/model';
 import { cn } from '@/lib/utils';
+import { useAppStore } from '@/store/useAppStore';
+import { getText } from '@/lib/i18n';
 
 interface TokenDashboardProps {
   stats: ContextStats;
@@ -26,7 +28,7 @@ export function TokenDashboard({
   onSave, 
   isGenerating 
 }: TokenDashboardProps) {
-  
+  const { language } = useAppStore();
   const analytics = useMemo(() => {
     return analyzeContext(fileTree, stats.estimatedTokens, models);
   }, [fileTree, stats.estimatedTokens, models]);
@@ -49,9 +51,9 @@ export function TokenDashboard({
       
       {/* 1. 核心统计 */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard icon={<FileText className="text-blue-500" />} label="Selected Files" value={stats.fileCount} />
-        <StatCard icon={<Database className="text-purple-500" />} label="Total Size" value={formatSize(stats.totalSize)} />
-        <StatCard icon={<Cpu className="text-orange-500" />} label="Est. Tokens" value={stats.estimatedTokens.toLocaleString()} highlight />
+        <StatCard icon={<FileText className="text-blue-500" />} label={getText('context', 'statSelected', language)} value={stats.fileCount} />
+        <StatCard icon={<Database className="text-purple-500" />} label={getText('context', 'statSize', language)} value={formatSize(stats.totalSize)} />
+        <StatCard icon={<Cpu className="text-orange-500" />} label={getText('context', 'statTokens', language)} value={stats.estimatedTokens.toLocaleString()} highlight />
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
@@ -61,8 +63,8 @@ export function TokenDashboard({
            {/* 语言分布 */}
            <div className="bg-card border border-border rounded-xl p-5 shadow-sm space-y-4">
               <div className="flex items-center justify-between">
-                 <h3 className="text-sm font-semibold flex items-center gap-2"><PieChart size={16} /> Language Breakdown</h3>
-                 <span className="text-xs text-muted-foreground">By Size</span>
+                 <h3 className="text-sm font-semibold flex items-center gap-2"><PieChart size={16} /> {getText('context', 'langBreakdown', language)}</h3>
+                 <span className="text-xs text-muted-foreground">{getText('context', 'bySize', language)}</span>
               </div>
               <div className="h-3 w-full flex rounded-full overflow-hidden bg-secondary">
                  {analytics.languages.map((lang) => (
@@ -83,7 +85,7 @@ export function TokenDashboard({
            {/* 动态成本估算 */}
            <div className="bg-card border border-border rounded-xl p-5 shadow-sm space-y-4">
               <div className="flex items-center justify-between">
-                 <h3 className="text-sm font-semibold flex items-center gap-2"><DollarSign size={16} /> Est. API Cost (Input)</h3>
+                 <h3 className="text-sm font-semibold flex items-center gap-2"><DollarSign size={16} /> {getText('context', 'estCost', language)}</h3>
               </div>
               {/* 这里的 Grid 会根据卡片数量自动换行 */}
               <div className="grid grid-cols-2 gap-3">
@@ -94,7 +96,7 @@ export function TokenDashboard({
                     </div>
                  ))}
               </div>
-              <p className="text-[10px] text-muted-foreground opacity-60">Calculated based on current token count and synced pricing.</p>
+              <p className="text-[10px] text-muted-foreground opacity-60">{getText('context', 'costNote', language)}</p>
            </div>
         </div>
 
@@ -102,7 +104,7 @@ export function TokenDashboard({
         <div className="space-y-6">
            {/* 动态上下文窗口 */}
            <div className="bg-card border border-border rounded-xl p-5 shadow-sm space-y-4">
-               <h3 className="text-sm font-semibold flex items-center gap-2"><TrendingUp size={16} /> Context Usage</h3>
+               <h3 className="text-sm font-semibold flex items-center gap-2"><TrendingUp size={16} /> {getText('context', 'contextUsage', language)}</h3>
                <div className="space-y-3">
                 {analytics.modelCosts.map(model => {
                     const percent = Math.min(100, (stats.estimatedTokens / model.limit) * 100);
@@ -127,8 +129,8 @@ export function TokenDashboard({
            {/* Top Files */}
            <div className="bg-card border border-border rounded-xl p-5 shadow-sm space-y-3">
               <div className="flex items-center justify-between mb-2">
-                 <h3 className="text-sm font-semibold flex items-center gap-2"><AlertTriangle size={16} /> Top Token Hogs</h3>
-                 <span className="text-xs text-muted-foreground">Largest Files</span>
+                 <h3 className="text-sm font-semibold flex items-center gap-2"><AlertTriangle size={16} /> {getText('context', 'topFiles', language)}</h3>
+                 <span className="text-xs text-muted-foreground">{getText('context', 'largestFiles', language)}</span>
               </div>
               <div className="space-y-2">
                  {analytics.topFiles.length === 0 && <span className="text-xs text-muted-foreground">No files selected</span>}
@@ -150,15 +152,15 @@ export function TokenDashboard({
       <div className="flex flex-col items-center gap-4 mt-auto">
          {stats.fileCount === 0 ? (
            <div className="text-muted-foreground flex items-center gap-2 bg-secondary/50 px-4 py-2 rounded-full text-sm">
-             <AlertCircle size={16} /> Select files from the left tree
+             <AlertCircle size={16} /> {getText('context', 'tipSelect', language)}
            </div>
          ) : (
            <div className="flex flex-wrap items-center gap-3 w-full justify-center">
              <button onClick={onCopy} disabled={isGenerating} className={cn("group relative inline-flex items-center justify-center gap-2 px-8 py-3 text-base font-semibold text-primary-foreground transition-all duration-200 bg-primary rounded-full shadow-lg shadow-primary/25 hover:bg-primary/90 hover:scale-105 active:scale-95 disabled:opacity-70 disabled:cursor-not-allowed disabled:scale-100 min-w-[200px] whitespace-nowrap", isGenerating && "cursor-wait")}>
-               {isGenerating ? (<><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /><span>Processing...</span></>) : (<><CheckCircle2 size={20} /><span>Copy to Clipboard</span></>)}
+               {isGenerating ? (<><div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" /><span>{getText('context', 'processing', language)}</span></>) : (<><CheckCircle2 size={20} /><span>{getText('context', 'btnCopy', language)}</span></>)}
              </button>
              <button onClick={onSave} disabled={isGenerating} className="inline-flex items-center justify-center gap-2 px-6 py-3 text-base font-medium text-foreground bg-secondary/80 border border-border rounded-full hover:bg-secondary hover:border-primary/30 transition-all active:scale-95 disabled:opacity-50 whitespace-nowrap">
-               <Save size={20} /><span>Save...</span>
+               <Save size={20} /><span>{getText('context', 'btnSave', language)}</span>
              </button>
            </div>
          )}

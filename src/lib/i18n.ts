@@ -28,6 +28,62 @@ const translations = {
       confirmDelete: "Delete",
       cancel: "Cancel"
     },
+    context: {
+      // Toolbar & Sidebar
+      searchPlaceholder: "Paste path or browse...",
+      browse: "Browse...",
+      scanning: "Scanning...",
+      scan: "Scan",
+      explorer: "EXPLORER",
+      selectedCount: "{count} selected",
+      filters: "Filters",
+      emptyDir: "Empty directory",
+      enterPath: "Enter a path to open",
+      
+      // Tabs
+      tabDashboard: "Dashboard",
+      tabPreview: "Preview",
+      
+      // Toast Messages
+      toastCopied: "Context copied to clipboard!",
+      toastCopyFail: "Failed to copy context",
+      toastSaved: "Context saved to file!",
+      toastSaveFail: "Failed to save file",
+      
+      // Filter Manager
+      filterDirs: "Folders",
+      filterFiles: "Files",
+      filterExts: "Exts",
+      filterPlaceholder: "Ignore {type}...", // e.g. Ignore name...
+      noFilters: "No filters active",
+      
+      // Preview
+      previewTitle: "Content Preview",
+      chars: "{count} characters",
+      generating: "Generating Preview...",
+      noFiles: "No files selected.",
+      copied: "Copied!",
+      
+      // Dashboard - Stats
+      statSelected: "Selected Files",
+      statSize: "Total Size",
+      statTokens: "Est. Tokens",
+      
+      // Dashboard - Analysis
+      langBreakdown: "Language Breakdown",
+      bySize: "By Size",
+      estCost: "Est. API Cost (Input)",
+      costNote: "Calculated based on current token count and synced pricing.",
+      contextUsage: "Context Usage",
+      topFiles: "Top Token Hogs",
+      largestFiles: "Largest Files",
+      
+      // Actions
+      tipSelect: "Select files from the left tree",
+      btnCopy: "Copy to Clipboard",
+      btnSave: "Save to File...",
+      processing: "Processing..."
+    },
     editor: {
       titleNew: "New Prompt",
       titleEdit: "Edit Prompt",
@@ -68,8 +124,8 @@ const translations = {
   },
   zh: {
     menu: {
-      prompts: "提示词指令库",
-      context: "上下文熔炉",
+      prompts: "提词库",
+      context: "文件整合",
       patch: "代码织补机",
       settings: "设置"
     },
@@ -89,6 +145,62 @@ const translations = {
       deleteMessage: "您确定要删除指令 “{name}” 吗？此操作无法撤销。",
       confirmDelete: "确认删除",
       cancel: "取消"
+    },
+    context: {
+      // Toolbar & Sidebar
+      searchPlaceholder: "粘贴路径或浏览...",
+      browse: "浏览...",
+      scanning: "扫描中...",
+      scan: "扫描",
+      explorer: "资源管理器",
+      selectedCount: "已选 {count} 项",
+      filters: "过滤规则",
+      emptyDir: "空目录",
+      enterPath: "请输入或选择路径",
+      
+      // Tabs
+      tabDashboard: "仪表盘",
+      tabPreview: "预览",
+      
+      // Toast Messages
+      toastCopied: "上下文已复制到剪贴板！",
+      toastCopyFail: "复制失败",
+      toastSaved: "上下文已保存到文件！",
+      toastSaveFail: "保存文件失败",
+      
+      // Filter Manager
+      filterDirs: "文件夹",
+      filterFiles: "文件",
+      filterExts: "后缀",
+      filterPlaceholder: "忽略 {type}...", 
+      noFilters: "暂无过滤规则",
+      
+      // Preview
+      previewTitle: "内容预览",
+      chars: "{count} 字符",
+      generating: "正在生成预览...",
+      noFiles: "未选择任何文件",
+      copied: "已复制!",
+      
+      // Dashboard - Stats
+      statSelected: "选中文件",
+      statSize: "总大小",
+      statTokens: "预估 Token",
+      
+      // Dashboard - Analysis
+      langBreakdown: "语言分布",
+      bySize: "按比例",
+      estCost: "预估 API 成本 (输入)",
+      costNote: "基于当前 Token 数量和云端价格计算。",
+      contextUsage: "上下文窗口占用",
+      topFiles: "Token 消耗大户",
+      largestFiles: "最大文件 Top 5",
+      
+      // Actions
+      tipSelect: "请从左侧文件树选择文件",
+      btnCopy: "复制上下文",
+      btnSave: "保存为文件...",
+      processing: "处理中..."
     },
     editor: {
       titleNew: "新建指令",

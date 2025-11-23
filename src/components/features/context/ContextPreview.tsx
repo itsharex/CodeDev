@@ -3,6 +3,8 @@ import { Copy, FileText, Loader2, AlertCircle } from 'lucide-react';
 import { FileNode } from '@/types/context';
 import { generateContext } from '@/lib/context_assembler';
 import { writeText } from '@tauri-apps/api/clipboard';
+import { useAppStore } from '@/store/useAppStore';
+import { getText } from '@/lib/i18n';
 
 interface ContextPreviewProps {
   fileTree: FileNode[];
@@ -12,7 +14,7 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
   const [content, setContent] = useState<string>('');
   const [isLoading, setIsLoading] = useState(true);
   const [isCopied, setIsCopied] = useState(false);
-
+  const { language } = useAppStore();
   // 当组件挂载或文件树变化时，生成预览内容
   useEffect(() => {
     let isMounted = true;
@@ -49,7 +51,7 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-3">
         <Loader2 size={24} className="animate-spin text-primary" />
-        <p className="text-sm">Generating Preview...</p>
+        <p className="text-sm">{getText('context', 'generating', language)}</p>
       </div>
     );
   }
@@ -58,7 +60,7 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-3 opacity-60">
         <AlertCircle size={32} />
-        <p>No files selected.</p>
+        <p>{getText('context', 'noFiles', language)}</p>
       </div>
     );
   }
@@ -69,9 +71,9 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
       <div className="flex items-center justify-between px-6 py-3 border-b border-border/50 bg-secondary/10 shrink-0">
         <div className="flex items-center gap-2 text-sm font-medium text-foreground">
           <FileText size={16} className="text-primary" />
-          <span>Content Preview</span>
+          <span>{getText('context', 'previewTitle', language)}</span>
           <span className="text-xs text-muted-foreground font-normal ml-2">
-            ({content.length.toLocaleString()} characters)
+            ({getText('context', 'chars', language, { count: content.length.toLocaleString() })})
           </span>
         </div>
         <button
@@ -79,10 +81,10 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
           className="flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-md hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground"
         >
           {isCopied ? (
-            <span className="text-green-500">Copied!</span>
+            <span className="text-green-500">{getText('context', 'copied', language)}</span>
           ) : (
             <>
-              <Copy size={14} /> Copy
+              <Copy size={14} /> {getText('actions', 'copy', language)}
             </>
           )}
         </button>

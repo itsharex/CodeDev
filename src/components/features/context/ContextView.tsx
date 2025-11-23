@@ -17,6 +17,7 @@ import { TokenDashboard } from './TokenDashboard';
 import { FilterManager } from './FilterManager';
 import { ContextPreview } from './ContextPreview';
 import { cn } from '@/lib/utils';
+import { getText } from '@/lib/i18n';
 
 export function ContextView() {
   const { 
@@ -30,7 +31,7 @@ export function ContextView() {
     isContextSidebarOpen, setContextSidebarOpen,
     contextSidebarWidth, setContextSidebarWidth,
     globalIgnore,
-    models // ✨ 现在类型是安全的，不需要 as any
+    models, language
   } = useAppStore(); 
 
   const [pathInput, setPathInput] = useState('');
@@ -71,10 +72,10 @@ export function ContextView() {
       const { text, tokenCount } = await generateContext(fileTree);
       await writeClipboard(text);
       console.log(`Context copied! Actual tokens: ${tokenCount}`);
-      triggerToast('Context copied to clipboard!');
+      triggerToast(getText('context', 'toastCopied', language));
     } catch (err) {
       console.error("Failed to copy:", err);
-      triggerToast('Failed to copy context');
+      triggerToast(getText('context', 'toastCopyFail', language));
     } finally {
       setIsGenerating(false);
     }
@@ -94,10 +95,10 @@ export function ContextView() {
       }
       const { text } = await generateContext(fileTree);
       await writeTextFile(filePath, text);
-      triggerToast('Context saved to file!');
+      triggerToast(getText('context', 'toastSaved', language));
     } catch (err) {
       console.error("Failed to save file:", err);
-      triggerToast('Failed to save file');
+      triggerToast(getText('context', 'toastSaveFail', language));
     } finally {
       setIsGenerating(false);
     }
@@ -177,7 +178,7 @@ export function ContextView() {
           <Search size={14} className="text-muted-foreground/50" />
           <input 
             className="flex-1 bg-transparent border-none outline-none text-sm h-8 placeholder:text-muted-foreground/40"
-            placeholder="Paste path or browse..."
+            placeholder={getText('context', 'searchPlaceholder', language)}
             value={pathInput}
             onChange={(e) => setPathInput(e.target.value)}
             onKeyDown={handleKeyDown}
@@ -188,7 +189,7 @@ export function ContextView() {
         </div>
 
         <button onClick={handleBrowse} className="flex items-center gap-2 px-3 py-1.5 bg-secondary hover:bg-secondary/80 border border-border rounded-md text-sm font-medium transition-colors whitespace-nowrap">
-          <FolderOpen size={16} /><span>Browse...</span>
+          <FolderOpen size={16} /><span>{getText('context', 'browse', language)}</span>
         </button>
         <button onClick={() => performScan(projectRoot || '')} disabled={!projectRoot || isScanning} className="p-2 text-muted-foreground hover:text-foreground hover:bg-secondary rounded-md transition-colors disabled:opacity-50">
           <RefreshCw size={16} className={cn(isScanning && "animate-spin")} />
@@ -204,18 +205,18 @@ export function ContextView() {
           style={{ width: isContextSidebarOpen ? `${contextSidebarWidth}px` : 0 }}
         >
           <div className="p-3 border-b border-border/50 text-xs font-bold text-muted-foreground uppercase tracking-wider flex justify-between shrink-0 items-center">
-             <span className="flex items-center gap-1"><FileJson size={12}/> EXPLORER</span>
-             <span className="bg-secondary/50 px-1.5 py-0.5 rounded text-[10px]">{stats.fileCount} selected</span>
+             <span className="flex items-center gap-1"><FileJson size={12}/>{getText('context', 'explorer', language)}</span>
+             <span className="bg-secondary/50 px-1.5 py-0.5 rounded text-[10px]">{getText('context', 'selectedCount', language, { count: stats.fileCount.toString() })}</span>
           </div>
           
           {/* File Tree */}
           <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
             {!projectRoot ? (
-              <div className="mt-10 flex flex-col items-center justify-center text-muted-foreground opacity-50 gap-2 text-center px-4"><p className="text-sm">Enter a path to open</p></div>
+              <div className="mt-10 flex flex-col items-center justify-center text-muted-foreground opacity-50 gap-2 text-center px-4"><p className="text-sm">{getText('context', 'enterPath', language)}</p></div>
             ) : isScanning ? (
-              <div className="flex flex-col items-center justify-center mt-10 gap-3 text-sm text-muted-foreground animate-pulse"><Loader2 size={20} className="animate-spin text-primary" /><span>Scanning...</span></div>
+              <div className="flex flex-col items-center justify-center mt-10 gap-3 text-sm text-muted-foreground animate-pulse"><Loader2 size={20} className="animate-spin text-primary" /><span>{getText('context', 'scanning', language)}</span></div>
             ) : fileTree.length === 0 ? (
-              <div className="mt-10 text-center text-sm text-muted-foreground">Empty directory</div>
+              <div className="mt-10 text-center text-sm text-muted-foreground">{getText('context', 'emptyDir', language)}</div>
             ) : (
               fileTree.map(node => <FileTreeNode key={node.id} node={node} onToggleSelect={toggleSelect} />)
             )}
@@ -227,7 +228,7 @@ export function ContextView() {
                   onClick={() => setShowFilters(!showFilters)}
                   className="flex items-center justify-between px-3 py-2 text-xs font-bold text-muted-foreground uppercase tracking-wider hover:bg-secondary/50 transition-colors"
               >
-                  <span className="flex items-center gap-2"><SlidersHorizontal size={12}/> Filters</span>
+                  <span className="flex items-center gap-2"><SlidersHorizontal size={12}/> {getText('context', 'filters', language)}</span>
                   <ChevronUp size={14} className={cn("transition-transform duration-200", showFilters ? "rotate-180" : "rotate-0")} />
               </button>
               {showFilters && (
@@ -252,13 +253,13 @@ export function ContextView() {
                     active={rightViewMode === 'dashboard'} 
                     onClick={() => setRightViewMode('dashboard')}
                     icon={<LayoutDashboard size={14} />} 
-                    label="Dashboard" 
+                    label={getText('context', 'tabDashboard', language)}
                   />
                   <ViewToggleBtn 
                     active={rightViewMode === 'preview'} 
                     onClick={() => setRightViewMode('preview')}
                     icon={<FileText size={14} />} 
-                    label="Preview" 
+                    label={getText('context', 'tabPreview', language)}
                   />
                </div>
             </div>
