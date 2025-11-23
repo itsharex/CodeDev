@@ -1,10 +1,10 @@
 [
   {
     "id": "tldr-zh-sunos-dmesg-0",
-    "title": "dmesg - 显示内核消息：",
+    "title": "dmesg - 显示内核消息",
     "content": "dmesg",
     "group": "SunOS",
-    "description": "dmesg: 将内核消息写入标准输出。 更多信息：. (显示内核消息：)",
+    "description": "dmesg: 将内核消息写入标准输出。 (显示内核消息)",
     "tags": [
       "sunos",
       "dmesg",
@@ -15,10 +15,10 @@
   },
   {
     "id": "tldr-zh-sunos-dmesg-1",
-    "title": "dmesg - 显示此系统上可用的物理内存：",
+    "title": "dmesg - 显示此系统上可用的物理内存",
     "content": "dmesg | grep -i memory",
     "group": "SunOS",
-    "description": "dmesg: 将内核消息写入标准输出。 更多信息：. (显示此系统上可用的物理内存：)",
+    "description": "dmesg: 将内核消息写入标准输出。 (显示此系统上可用的物理内存)",
     "tags": [
       "sunos",
       "dmesg",
@@ -29,10 +29,10 @@
   },
   {
     "id": "tldr-zh-sunos-dmesg-2",
-    "title": "dmesg - 一次显示一页内核消息：",
+    "title": "dmesg - 一次显示一页内核消息",
     "content": "dmesg | less",
     "group": "SunOS",
-    "description": "dmesg: 将内核消息写入标准输出。 更多信息：. (一次显示一页内核消息：)",
+    "description": "dmesg: 将内核消息写入标准输出。 (一次显示一页内核消息)",
     "tags": [
       "sunos",
       "dmesg",

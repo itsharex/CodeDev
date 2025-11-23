@@ -4,7 +4,7 @@
     "title": "transport - Restrict line protocols to `ssh`",
     "content": "transport input ssh",
     "group": "Cisco-Ios",
-    "description": "transport: Manage line transport protocols. Accessed in configuration mode under `line`. More information: . (Restrict line protocols to `ssh`)",
+    "description": "transport: Manage line transport protocols. Accessed in configuration mode under `line`. (Restrict line protocols to `ssh`)",
     "tags": [
       "cisco-ios",
       "transport",
@@ -18,7 +18,7 @@
     "title": "transport - Restrict line protocols to `telnet`",
     "content": "transport input telnet",
     "group": "Cisco-Ios",
-    "description": "transport: Manage line transport protocols. Accessed in configuration mode under `line`. More information: . (Restrict line protocols to `telnet`)",
+    "description": "transport: Manage line transport protocols. Accessed in configuration mode under `line`. (Restrict line protocols to `telnet`)",
     "tags": [
       "cisco-ios",
       "transport",
@@ -32,7 +32,7 @@
     "title": "configure - Configure from the terminal",
     "content": "{{[conf|configure]}} {{[t|terminal]}}",
     "group": "Cisco-Ios",
-    "description": "configure: Enter configuration mode. More information: . (Configure from the terminal)",
+    "description": "configure: Enter configuration mode. (Configure from the terminal)",
     "tags": [
       "cisco-ios",
       "configure",
@@ -46,7 +46,7 @@
     "title": "configure - Back out one level in configuration mode",
     "content": "exit",
     "group": "Cisco-Ios",
-    "description": "configure: Enter configuration mode. More information: . (Back out one level in configuration mode)",
+    "description": "configure: Enter configuration mode. (Back out one level in configuration mode)",
     "tags": [
       "cisco-ios",
       "configure",
@@ -60,7 +60,7 @@
     "title": "configure - Exit out of configuration mode",
     "content": "end",
     "group": "Cisco-Ios",
-    "description": "configure: Enter configuration mode. More information: . (Exit out of configuration mode)",
+    "description": "configure: Enter configuration mode. (Exit out of configuration mode)",
     "tags": [
       "cisco-ios",
       "configure",
@@ -74,7 +74,7 @@
     "title": "erase - Erase the startup configuration",
     "content": "erase startup-config",
     "group": "Cisco-Ios",
-    "description": "erase: Delete preset things. More information: . (Erase the startup configuration)",
+    "description": "erase: Delete preset things. (Erase the startup configuration)",
     "tags": [
       "cisco-ios",
       "erase",
@@ -88,7 +88,7 @@
     "title": "erase - Erase a filesystem",
     "content": "erase {{flash}}:",
     "group": "Cisco-Ios",
-    "description": "erase: Delete preset things. More information: . (Erase a filesystem)",
+    "description": "erase: Delete preset things. (Erase a filesystem)",
     "tags": [
       "cisco-ios",
       "erase",
@@ -102,7 +102,7 @@
     "title": "reload - Reboot the system",
     "content": "reload",
     "group": "Cisco-Ios",
-    "description": "reload: Control reboot behavior. More information: . (Reboot the system)",
+    "description": "reload: Control reboot behavior. (Reboot the system)",
     "tags": [
       "cisco-ios",
       "reload",
@@ -116,7 +116,7 @@
     "title": "reload - Reboot after `n` seconds",
     "content": "reload in {{n}}",
     "group": "Cisco-Ios",
-    "description": "reload: Control reboot behavior. More information: . (Reboot after `n` seconds)",
+    "description": "reload: Control reboot behavior. (Reboot after `n` seconds)",
     "tags": [
       "cisco-ios",
       "reload",
@@ -130,7 +130,7 @@
     "title": "reload - Cancel pending reboots",
     "content": "reload cancel",
     "group": "Cisco-Ios",
-    "description": "reload: Control reboot behavior. More information: . (Cancel pending reboots)",
+    "description": "reload: Control reboot behavior. (Cancel pending reboots)",
     "tags": [
       "cisco-ios",
       "reload",
@@ -144,7 +144,7 @@
     "title": "clock - Enter privileged execution mode",
     "content": "clock set {{23}}:{{59}}:{{59}} {{31}} {{april}} {{2000}}",
     "group": "Cisco-Ios",
-    "description": "clock: Set the system clock. More information: . (Enter privileged execution mode)",
+    "description": "clock: Set the system clock. (Enter privileged execution mode)",
     "tags": [
       "cisco-ios",
       "clock",
@@ -158,7 +158,7 @@
     "title": "clock - Auto negotiate with the far end of the link, defaulting to active-clock",
     "content": "clock active prefer",
     "group": "Cisco-Ios",
-    "description": "clock: Set the system clock. More information: . (Auto negotiate with the far end of the link, defaulting to active-clock)",
+    "description": "clock: Set the system clock. (Auto negotiate with the far end of the link, defaulting to active-clock)",
     "tags": [
       "cisco-ios",
       "clock",
@@ -172,7 +172,7 @@
     "title": "clock - Auto negotiate with the far end of the link, defaulting to passive-clock",
     "content": "clock passive prefer",
     "group": "Cisco-Ios",
-    "description": "clock: Set the system clock. More information: . (Auto negotiate with the far end of the link, defaulting to passive-clock)",
+    "description": "clock: Set the system clock. (Auto negotiate with the far end of the link, defaulting to passive-clock)",
     "tags": [
       "cisco-ios",
       "clock",
@@ -186,7 +186,7 @@
     "title": "clock - Show the current clock mode negotiated by the firmware",
     "content": "clock show interfaces",
     "group": "Cisco-Ios",
-    "description": "clock: Set the system clock. More information: . (Show the current clock mode negotiated by the firmware)",
+    "description": "clock: Set the system clock. (Show the current clock mode negotiated by the firmware)",
     "tags": [
       "cisco-ios",
       "clock",
@@ -200,7 +200,7 @@
     "title": "line - Configure lines from 0 to 15",
     "content": "line vty 0 15",
     "group": "Cisco-Ios",
-    "description": "line: Manage lines. Accessed in configuration mode. More information: . (Configure lines from 0 to 15)",
+    "description": "line: Manage lines. Accessed in configuration mode. (Configure lines from 0 to 15)",
     "tags": [
       "cisco-ios",
       "line",
@@ -214,7 +214,7 @@
     "title": "dir - List files in the current working directory",
     "content": "dir",
     "group": "Cisco-Ios",
-    "description": "dir: List files. More information: . (List files in the current working directory)",
+    "description": "dir: List files. (List files in the current working directory)",
     "tags": [
       "cisco-ios",
       "dir",
@@ -228,7 +228,7 @@
     "title": "dir - List files in a specific filesystem",
     "content": "dir {{flash}}:",
     "group": "Cisco-Ios",
-    "description": "dir: List files. More information: . (List files in a specific filesystem)",
+    "description": "dir: List files. (List files in a specific filesystem)",
     "tags": [
       "cisco-ios",
       "dir",
@@ -242,7 +242,7 @@
     "title": "dir - List available filesystems",
     "content": "dir ?",
     "group": "Cisco-Ios",
-    "description": "dir: List files. More information: . (List available filesystems)",
+    "description": "dir: List files. (List available filesystems)",
     "tags": [
       "cisco-ios",
       "dir",
@@ -256,7 +256,7 @@
     "title": "enable - Enter privileged execution mode",
     "content": "enable",
     "group": "Cisco-Ios",
-    "description": "enable: Enter privileged execution mode. More information: . (Enter privileged execution mode)",
+    "description": "enable: Enter privileged execution mode. (Enter privileged execution mode)",
     "tags": [
       "cisco-ios",
       "enable",
@@ -270,7 +270,7 @@
     "title": "interface - Configure a VLAN",
     "content": "interface vlan {{1}}",
     "group": "Cisco-Ios",
-    "description": "interface: Manage interfaces. Accessed in configuration mode. More information: . (Configure a VLAN)",
+    "description": "interface: Manage interfaces. Accessed in configuration mode. (Configure a VLAN)",
     "tags": [
       "cisco-ios",
       "interface",
@@ -284,7 +284,7 @@
     "title": "interface - Set an interface to be active or inactive (this is run inside the interface command)",
     "content": "{{no shutdown|shutdown}}",
     "group": "Cisco-Ios",
-    "description": "interface: Manage interfaces. Accessed in configuration mode. More information: . (Set an interface to be active or inactive (this is run inside the interface command))",
+    "description": "interface: Manage interfaces. Accessed in configuration mode. (Set an interface to be active or inactive (this is run inside the interface command))",
     "tags": [
       "cisco-ios",
       "interface",
@@ -298,7 +298,7 @@
     "title": "delete - Delete a file from flash memory",
     "content": "delete {{vlan.dat}}",
     "group": "Cisco-Ios",
-    "description": "delete: Delete individual files. More information: . (Delete a file from flash memory)",
+    "description": "delete: Delete individual files. (Delete a file from flash memory)",
     "tags": [
       "cisco-ios",
       "delete",
@@ -312,7 +312,7 @@
     "title": "login - Use local username and password for authentication",
     "content": "login local",
     "group": "Cisco-Ios",
-    "description": "login: Manage console and virtual line authentication. Accessed in configuration mode under `line`. More information: . (Use local username and password for authentication)",
+    "description": "login: Manage console and virtual line authentication. Accessed in configuration mode under `line`. (Use local username and password for authentication)",
     "tags": [
       "cisco-ios",
       "login",
@@ -326,7 +326,7 @@
     "title": "crypto - Generate an `rsa` key",
     "content": "crypto key generate rsa",
     "group": "Cisco-Ios",
-    "description": "crypto: Manage cryptography. Accessed in configuration mode. More information: . (Generate an `rsa` key)",
+    "description": "crypto: Manage cryptography. Accessed in configuration mode. (Generate an `rsa` key)",
     "tags": [
       "cisco-ios",
       "crypto",
@@ -340,7 +340,7 @@
     "title": "crypto - Define a modulus for a key",
     "content": "crypto key generate rsa modulus {{1024}}",
     "group": "Cisco-Ios",
-    "description": "crypto: Manage cryptography. Accessed in configuration mode. More information: . (Define a modulus for a key)",
+    "description": "crypto: Manage cryptography. Accessed in configuration mode. (Define a modulus for a key)",
     "tags": [
       "cisco-ios",
       "crypto",
@@ -354,7 +354,7 @@
     "title": "crypto - Remove all keys",
     "content": "crypto key zeroize",
     "group": "Cisco-Ios",
-    "description": "crypto: Manage cryptography. Accessed in configuration mode. More information: . (Remove all keys)",
+    "description": "crypto: Manage cryptography. Accessed in configuration mode. (Remove all keys)",
     "tags": [
       "cisco-ios",
       "crypto",
@@ -368,7 +368,7 @@
     "title": "show - Show switch IP addresses",
     "content": "{{[sh|show]}} ip interface brief",
     "group": "Cisco-Ios",
-    "description": "show: Show various system information. More information: . (Show switch IP addresses)",
+    "description": "show: Show various system information. (Show switch IP addresses)",
     "tags": [
       "cisco-ios",
       "show",
@@ -382,7 +382,7 @@
     "title": "show - Show specific interface configuration",
     "content": "{{[sh|show]}} ip interface {{vlan1}}",
     "group": "Cisco-Ios",
-    "description": "show: Show various system information. More information: . (Show specific interface configuration)",
+    "description": "show: Show various system information. (Show specific interface configuration)",
     "tags": [
       "cisco-ios",
       "show",
@@ -396,7 +396,7 @@
     "title": "show - Show vlan configuration",
     "content": "{{[sh|show]}} vlan",
     "group": "Cisco-Ios",
-    "description": "show: Show various system information. More information: . (Show vlan configuration)",
+    "description": "show: Show various system information. (Show vlan configuration)",
     "tags": [
       "cisco-ios",
       "show",
@@ -410,7 +410,7 @@
     "title": "show - Show currently running configuration",
     "content": "{{[sh|show]}} running-config",
     "group": "Cisco-Ios",
-    "description": "show: Show various system information. More information: . (Show currently running configuration)",
+    "description": "show: Show various system information. (Show currently running configuration)",
     "tags": [
       "cisco-ios",
       "show",
@@ -424,7 +424,7 @@
     "title": "show - Show SSH configuration",
     "content": "{{[sh|show]}} ip ssh",
     "group": "Cisco-Ios",
-    "description": "show: Show various system information. More information: . (Show SSH configuration)",
+    "description": "show: Show various system information. (Show SSH configuration)",
     "tags": [
       "cisco-ios",
       "show",
@@ -438,7 +438,7 @@
     "title": "ip - Set the SSH version",
     "content": "ip ssh version {{2}}",
     "group": "Cisco-Ios",
-    "description": "ip: Manage IP configurations. Accessed in configuration mode. More information: . (Set the SSH version)",
+    "description": "ip: Manage IP configurations. Accessed in configuration mode. (Set the SSH version)",
     "tags": [
       "cisco-ios",
       "ip",
@@ -452,7 +452,7 @@
     "title": "ip - Set the address of the device (This is done under `interface command`)",
     "content": "ip address {{10.0.0.1}} {{255.255.255.0}}",
     "group": "Cisco-Ios",
-    "description": "ip: Manage IP configurations. Accessed in configuration mode. More information: . (Set the address of the device (This is done under `interface command`))",
+    "description": "ip: Manage IP configurations. Accessed in configuration mode. (Set the address of the device (This is done under `interface command`))",
     "tags": [
       "cisco-ios",
       "ip",
@@ -466,7 +466,7 @@
     "title": "ip - Set the address to be determined with DHCP (This is done under `interface command`)",
     "content": "ip address dhcp",
     "group": "Cisco-Ios",
-    "description": "ip: Manage IP configurations. Accessed in configuration mode. More information: . (Set the address to be determined with DHCP (This is done under `interface command`))",
+    "description": "ip: Manage IP configurations. Accessed in configuration mode. (Set the address to be determined with DHCP (This is done under `interface command`))",
     "tags": [
       "cisco-ios",
       "ip",
@@ -480,7 +480,7 @@
     "title": "ip - Define a domain name",
     "content": "ip domain-name {{example.com}}",
     "group": "Cisco-Ios",
-    "description": "ip: Manage IP configurations. Accessed in configuration mode. More information: . (Define a domain name)",
+    "description": "ip: Manage IP configurations. Accessed in configuration mode. (Define a domain name)",
     "tags": [
       "cisco-ios",
       "ip",
@@ -494,7 +494,7 @@
     "title": "write - Write current configuration to memory",
     "content": "write memory",
     "group": "Cisco-Ios",
-    "description": "write: Write data to memory. More information: . (Write current configuration to memory)",
+    "description": "write: Write data to memory. (Write current configuration to memory)",
     "tags": [
       "cisco-ios",
       "write",
@@ -508,7 +508,7 @@
     "title": "write - Delete the configuration in memory",
     "content": "write erase",
     "group": "Cisco-Ios",
-    "description": "write: Write data to memory. More information: . (Delete the configuration in memory)",
+    "description": "write: Write data to memory. (Delete the configuration in memory)",
     "tags": [
       "cisco-ios",
       "write",
@@ -522,7 +522,7 @@
     "title": "write - Display help",
     "content": "write ?",
     "group": "Cisco-Ios",
-    "description": "write: Write data to memory. More information: . (Display help)",
+    "description": "write: Write data to memory. (Display help)",
     "tags": [
       "cisco-ios",
       "write",
@@ -536,7 +536,7 @@
     "title": "username - Set up an admin account",
     "content": "username {{admin}} privilege 15 secret {{password}}",
     "group": "Cisco-Ios",
-    "description": "username: Manage users. Accessed in configuration mode. More information: . (Set up an admin account)",
+    "description": "username: Manage users. Accessed in configuration mode. (Set up an admin account)",
     "tags": [
       "cisco-ios",
       "username",
@@ -550,7 +550,7 @@
     "title": "question-mark - Get available commands",
     "content": "?",
     "group": "Cisco-Ios",
-    "description": "question-mark: Get context sensitive. More information: . (Get available commands)",
+    "description": "question-mark: Get context sensitive. (Get available commands)",
     "tags": [
       "cisco-ios",
       "question-mark",
@@ -564,7 +564,7 @@
     "title": "question-mark - Get storages that are listable",
     "content": "dir ?",
     "group": "Cisco-Ios",
-    "description": "question-mark: Get context sensitive. More information: . (Get storages that are listable)",
+    "description": "question-mark: Get context sensitive. (Get storages that are listable)",
     "tags": [
       "cisco-ios",
       "question-mark",
@@ -578,7 +578,7 @@
     "title": "question-mark - Show what IP information is viewable",
     "content": "ip show ?",
     "group": "Cisco-Ios",
-    "description": "question-mark: Get context sensitive. More information: . (Show what IP information is viewable)",
+    "description": "question-mark: Get context sensitive. (Show what IP information is viewable)",
     "tags": [
       "cisco-ios",
       "question-mark",

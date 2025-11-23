@@ -4,7 +4,7 @@
     "title": "chpass - Add or change user database information for the current user interactively",
     "content": "su -c chpass",
     "group": "Freebsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Add or change user database information for the current user interactively)",
+    "description": "chpass: Add or change user database information, including login shell and password. (Add or change user database information for the current user interactively)",
     "tags": [
       "freebsd",
       "chpass",
@@ -18,7 +18,7 @@
     "title": "chpass - Set a specific login [s]hell for the current user",
     "content": "chpass -s {{path/to/shell}}",
     "group": "Freebsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Set a specific login [s]hell for the current user)",
+    "description": "chpass: Add or change user database information, including login shell and password. (Set a specific login [s]hell for the current user)",
     "tags": [
       "freebsd",
       "chpass",
@@ -32,7 +32,7 @@
     "title": "chpass - Set a login [s]hell for a specific user",
     "content": "chpass -s {{path/to/shell}} {{username}}",
     "group": "Freebsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Set a login [s]hell for a specific user)",
+    "description": "chpass: Add or change user database information, including login shell and password. (Set a login [s]hell for a specific user)",
     "tags": [
       "freebsd",
       "chpass",
@@ -46,7 +46,7 @@
     "title": "chpass - Change the account [e]xpire time (in seconds from the epoch, UTC)",
     "content": "su -c 'chpass -e {{time}} {{username}}'",
     "group": "Freebsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Change the account [e]xpire time (in seconds from the epoch, UTC))",
+    "description": "chpass: Add or change user database information, including login shell and password. (Change the account [e]xpire time (in seconds from the epoch, UTC))",
     "tags": [
       "freebsd",
       "chpass",
@@ -60,7 +60,7 @@
     "title": "chpass - Change a user's password",
     "content": "su -c 'chpass -p {{encrypted_password}} {{username}}'",
     "group": "Freebsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Change a user's password)",
+    "description": "chpass: Add or change user database information, including login shell and password. (Change a user's password)",
     "tags": [
       "freebsd",
       "chpass",
@@ -74,7 +74,7 @@
     "title": "chpass - Specify the [h]ostname or address of an NIS server to query",
     "content": "su -c 'chpass -h {{hostname}} {{username}}'",
     "group": "Freebsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Specify the [h]ostname or address of an NIS server to query)",
+    "description": "chpass: Add or change user database information, including login shell and password. (Specify the [h]ostname or address of an NIS server to query)",
     "tags": [
       "freebsd",
       "chpass",
@@ -88,7 +88,7 @@
     "title": "chpass - Specify a particular NIS [d]omain (system domain name by default)",
     "content": "su -c 'chpass -d {{domain}} {{username}}'",
     "group": "Freebsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Specify a particular NIS [d]omain (system domain name by default))",
+    "description": "chpass: Add or change user database information, including login shell and password. (Specify a particular NIS [d]omain (system domain name by default))",
     "tags": [
       "freebsd",
       "chpass",
@@ -116,7 +116,7 @@
     "title": "procstat - Display file descriptors of a specific process",
     "content": "procstat fds {{pid}}",
     "group": "Freebsd",
-    "description": "procstat: Display detailed information about processes in FreeBSD. More information: . (Display file descriptors of a specific process)",
+    "description": "procstat: Display detailed information about processes in FreeBSD. (Display file descriptors of a specific process)",
     "tags": [
       "freebsd",
       "procstat",
@@ -130,7 +130,7 @@
     "title": "procstat - Show virtual memory mappings of a process",
     "content": "procstat vm {{pid}}",
     "group": "Freebsd",
-    "description": "procstat: Display detailed information about processes in FreeBSD. More information: . (Show virtual memory mappings of a process)",
+    "description": "procstat: Display detailed information about processes in FreeBSD. (Show virtual memory mappings of a process)",
     "tags": [
       "freebsd",
       "procstat",
@@ -144,7 +144,7 @@
     "title": "procstat - Display process arguments",
     "content": "procstat arguments {{pid}}",
     "group": "Freebsd",
-    "description": "procstat: Display detailed information about processes in FreeBSD. More information: . (Display process arguments)",
+    "description": "procstat: Display detailed information about processes in FreeBSD. (Display process arguments)",
     "tags": [
       "freebsd",
       "procstat",
@@ -158,7 +158,7 @@
     "title": "procstat - Show resource limits of a process",
     "content": "procstat rlimit {{pid}}",
     "group": "Freebsd",
-    "description": "procstat: Display detailed information about processes in FreeBSD. More information: . (Show resource limits of a process)",
+    "description": "procstat: Display detailed information about processes in FreeBSD. (Show resource limits of a process)",
     "tags": [
       "freebsd",
       "procstat",
@@ -172,7 +172,7 @@
     "title": "ipmitool - Load the IPMI kernel module for local connections",
     "content": "kldload ipmi.ko",
     "group": "Freebsd",
-    "description": "ipmitool: Interface with the Intelligent Platform Management Interface (IPMI). More information: . (Load the IPMI kernel module for local connections)",
+    "description": "ipmitool: Interface with the Intelligent Platform Management Interface (IPMI). (Load the IPMI kernel module for local connections)",
     "tags": [
       "freebsd",
       "ipmitool",
@@ -186,7 +186,7 @@
     "title": "ipmitool - Open IPMI shell on the local hardware",
     "content": "ipmitool shell",
     "group": "Freebsd",
-    "description": "ipmitool: Interface with the Intelligent Platform Management Interface (IPMI). More information: . (Open IPMI shell on the local hardware)",
+    "description": "ipmitool: Interface with the Intelligent Platform Management Interface (IPMI). (Open IPMI shell on the local hardware)",
     "tags": [
       "freebsd",
       "ipmitool",
@@ -200,7 +200,7 @@
     "title": "ipmitool - Open IPMI shell on a remote host",
     "content": "ipmitool -H {{ip_address}} -U {{user_name}} shell",
     "group": "Freebsd",
-    "description": "ipmitool: Interface with the Intelligent Platform Management Interface (IPMI). More information: . (Open IPMI shell on a remote host)",
+    "description": "ipmitool: Interface with the Intelligent Platform Management Interface (IPMI). (Open IPMI shell on a remote host)",
     "tags": [
       "freebsd",
       "ipmitool",
@@ -214,7 +214,7 @@
     "title": "look - Search for lines beginning with a specific prefix in a specific file",
     "content": "look {{prefix}} {{path/to/file}}",
     "group": "Freebsd",
-    "description": "look: Display lines beginning with a prefix in a sorted file. See also: `grep`, `sort`. More information: . (Search for lines beginning with a specific prefix in a specific file)",
+    "description": "look: Display lines beginning with a prefix in a sorted file. (Search for lines beginning with a specific prefix in a specific file)",
     "tags": [
       "freebsd",
       "look",
@@ -228,7 +228,7 @@
     "title": "look - Case-insensitively search only on alphanumeric characters",
     "content": "look {{[-f|--ignore-case]}} {{[-d|--alphanum]}} {{prefix}} {{path/to/file}}",
     "group": "Freebsd",
-    "description": "look: Display lines beginning with a prefix in a sorted file. See also: `grep`, `sort`. More information: . (Case-insensitively search only on alphanumeric characters)",
+    "description": "look: Display lines beginning with a prefix in a sorted file. (Case-insensitively search only on alphanumeric characters)",
     "tags": [
       "freebsd",
       "look",
@@ -242,7 +242,7 @@
     "title": "look - Specify a string termination character (space by default)",
     "content": "look {{[-t|--terminate]}} {{,}}",
     "group": "Freebsd",
-    "description": "look: Display lines beginning with a prefix in a sorted file. See also: `grep`, `sort`. More information: . (Specify a string termination character (space by default))",
+    "description": "look: Display lines beginning with a prefix in a sorted file. (Specify a string termination character (space by default))",
     "tags": [
       "freebsd",
       "look",
@@ -256,7 +256,7 @@
     "title": "look - Search in `/usr/share/dict/words` (`--ignore-case` and `--alphanum` are assumed)",
     "content": "look {{prefix}}",
     "group": "Freebsd",
-    "description": "look: Display lines beginning with a prefix in a sorted file. See also: `grep`, `sort`. More information: . (Search in `/usr/share/dict/words` (`--ignore-case` and `--alphanum` are assumed))",
+    "description": "look: Display lines beginning with a prefix in a sorted file. (Search in `/usr/share/dict/words` (`--ignore-case` and `--alphanum` are assumed))",
     "tags": [
       "freebsd",
       "look",
@@ -270,7 +270,7 @@
     "title": "sed - Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in all input lines and print the result to `stdout`",
     "content": "{{command}} | sed 's/apple/mango/g'",
     "group": "Freebsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in all input lines and print the result to `stdout`)",
+    "description": "sed: Edit text in a scriptable manner. (Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in all input lines and print the result to `stdout`)",
     "tags": [
       "freebsd",
       "sed",
@@ -284,7 +284,7 @@
     "title": "sed - Execute a specific script [f]ile and print the result to `stdout`",
     "content": "{{command}} | sed -f {{path/to/script.sed}}",
     "group": "Freebsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Execute a specific script [f]ile and print the result to `stdout`)",
+    "description": "sed: Edit text in a scriptable manner. (Execute a specific script [f]ile and print the result to `stdout`)",
     "tags": [
       "freebsd",
       "sed",
@@ -298,7 +298,7 @@
     "title": "sed - Delay opening each file until a command containing the related `w` function or flag is applied to a line of input",
     "content": "{{command}} | sed -fa {{path/to/script.sed}}",
     "group": "Freebsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Delay opening each file until a command containing the related `w` function or flag is applied to a line of input)",
+    "description": "sed: Edit text in a scriptable manner. (Delay opening each file until a command containing the related `w` function or flag is applied to a line of input)",
     "tags": [
       "freebsd",
       "sed",
@@ -312,7 +312,7 @@
     "title": "sed - Replace all `apple` (extended `regex`) occurrences with `APPLE` (extended `regex`) in all input lines and print the result to `stdout`",
     "content": "{{command}} | sed -E 's/(apple)/\\U\\1/g'",
     "group": "Freebsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Replace all `apple` (extended `regex`) occurrences with `APPLE` (extended `regex`) in all input lines and print the result to `stdout`)",
+    "description": "sed: Edit text in a scriptable manner. (Replace all `apple` (extended `regex`) occurrences with `APPLE` (extended `regex`) in all input lines and print the result to `stdout`)",
     "tags": [
       "freebsd",
       "sed",
@@ -326,7 +326,7 @@
     "title": "sed - Print just a first line to `stdout`",
     "content": "{{command}} | sed -n '1p'",
     "group": "Freebsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Print just a first line to `stdout`)",
+    "description": "sed: Edit text in a scriptable manner. (Print just a first line to `stdout`)",
     "tags": [
       "freebsd",
       "sed",
@@ -340,7 +340,7 @@
     "title": "sed - Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in a specific file and overwrite the original file in place",
     "content": "sed -i 's/apple/mango/g' {{path/to/file}}",
     "group": "Freebsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in a specific file and overwrite the original file in place)",
+    "description": "sed: Edit text in a scriptable manner. (Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in a specific file and overwrite the original file in place)",
     "tags": [
       "freebsd",
       "sed",
@@ -382,7 +382,7 @@
     "title": "sockstat - View which users/processes are [l]istening on which ports",
     "content": "sockstat -l",
     "group": "Freebsd",
-    "description": "sockstat: List open Internet or UNIX domain sockets. More information: . (View which users/processes are [l]istening on which ports)",
+    "description": "sockstat: List open Internet or UNIX domain sockets. (View which users/processes are [l]istening on which ports)",
     "tags": [
       "freebsd",
       "sockstat",
@@ -396,7 +396,7 @@
     "title": "sockstat - Show information for IPv[4]/IPv[6] sockets [l]istening on specific [p]orts using a specific [P]rotocol",
     "content": "sockstat -{{4|6}} -l -P {{tcp|udp|sctp|divert}} -p {{port1,port2...}}",
     "group": "Freebsd",
-    "description": "sockstat: List open Internet or UNIX domain sockets. More information: . (Show information for IPv[4]/IPv[6] sockets [l]istening on specific [p]orts using a specific [P]rotocol)",
+    "description": "sockstat: List open Internet or UNIX domain sockets. (Show information for IPv[4]/IPv[6] sockets [l]istening on specific [p]orts using a specific [P]rotocol)",
     "tags": [
       "freebsd",
       "sockstat",
@@ -410,7 +410,7 @@
     "title": "sockstat - Also show [c]onnected sockets, not resolving [n]umeric UIDs to user names and using a [w]ider field size",
     "content": "sockstat -cnw",
     "group": "Freebsd",
-    "description": "sockstat: List open Internet or UNIX domain sockets. More information: . (Also show [c]onnected sockets, not resolving [n]umeric UIDs to user names and using a [w]ider field size)",
+    "description": "sockstat: List open Internet or UNIX domain sockets. (Also show [c]onnected sockets, not resolving [n]umeric UIDs to user names and using a [w]ider field size)",
     "tags": [
       "freebsd",
       "sockstat",
@@ -424,7 +424,7 @@
     "title": "sockstat - Only show sockets that belong to a specific [j]ail ID or name in [v]erbose mode",
     "content": "sockstat -jv",
     "group": "Freebsd",
-    "description": "sockstat: List open Internet or UNIX domain sockets. More information: . (Only show sockets that belong to a specific [j]ail ID or name in [v]erbose mode)",
+    "description": "sockstat: List open Internet or UNIX domain sockets. (Only show sockets that belong to a specific [j]ail ID or name in [v]erbose mode)",
     "tags": [
       "freebsd",
       "sockstat",
@@ -438,7 +438,7 @@
     "title": "sockstat - Display the protocol [s]tate and the remote [U]DP encapsulation port number, if applicable (these are currently only implemented for SCTP and TCP)",
     "content": "sockstat -sU",
     "group": "Freebsd",
-    "description": "sockstat: List open Internet or UNIX domain sockets. More information: . (Display the protocol [s]tate and the remote [U]DP encapsulation port number, if applicable (these are currently only implemented for SCTP and TCP))",
+    "description": "sockstat: List open Internet or UNIX domain sockets. (Display the protocol [s]tate and the remote [U]DP encapsulation port number, if applicable (these are currently only implemented for SCTP and TCP))",
     "tags": [
       "freebsd",
       "sockstat",
@@ -452,7 +452,7 @@
     "title": "sockstat - Display the [C]ongestion control module and the protocol [S]tack, if applicable (these are currently only implemented for TCP)",
     "content": "sockstat -CS",
     "group": "Freebsd",
-    "description": "sockstat: List open Internet or UNIX domain sockets. More information: . (Display the [C]ongestion control module and the protocol [S]tack, if applicable (these are currently only implemented for TCP))",
+    "description": "sockstat: List open Internet or UNIX domain sockets. (Display the [C]ongestion control module and the protocol [S]tack, if applicable (these are currently only implemented for TCP))",
     "tags": [
       "freebsd",
       "sockstat",
@@ -466,7 +466,7 @@
     "title": "sockstat - Only show Internet sockets if the local and foreign addresses are not in the loopback network prefix 127.0.0.0/8, or do not contain the IPv6 loopback address ::1",
     "content": "sockstat -L",
     "group": "Freebsd",
-    "description": "sockstat: List open Internet or UNIX domain sockets. More information: . (Only show Internet sockets if the local and foreign addresses are not in the loopback network prefix 127.0.0.0/8, or do not contain the IPv6 loopback address ::1)",
+    "description": "sockstat: List open Internet or UNIX domain sockets. (Only show Internet sockets if the local and foreign addresses are not in the loopback network prefix 127.0.0.0/8, or do not contain the IPv6 loopback address ::1)",
     "tags": [
       "freebsd",
       "sockstat",
@@ -480,7 +480,7 @@
     "title": "sockstat - Do not show the header ([q]uiet mode), showing [u]nix sockets and displaying the `inp_gencnt`",
     "content": "sockstat -qui",
     "group": "Freebsd",
-    "description": "sockstat: List open Internet or UNIX domain sockets. More information: . (Do not show the header ([q]uiet mode), showing [u]nix sockets and displaying the `inp_gencnt`)",
+    "description": "sockstat: List open Internet or UNIX domain sockets. (Do not show the header ([q]uiet mode), showing [u]nix sockets and displaying the `inp_gencnt`)",
     "tags": [
       "freebsd",
       "sockstat",
@@ -494,7 +494,7 @@
     "title": "df - Display all filesystems and their disk usage (using 512-byte units)",
     "content": "df",
     "group": "Freebsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Display all filesystems and their disk usage (using 512-byte units))",
+    "description": "df: Display an overview of the filesystem disk space usage. (Display all filesystems and their disk usage (using 512-byte units))",
     "tags": [
       "freebsd",
       "df",
@@ -508,7 +508,7 @@
     "title": "df - Use [h]uman-readable units (based on powers of 1024) and display a grand total",
     "content": "df -h -c",
     "group": "Freebsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Use [h]uman-readable units (based on powers of 1024) and display a grand total)",
+    "description": "df: Display an overview of the filesystem disk space usage. (Use [h]uman-readable units (based on powers of 1024) and display a grand total)",
     "tags": [
       "freebsd",
       "df",
@@ -522,7 +522,7 @@
     "title": "df - Use [H]uman-readable units (based on powers of 1000)",
     "content": "df -{{-si|H}}",
     "group": "Freebsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Use [H]uman-readable units (based on powers of 1000))",
+    "description": "df: Display an overview of the filesystem disk space usage. (Use [H]uman-readable units (based on powers of 1000))",
     "tags": [
       "freebsd",
       "df",
@@ -536,7 +536,7 @@
     "title": "df - Display the filesystem containing the specified file or directory",
     "content": "df {{path/to/file_or_directory}}",
     "group": "Freebsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Display the filesystem containing the specified file or directory)",
+    "description": "df: Display an overview of the filesystem disk space usage. (Display the filesystem containing the specified file or directory)",
     "tags": [
       "freebsd",
       "df",
@@ -550,7 +550,7 @@
     "title": "df - Include statistics on the number of free and used [i]nodes, including the filesystem [T]ypes",
     "content": "df -iT",
     "group": "Freebsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Include statistics on the number of free and used [i]nodes, including the filesystem [T]ypes)",
+    "description": "df: Display an overview of the filesystem disk space usage. (Include statistics on the number of free and used [i]nodes, including the filesystem [T]ypes)",
     "tags": [
       "freebsd",
       "df",
@@ -564,7 +564,7 @@
     "title": "df - Use [k]ibibyte (1024 byte) units when showing size figures",
     "content": "df -k",
     "group": "Freebsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Use [k]ibibyte (1024 byte) units when showing size figures)",
+    "description": "df: Display an overview of the filesystem disk space usage. (Use [k]ibibyte (1024 byte) units when showing size figures)",
     "tags": [
       "freebsd",
       "df",
@@ -578,7 +578,7 @@
     "title": "df - Display information in a [P]ortable way",
     "content": "df -P",
     "group": "Freebsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Display information in a [P]ortable way)",
+    "description": "df: Display an overview of the filesystem disk space usage. (Display information in a [P]ortable way)",
     "tags": [
       "freebsd",
       "df",
@@ -606,7 +606,7 @@
     "title": "pkg - Install a new package",
     "content": "pkg install {{package}}",
     "group": "Freebsd",
-    "description": "pkg: FreeBSD package manager. More information: . (Install a new package)",
+    "description": "pkg: FreeBSD package manager. (Install a new package)",
     "tags": [
       "freebsd",
       "pkg",
@@ -620,7 +620,7 @@
     "title": "pkg - Delete a package",
     "content": "pkg delete {{package}}",
     "group": "Freebsd",
-    "description": "pkg: FreeBSD package manager. More information: . (Delete a package)",
+    "description": "pkg: FreeBSD package manager. (Delete a package)",
     "tags": [
       "freebsd",
       "pkg",
@@ -634,7 +634,7 @@
     "title": "pkg - Upgrade all packages",
     "content": "pkg upgrade",
     "group": "Freebsd",
-    "description": "pkg: FreeBSD package manager. More information: . (Upgrade all packages)",
+    "description": "pkg: FreeBSD package manager. (Upgrade all packages)",
     "tags": [
       "freebsd",
       "pkg",
@@ -648,7 +648,7 @@
     "title": "pkg - Search for a package",
     "content": "pkg search {{keyword}}",
     "group": "Freebsd",
-    "description": "pkg: FreeBSD package manager. More information: . (Search for a package)",
+    "description": "pkg: FreeBSD package manager. (Search for a package)",
     "tags": [
       "freebsd",
       "pkg",
@@ -662,7 +662,7 @@
     "title": "pkg - List installed packages",
     "content": "pkg info",
     "group": "Freebsd",
-    "description": "pkg: FreeBSD package manager. More information: . (List installed packages)",
+    "description": "pkg: FreeBSD package manager. (List installed packages)",
     "tags": [
       "freebsd",
       "pkg",
@@ -676,7 +676,7 @@
     "title": "pkg - Remove unneeded dependencies",
     "content": "pkg autoremove",
     "group": "Freebsd",
-    "description": "pkg: FreeBSD package manager. More information: . (Remove unneeded dependencies)",
+    "description": "pkg: FreeBSD package manager. (Remove unneeded dependencies)",
     "tags": [
       "freebsd",
       "pkg",
@@ -704,7 +704,7 @@
     "title": "cal - Display a calendar for the current month",
     "content": "cal",
     "group": "Freebsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display a calendar for the current month)",
+    "description": "cal: Display a calendar with the current day highlighted. (Display a calendar for the current month)",
     "tags": [
       "freebsd",
       "cal",
@@ -718,7 +718,7 @@
     "title": "cal - Display a calendar for a specific year",
     "content": "cal {{year}}",
     "group": "Freebsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display a calendar for a specific year)",
+    "description": "cal: Display a calendar with the current day highlighted. (Display a calendar for a specific year)",
     "tags": [
       "freebsd",
       "cal",
@@ -732,7 +732,7 @@
     "title": "cal - Display a calendar for a specific month and year",
     "content": "cal {{month}} {{year}}",
     "group": "Freebsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display a calendar for a specific month and year)",
+    "description": "cal: Display a calendar with the current day highlighted. (Display a calendar for a specific month and year)",
     "tags": [
       "freebsd",
       "cal",
@@ -746,7 +746,7 @@
     "title": "cal - Display the whole calendar for the current year",
     "content": "cal -y",
     "group": "Freebsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display the whole calendar for the current year)",
+    "description": "cal: Display a calendar with the current day highlighted. (Display the whole calendar for the current year)",
     "tags": [
       "freebsd",
       "cal",
@@ -760,7 +760,7 @@
     "title": "cal - Don't [h]ighlight today and display [3] months spanning the date",
     "content": "cal -h -3 {{month}} {{year}}",
     "group": "Freebsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Don't [h]ighlight today and display [3] months spanning the date)",
+    "description": "cal: Display a calendar with the current day highlighted. (Don't [h]ighlight today and display [3] months spanning the date)",
     "tags": [
       "freebsd",
       "cal",
@@ -774,7 +774,7 @@
     "title": "cal - Display the 2 months [B]efore and 3 [A]fter a specific [m]onth of the current year",
     "content": "cal -A 3 -B 2 {{month}}",
     "group": "Freebsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display the 2 months [B]efore and 3 [A]fter a specific [m]onth of the current year)",
+    "description": "cal: Display a calendar with the current day highlighted. (Display the 2 months [B]efore and 3 [A]fter a specific [m]onth of the current year)",
     "tags": [
       "freebsd",
       "cal",
@@ -788,7 +788,7 @@
     "title": "cal - Display [j]ulian days (starting from one, numbered from January 1)",
     "content": "cal -j",
     "group": "Freebsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display [j]ulian days (starting from one, numbered from January 1))",
+    "description": "cal: Display a calendar with the current day highlighted. (Display [j]ulian days (starting from one, numbered from January 1))",
     "tags": [
       "freebsd",
       "cal",
@@ -802,7 +802,7 @@
     "title": "base64 - Encode a file to `stdout`",
     "content": "base64 {{[-i|--input]}} {{path/to/file}}",
     "group": "Freebsd",
-    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. More information: . (Encode a file to `stdout`)",
+    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. (Encode a file to `stdout`)",
     "tags": [
       "freebsd",
       "base64",
@@ -816,7 +816,7 @@
     "title": "base64 - Encode a file to the specified output file",
     "content": "base64 {{[-i|--input]}} {{path/to/input_file}} {{[-o|--output]}} {{path/to/output_file}}",
     "group": "Freebsd",
-    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. More information: . (Encode a file to the specified output file)",
+    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. (Encode a file to the specified output file)",
     "tags": [
       "freebsd",
       "base64",
@@ -830,7 +830,7 @@
     "title": "base64 - Wrap encoded output at a specific width (`0` disables wrapping)",
     "content": "base64 {{[-b|--break]}} {{0|76|...}} {{path/to/file}}",
     "group": "Freebsd",
-    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. More information: . (Wrap encoded output at a specific width (`0` disables wrapping))",
+    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. (Wrap encoded output at a specific width (`0` disables wrapping))",
     "tags": [
       "freebsd",
       "base64",
@@ -844,7 +844,7 @@
     "title": "base64 - Decode a file to `stdout`",
     "content": "base64 {{[-d|--decode]}} {{[-i|--input]}} {{path/to/file}}",
     "group": "Freebsd",
-    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. More information: . (Decode a file to `stdout`)",
+    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. (Decode a file to `stdout`)",
     "tags": [
       "freebsd",
       "base64",
@@ -858,7 +858,7 @@
     "title": "base64 - Encode from `stdin` to `stdout`",
     "content": "{{command}} | base64",
     "group": "Freebsd",
-    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. More information: . (Encode from `stdin` to `stdout`)",
+    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. (Encode from `stdin` to `stdout`)",
     "tags": [
       "freebsd",
       "base64",
@@ -872,7 +872,7 @@
     "title": "base64 - Decode from `stdin` to `stdout`",
     "content": "{{command}} | base64 {{[-d|--decode]}}",
     "group": "Freebsd",
-    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. More information: . (Decode from `stdin` to `stdout`)",
+    "description": "base64: Encode or decode file or `stdin` to/from base64, to `stdout` or another file. (Decode from `stdin` to `stdout`)",
     "tags": [
       "freebsd",
       "base64",

@@ -4,7 +4,7 @@
     "title": "chpass - Set a specific login shell for the current user interactively",
     "content": "doas chpass",
     "group": "Openbsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Set a specific login shell for the current user interactively)",
+    "description": "chpass: Add or change user database information, including login shell and password. (Set a specific login shell for the current user interactively)",
     "tags": [
       "openbsd",
       "chpass",
@@ -18,7 +18,7 @@
     "title": "chpass - Set a specific login [s]hell for the current user",
     "content": "doas chpass -s {{path/to/shell}}",
     "group": "Openbsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Set a specific login [s]hell for the current user)",
+    "description": "chpass: Add or change user database information, including login shell and password. (Set a specific login [s]hell for the current user)",
     "tags": [
       "openbsd",
       "chpass",
@@ -32,7 +32,7 @@
     "title": "chpass - Set a login [s]hell for a specific user",
     "content": "doas chpass -s {{path/to/shell}} {{username}}",
     "group": "Openbsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Set a login [s]hell for a specific user)",
+    "description": "chpass: Add or change user database information, including login shell and password. (Set a login [s]hell for a specific user)",
     "tags": [
       "openbsd",
       "chpass",
@@ -46,7 +46,7 @@
     "title": "chpass - Specify a user database entry in the `passwd` file format",
     "content": "doas chpass -a {{username:encrypted_password:uid:gid:...}}",
     "group": "Openbsd",
-    "description": "chpass: Add or change user database information, including login shell and password. See also: `passwd`. More information: . (Specify a user database entry in the `passwd` file format)",
+    "description": "chpass: Add or change user database information, including login shell and password. (Specify a user database entry in the `passwd` file format)",
     "tags": [
       "openbsd",
       "chpass",
@@ -60,7 +60,7 @@
     "title": "pkg_add - Update all packages, including dependencies",
     "content": "pkg_add -u",
     "group": "Openbsd",
-    "description": "pkg_add: Install/update packages in OpenBSD. See also: `pkg_info`, `pkg_delete`. More information: . (Update all packages, including dependencies)",
+    "description": "pkg_add: Install/update packages in OpenBSD. (Update all packages, including dependencies)",
     "tags": [
       "openbsd",
       "pkg_add",
@@ -74,7 +74,7 @@
     "title": "pkg_add - Install a new package",
     "content": "pkg_add {{package}}",
     "group": "Openbsd",
-    "description": "pkg_add: Install/update packages in OpenBSD. See also: `pkg_info`, `pkg_delete`. More information: . (Install a new package)",
+    "description": "pkg_add: Install/update packages in OpenBSD. (Install a new package)",
     "tags": [
       "openbsd",
       "pkg_add",
@@ -88,7 +88,7 @@
     "title": "pkg_add - Install packages from the raw output of `pkg_info`",
     "content": "pkg_add -l {{path/to/file}}",
     "group": "Openbsd",
-    "description": "pkg_add: Install/update packages in OpenBSD. See also: `pkg_info`, `pkg_delete`. More information: . (Install packages from the raw output of `pkg_info`)",
+    "description": "pkg_add: Install/update packages in OpenBSD. (Install packages from the raw output of `pkg_info`)",
     "tags": [
       "openbsd",
       "pkg_add",
@@ -102,7 +102,7 @@
     "title": "sed - Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in all input lines and print the result to `stdout`",
     "content": "{{command}} | sed 's/apple/mango/g'",
     "group": "Openbsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in all input lines and print the result to `stdout`)",
+    "description": "sed: Edit text in a scriptable manner. (Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in all input lines and print the result to `stdout`)",
     "tags": [
       "openbsd",
       "sed",
@@ -116,7 +116,7 @@
     "title": "sed - Execute a specific script [f]ile and print the result to `stdout`",
     "content": "{{command}} | sed -f {{path/to/script.sed}}",
     "group": "Openbsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Execute a specific script [f]ile and print the result to `stdout`)",
+    "description": "sed: Edit text in a scriptable manner. (Execute a specific script [f]ile and print the result to `stdout`)",
     "tags": [
       "openbsd",
       "sed",
@@ -130,7 +130,7 @@
     "title": "sed - Delay opening each file until a command containing the related `w` function or flag is applied to a line of input",
     "content": "{{command}} | sed -fa {{path/to/script.sed}}",
     "group": "Openbsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Delay opening each file until a command containing the related `w` function or flag is applied to a line of input)",
+    "description": "sed: Edit text in a scriptable manner. (Delay opening each file until a command containing the related `w` function or flag is applied to a line of input)",
     "tags": [
       "openbsd",
       "sed",
@@ -144,7 +144,7 @@
     "title": "sed - Replace all `apple` (extended `regex`) occurrences with `APPLE` (extended `regex`) in all input lines and print the result to `stdout`",
     "content": "{{command}} | sed -E 's/(apple)/\\U\\1/g'",
     "group": "Openbsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Replace all `apple` (extended `regex`) occurrences with `APPLE` (extended `regex`) in all input lines and print the result to `stdout`)",
+    "description": "sed: Edit text in a scriptable manner. (Replace all `apple` (extended `regex`) occurrences with `APPLE` (extended `regex`) in all input lines and print the result to `stdout`)",
     "tags": [
       "openbsd",
       "sed",
@@ -158,7 +158,7 @@
     "title": "sed - Print just a first line to `stdout`",
     "content": "{{command}} | sed -n '1p'",
     "group": "Openbsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Print just a first line to `stdout`)",
+    "description": "sed: Edit text in a scriptable manner. (Print just a first line to `stdout`)",
     "tags": [
       "openbsd",
       "sed",
@@ -172,7 +172,7 @@
     "title": "sed - Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in a specific file and overwrite the original file in place",
     "content": "sed -i 's/apple/mango/g' {{path/to/file}}",
     "group": "Openbsd",
-    "description": "sed: Edit text in a scriptable manner. See also: `awk`, `ed`. More information: . (Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in a specific file and overwrite the original file in place)",
+    "description": "sed: Edit text in a scriptable manner. (Replace all `apple` (basic `regex`) occurrences with `mango` (basic `regex`) in a specific file and overwrite the original file in place)",
     "tags": [
       "openbsd",
       "sed",
@@ -200,7 +200,7 @@
     "title": "pkg_info - Search for a package using the package name",
     "content": "pkg_info -Q {{package}}",
     "group": "Openbsd",
-    "description": "pkg_info: View information about packages in OpenBSD. See also: `pkg_add`, `pkg_delete`. More information: . (Search for a package using the package name)",
+    "description": "pkg_info: View information about packages in OpenBSD. (Search for a package using the package name)",
     "tags": [
       "openbsd",
       "pkg_info",
@@ -214,7 +214,7 @@
     "title": "pkg_info - Output a list of installed packages for use with `pkg_add -l`",
     "content": "pkg_info -mz",
     "group": "Openbsd",
-    "description": "pkg_info: View information about packages in OpenBSD. See also: `pkg_add`, `pkg_delete`. More information: . (Output a list of installed packages for use with `pkg_add -l`)",
+    "description": "pkg_info: View information about packages in OpenBSD. (Output a list of installed packages for use with `pkg_add -l`)",
     "tags": [
       "openbsd",
       "pkg_info",
@@ -228,7 +228,7 @@
     "title": "df - Display all filesystems and their disk usage (using 512-byte units)",
     "content": "df",
     "group": "Openbsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Display all filesystems and their disk usage (using 512-byte units))",
+    "description": "df: Display an overview of the filesystem disk space usage. (Display all filesystems and their disk usage (using 512-byte units))",
     "tags": [
       "openbsd",
       "df",
@@ -242,7 +242,7 @@
     "title": "df - Display all filesystems in [h]uman-readable form (based on powers of 1024)",
     "content": "df -h",
     "group": "Openbsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Display all filesystems in [h]uman-readable form (based on powers of 1024))",
+    "description": "df: Display an overview of the filesystem disk space usage. (Display all filesystems in [h]uman-readable form (based on powers of 1024))",
     "tags": [
       "openbsd",
       "df",
@@ -256,7 +256,7 @@
     "title": "df - Display the filesystem containing the specified file or directory",
     "content": "df {{path/to/file_or_directory}}",
     "group": "Openbsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Display the filesystem containing the specified file or directory)",
+    "description": "df: Display an overview of the filesystem disk space usage. (Display the filesystem containing the specified file or directory)",
     "tags": [
       "openbsd",
       "df",
@@ -270,7 +270,7 @@
     "title": "df - Include statistics on the number of free and used [i]nodes",
     "content": "df -i",
     "group": "Openbsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Include statistics on the number of free and used [i]nodes)",
+    "description": "df: Display an overview of the filesystem disk space usage. (Include statistics on the number of free and used [i]nodes)",
     "tags": [
       "openbsd",
       "df",
@@ -284,7 +284,7 @@
     "title": "df - Use [k]ibibyte (1024 byte) units when showing size figures",
     "content": "df -k",
     "group": "Openbsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Use [k]ibibyte (1024 byte) units when showing size figures)",
+    "description": "df: Display an overview of the filesystem disk space usage. (Use [k]ibibyte (1024 byte) units when showing size figures)",
     "tags": [
       "openbsd",
       "df",
@@ -298,7 +298,7 @@
     "title": "df - Display information in a [P]ortable way",
     "content": "df -P",
     "group": "Openbsd",
-    "description": "df: Display an overview of the filesystem disk space usage. More information: . (Display information in a [P]ortable way)",
+    "description": "df: Display an overview of the filesystem disk space usage. (Display information in a [P]ortable way)",
     "tags": [
       "openbsd",
       "df",
@@ -326,7 +326,7 @@
     "title": "pkg_delete - Delete a package",
     "content": "pkg_delete {{package}}",
     "group": "Openbsd",
-    "description": "pkg_delete: Remove packages in OpenBSD. See also: `pkg_add`, `pkg_info`. More information: . (Delete a package)",
+    "description": "pkg_delete: Remove packages in OpenBSD. (Delete a package)",
     "tags": [
       "openbsd",
       "pkg_delete",
@@ -340,7 +340,7 @@
     "title": "pkg_delete - Delete a package, including its unused dependencies",
     "content": "pkg_delete -a {{package}}",
     "group": "Openbsd",
-    "description": "pkg_delete: Remove packages in OpenBSD. See also: `pkg_add`, `pkg_info`. More information: . (Delete a package, including its unused dependencies)",
+    "description": "pkg_delete: Remove packages in OpenBSD. (Delete a package, including its unused dependencies)",
     "tags": [
       "openbsd",
       "pkg_delete",
@@ -354,7 +354,7 @@
     "title": "pkg_delete - Dry-run deletion of a package",
     "content": "pkg_delete -n {{package}}",
     "group": "Openbsd",
-    "description": "pkg_delete: Remove packages in OpenBSD. See also: `pkg_add`, `pkg_info`. More information: . (Dry-run deletion of a package)",
+    "description": "pkg_delete: Remove packages in OpenBSD. (Dry-run deletion of a package)",
     "tags": [
       "openbsd",
       "pkg_delete",
@@ -368,7 +368,7 @@
     "title": "pkg - View documentation for installing/updating packages",
     "content": "tldr pkg_add",
     "group": "Openbsd",
-    "description": "pkg: OpenBSD package manager utility. More information: . (View documentation for installing/updating packages)",
+    "description": "pkg: OpenBSD package manager utility. (View documentation for installing/updating packages)",
     "tags": [
       "openbsd",
       "pkg",
@@ -382,7 +382,7 @@
     "title": "pkg - View documentation for removing packages",
     "content": "tldr pkg_delete",
     "group": "Openbsd",
-    "description": "pkg: OpenBSD package manager utility. More information: . (View documentation for removing packages)",
+    "description": "pkg: OpenBSD package manager utility. (View documentation for removing packages)",
     "tags": [
       "openbsd",
       "pkg",
@@ -396,7 +396,7 @@
     "title": "pkg - View documentation for viewing information about packages",
     "content": "tldr pkg_info",
     "group": "Openbsd",
-    "description": "pkg: OpenBSD package manager utility. More information: . (View documentation for viewing information about packages)",
+    "description": "pkg: OpenBSD package manager utility. (View documentation for viewing information about packages)",
     "tags": [
       "openbsd",
       "pkg",
@@ -410,7 +410,7 @@
     "title": "cal - Display a calendar for the current month",
     "content": "cal",
     "group": "Openbsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display a calendar for the current month)",
+    "description": "cal: Display a calendar with the current day highlighted. (Display a calendar for the current month)",
     "tags": [
       "openbsd",
       "cal",
@@ -424,7 +424,7 @@
     "title": "cal - Display a calendar for a specific year",
     "content": "cal {{year}}",
     "group": "Openbsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display a calendar for a specific year)",
+    "description": "cal: Display a calendar with the current day highlighted. (Display a calendar for a specific year)",
     "tags": [
       "openbsd",
       "cal",
@@ -438,7 +438,7 @@
     "title": "cal - Display a calendar for a specific month and year",
     "content": "cal {{month}} {{year}}",
     "group": "Openbsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display a calendar for a specific month and year)",
+    "description": "cal: Display a calendar with the current day highlighted. (Display a calendar for a specific month and year)",
     "tags": [
       "openbsd",
       "cal",
@@ -452,7 +452,7 @@
     "title": "cal - Display a calendar for the current [y]ear",
     "content": "cal -y",
     "group": "Openbsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display a calendar for the current [y]ear)",
+    "description": "cal: Display a calendar with the current day highlighted. (Display a calendar for the current [y]ear)",
     "tags": [
       "openbsd",
       "cal",
@@ -466,7 +466,7 @@
     "title": "cal - Display [j]ulian days (starting from one, numbered from January 1)",
     "content": "cal -j",
     "group": "Openbsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Display [j]ulian days (starting from one, numbered from January 1))",
+    "description": "cal: Display a calendar with the current day highlighted. (Display [j]ulian days (starting from one, numbered from January 1))",
     "tags": [
       "openbsd",
       "cal",
@@ -480,7 +480,7 @@
     "title": "cal - Use [m]onday as week start instead of Sunday",
     "content": "cal -m",
     "group": "Openbsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Use [m]onday as week start instead of Sunday)",
+    "description": "cal: Display a calendar with the current day highlighted. (Use [m]onday as week start instead of Sunday)",
     "tags": [
       "openbsd",
       "cal",
@@ -494,7 +494,7 @@
     "title": "cal - Number [w]eek numbers (incompatible with `-j`)",
     "content": "cal -w",
     "group": "Openbsd",
-    "description": "cal: Display a calendar with the current day highlighted. More information: . (Number [w]eek numbers (incompatible with `-j`))",
+    "description": "cal: Display a calendar with the current day highlighted. (Number [w]eek numbers (incompatible with `-j`))",
     "tags": [
       "openbsd",
       "cal",

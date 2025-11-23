@@ -1,5 +1,5 @@
 {
-  "updated_at": 1763893858677,
+  "updated_at": 1763900293621,
   "version": "1.0.0",
   "packages": [
     {
@@ -9,7 +9,7 @@
       "name": "Android 开发 (ZH)",
       "description": "Contains 54 zh commands for android.",
       "count": 54,
-      "size_kb": 23,
+      "size_kb": 22,
       "url": "packs/zh/android.json"
     },
     {
@@ -19,7 +19,7 @@
       "name": "Windows (ZH)",
       "description": "Contains 406 zh commands for windows.",
       "count": 406,
-      "size_kb": 175,
+      "size_kb": 166,
       "url": "packs/zh/windows.json"
     },
     {
@@ -29,7 +29,7 @@
       "name": "Linux 运维 (ZH)",
       "description": "Contains 704 zh commands for linux.",
       "count": 704,
-      "size_kb": 316,
+      "size_kb": 300,
       "url": "packs/zh/linux.json"
     },
     {
@@ -39,7 +39,7 @@
       "name": "通用工具 (Common) (ZH)",
       "description": "Contains 3058 zh commands for common.",
       "count": 3058,
-      "size_kb": 1485,
+      "size_kb": 1417,
       "url": "packs/zh/common.json"
     },
     {
@@ -49,7 +49,7 @@
       "name": "macOS (ZH)",
       "description": "Contains 462 zh commands for osx.",
       "count": 462,
-      "size_kb": 191,
+      "size_kb": 182,
       "url": "packs/zh/osx.json"
     },
     {
@@ -69,7 +69,7 @@
       "name": "Android Dev (EN)",
       "description": "Contains 54 en commands for android.",
       "count": 54,
-      "size_kb": 24,
+      "size_kb": 23,
       "url": "packs/en/android.json"
     },
     {
@@ -79,7 +79,7 @@
       "name": "Windows (EN)",
       "description": "Contains 1089 en commands for windows.",
       "count": 1089,
-      "size_kb": 528,
+      "size_kb": 507,
       "url": "packs/en/windows.json"
     },
     {
@@ -99,7 +99,7 @@
       "name": "Openbsd (EN)",
       "description": "Contains 36 en commands for openbsd.",
       "count": 36,
-      "size_kb": 16,
+      "size_kb": 15,
       "url": "packs/en/openbsd.json"
     },
     {
@@ -109,7 +109,7 @@
       "name": "Netbsd (EN)",
       "description": "Contains 41 en commands for netbsd.",
       "count": 41,
-      "size_kb": 19,
+      "size_kb": 18,
       "url": "packs/en/netbsd.json"
     },
     {
@@ -119,7 +119,7 @@
       "name": "Freebsd (EN)",
       "description": "Contains 63 en commands for freebsd.",
       "count": 63,
-      "size_kb": 29,
+      "size_kb": 27,
       "url": "packs/en/freebsd.json"
     },
     {
@@ -129,7 +129,7 @@
       "name": "Linux Ops (EN)",
       "description": "Contains 7533 en commands for linux.",
       "count": 7533,
-      "size_kb": 3576,
+      "size_kb": 3386,
       "url": "packs/en/linux.json"
     },
     {
@@ -139,7 +139,7 @@
       "name": "Common Tools (EN)",
       "description": "Contains 18935 en commands for common.",
       "count": 18935,
-      "size_kb": 9191,
+      "size_kb": 8755,
       "url": "packs/en/common.json"
     },
     {
@@ -149,7 +149,7 @@
       "name": "macOS (EN)",
       "description": "Contains 931 en commands for osx.",
       "count": 931,
-      "size_kb": 408,
+      "size_kb": 392,
       "url": "packs/en/osx.json"
     },
     {
@@ -159,7 +159,7 @@
       "name": "SunOS (EN)",
       "description": "Contains 42 en commands for sunos.",
       "count": 42,
-      "size_kb": 18,
+      "size_kb": 17,
       "url": "packs/en/sunos.json"
     },
     {
@@ -169,7 +169,7 @@
       "name": "Cisco-Ios (EN)",
       "description": "Contains 42 en commands for cisco-ios.",
       "count": 42,
-      "size_kb": 17,
+      "size_kb": 16,
       "url": "packs/en/cisco-ios.json"
     }
   ]

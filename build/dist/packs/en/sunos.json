@@ -4,7 +4,7 @@
     "title": "prctl - Examine process limits and permissions",
     "content": "prctl {{pid}}",
     "group": "SunOS",
-    "description": "prctl: Get or set the resource controls of running processes, tasks, and projects. More information: . (Examine process limits and permissions)",
+    "description": "prctl: Get or set the resource controls of running processes, tasks, and projects. (Examine process limits and permissions)",
     "tags": [
       "sunos",
       "prctl",
@@ -18,7 +18,7 @@
     "title": "prctl - Examine process limits and permissions in machine parsable format",
     "content": "prctl -P {{pid}}",
     "group": "SunOS",
-    "description": "prctl: Get or set the resource controls of running processes, tasks, and projects. More information: . (Examine process limits and permissions in machine parsable format)",
+    "description": "prctl: Get or set the resource controls of running processes, tasks, and projects. (Examine process limits and permissions in machine parsable format)",
     "tags": [
       "sunos",
       "prctl",
@@ -32,7 +32,7 @@
     "title": "prctl - Get specific limit for a running process",
     "content": "prctl -n process.max-file-descriptor {{pid}}",
     "group": "SunOS",
-    "description": "prctl: Get or set the resource controls of running processes, tasks, and projects. More information: . (Get specific limit for a running process)",
+    "description": "prctl: Get or set the resource controls of running processes, tasks, and projects. (Get specific limit for a running process)",
     "tags": [
       "sunos",
       "prctl",
@@ -46,7 +46,7 @@
     "title": "svcadm - Enable a service in the service database",
     "content": "svcadm enable {{service_name}}",
     "group": "SunOS",
-    "description": "svcadm: Manipulate service instances. More information: . (Enable a service in the service database)",
+    "description": "svcadm: Manipulate service instances. (Enable a service in the service database)",
     "tags": [
       "sunos",
       "svcadm",
@@ -60,7 +60,7 @@
     "title": "svcadm - Disable service",
     "content": "svcadm disable {{service_name}}",
     "group": "SunOS",
-    "description": "svcadm: Manipulate service instances. More information: . (Disable service)",
+    "description": "svcadm: Manipulate service instances. (Disable service)",
     "tags": [
       "sunos",
       "svcadm",
@@ -74,7 +74,7 @@
     "title": "svcadm - Restart a running service",
     "content": "svcadm restart {{service_name}}",
     "group": "SunOS",
-    "description": "svcadm: Manipulate service instances. More information: . (Restart a running service)",
+    "description": "svcadm: Manipulate service instances. (Restart a running service)",
     "tags": [
       "sunos",
       "svcadm",
@@ -88,7 +88,7 @@
     "title": "svcadm - Command service to re-read configuration files",
     "content": "svcadm refresh {{service_name}}",
     "group": "SunOS",
-    "description": "svcadm: Manipulate service instances. More information: . (Command service to re-read configuration files)",
+    "description": "svcadm: Manipulate service instances. (Command service to re-read configuration files)",
     "tags": [
       "sunos",
       "svcadm",
@@ -102,7 +102,7 @@
     "title": "svcadm - Clear a service from maintenance state and command it to start",
     "content": "svcadm clear {{service_name}}",
     "group": "SunOS",
-    "description": "svcadm: Manipulate service instances. More information: . (Clear a service from maintenance state and command it to start)",
+    "description": "svcadm: Manipulate service instances. (Clear a service from maintenance state and command it to start)",
     "tags": [
       "sunos",
       "svcadm",
@@ -116,7 +116,7 @@
     "title": "dmesg - Show kernel messages",
     "content": "dmesg",
     "group": "SunOS",
-    "description": "dmesg: Write the kernel messages to `stdout`. More information: . (Show kernel messages)",
+    "description": "dmesg: Write the kernel messages to `stdout`. (Show kernel messages)",
     "tags": [
       "sunos",
       "dmesg",
@@ -130,7 +130,7 @@
     "title": "dmesg - Show how much physical memory is available on this system",
     "content": "dmesg | grep -i memory",
     "group": "SunOS",
-    "description": "dmesg: Write the kernel messages to `stdout`. More information: . (Show how much physical memory is available on this system)",
+    "description": "dmesg: Write the kernel messages to `stdout`. (Show how much physical memory is available on this system)",
     "tags": [
       "sunos",
       "dmesg",
@@ -144,7 +144,7 @@
     "title": "dmesg - Show kernel messages 1 page at a time",
     "content": "dmesg | less",
     "group": "SunOS",
-    "description": "dmesg: Write the kernel messages to `stdout`. More information: . (Show kernel messages 1 page at a time)",
+    "description": "dmesg: Write the kernel messages to `stdout`. (Show kernel messages 1 page at a time)",
     "tags": [
       "sunos",
       "dmesg",
@@ -158,7 +158,7 @@
     "title": "svcs - List all running services",
     "content": "svcs",
     "group": "SunOS",
-    "description": "svcs: List information about running services. More information: . (List all running services)",
+    "description": "svcs: List information about running services. (List all running services)",
     "tags": [
       "sunos",
       "svcs",
@@ -172,7 +172,7 @@
     "title": "svcs - List services that are not running",
     "content": "svcs -vx",
     "group": "SunOS",
-    "description": "svcs: List information about running services. More information: . (List services that are not running)",
+    "description": "svcs: List information about running services. (List services that are not running)",
     "tags": [
       "sunos",
       "svcs",
@@ -186,7 +186,7 @@
     "title": "svcs - List information about a service",
     "content": "svcs apache",
     "group": "SunOS",
-    "description": "svcs: List information about running services. More information: . (List information about a service)",
+    "description": "svcs: List information about running services. (List information about a service)",
     "tags": [
       "sunos",
       "svcs",
@@ -200,7 +200,7 @@
     "title": "svcs - Show location of service log file",
     "content": "svcs -L apache",
     "group": "SunOS",
-    "description": "svcs: List information about running services. More information: . (Show location of service log file)",
+    "description": "svcs: List information about running services. (Show location of service log file)",
     "tags": [
       "sunos",
       "svcs",
@@ -214,7 +214,7 @@
     "title": "svcs - Display end of a service log file",
     "content": "tail $(svcs -L apache)",
     "group": "SunOS",
-    "description": "svcs: List information about running services. More information: . (Display end of a service log file)",
+    "description": "svcs: List information about running services. (Display end of a service log file)",
     "tags": [
       "sunos",
       "svcs",
@@ -228,7 +228,7 @@
     "title": "svccfg - Validate configuration file",
     "content": "svccfg validate {{path/to/smf_file.xml}}",
     "group": "SunOS",
-    "description": "svccfg: Import, export, and modify service configurations. More information: . (Validate configuration file)",
+    "description": "svccfg: Import, export, and modify service configurations. (Validate configuration file)",
     "tags": [
       "sunos",
       "svccfg",
@@ -242,7 +242,7 @@
     "title": "svccfg - Export service configurations to file",
     "content": "svccfg export {{servicename}} > {{path/to/smf_file.xml}}",
     "group": "SunOS",
-    "description": "svccfg: Import, export, and modify service configurations. More information: . (Export service configurations to file)",
+    "description": "svccfg: Import, export, and modify service configurations. (Export service configurations to file)",
     "tags": [
       "sunos",
       "svccfg",
@@ -256,7 +256,7 @@
     "title": "svccfg - Import/update service configurations from file",
     "content": "svccfg import {{path/to/smf_file.xml}}",
     "group": "SunOS",
-    "description": "svccfg: Import, export, and modify service configurations. More information: . (Import/update service configurations from file)",
+    "description": "svccfg: Import, export, and modify service configurations. (Import/update service configurations from file)",
     "tags": [
       "sunos",
       "svccfg",
@@ -270,7 +270,7 @@
     "title": "devfsadm - Scan for new disks",
     "content": "devfsadm -c disk",
     "group": "SunOS",
-    "description": "devfsadm: Administration command for `/dev`. Maintains the `/dev` namespace. More information: . (Scan for new disks)",
+    "description": "devfsadm: Administration command for `/dev`. Maintains the `/dev` namespace. (Scan for new disks)",
     "tags": [
       "sunos",
       "devfsadm",
@@ -284,7 +284,7 @@
     "title": "devfsadm - Cleanup any dangling /dev links and scan for new device",
     "content": "devfsadm -C -v",
     "group": "SunOS",
-    "description": "devfsadm: Administration command for `/dev`. Maintains the `/dev` namespace. More information: . (Cleanup any dangling /dev links and scan for new device)",
+    "description": "devfsadm: Administration command for `/dev`. Maintains the `/dev` namespace. (Cleanup any dangling /dev links and scan for new device)",
     "tags": [
       "sunos",
       "devfsadm",
@@ -298,7 +298,7 @@
     "title": "devfsadm - Dry-run - output what would be changed but make no modifications",
     "content": "devfsadm -C -v -n",
     "group": "SunOS",
-    "description": "devfsadm: Administration command for `/dev`. Maintains the `/dev` namespace. More information: . (Dry-run - output what would be changed but make no modifications)",
+    "description": "devfsadm: Administration command for `/dev`. Maintains the `/dev` namespace. (Dry-run - output what would be changed but make no modifications)",
     "tags": [
       "sunos",
       "devfsadm",
@@ -312,7 +312,7 @@
     "title": "share - List all currently shared file systems",
     "content": "share",
     "group": "SunOS",
-    "description": "share: Make local resource/filesystem available for mounting by remote systems. More information: . (List all currently shared file systems)",
+    "description": "share: Make local resource/filesystem available for mounting by remote systems. (List all currently shared file systems)",
     "tags": [
       "sunos",
       "share",
@@ -326,7 +326,7 @@
     "title": "share - Share a directory with read/write access",
     "content": "share -F nfs -o rw /{{path/to/directory}}",
     "group": "SunOS",
-    "description": "share: Make local resource/filesystem available for mounting by remote systems. More information: . (Share a directory with read/write access)",
+    "description": "share: Make local resource/filesystem available for mounting by remote systems. (Share a directory with read/write access)",
     "tags": [
       "sunos",
       "share",
@@ -340,7 +340,7 @@
     "title": "share - Share a directory with read-only access",
     "content": "share -F nfs -o ro /{{path/to/directory}}",
     "group": "SunOS",
-    "description": "share: Make local resource/filesystem available for mounting by remote systems. More information: . (Share a directory with read-only access)",
+    "description": "share: Make local resource/filesystem available for mounting by remote systems. (Share a directory with read-only access)",
     "tags": [
       "sunos",
       "share",
@@ -354,7 +354,7 @@
     "title": "share - Share a directory with specific options (e.g., allow root access from a specific host)",
     "content": "share -F nfs -o rw,root={{hostname}} /{{path/to/directory}}",
     "group": "SunOS",
-    "description": "share: Make local resource/filesystem available for mounting by remote systems. More information: . (Share a directory with specific options (e.g., allow root access from a specific host))",
+    "description": "share: Make local resource/filesystem available for mounting by remote systems. (Share a directory with specific options (e.g., allow root access from a specific host))",
     "tags": [
       "sunos",
       "share",
@@ -368,7 +368,7 @@
     "title": "share - Make sharing persistent by adding entries to `/etc/dfs/dfstab`",
     "content": "echo \"share -F nfs -o rw /{{path/to/directory}}\" >> /etc/dfs/dfstab",
     "group": "SunOS",
-    "description": "share: Make local resource/filesystem available for mounting by remote systems. More information: . (Make sharing persistent by adding entries to `/etc/dfs/dfstab`)",
+    "description": "share: Make local resource/filesystem available for mounting by remote systems. (Make sharing persistent by adding entries to `/etc/dfs/dfstab`)",
     "tags": [
       "sunos",
       "share",
@@ -382,7 +382,7 @@
     "title": "prstat - Examine all processes and reports statistics sorted by CPU usage",
     "content": "prstat",
     "group": "SunOS",
-    "description": "prstat: Report active process statistics. More information: . (Examine all processes and reports statistics sorted by CPU usage)",
+    "description": "prstat: Report active process statistics. (Examine all processes and reports statistics sorted by CPU usage)",
     "tags": [
       "sunos",
       "prstat",
@@ -396,7 +396,7 @@
     "title": "prstat - Examine all processes and reports statistics sorted by memory usage",
     "content": "prstat -s rss",
     "group": "SunOS",
-    "description": "prstat: Report active process statistics. More information: . (Examine all processes and reports statistics sorted by memory usage)",
+    "description": "prstat: Report active process statistics. (Examine all processes and reports statistics sorted by memory usage)",
     "tags": [
       "sunos",
       "prstat",
@@ -410,7 +410,7 @@
     "title": "prstat - Report total usage summary for each user",
     "content": "prstat -t",
     "group": "SunOS",
-    "description": "prstat: Report active process statistics. More information: . (Report total usage summary for each user)",
+    "description": "prstat: Report active process statistics. (Report total usage summary for each user)",
     "tags": [
       "sunos",
       "prstat",
@@ -424,7 +424,7 @@
     "title": "prstat - Report microstate process accounting information",
     "content": "prstat -m",
     "group": "SunOS",
-    "description": "prstat: Report active process statistics. More information: . (Report microstate process accounting information)",
+    "description": "prstat: Report active process statistics. (Report microstate process accounting information)",
     "tags": [
       "sunos",
       "prstat",
@@ -438,7 +438,7 @@
     "title": "prstat - Print out a list of top 5 CPU using processes every second",
     "content": "prstat -c -n 5 -s cpu 1",
     "group": "SunOS",
-    "description": "prstat: Report active process statistics. More information: . (Print out a list of top 5 CPU using processes every second)",
+    "description": "prstat: Report active process statistics. (Print out a list of top 5 CPU using processes every second)",
     "tags": [
       "sunos",
       "prstat",
@@ -452,7 +452,7 @@
     "title": "snoop - Capture packets on a specific network interface",
     "content": "snoop -d {{e1000g0}}",
     "group": "SunOS",
-    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. More information: . (Capture packets on a specific network interface)",
+    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. (Capture packets on a specific network interface)",
     "tags": [
       "sunos",
       "snoop",
@@ -466,7 +466,7 @@
     "title": "snoop - Save captured packets in a file instead of displaying them",
     "content": "snoop -o {{path/to/file}}",
     "group": "SunOS",
-    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. More information: . (Save captured packets in a file instead of displaying them)",
+    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. (Save captured packets in a file instead of displaying them)",
     "tags": [
       "sunos",
       "snoop",
@@ -480,7 +480,7 @@
     "title": "snoop - Display verbose protocol layer summary of packets from a file",
     "content": "snoop -V -i {{path/to/file}}",
     "group": "SunOS",
-    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. More information: . (Display verbose protocol layer summary of packets from a file)",
+    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. (Display verbose protocol layer summary of packets from a file)",
     "tags": [
       "sunos",
       "snoop",
@@ -494,7 +494,7 @@
     "title": "snoop - Capture network packets that come from a hostname and go to a given port",
     "content": "snoop to port {{port}} from host {{hostname}}",
     "group": "SunOS",
-    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. More information: . (Capture network packets that come from a hostname and go to a given port)",
+    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. (Capture network packets that come from a hostname and go to a given port)",
     "tags": [
       "sunos",
       "snoop",
@@ -508,7 +508,7 @@
     "title": "snoop - Capture and show a hex-dump of network packets exchanged between two IP addresses",
     "content": "snoop -x0 -p4 {{ip1}} {{ip2}}",
     "group": "SunOS",
-    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. More information: . (Capture and show a hex-dump of network packets exchanged between two IP addresses)",
+    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. (Capture and show a hex-dump of network packets exchanged between two IP addresses)",
     "tags": [
       "sunos",
       "snoop",
@@ -522,7 +522,7 @@
     "title": "truss - Start tracing a program by executing it, following all child processes",
     "content": "truss -f {{program}}",
     "group": "SunOS",
-    "description": "truss: Troubleshooting tool for tracing system calls. SunOS equivalent of strace. More information: . (Start tracing a program by executing it, following all child processes)",
+    "description": "truss: Troubleshooting tool for tracing system calls. SunOS equivalent of strace. (Start tracing a program by executing it, following all child processes)",
     "tags": [
       "sunos",
       "truss",
@@ -536,7 +536,7 @@
     "title": "truss - Start tracing a specific process by its PID",
     "content": "truss -p {{pid}}",
     "group": "SunOS",
-    "description": "truss: Troubleshooting tool for tracing system calls. SunOS equivalent of strace. More information: . (Start tracing a specific process by its PID)",
+    "description": "truss: Troubleshooting tool for tracing system calls. SunOS equivalent of strace. (Start tracing a specific process by its PID)",
     "tags": [
       "sunos",
       "truss",
@@ -550,7 +550,7 @@
     "title": "truss - Start tracing a program by executing it, showing arguments and environment variables",
     "content": "truss -a -e {{program}}",
     "group": "SunOS",
-    "description": "truss: Troubleshooting tool for tracing system calls. SunOS equivalent of strace. More information: . (Start tracing a program by executing it, showing arguments and environment variables)",
+    "description": "truss: Troubleshooting tool for tracing system calls. SunOS equivalent of strace. (Start tracing a program by executing it, showing arguments and environment variables)",
     "tags": [
       "sunos",
       "truss",
@@ -564,7 +564,7 @@
     "title": "truss - Count time, calls, and errors for each system call and report a summary on program exit",
     "content": "truss -c -p {{pid}}",
     "group": "SunOS",
-    "description": "truss: Troubleshooting tool for tracing system calls. SunOS equivalent of strace. More information: . (Count time, calls, and errors for each system call and report a summary on program exit)",
+    "description": "truss: Troubleshooting tool for tracing system calls. SunOS equivalent of strace. (Count time, calls, and errors for each system call and report a summary on program exit)",
     "tags": [
       "sunos",
       "truss",
@@ -578,7 +578,7 @@
     "title": "truss - Trace a process filtering output by system call",
     "content": "truss -p {{pid}} -t {{system_call_name}}",
     "group": "SunOS",
-    "description": "truss: Troubleshooting tool for tracing system calls. SunOS equivalent of strace. More information: . (Trace a process filtering output by system call)",
+    "description": "truss: Troubleshooting tool for tracing system calls. SunOS equivalent of strace. (Trace a process filtering output by system call)",
     "tags": [
       "sunos",
       "truss",

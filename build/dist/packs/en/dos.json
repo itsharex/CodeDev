@@ -4,7 +4,7 @@
     "title": "cd - Go to the specified directory",
     "content": "CD {{PATH\\TO\\DIRECTORY}}",
     "group": "Dos",
-    "description": "cd: Change the current working directory. More information: . (Go to the specified directory)",
+    "description": "cd: Change the current working directory. (Go to the specified directory)",
     "tags": [
       "dos",
       "cd",
@@ -18,7 +18,7 @@
     "title": "cd - Go up to the parent of the current directory",
     "content": "CD ..",
     "group": "Dos",
-    "description": "cd: Change the current working directory. More information: . (Go up to the parent of the current directory)",
+    "description": "cd: Change the current working directory. (Go up to the parent of the current directory)",
     "tags": [
       "dos",
       "cd",
@@ -32,7 +32,7 @@
     "title": "cd - Go to the root directory of the current drive",
     "content": "CD \\",
     "group": "Dos",
-    "description": "cd: Change the current working directory. More information: . (Go to the root directory of the current drive)",
+    "description": "cd: Change the current working directory. (Go to the root directory of the current drive)",
     "tags": [
       "dos",
       "cd",
@@ -46,7 +46,7 @@
     "title": "cls - Clear the screen resetting colors to white on black",
     "content": "CLS",
     "group": "Dos",
-    "description": "cls: Clear the screen and reset colors. More information: . (Clear the screen resetting colors to white on black)",
+    "description": "cls: Clear the screen and reset colors. (Clear the screen resetting colors to white on black)",
     "tags": [
       "dos",
       "cls",
@@ -74,7 +74,7 @@
     "title": "path - Display the current search path",
     "content": "PATH",
     "group": "Dos",
-    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. More information: . (Display the current search path)",
+    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. (Display the current search path)",
     "tags": [
       "dos",
       "path",
@@ -88,7 +88,7 @@
     "title": "path - Set the semicolon-separated list of directories to search in",
     "content": "PATH {{path/to/directory1;path/to/directory2;...}}",
     "group": "Dos",
-    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. More information: . (Set the semicolon-separated list of directories to search in)",
+    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. (Set the semicolon-separated list of directories to search in)",
     "tags": [
       "dos",
       "path",
@@ -102,7 +102,7 @@
     "title": "path - Append a directory to the search path",
     "content": "PATH %PATH%;{{path/to/directory}}",
     "group": "Dos",
-    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. More information: . (Append a directory to the search path)",
+    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. (Append a directory to the search path)",
     "tags": [
       "dos",
       "path",
@@ -116,7 +116,7 @@
     "title": "path - Add a directory to the beginning of the search path",
     "content": "PATH {{path/to/directory}};%PATH%",
     "group": "Dos",
-    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. More information: . (Add a directory to the beginning of the search path)",
+    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. (Add a directory to the beginning of the search path)",
     "tags": [
       "dos",
       "path",
@@ -130,7 +130,7 @@
     "title": "path - Clear the search path",
     "content": "PATH;",
     "group": "Dos",
-    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. More information: . (Clear the search path)",
+    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. (Clear the search path)",
     "tags": [
       "dos",
       "path",
@@ -144,7 +144,7 @@
     "title": "path - Display help",
     "content": "PATH /?",
     "group": "Dos",
-    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. More information: . (Display help)",
+    "description": "path: Display or set the search path for executable files. This command is available in `FreeDOS` only. (Display help)",
     "tags": [
       "dos",
       "path",
