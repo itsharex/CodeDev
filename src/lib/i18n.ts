@@ -106,12 +106,17 @@ const translations = {
     },
     settings: {
       title: "Settings",
+      navAppearance: "Appearance",
+      navLanguage: "Language",
+      navFilters: "Global Filters",
       appearance: "Appearance",
       language: "Language",
       themeDark: "Dark Theme",
       themeLight: "Light Theme",
       langEn: "English",
       langZh: "Chinese (Simplified)",
+      filtersTitle: "Global Ignore Rules",
+      filtersDesc: "Files matching these rules will be excluded from ALL projects by default.",
       close: "Close"
     },
     actions: {
@@ -224,12 +229,17 @@ const translations = {
     },
     settings: {
       title: "设置",
+      navAppearance: "外观设置",
+      navLanguage: "语言选项",
+      navFilters: "全局过滤",
       appearance: "外观与显示",
       language: "语言偏好",
       themeDark: "深色模式",
       themeLight: "亮色模式",
       langEn: "English",
       langZh: "简体中文",
+      filtersTitle: "全局忽略规则",
+      filtersDesc: "匹配这些规则的文件将默认从所有项目中排除（如 node_modules）。",
       close: "关闭"
     },
     actions: {

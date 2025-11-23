@@ -42,9 +42,9 @@ export function SettingsModal() {
         <div className="flex flex-1 overflow-hidden">
             {/* Sidebar Navigation */}
             <div className="w-40 bg-secondary/5 border-r border-border p-2 space-y-1">
-                <NavBtn active={activeSection === 'appearance'} onClick={() => setActiveSection('appearance')} icon={<Monitor size={14} />} label="Appearance" />
-                <NavBtn active={activeSection === 'language'} onClick={() => setActiveSection('language')} icon={<Languages size={14} />} label="Language" />
-                <NavBtn active={activeSection === 'filters'} onClick={() => setActiveSection('filters')} icon={<Filter size={14} />} label="Global Filters" />
+                <NavBtn active={activeSection === 'appearance'} onClick={() => setActiveSection('appearance')} icon={<Monitor size={14} />} label={getText('settings', 'navAppearance', language)}  />
+                <NavBtn active={activeSection === 'language'} onClick={() => setActiveSection('language')} icon={<Languages size={14} />} label={getText('settings', 'navLanguage', language)} />
+                <NavBtn active={activeSection === 'filters'} onClick={() => setActiveSection('filters')} icon={<Filter size={14} />} label={getText('settings', 'navFilters', language)} />
             </div>
 
             {/* Content Area */}
@@ -80,9 +80,9 @@ export function SettingsModal() {
                 {activeSection === 'filters' && (
                     <div className="h-full flex flex-col">
                         <div className="mb-4">
-                            <h3 className="text-sm font-medium text-foreground">Global Ignore Rules</h3>
+                            <h3 className="text-sm font-medium text-foreground">{getText('settings', 'filtersTitle', language)}</h3>
                             <p className="text-xs text-muted-foreground mt-1">
-                                Files matching these rules will be excluded from ALL projects by default.
+                                {getText('settings', 'filtersDesc', language)}
                             </p>
                         </div>
                         <div className="flex-1 border border-border rounded-lg p-4 bg-secondary/5 overflow-hidden flex flex-col">
