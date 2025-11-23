@@ -1,28 +1,34 @@
-name: Update Prompt Library (To Main)
+name: Update Prompt Library
 
-# 触发机制
+# 触发条件
 on:
+  # 1. 自动：每周一北京时间早上 8:00 (UTC 0:00) 运行
   schedule:
-    - cron: '0 0 * * 1' # 每周一自动运行
-  workflow_dispatch:    # 支持手动按钮触发
+    - cron: '0 0 * * 1'
+  # 2. 手动：允许你在网页上点按钮立即运行
+  workflow_dispatch:
+  # 3. 推送：当你修改了脚本时自动测试一次 (可选，不需要可以删掉)
+  push:
+    paths:
+      - 'build/build_tldr.py'
 
-# 赋予 Action 写权限，允许它提交代码
+# 权限：允许 Action 修改你的仓库代码 (为了把生成的 json 传回来)
 permissions:
   contents: write
 
 jobs:
-  update-data:
+  build-and-commit:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. 拉取你的代码 (Main 分支)
-      - name: Checkout CodeForgeAI
+      # 1. 拉取你的代码
+      - name: Checkout Code
         uses: actions/checkout@v4
         with:
-          ref: main # 明确指定拉取 main
+          ref: main
 
-      # 2. 拉取官方 tldr 数据 (挂载到 build/tldr)
-      - name: Checkout Official TLDR Data
+      # 2. 拉取 tldr 官方数据 (挂载到 build/tldr)
+      - name: Checkout Official Data
         uses: actions/checkout@v4
         with:
           repository: tldr-pages/tldr
@@ -32,31 +38,30 @@ jobs:
             pages.zh
           fetch-depth: 1
 
-      # 3. 设置 Python
+      # 3. 准备 Python
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      # 4. 运行脚本生成 JSON (文件会生成在 build/dist)
+      # 4. 运行你的脚本
       - name: Run ETL Script
         run: python build/build_tldr.py
 
-      # 5. 提交并推送到 Main 分支
-      - name: Commit and Push changes
+      # 5. 提交生成的 JSON 到 main 分支
+      - name: Commit and Push
         run: |
-          # 配置 Bot 身份
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           
-          # 强制添加 dist 目录 (即使 .gitignore 误写了也能强制添加，双保险)
+          # 强制添加 build/dist 目录 (不管 gitignore 怎么写)
           git add -f build/dist
           
-          # 检查是否有文件变化
+          # 只有当文件有变化时才提交
           if git diff --staged --quiet; then
-            echo "✅ Data is up to date. No changes to commit."
+            echo "✅ 数据没有变化，无需提交。"
           else
-            echo "⚡ Changes detected. Committing..."
-            git commit -m "chore(data): auto-update tldr prompt library [skip ci]"
+            git commit -m "chore(data): auto-update tldr prompts [skip ci]"
             git push origin main
+            echo "🚀 数据已推送到 main 分支！"
           fi
