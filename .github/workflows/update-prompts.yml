@@ -1,0 +1,62 @@
+name: Update Prompt Library (To Main)
+
+# 触发机制
+on:
+  schedule:
+    - cron: '0 0 * * 1' # 每周一自动运行
+  workflow_dispatch:    # 支持手动按钮触发
+
+# 赋予 Action 写权限，允许它提交代码
+permissions:
+  contents: write
+
+jobs:
+  update-data:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 拉取你的代码 (Main 分支)
+      - name: Checkout CodeForgeAI
+        uses: actions/checkout@v4
+        with:
+          ref: main # 明确指定拉取 main
+
+      # 2. 拉取官方 tldr 数据 (挂载到 build/tldr)
+      - name: Checkout Official TLDR Data
+        uses: actions/checkout@v4
+        with:
+          repository: tldr-pages/tldr
+          path: build/tldr
+          sparse-checkout: |
+            pages
+            pages.zh
+          fetch-depth: 1
+
+      # 3. 设置 Python
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # 4. 运行脚本生成 JSON (文件会生成在 build/dist)
+      - name: Run ETL Script
+        run: python build/build_tldr.py
+
+      # 5. 提交并推送到 Main 分支
+      - name: Commit and Push changes
+        run: |
+          # 配置 Bot 身份
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+          # 强制添加 dist 目录 (即使 .gitignore 误写了也能强制添加，双保险)
+          git add -f build/dist
+          
+          # 检查是否有文件变化
+          if git diff --staged --quiet; then
+            echo "✅ Data is up to date. No changes to commit."
+          else
+            echo "⚡ Changes detected. Committing..."
+            git commit -m "chore(data): auto-update tldr prompt library [skip ci]"
+            git push origin main
+          fi
