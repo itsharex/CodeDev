@@ -2,6 +2,7 @@ import os
 import re
 import json
 from pathlib import Path
+import time
 
 # ================= 配置区域 =================
 
@@ -12,12 +13,9 @@ SCRIPT_DIR = Path(__file__).parent.resolve()
 OUTPUT_DIR = SCRIPT_DIR / 'dist'
 
 # 3. 多语言源配置
-# 键名(zh/en) 将作为 manifest 中的 language 字段和 packs 下的子目录名
 LANG_CONFIG = {
     'zh': {
-        # 中文数据源: build/tldr/pages.zh
         'source': SCRIPT_DIR / 'tldr' / 'pages.zh',
-        # 平台显示名称映射 (中文)
         'names': {
             'common': '通用工具 (Common)',
             'linux': 'Linux 运维',
@@ -28,9 +26,7 @@ LANG_CONFIG = {
         }
     },
     'en': {
-        # 英文数据源: build/tldr/pages (注意这里没有 .en)
         'source': SCRIPT_DIR / 'tldr' / 'pages',
-        # 平台显示名称映射 (英文)
         'names': {
             'common': 'Common Tools',
             'linux': 'Linux Ops',
@@ -51,13 +47,33 @@ def parse_markdown(content, cmd_name, platform, lang, platform_display_name):
     prompts = []
     lines = content.splitlines()
 
-    # 1. 提取描述
-    desc_lines = [
-        re.sub(r'<[^>]+>|\[([^\]]+)\]\([^\)]+\)', '', line.lstrip('> ').strip()) 
-        for line in lines if line.strip().startswith('>')
-    ]
+    # --- 1. 提取并清洗描述 (Description) ---
+    desc_lines = []
+    for line in lines:
+        line = line.strip()
+        # 只处理引用行
+        if line.startswith('>'):
+            # 去掉开头的 '> '
+            clean_line = line[1:].strip()
+            
+            # 1.1 去除 Markdown 链接和 HTML 标签
+            # 例如: <https://example.com> 或 [link](url)
+            clean_line = re.sub(r'<[^>]+>|\[([^\]]+)\]\([^\)]+\)', '', clean_line)
+            
+            # 1.2 ✨ 核心清洗：直接丢弃包含 "更多信息" 或 "More information" 的行
+            # 这样就不会出现 "更多信息：." 这种残留了
+            if re.search(r'(?:More information|更多信息|See also|参见)\s*[:：]', clean_line, re.IGNORECASE):
+                continue
+            
+            # 1.3 去除末尾残留的标点
+            clean_line = clean_line.strip()
+            
+            if clean_line:
+                desc_lines.append(clean_line)
+
     description = ' '.join(desc_lines) or f"{cmd_name} command"
 
+    # --- 2. 提取命令 (Actions) ---
     current_action = None
     index = 0
     
@@ -65,18 +81,22 @@ def parse_markdown(content, cmd_name, platform, lang, platform_display_name):
         line = line.strip()
         
         if line.startswith('- '):
-            current_action = line[2:].rstrip(':').strip()
+            # ✨ 核心清洗：去除末尾的 英文冒号(:)、中文冒号(：)、句号(.) 和 空格
+            # 原始内容: "- 归档一个文件或目录："
+            # 清洗后: "归档一个文件或目录"
+            raw_action = line[2:]
+            current_action = re.sub(r'[:：\.\s]+$', '', raw_action)
         
         elif line.startswith('`') and line.endswith('`') and current_action:
             code_content = line.strip('`')
             
             prompts.append({
-                # ID 包含语言标识，防止冲突: tldr-en-linux-apk-0
                 "id": f"tldr-{lang}-{platform}-{cmd_name}-{index}",
+                # 标题现在会非常干净，没有冒号
                 "title": f"{cmd_name} - {current_action}",
                 "content": code_content,
-                # 分组使用配置好的显示名称，或者首字母大写
                 "group": platform_display_name, 
+                # 描述里的 current_action 也没有冒号了，看起来会像 (归档一个文件或目录)
                 "description": f"{cmd_name}: {description} ({current_action})",
                 "tags": [platform, cmd_name, 'tldr', lang],
                 "source": "official"
@@ -97,7 +117,6 @@ def main():
 
     manifest_packages = []
     
-    # --- 第一层循环：遍历语言 (zh, en) ---
     for lang, config in LANG_CONFIG.items():
         source_dir = config['source']
         names_map = config['names']
@@ -109,19 +128,16 @@ def main():
             print(f"❌ 错误: 找不到源目录 {source_dir}，跳过此语言。")
             continue
 
-        # 确保该语言的输出目录存在 (dist/packs/zh 或 dist/packs/en)
+        # 确保该语言的输出目录存在
         lang_pack_dir = OUTPUT_DIR / 'packs' / lang
         if not lang_pack_dir.exists():
             lang_pack_dir.mkdir(parents=True)
 
-        # --- 第二层循环：遍历平台 (common, linux...) ---
         # 动态扫描该源目录下的所有子文件夹作为平台
-        # 这样可以兼容 pages 和 pages.zh 目录结构不完全一致的情况
         platforms = [d.name for d in source_dir.iterdir() if d.is_dir()]
         
         for platform in platforms:
             platform_path = source_dir / platform
-            # 获取显示名称，如果没有配置则首字母大写
             display_name = names_map.get(platform, platform.title())
 
             print(f"   📦 处理平台: {platform} ({display_name})...")
@@ -152,17 +168,16 @@ def main():
                     "id": f"{lang}-{platform}",
                     "language": lang,
                     "platform": platform,
-                    "name": f"{display_name} ({lang.upper()})", # 例如: Linux 运维 (ZH)
+                    "name": f"{display_name} ({lang.upper()})",
                     "description": f"Contains {len(all_platform_prompts)} {lang} commands for {platform}.",
                     "count": len(all_platform_prompts),
                     "size_kb": size_kb,
-                    # URL 结构: packs/en/linux.json
                     "url": f"packs/{lang}/{output_filename}"
                 })
 
     # 生成总索引 manifest.json
     manifest = {
-        "updated_at": int(os.path.getmtime(output_path) * 1000) if 'output_path' in locals() else 0,
+        "updated_at": int(time.time() * 1000),
         "version": "1.0.0",
         "packages": manifest_packages
     }
@@ -172,11 +187,6 @@ def main():
 
     print("\n🎉 全构建完成!")
     print(f"👉 产物目录: {OUTPUT_DIR}")
-    print(f"   结构预览:")
-    print(f"   dist/manifest.json")
-    print(f"   dist/packs/zh/linux.json")
-    print(f"   dist/packs/en/linux.json")
-    print(f"   ...")
 
 if __name__ == "__main__":
     main()

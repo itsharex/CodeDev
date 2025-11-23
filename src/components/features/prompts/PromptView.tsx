@@ -55,24 +55,72 @@ export function PromptView() {
   // 依赖 localPrompts 和 repoPrompts，当下载新包或添加指令时自动更新
   const allPrompts = useMemo(() => getAllPrompts(), [localPrompts, repoPrompts, groups]);
 
-  // 2. 过滤逻辑 (High Cost) - 依赖防抖后的搜索词
+  // 2. 过滤逻辑 (High Cost) - 依赖防抖后的搜索词，引入权重评分，分词
   const filteredPrompts = useMemo(() => {
-    return allPrompts.filter(p => {
-        // Group Filter
-        const matchGroup = activeGroup === 'all' ? true : activeGroup === 'favorite' ? p.isFavorite : p.group === activeGroup;
-        if (!matchGroup) return false;
+    const rawQuery = debouncedSearchQuery.trim().toLowerCase();
 
-        // Search Filter
-        if (!debouncedSearchQuery.trim()) return true;
-        
-        const q = debouncedSearchQuery.toLowerCase();
-        return (
-            p.title.toLowerCase().includes(q) || 
-            (p.description && p.description.toLowerCase().includes(q)) ||
-            p.content.toLowerCase().includes(q) ||
-            (p.tags && p.tags.some(t => t.toLowerCase().includes(q)))
-        );
-    });
+    // A. 如果没搜索词，只按分组过滤 (快速路径)
+    if (!rawQuery) {
+      return allPrompts.filter(p => {
+        return activeGroup === 'all' ? true : activeGroup === 'favorite' ? p.isFavorite : p.group === activeGroup;
+      });
+    }
+
+    // B. 分词处理：将 "docker  run" 拆分为 ["docker", "run"]
+    const terms = rawQuery.split(/\s+/).filter(t => t.length > 0);
+
+    return allPrompts
+      .map(p => {
+        // 1. 先检查分组
+        const matchGroup = activeGroup === 'all' ? true : activeGroup === 'favorite' ? p.isFavorite : p.group === activeGroup;
+        if (!matchGroup) return { ...p, score: -1 };
+
+        // 2. 准备数据源
+        const title = p.title.toLowerCase();
+        const desc = p.description?.toLowerCase() || '';
+        const content = p.content.toLowerCase();
+        const tags = (p.tags || []).map(t => t.toLowerCase());
+
+        let totalScore = 0;
+        let matchAllTerms = true;
+
+        // 3. 遍历每一个搜索词 (AND 逻辑)
+        for (const term of terms) {
+            let termScore = 0;
+
+            // --- 权重规则 ---
+            
+            // 规则1: 标题命中 (权重高)
+            if (title.includes(term)) {
+                termScore += 50;
+                // 额外奖励：开头匹配或完全匹配
+                if (title.startsWith(term)) termScore += 10; 
+                if (title === term) termScore += 20;
+            }
+
+            // 规则2: 标签命中 (权重中)
+            if (tags.some(t => t.includes(term))) {
+                termScore += 30;
+            }
+
+            // 规则3: 描述或内容命中 (权重低)
+            if (desc.includes(term)) termScore += 5;
+            if (content.includes(term)) termScore += 5;
+
+            // 关键逻辑：如果当前这个词在 p 里完全找不到，则 p 不符合要求 (AND 逻辑)
+            if (termScore === 0) {
+                matchAllTerms = false;
+                break; // 只要有一个词没匹配，这单就废了，不用往下算了
+            }
+
+            totalScore += termScore;
+        }
+
+        return { ...p, score: matchAllTerms ? totalScore : 0 };
+      })
+      .filter(p => p.score > 0) // 过滤掉不匹配的
+      .sort((a, b) => b.score - a.score); // 按总分排序
+
   }, [allPrompts, activeGroup, debouncedSearchQuery]);
 
   // 3. 切片数据 (用于渲染)
