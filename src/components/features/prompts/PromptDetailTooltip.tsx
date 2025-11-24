@@ -69,8 +69,8 @@ export function PromptDetailTooltip({ prompt, anchorRect, isOpen }: PromptDetail
       {/* 流光边框容器 */}
       <div className="relative group rounded-xl p-[1.5px] overflow-hidden">
         
-        {/* 动态流光背景层 */}
-        <div className="absolute inset-[-50%] bg-[conic-gradient(from_90deg_at_50%_50%,#E2E8F0_0%,#3B82F6_50%,#E2E8F0_100%)] dark:bg-[conic-gradient(from_90deg_at_50%_50%,#1e293b_0%,#3b82f6_50%,#1e293b_100%)] animate-[spin_4s_linear_infinite]" />
+        {/* 动态彩色流光背景层 */}
+        <div className="absolute inset-[-50%] bg-[conic-gradient(from_90deg_at_50%_50%,#ef4444_0%,#eab308_25%,#22c55e_50%,#3b82f6_75%,#a855f7_100%,#ef4444_100%)] animate-[spin_3s_linear_infinite]" />
         
         {/* 内容层 (遮住中间，只漏出边缘) */}
         <div className="relative bg-popover/95 backdrop-blur-xl shadow-2xl rounded-xl overflow-hidden flex flex-col text-sm text-popover-foreground h-full">
