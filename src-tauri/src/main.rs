@@ -34,6 +34,19 @@ fn main() {
     let system_tray = SystemTray::new().with_menu(tray_menu);
 
     tauri::Builder::default()
+        .plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
+            
+            // 当检测到第二个实例启动时：
+            // 找到主窗口
+            if let Some(window) = app.get_window("main") {
+                // 如果最小化了，恢复它
+                let _ = window.unminimize();
+                // 如果隐藏了，显示它
+                let _ = window.show();
+                // 强制获取焦点（置顶）
+                let _ = window.set_focus();
+            }
+        }))
         .system_tray(system_tray)
         .invoke_handler(tauri::generate_handler![greet, get_file_size])
         

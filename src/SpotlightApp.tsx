@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef, useMemo } from 'react';
 import { appWindow } from '@tauri-apps/api/window';
 import { writeText } from '@tauri-apps/api/clipboard';
+import { listen } from '@tauri-apps/api/event';
 import { Search, Sparkles, Terminal, CornerDownLeft } from 'lucide-react';
 import { usePromptStore } from '@/store/usePromptStore';
-import { cn } from '@/lib/utils';
 import { useAppStore, AppTheme } from '@/store/useAppStore';
-import { listen } from '@tauri-apps/api/event';
+import { cn } from '@/lib/utils';
 
 export default function SpotlightApp() {
   const [query, setQuery] = useState('');
@@ -13,37 +13,41 @@ export default function SpotlightApp() {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
   
-  // 从 Store 获取数据
-  // 注意：因为是新窗口，store 会重新初始化并读取文件，数据是同步的
   const { getAllPrompts } = usePromptStore();
-  const { theme, setTheme } = useAppStore();
+  const { theme, setTheme } = useAppStore(); 
+  
   const allPrompts = useMemo(() => getAllPrompts(), []);
 
+  // 1. 主题同步
   useEffect(() => {
-    // 1. 初始化：应用启动时的当前主题
     const root = document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
 
-    // 2. 监听：来自主窗口的切换事件
     const unlistenPromise = listen<AppTheme>('theme-changed', (event) => {
         const newTheme = event.payload;
-        // 更新 React 状态
         setTheme(newTheme, true); 
-        // 强制更新 DOM (setTheme 内部虽然做了，但跨窗口 state 同步可能会有延迟，手动再保底一次)
         root.classList.remove('light', 'dark');
         root.classList.add(newTheme);
     });
 
-    return () => {
-        unlistenPromise.then(unlisten => unlisten());
-    };
-  }, []); // 空依赖数组，只运行一次
+    return () => { unlistenPromise.then(unlisten => unlisten()); };
+  }, []);
 
-  // 过滤逻辑
+  useEffect(() => {
+    const unlisten = appWindow.onFocusChanged(({ payload: isFocused }) => {
+      if (isFocused) {
+        // 当窗口显示/获得焦点时，自动聚焦输入框并清空内容
+        setTimeout(() => inputRef.current?.focus(), 50);
+        setQuery('');
+        setSelectedIndex(0);
+      } 
+    });
+    return () => { unlisten.then(f => f()); };
+  }, []);
+
   const filtered = useMemo(() => {
-    if (!query) return allPrompts.slice(0, 10); // 默认显示前10个
-    
+    if (!query) return allPrompts.slice(0, 10);
     const lower = query.toLowerCase();
     return allPrompts
       .filter(p => 
@@ -51,74 +55,58 @@ export default function SpotlightApp() {
         p.content.toLowerCase().includes(lower) ||
         p.group.toLowerCase().includes(lower)
       )
-      .slice(0, 20); // 性能优化：只渲染前20个
+      .slice(0, 20);
   }, [query, allPrompts]);
-
-  // 每次显示窗口时，自动聚焦输入框并重置状态
-  useEffect(() => {
-    const unlisten = appWindow.onFocusChanged(({ payload: isFocused }) => {
-      if (isFocused) {
-        setTimeout(() => inputRef.current?.focus(), 50);
-        setQuery('');
-        setSelectedIndex(0);
-      } else {
-        // 失去焦点自动隐藏 (类似 Alfred)
-        // 开发时可以注释掉这行，方便调试
-        if (import.meta.env.PROD) {
-            appWindow.hide();
-        }
-      }
-    });
-    return () => { unlisten.then(f => f()); };
-  }, []);
-
-  // 键盘导航
-  const handleKeyDown = async (e: React.KeyboardEvent) => {
-    if (e.key === 'ArrowDown') {
-      e.preventDefault();
-      setSelectedIndex(prev => (prev + 1) % filtered.length);
-    } else if (e.key === 'ArrowUp') {
-      e.preventDefault();
-      setSelectedIndex(prev => (prev - 1 + filtered.length) % filtered.length);
-    } else if (e.key === 'Enter') {
-      e.preventDefault();
-      handleSelect(filtered[selectedIndex]);
-    } else if (e.key === 'Escape') {
-      e.preventDefault();
-      await appWindow.hide();
-    }
-  };
 
   const handleSelect = async (prompt: any) => {
     if (!prompt) return;
     try {
-      // 简单处理：直接复制内容
-      // TODO: 如果有变量，后续可以在这里扩展 UI 让用户填空
       await writeText(prompt.content);
-      // 可以在这里播放一个提示音
       await appWindow.hide();
     } catch (err) {
       console.error(err);
     }
   };
 
+  useEffect(() => {
+    const handleGlobalKeyDown = async (e: KeyboardEvent) => {
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        setSelectedIndex(prev => (prev + 1) % filtered.length);
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        setSelectedIndex(prev => (prev - 1 + filtered.length) % filtered.length);
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        handleSelect(filtered[selectedIndex]);
+      } else if (e.key === 'Escape') {
+        e.preventDefault();
+        // 只要在这个窗口里按 Esc，就隐藏
+        await appWindow.hide();
+      }
+    };
+
+    document.addEventListener('keydown', handleGlobalKeyDown);
+    return () => document.removeEventListener('keydown', handleGlobalKeyDown);
+  }, [filtered, selectedIndex]); // 依赖项要加上 filtered 和 selectedIndex 以便获取最新状态
+
   // 自动滚动
   useEffect(() => {
     if (listRef.current) {
         const el = listRef.current.children[selectedIndex] as HTMLElement;
-        if (el) {
-            el.scrollIntoView({ block: 'nearest' });
-        }
+        if (el) el.scrollIntoView({ block: 'nearest' });
     }
   }, [selectedIndex]);
 
   return (
     <div className="h-screen w-screen bg-transparent flex flex-col items-center justify-start pt-2 px-2 pb-2">
-      {/* 容器：磨砂玻璃效果 */}
       <div className="w-full h-full max-h-[400px] flex flex-col bg-background/80 backdrop-blur-xl border border-border/50 rounded-xl shadow-2xl overflow-hidden ring-1 ring-white/10">
         
-        {/* 搜索栏 */}
-        <div data-tauri-drag-region className="h-14 flex items-center px-4 gap-3 border-b border-border/50 shrink-0 bg-secondary/20">
+        {/* Header - 可拖动 */}
+        <div 
+          data-tauri-drag-region 
+          className="h-14 flex items-center px-4 gap-3 border-b border-border/50 shrink-0 bg-secondary/20 cursor-move"
+        >
           <Search className="text-muted-foreground w-5 h-5 pointer-events-none" />
           <input
             ref={inputRef}
@@ -126,7 +114,7 @@ export default function SpotlightApp() {
             placeholder="Type to search..."
             value={query}
             onChange={e => { setQuery(e.target.value); setSelectedIndex(0); }}
-            onKeyDown={handleKeyDown}
+            // 移除原本绑定在 input 上的 onKeyDown，改用上面的全局监听
             autoFocus
           />
           <div className="flex items-center gap-1.5 pointer-events-none">
@@ -134,9 +122,9 @@ export default function SpotlightApp() {
           </div>
         </div>
 
-        {/* 列表 */}
+        {/* List */}
         <div className="flex-1 overflow-y-auto p-2 space-y-1 custom-scrollbar" ref={listRef}>
-          {filtered.length === 0 ? (
+           {filtered.length === 0 ? (
              <div className="h-24 flex items-center justify-center text-muted-foreground text-sm">
                 No results found.
              </div>
@@ -144,7 +132,6 @@ export default function SpotlightApp() {
              filtered.map((item, index) => {
                const isActive = index === selectedIndex;
                const isCommand = item.type === 'command' || (!item.type && item.content.length < 50);
-               
                return (
                  <div
                    key={item.id}
@@ -161,7 +148,6 @@ export default function SpotlightApp() {
                     )}>
                         {isCommand ? <Terminal size={16} /> : <Sparkles size={16} />}
                     </div>
-                    
                     <div className="flex-1 min-w-0">
                         <div className="flex items-center justify-between">
                             <span className="font-medium truncate text-sm">{item.title}</span>
@@ -177,15 +163,17 @@ export default function SpotlightApp() {
           )}
         </div>
         
-        {/* 底部状态栏 (为未来的知识库做预留) */}
-        <div data-tauri-drag-region className="h-8 bg-secondary/30 border-t border-border/50 flex items-center justify-between px-3 text-[10px] text-muted-foreground shrink-0">
-            <span>{filtered.length} results</span>
-            <div className="flex gap-3">
+        {/* Footer - 可拖动 */}
+        <div 
+            data-tauri-drag-region
+            className="h-8 bg-secondary/30 border-t border-border/50 flex items-center justify-between px-3 text-[10px] text-muted-foreground shrink-0 cursor-move"
+        >
+            <span className="pointer-events-none">{filtered.length} results</span>
+            <div className="flex gap-3 pointer-events-none">
                 <span>Select: ↑↓</span>
                 <span>Copy: ↵</span>
             </div>
         </div>
-
       </div>
     </div>
   );
