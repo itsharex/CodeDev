@@ -95,7 +95,8 @@
             "width": 800,
             "decorations": false,
             "center": true,
-            "transparent": true
+            "transparent": true,
+            "visible": false
           },
           {
             "label": "spotlight",

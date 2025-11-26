@@ -1,34 +1,48 @@
 import { useEffect } from 'react';
+import { appWindow } from '@tauri-apps/api/window';
+import { listen } from '@tauri-apps/api/event';
 import { TitleBar } from "@/components/layout/TitleBar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SettingsModal } from "@/components/settings/SettingsModal";
-import { useAppStore } from "@/store/useAppStore";
+import { useAppStore, AppTheme } from "@/store/useAppStore";
 import { ContextView } from "@/components/features/context/ContextView";
 import { PromptView } from "@/components/features/prompts/PromptView";
 
 function App() {
-  const { currentView, theme, syncModels, lastUpdated } = useAppStore();
-  // ✨ 注意：这里不再解构 initStore，我们把它移到 Store 内部自动触发
-  // const { initStore } = usePromptStore(); 
+  // 解构出 setTheme
+  const { currentView, theme, setTheme, syncModels, lastUpdated } = useAppStore();
 
-  // 主题初始化
   useEffect(() => {
+    // 1. 初始化 DOM 类名 (防止刚启动时颜色不对)
     const root = document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
-  }, [theme]);
 
-  // ✨ 1. 禁止右键菜单 & 快捷键刷新
+    // 2. 监听来自 Spotlight 的主题变化
+    // 当 Spotlight 改变主题时，主窗口也需要同步更新，且传入 true 防止死循环广播
+    const unlistenPromise = listen<AppTheme>('theme-changed', (event) => {
+        setTheme(event.payload, true); 
+    });
+
+    // 优雅显示窗口 (防闪白)
+    // 延迟 100ms 确保 CSS 渲染完毕，再把原本隐藏(visible: false)的窗口显示出来
+    setTimeout(() => {
+        appWindow.show();
+        appWindow.setFocus();
+    }, 100);
+
+    return () => {
+        unlistenPromise.then(unlisten => unlisten());
+    };
+  }, []); // 空依赖数组，只在组件挂载时执行一次
+
   useEffect(() => {
-    // 禁止右键
     const handleContextMenu = (e: MouseEvent) => {
-      // 如果是开发环境，按住 Ctrl 还可以呼出右键（方便调试），生产环境直接禁止
       if (import.meta.env.PROD || !e.ctrlKey) {
         e.preventDefault();
       }
     };
     
-    // 禁止 F5 和 Ctrl+R 刷新
     const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
             e.preventDefault();
@@ -52,7 +66,6 @@ function App() {
     } else {
         syncModels();
     }
-    // ✨ 注意：删除了这里的 initStore() 调用，防止竞态条件
   }, []);
 
   return (
