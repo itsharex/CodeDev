@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
-import { X, Save, Tag, FileText, Folder, ChevronDown, Check, Plus } from 'lucide-react';
+import { X, Save, Tag, FileText, Folder, ChevronDown, Check, Plus, Sparkles, Terminal } from 'lucide-react';
 import { usePromptStore } from '@/store/usePromptStore';
-import { useAppStore } from '@/store/useAppStore'; // 引入 AppStore
+import { useAppStore } from '@/store/useAppStore'; 
 import { Prompt, DEFAULT_GROUP } from '@/types/prompt';
 import { cn } from '@/lib/utils';
-import { getText } from '@/lib/i18n'; // 引入 i18n
+import { getText } from '@/lib/i18n';
 
 interface PromptEditorDialogProps {
   isOpen: boolean;
@@ -14,15 +14,17 @@ interface PromptEditorDialogProps {
 
 export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEditorDialogProps) {
   const { groups, addPrompt, updatePrompt, addGroup } = usePromptStore();
-  const { language } = useAppStore(); // 获取语言
+  const { language } = useAppStore();
   
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [group, setGroup] = useState(DEFAULT_GROUP);
   
+  // 类型状态，默认为 'prompt'
+  const [type, setType] = useState<'command' | 'prompt'>('prompt');
+  
   const [newGroupMode, setNewGroupMode] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
-  
   const [isGroupOpen, setIsGroupOpen] = useState(false);
 
   useEffect(() => {
@@ -31,10 +33,14 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
         setTitle(initialData.title);
         setContent(initialData.content);
         setGroup(initialData.group);
+        // 恢复类型，如果没有(老数据)则默认为 prompt
+        setType(initialData.type || 'prompt');
       } else {
         setTitle('');
         setContent('');
         setGroup(DEFAULT_GROUP);
+        // 新建时默认为 prompt
+        setType('prompt');
       }
       setNewGroupMode(false);
       setNewGroupName('');
@@ -53,10 +59,17 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
       finalGroup = newGroupName.trim();
     }
 
+    const data = { 
+        title, 
+        content, 
+        group: finalGroup,
+        type: type // 保存类型
+    };
+
     if (initialData) {
-      updatePrompt(initialData.id, { title, content, group: finalGroup });
+      updatePrompt(initialData.id, data);
     } else {
-      addPrompt({ title, content, group: finalGroup });
+      addPrompt(data);
     }
     onClose();
   };
@@ -76,6 +89,30 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
 
         <div className="p-6 space-y-5 overflow-y-auto flex-1 pb-24 custom-scrollbar">
           
+          {/* 类型选择器 */}
+          <div className="flex gap-2 p-1 bg-secondary/30 rounded-lg border border-border/50">
+             <button
+                onClick={() => setType('prompt')}
+                className={cn(
+                    "flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-sm font-medium transition-all duration-200",
+                    type === 'prompt' ? "bg-background text-primary shadow-sm ring-1 ring-border" : "text-muted-foreground hover:text-foreground"
+                )}
+             >
+                <Sparkles size={16} />
+                <span>Prompt</span>
+             </button>
+             <button
+                onClick={() => setType('command')}
+                className={cn(
+                    "flex-1 flex items-center justify-center gap-2 py-2 rounded-md text-sm font-medium transition-all duration-200",
+                    type === 'command' ? "bg-background text-primary shadow-sm ring-1 ring-border" : "text-muted-foreground hover:text-foreground"
+                )}
+             >
+                <Terminal size={16} />
+                <span>Command</span>
+             </button>
+          </div>
+
           {/* Title */}
           <div className="space-y-2">
             <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5">

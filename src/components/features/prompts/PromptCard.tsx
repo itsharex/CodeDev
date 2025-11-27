@@ -1,11 +1,10 @@
-import { useState, useRef, memo } from 'react'; // 引入 useRef
+import { useState, useRef, memo } from 'react';
 import { Copy, Edit3, Trash2, Star, Hash, Terminal, BadgeCheck } from 'lucide-react';
 import { Prompt } from '@/types/prompt';
 import { cn } from '@/lib/utils';
 import { usePromptStore } from '@/store/usePromptStore';
 import { useAppStore } from '@/store/useAppStore';
 import { getText } from '@/lib/i18n';
-// ✨ 引入新组件
 import { PromptDetailTooltip } from './PromptDetailTooltip';
 
 interface PromptCardProps {
@@ -20,10 +19,12 @@ function PromptCardComponent({ prompt, onEdit, onDelete, onTrigger }: PromptCard
   const { language } = useAppStore();
   const [isHovered, setIsHovered] = useState(false);
   
-  // ✨ 悬浮卡状态
   const [showTooltip, setShowTooltip] = useState(false);
   const [anchorRect, setAnchorRect] = useState<DOMRect | null>(null);
-  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
+  
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null); // 打开定时器
+  const closeTimerRef = useRef<NodeJS.Timeout | null>(null); // 关闭定时器
+  
   const cardRef = useRef<HTMLDivElement>(null);
 
   const handleClick = (e: React.MouseEvent) => {
@@ -31,24 +32,54 @@ function PromptCardComponent({ prompt, onEdit, onDelete, onTrigger }: PromptCard
     onTrigger(prompt);
   };
 
-  // ✨ 鼠标进入：延迟 600ms 后显示
+  // 鼠标进入卡片
   const handleMouseEnter = () => {
     setIsHovered(true);
+    
+    // 如果有关闭定时器正在运行（比如刚从Tooltip移出来），取消它，保持显示
+    if (closeTimerRef.current) {
+        clearTimeout(closeTimerRef.current);
+        closeTimerRef.current = null;
+    }
+
     if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
     
-    hoverTimerRef.current = setTimeout(() => {
-        if (cardRef.current) {
-            setAnchorRect(cardRef.current.getBoundingClientRect());
-            setShowTooltip(true);
-        }
-    }, 600); // 600ms 延迟，防闪烁
+    // 如果还没显示，开启显示延时
+    if (!showTooltip) {
+        hoverTimerRef.current = setTimeout(() => {
+            if (cardRef.current) {
+                setAnchorRect(cardRef.current.getBoundingClientRect());
+                setShowTooltip(true);
+            }
+        }, 200);
+    }
   };
 
-  // ✨ 鼠标离开：立即关闭并清除定时器
+  // 鼠标离开卡片
   const handleMouseLeave = () => {
     setIsHovered(false);
     if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
-    setShowTooltip(false);
+    
+    // ✨ 不要立即关闭，而是延迟 300ms
+    // 给用户时间把鼠标移动到 Tooltip 上
+    closeTimerRef.current = setTimeout(() => {
+        setShowTooltip(false);
+    }, 150);
+  };
+
+  // Tooltip 鼠标进入：取消关闭
+  const handleTooltipEnter = () => {
+      if (closeTimerRef.current) {
+          clearTimeout(closeTimerRef.current);
+          closeTimerRef.current = null;
+      }
+  };
+
+  // Tooltip 鼠标离开：开启关闭倒计时
+  const handleTooltipLeave = () => {
+      closeTimerRef.current = setTimeout(() => {
+          setShowTooltip(false);
+      }, 300);
   };
 
   const getGroupStyle = (group: string) => {
@@ -67,10 +98,10 @@ function PromptCardComponent({ prompt, onEdit, onDelete, onTrigger }: PromptCard
   return (
     <>
         <div 
-          ref={cardRef} // 绑定 Ref
+          ref={cardRef}
           className="group relative border border-border bg-card hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 rounded-xl transition-all duration-300 flex flex-col h-[180px] overflow-hidden cursor-pointer"
-          onMouseEnter={handleMouseEnter} // 绑定事件
-          onMouseLeave={handleMouseLeave} // 绑定事件
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
           onClick={handleClick}
         >
           {/* Header */}
@@ -139,11 +170,13 @@ function PromptCardComponent({ prompt, onEdit, onDelete, onTrigger }: PromptCard
           </div>
         </div>
 
-        {/* ✨ 渲染悬浮卡 (Portal) */}
         <PromptDetailTooltip 
             prompt={prompt} 
             anchorRect={anchorRect} 
-            isOpen={showTooltip} 
+            isOpen={showTooltip}
+            // ✨ 传入事件处理函数
+            onMouseEnter={handleTooltipEnter}
+            onMouseLeave={handleTooltipLeave} 
         />
     </>
   );

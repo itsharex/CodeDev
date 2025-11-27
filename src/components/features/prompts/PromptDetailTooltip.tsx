@@ -11,20 +11,18 @@ interface PromptDetailTooltipProps {
   prompt: Prompt;
   anchorRect: DOMRect | null;
   isOpen: boolean;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
 }
 
-export function PromptDetailTooltip({ prompt, anchorRect, isOpen }: PromptDetailTooltipProps) {
+export function PromptDetailTooltip({ prompt, anchorRect, isOpen, onMouseEnter, onMouseLeave }: PromptDetailTooltipProps) {
   const { language } = useAppStore();
   const [position, setPosition] = useState({ top: 0, left: 0 });
-  
-  // 是否已完成定位计算
   const [isPositioned, setIsPositioned] = useState(false);
-  
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const variables = parseVariables(prompt.content);
   
-  // 它会在 DOM 变更后、浏览器绘制前同步触发，杜绝闪烁
   useLayoutEffect(() => {
     if (isOpen && anchorRect && tooltipRef.current) {
       const tooltip = tooltipRef.current;
@@ -34,7 +32,6 @@ export function PromptDetailTooltip({ prompt, anchorRect, isOpen }: PromptDetail
       let left = anchorRect.right + padding;
       let top = anchorRect.top;
 
-      // 视口边界检查
       if (left + tooltipRect.width > window.innerWidth) {
         left = anchorRect.left - tooltipRect.width - padding;
       }
@@ -44,11 +41,8 @@ export function PromptDetailTooltip({ prompt, anchorRect, isOpen }: PromptDetail
       if (top < padding) top = padding;
 
       setPosition({ top, left });
-      
-      // 标记为已定位，允许显示
       setIsPositioned(true);
     } else {
-      // 如果关闭了，重置状态以便下次重新计算
       setIsPositioned(false);
     }
   }, [isOpen, anchorRect]);
@@ -60,20 +54,33 @@ export function PromptDetailTooltip({ prompt, anchorRect, isOpen }: PromptDetail
   return createPortal(
     <div 
       ref={tooltipRef}
+      // 移入时保持显示，移出时准备关闭
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
       className={cn(
-        "fixed z-[100] w-[380px] transition-opacity duration-200", // 移除之前的 zoom-in 动画，因为这会干扰首次定位测量
-        isPositioned ? "opacity-100" : "opacity-0 pointer-events-none" // 未定位时隐藏但保留占位
+        "fixed z-[100] w-[380px] transition-opacity duration-200", 
+        // 确保 isPositioned 为 true 时 pointer-events-auto，否则无法滚动
+        isPositioned ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       )}
       style={{ top: position.top, left: position.left }}
     >
       {/* 流光边框容器 */}
       <div className="relative group rounded-xl p-[1.5px] overflow-hidden">
         
-        {/* 动态彩色流光背景层 */}
-        <div className="absolute inset-[-50%] bg-[conic-gradient(from_90deg_at_50%_50%,#ef4444_0%,#eab308_25%,#22c55e_50%,#3b82f6_75%,#a855f7_100%,#ef4444_100%)] animate-[spin_3s_linear_infinite]" />
+        <div className="absolute inset-[-50%] animate-[spin_3s_linear_infinite] blur-sm" 
+             style={{
+               backgroundImage: `conic-gradient(from 90deg at 50% 50%, 
+                 #ef4444 0%,   
+                 #eab308 20%,  
+                 #22c55e 40%,  
+                 #3b82f6 60%,  
+                 #a855f7 80%,  
+                 #ef4444 100% 
+               )`
+             }}
+        />
         
-        {/* 内容层 (遮住中间，只漏出边缘) */}
-        <div className="relative bg-popover/95 backdrop-blur-xl shadow-2xl rounded-xl overflow-hidden flex flex-col text-sm text-popover-foreground h-full">
+        <div className="relative bg-popover shadow-2xl rounded-xl overflow-hidden flex flex-col text-sm text-popover-foreground h-full">
             
             {/* Header */}
             <div className="p-4 border-b border-border/50 bg-secondary/10 flex flex-col gap-2">
