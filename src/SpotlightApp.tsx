@@ -184,6 +184,13 @@ const handleSendToAI = async () => {
       );
   };
 
+  const handleClearChat = () => {
+      setMessages([]);
+      setChatInput('');
+      setIsStreaming(false); // 强制停止流式状态（虽然无法物理中断 fetch，但能停止 UI 更新）
+      setTimeout(() => inputRef.current?.focus(), 50);
+  };
+
   useEffect(() => {
       if (mode === 'chat' && chatEndRef.current) {
           chatEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -206,6 +213,14 @@ const handleSendToAI = async () => {
         else if (mode === 'chat' && chatInput) setChatInput('');
         else await appWindow.hide();
         return;
+      }
+      
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          if (mode === 'chat') {
+              handleClearChat();
+          }
+          return;
       }
 
       if (mode === 'search') {
@@ -507,7 +522,10 @@ const handleSendToAI = async () => {
                           <span>Copy ↵</span>
                       </>
                   ) : (
+                      <>
+                      <span>Clear Ctrl+K</span> 
                       <span>Send ↵</span>
+                      </>
                   )}
                   <span>Close Esc</span>
               </div>
