@@ -1,4 +1,38 @@
-# CodeForge AI
+<div align="center">
+  <!-- Logo 图片：如果没有专用 Logo，可以使用 Banner 截图，宽度设为 auto -->
+  <a href="https://github.com/WinriseF/Code-Forge-AI">
+    <img src="images/icon.png" alt="CodeForge AI Logo" width="120" height="120">
+  </a>
+
+  <h1 align="center">CodeForge AI</h1>
+
+  <p align="center">
+    <strong>Forge your code with intelligence.</strong>
+    <br />
+    专为开发者打造的 AI 辅助生产力终端：上下文组装 · 提示词管理 · 全局 AI 对话
+  </p>
+
+  <!-- 动态徽章 (Shields.io) -->
+  <p align="center">
+    <a href="https://github.com/WinriseF/Code-Forge-AI/actions">
+      <img src="https://img.shields.io/github/actions/workflow/status/WinriseF/Code-Forge-AI/update-prompts.yml?style=flat-square&logo=github&label=build" alt="Build Status">
+    </a>
+    <a href="https://tauri.app">
+      <img src="https://img.shields.io/badge/built%20with-Tauri-24C8DB?style=flat-square&logo=tauri&logoColor=white" alt="Built with Tauri">
+    </a>
+    <a href="https://react.dev">
+      <img src="https://img.shields.io/badge/frontend-React-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React">
+    </a>
+    <a href="https://www.rust-lang.org">
+      <img src="https://img.shields.io/badge/backend-Rust-000000?style=flat-square&logo=rust&logoColor=white" alt="Rust">
+    </a>
+    <a href="LICENSE">
+      <img src="https://img.shields.io/github/license/WinriseF/Code-Forge-AI?style=flat-square&color=blue" alt="License">
+    </a>
+  </p>
+</div>
+
+<br />
 
 **CodeForge AI** 是一款专为开发者打造的 AI 辅助生产力工具。它集成了代码上下文组装、提示词管理以及一个随时待命的全局 AI 终端，旨在无缝连接你的 IDE 与大语言模型（LLM）。
 
