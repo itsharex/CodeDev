@@ -101790,6 +101790,36 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-project-zomboid-0",
+    "type": "command",
+    "title": "project-zomboid - Start the server",
+    "content": "{{path/to/start-server.sh}}",
+    "group": "Linux Ops",
+    "description": "project-zomboid: Start a headless Project Zomboid server. (Start the server)",
+    "tags": [
+      "linux",
+      "project-zomboid",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-project-zomboid-1",
+    "type": "command",
+    "title": "project-zomboid - Start a server with a specific name",
+    "content": "{{path/to/start-server.sh}} -servername {{server_name}}",
+    "group": "Linux Ops",
+    "description": "project-zomboid: Start a headless Project Zomboid server. (Start a server with a specific name)",
+    "tags": [
+      "linux",
+      "project-zomboid",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-toolbox-help-0",
     "type": "command",
     "title": "toolbox-help - Display the `toolbox` manual",
