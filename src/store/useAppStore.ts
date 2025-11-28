@@ -2,9 +2,9 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { fileStorage } from '@/lib/storage';
 import { IgnoreConfig, DEFAULT_GLOBAL_IGNORE } from '@/types/context';
-import { AIModelConfig } from '@/types/model';
 import { fetch } from '@tauri-apps/api/http';
 import { emit } from '@tauri-apps/api/event'; 
+import { AIModelConfig, AIProviderConfig, DEFAULT_AI_CONFIG } from '@/types/model';
 
 // --- 1. 导出类型 ---
 export type AppView = 'prompts' | 'context' | 'patch';
@@ -73,6 +73,8 @@ interface AppState {
   models: AIModelConfig[];
   lastUpdated: number;
 
+  aiConfig: AIProviderConfig;
+
   // Actions
   setView: (view: AppView) => void;
   toggleSidebar: () => void;
@@ -83,7 +85,7 @@ interface AppState {
   setTheme: (theme: AppTheme, skipEmit?: boolean) => void;
   setLanguage: (lang: AppLang) => void;
   updateGlobalIgnore: (type: keyof IgnoreConfig, action: 'add' | 'remove', value: string) => void;
-  
+  setAIConfig: (config: Partial<AIProviderConfig>) => void;
   // Async Actions
   syncModels: () => Promise<void>;
   resetModels: () => void;
@@ -102,6 +104,7 @@ export const useAppStore = create<AppState>()(
       contextSidebarWidth: 300,
       theme: 'dark',
       language: 'zh',
+      aiConfig: DEFAULT_AI_CONFIG,
       globalIgnore: DEFAULT_GLOBAL_IGNORE,
       
       // 模型初始值
@@ -124,6 +127,9 @@ export const useAppStore = create<AppState>()(
         }
         return { theme };
       }),
+      setAIConfig: (config) => set((state) => ({ 
+        aiConfig: { ...state.aiConfig, ...config } 
+      })),
       setLanguage: (language) => set({ language }),
       updateGlobalIgnore: (type, action, value) => set((state) => {
         const currentList = state.globalIgnore[type];
@@ -185,7 +191,8 @@ export const useAppStore = create<AppState>()(
         currentView: state.currentView,
         globalIgnore: state.globalIgnore,
         models: state.models,
-        lastUpdated: state.lastUpdated
+        lastUpdated: state.lastUpdated,
+        aiConfig: state.aiConfig
       }),
     }
   )
