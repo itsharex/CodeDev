@@ -3,7 +3,7 @@ name: Release App
 on:
   push:
     tags:
-      - 'v*'
+      - 'v*' # 触发条件：推送 v 开头的 tag
 
 jobs:
   create-release:
@@ -14,19 +14,16 @@ jobs:
       release_id: ${{ steps.create_release.outputs.id }}
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Create Release
         id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ github.ref }}
-          release_name: CodeForge AI ${{ github.ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           draft: true
           prerelease: false
+          generate_release_notes: true
 
   build-tauri:
     needs: create-release
@@ -36,11 +33,11 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - platform: 'macos-latest' # 构建 macOS 版本 (.dmg, .app)
+          - platform: 'macos-latest'
             args: '--target universal-apple-darwin'
-          - platform: 'ubuntu-22.04' # 构建 Linux 版本 (.deb, .AppImage)
+          - platform: 'ubuntu-22.04'
             args: ''
-          - platform: 'windows-latest' # 构建 Windows 版本 (.exe, .msi)
+          - platform: 'windows-latest'
             args: ''
 
     runs-on: ${{ matrix.platform }}
