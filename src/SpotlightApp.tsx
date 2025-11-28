@@ -135,7 +135,7 @@ export default function SpotlightApp() {
     const totalIdealHeight = FIXED_HEIGHT + listHeight;
     const finalHeight = Math.min(Math.max(totalIdealHeight, 120), MAX_WINDOW_HEIGHT);
     appWindow.setSize(new LogicalSize(640, finalHeight));
-  }, [filtered, query]); // 监听 filtered，当搜索结果变化时高度会自动变
+  }, [filtered, query, selectedIndex]);
 
   // --- Actions ---
   const handleCopy = async (prompt: Prompt) => {
@@ -223,37 +223,64 @@ export default function SpotlightApp() {
              filtered.map((item, index) => {
                const isActive = index === selectedIndex;
                const isCopied = copiedId === item.id;
+               
+               // 判断是否有描述，用于布局逻辑
+               const hasDesc = !!item.description;
+
                return (
                  <div
                    key={item.id}
                    onClick={() => handleCopy(item)}
                    onMouseEnter={() => setSelectedIndex(index)}
                    className={cn(
-                     "relative px-4 py-3 rounded-lg flex items-center gap-4 cursor-pointer transition-all duration-150 group",
+                     "relative px-4 py-3 rounded-lg flex items-start gap-4 cursor-pointer transition-all duration-150 group",
                      isActive ? "bg-primary text-primary-foreground shadow-sm scale-[0.99]" : "text-foreground hover:bg-secondary/40",
                      isCopied && "bg-green-500 text-white"
                    )}
                  >
+                    {/* Icon Box */}
                     <div className={cn(
-                        "w-9 h-9 rounded-md flex items-center justify-center shrink-0 transition-colors",
+                        "w-9 h-9 mt-0.5 rounded-md flex items-center justify-center shrink-0 transition-colors",
                         isActive ? "bg-white/20 text-white" : "bg-secondary text-muted-foreground",
                         isCopied && "bg-white/20"
                     )}>
                         {isCopied ? <Check size={18} /> : (isCommand(item) ? <Terminal size={18} /> : <Sparkles size={18} />)}
                     </div>
-                    <div className="flex-1 min-w-0 flex flex-col gap-0.5">
+                    
+                    <div className="flex-1 min-w-0 flex flex-col gap-1">
+                        {/* 1. 标题行 */}
                         <div className="flex items-center justify-between">
                             <span className={cn("font-semibold truncate text-sm tracking-tight", isActive ? "text-white" : "text-foreground")}>
                                 {item.title}
                             </span>
                             {isActive && !isCopied && (
-                                <span className="text-[10px] opacity-70 flex items-center gap-1 font-medium bg-black/10 px-1.5 rounded">
+                                <span className="text-[10px] opacity-70 flex items-center gap-1 font-medium bg-black/10 px-1.5 rounded whitespace-nowrap">
                                     <CornerDownLeft size={10} /> Enter
                                 </span>
                             )}
                         </div>
-                        <div className={cn("text-xs truncate transition-opacity font-mono", isActive ? "opacity-80 text-blue-100" : "text-muted-foreground opacity-60")}>
-                            {item.description || item.content}
+                        
+                        {/* 2. 描述行 (如果存在) */}
+                        {hasDesc && (
+                            <div className={cn(
+                                "text-xs truncate transition-opacity", 
+                                isActive ? "opacity-90 text-white/90" : "text-muted-foreground opacity-70"
+                            )}>
+                                {item.description}
+                            </div>
+                        )}
+
+                        {/* 3. PROMPT TEMPLATE (核心修改) */}
+                        {/* 选中时：显示为代码块，多行展示；未选中且有描述时：隐藏以节省空间；未选中且无描述时：显示单行截断 */}
+                        <div className={cn(
+                            "text-xs font-mono transition-all duration-200",
+                            isActive 
+                                ? "mt-1 bg-black/20 rounded p-2 text-white/95 whitespace-pre-wrap break-all line-clamp-6" // 选中：代码块样式
+                                : (hasDesc ? "hidden" : "text-muted-foreground opacity-50 truncate") // 未选中：有描述则隐藏，无描述则显示预览
+                        )}>
+                            {/* 选中时加个小标签提示 */}
+                            {isActive && <span className="block text-[9px] opacity-50 mb-0.5 select-none uppercase tracking-wider">Template</span>}
+                            {item.content}
                         </div>
                     </div>
                  </div>
