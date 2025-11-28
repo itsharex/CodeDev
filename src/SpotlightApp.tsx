@@ -223,8 +223,6 @@ export default function SpotlightApp() {
              filtered.map((item, index) => {
                const isActive = index === selectedIndex;
                const isCopied = copiedId === item.id;
-               
-               // 判断是否有描述，用于布局逻辑
                const hasDesc = !!item.description;
 
                return (
@@ -238,7 +236,7 @@ export default function SpotlightApp() {
                      isCopied && "bg-green-500 text-white"
                    )}
                  >
-                    {/* Icon Box */}
+                    {/* Icon */}
                     <div className={cn(
                         "w-9 h-9 mt-0.5 rounded-md flex items-center justify-center shrink-0 transition-colors",
                         isActive ? "bg-white/20 text-white" : "bg-secondary text-muted-foreground",
@@ -248,7 +246,7 @@ export default function SpotlightApp() {
                     </div>
                     
                     <div className="flex-1 min-w-0 flex flex-col gap-1">
-                        {/* 1. 标题行 */}
+                        {/* 1. Title */}
                         <div className="flex items-center justify-between">
                             <span className={cn("font-semibold truncate text-sm tracking-tight", isActive ? "text-white" : "text-foreground")}>
                                 {item.title}
@@ -260,25 +258,25 @@ export default function SpotlightApp() {
                             )}
                         </div>
                         
-                        {/* 2. 描述行 (如果存在) */}
+                        {/* 2. Description (已修复) */}
                         {hasDesc && (
                             <div className={cn(
-                                "text-xs truncate transition-opacity", 
-                                isActive ? "opacity-90 text-white/90" : "text-muted-foreground opacity-70"
+                                "text-xs transition-all", // 移除之前的 truncate
+                                isActive 
+                                    ? "opacity-90 text-white/90 whitespace-pre-wrap" // 选中：自动换行，显示全部
+                                    : "text-muted-foreground opacity-70 truncate"    // 未选中：单行省略
                             )}>
                                 {item.description}
                             </div>
                         )}
 
-                        {/* 3. PROMPT TEMPLATE (核心修改) */}
-                        {/* 选中时：显示为代码块，多行展示；未选中且有描述时：隐藏以节省空间；未选中且无描述时：显示单行截断 */}
+                        {/* 3. Prompt Template */}
                         <div className={cn(
                             "text-xs font-mono transition-all duration-200",
                             isActive 
-                                ? "mt-1 bg-black/20 rounded p-2 text-white/95 whitespace-pre-wrap break-all line-clamp-6" // 选中：代码块样式
-                                : (hasDesc ? "hidden" : "text-muted-foreground opacity-50 truncate") // 未选中：有描述则隐藏，无描述则显示预览
+                                ? "mt-1 bg-black/20 rounded p-2 text-white/95 whitespace-pre-wrap break-all line-clamp-6"
+                                : (hasDesc ? "hidden" : "text-muted-foreground opacity-50 truncate")
                         )}>
-                            {/* 选中时加个小标签提示 */}
                             {isActive && <span className="block text-[9px] opacity-50 mb-0.5 select-none uppercase tracking-wider">Template</span>}
                             {item.content}
                         </div>
