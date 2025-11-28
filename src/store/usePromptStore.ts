@@ -4,7 +4,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { fileStorage } from '@/lib/storage';
 import { Prompt, DEFAULT_GROUP, PackManifest, PackManifestItem } from '@/types/prompt';
 import { fetch } from '@tauri-apps/api/http';
-import { emit } from '@tauri-apps/api/event';
 import { appWindow } from '@tauri-apps/api/window'
 
 // 多源 URL 配置 (GitHub + Gitee)
@@ -157,21 +156,18 @@ export const usePromptStore = create<PromptState>()(
             source: 'local'
           }, ...state.localPrompts]
         }));
-        emit('prompts-updated');
       },
 
       updatePrompt: (id, data) => {
         set((state) => ({
           localPrompts: state.localPrompts.map(p => p.id === id ? { ...p, ...data, updatedAt: Date.now() } : p)
         }));
-        emit('prompts-updated');
       },
 
       deletePrompt: (id) => {
         set((state) => ({
           localPrompts: state.localPrompts.filter(p => p.id !== id)
         }));
-        emit('prompts-updated');
       },
 
       // 收藏官方指令时记录 originalId
@@ -290,7 +286,6 @@ export const usePromptStore = create<PromptState>()(
             });
             
             console.log(`Pack ${pack.id} installed.`);
-            emit('prompts-updated');
 
         } catch (e: any) {
             console.error("Install failed:", e);
@@ -319,7 +314,6 @@ export const usePromptStore = create<PromptState>()(
                 repoPrompts: state.repoPrompts.filter(p => p.packId !== packId)
             }));
             
-            emit('prompts-updated');
         } catch (e) {
             console.error("Uninstall critical error:", e);
         } finally {
