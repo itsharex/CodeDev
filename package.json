@@ -15,6 +15,7 @@
     "clsx": "^2.1.1",
     "diff-match-patch": "^1.0.5",
     "js-tiktoken": "^1.0.21",
+    "js-yaml": "^4.1.1",
     "lucide-react": "^0.554.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -30,6 +31,7 @@
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.5",
     "@types/diff-match-patch": "^1.0.36",
+    "@types/js-yaml": "^4.0.9",
     "@types/node": "^24.10.1",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",

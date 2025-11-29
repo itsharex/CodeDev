@@ -5,8 +5,9 @@ import { TitleBar } from "@/components/layout/TitleBar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SettingsModal } from "@/components/settings/SettingsModal";
 import { useAppStore, AppTheme } from "@/store/useAppStore";
-import { ContextView } from "@/components/features/context/ContextView";
-import { PromptView } from "@/components/features/prompts/PromptView";
+import { PromptView } from '@/components/features/prompts/PromptView';
+import { ContextView } from '@/components/features/context/ContextView';
+import { PatchView } from '@/components/features/patch/PatchView';
 
 function App() {
   // 解构出 setTheme
@@ -76,11 +77,7 @@ function App() {
         <main className="flex-1 min-w-0 relative transition-colors duration-300">
           {currentView === 'prompts' && <PromptView />}
           {currentView === 'context' && <ContextView />}
-          {currentView === 'patch' && (
-             <div className="h-full flex items-center justify-center text-muted-foreground">
-                🚧 Patch Weaver 开发中...
-             </div>
-          )}
+          {currentView === 'patch' && <PatchView />}
         </main>
       </div>
       <SettingsModal />
