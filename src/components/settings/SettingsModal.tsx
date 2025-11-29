@@ -56,6 +56,46 @@ export function SettingsModal() {
                             <ThemeCard active={theme === 'dark'} onClick={() => setTheme('dark')} icon={<Moon size={24} />} label={getText('settings', 'themeDark', language)} />
                             <ThemeCard active={theme === 'light'} onClick={() => setTheme('light')} icon={<Sun size={24} />} label={getText('settings', 'themeLight', language)} />
                         </div>
+                        <div className="space-y-4 pt-4 border-t border-border/50">
+                            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
+                                Spotlight Window Size
+                            </h3>
+                            
+                            {/* Width Slider */}
+                            <div className="space-y-3">
+                                <div className="flex justify-between text-xs">
+                                    <span>Width</span>
+                                    <span className="font-mono text-muted-foreground">{useAppStore.getState().spotlightAppearance.width}px</span>
+                                </div>
+                                <input 
+                                    type="range" 
+                                    min="500" 
+                                    max="1000" 
+                                    step="20"
+                                    className="w-full h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
+                                    value={useAppStore.getState().spotlightAppearance.width}
+                                    onChange={(e) => useAppStore.getState().setSpotlightAppearance({ width: parseInt(e.target.value) })}
+                                />
+                                <p className="text-[10px] text-muted-foreground/60">Adjust the width of the command palette (500px - 1000px).</p>
+                            </div>
+
+                            {/* Height Slider */}
+                            <div className="space-y-3">
+                                <div className="flex justify-between text-xs">
+                                    <span>Max Chat Height</span>
+                                    <span className="font-mono text-muted-foreground">{useAppStore.getState().spotlightAppearance.maxChatHeight}px</span>
+                                </div>
+                                <input 
+                                    type="range" 
+                                    min="400" 
+                                    max="900" 
+                                    step="50"
+                                    className="w-full h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
+                                    value={useAppStore.getState().spotlightAppearance.maxChatHeight}
+                                    onChange={(e) => useAppStore.getState().setSpotlightAppearance({ maxChatHeight: parseInt(e.target.value) })}
+                                />
+                            </div>
+                        </div>
                     </div>
                 )}
                 

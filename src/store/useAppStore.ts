@@ -47,12 +47,17 @@ export const DEFAULT_MODELS: AIModelConfig[] = [
   }
 ];
 
-// ✨ 修改：配置 URL 列表 (CDN 优先 + GitHub 原站)
+// 配置 URL 列表 (CDN 优先 + GitHub 原站)
 const REMOTE_CONFIG_URLS = [
   'https://gitee.com/winriseF/models/raw/master/models/models.json',
   'https://cdn.jsdelivr.net/gh/WinriseF/Code-Forge-AI@main/models/models.json', // 方案一：jsDelivr CDN (国内快)
   'https://raw.githubusercontent.com/WinriseF/Code-Forge-AI/main/models/models.json' // 方案二：GitHub 原站 (备用)
 ];
+
+export interface SpotlightAppearance {
+  width: number;        // 默认 640
+  maxChatHeight: number; // 聊天模式最大高度，默认 600
+}
 
 // --- 3. Store 接口 ---
 interface AppState {
@@ -65,7 +70,8 @@ interface AppState {
   contextSidebarWidth: number;
   theme: AppTheme;
   language: AppLang;
-  
+  spotlightAppearance: SpotlightAppearance;
+
   // Filters
   globalIgnore: IgnoreConfig;
 
@@ -89,6 +95,7 @@ interface AppState {
   // Async Actions
   syncModels: () => Promise<void>;
   resetModels: () => void;
+  setSpotlightAppearance: (config: Partial<SpotlightAppearance>) => void;
 }
 
 // --- 4. Store 实现 ---
@@ -112,6 +119,10 @@ export const useAppStore = create<AppState>()(
       lastUpdated: 0,
 
       // Setters
+      spotlightAppearance: { width: 640, maxChatHeight: 600 },
+      setSpotlightAppearance: (config) => set((state) => ({
+        spotlightAppearance: { ...state.spotlightAppearance, ...config }
+      })),
       setView: (view) => set({ currentView: view }),
       toggleSidebar: () => set((state) => ({ isSidebarOpen: !state.isSidebarOpen })),
       setSettingsOpen: (open) => set({ isSettingsOpen: open }),
@@ -192,7 +203,8 @@ export const useAppStore = create<AppState>()(
         globalIgnore: state.globalIgnore,
         models: state.models,
         lastUpdated: state.lastUpdated,
-        aiConfig: state.aiConfig
+        aiConfig: state.aiConfig,
+        spotlightAppearance: state.spotlightAppearance
       }),
     }
   )

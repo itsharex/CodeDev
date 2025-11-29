@@ -16,7 +16,6 @@ import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 // 常量定义
 const FIXED_HEIGHT = 106; 
 const MAX_WINDOW_HEIGHT = 460;
-const MAX_CHAT_HEIGHT = 600;
 
 interface ScoredPrompt extends Prompt {
   score: number;
@@ -39,7 +38,7 @@ export default function SpotlightApp() {
   const chatEndRef = useRef<HTMLDivElement>(null); 
   
   const { getAllPrompts, initStore } = usePromptStore();
-  const { theme, setTheme, aiConfig } = useAppStore(); 
+  const { theme, setTheme, aiConfig, spotlightAppearance } = useAppStore(); 
   
   const allPrompts = getAllPrompts();
 
@@ -104,16 +103,17 @@ export default function SpotlightApp() {
 
   useLayoutEffect(() => {
     let finalHeight = 120;
+    const targetWidth = spotlightAppearance.width;
     if (mode === 'search') {
         const listHeight = listRef.current?.scrollHeight || 0;
         const totalIdealHeight = FIXED_HEIGHT + listHeight;
         finalHeight = Math.min(Math.max(totalIdealHeight, 120), MAX_WINDOW_HEIGHT);
     } else {
         // 如果有消息，窗口变高；没有消息，保持紧凑的空状态高度
-        finalHeight = messages.length > 0 ? MAX_CHAT_HEIGHT : 300;
+        finalHeight = messages.length > 0 ? spotlightAppearance.maxChatHeight : 300;
     }
-    appWindow.setSize(new LogicalSize(640, finalHeight));
-  }, [filtered, query, selectedIndex, mode, messages.length]);
+    appWindow.setSize(new LogicalSize(targetWidth, finalHeight));
+  }, [filtered, query, selectedIndex, mode, messages.length, spotlightAppearance]);
 
   const handleCopy = async (prompt: Prompt) => {
     if (!prompt) return;
