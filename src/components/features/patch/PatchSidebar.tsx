@@ -36,7 +36,8 @@ const AI_SYSTEM_PROMPT = `你是一位顶级的软件工程师。请针对用户
     modified: |
       export const sum = (a: number, b: number) => a + b;
 
-注意：不要输出任何Markdown代码块标记，直接输出纯 YAML 内容。`;
+注意：不要输出任何Markdown代码块标记，直接输出纯 YAML 内容。
+我的需求是：`;
 
 interface PatchSidebarProps {
   mode: PatchMode;

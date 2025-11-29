@@ -1,12 +1,13 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import { usePromptStore } from '@/store/usePromptStore';
 import { useAppStore } from '@/store/useAppStore';
-import { Search, Plus, Folder, Star, Hash, Trash2, Layers, CheckCircle2, PanelLeft, AlertTriangle, Loader2, Terminal, Sparkles } from 'lucide-react'; // 引入新图标
+import { Search, Plus, Folder, Star, Hash, Trash2, Layers, PanelLeft, AlertTriangle, Loader2, Terminal, Sparkles } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Prompt } from '@/types/prompt';
 import { writeText } from '@tauri-apps/api/clipboard';
 import { parseVariables } from '@/lib/template';
 import { getText } from '@/lib/i18n'; 
+import { Toast, ToastType } from '@/components/ui/Toast';
 
 import { PromptCard } from './PromptCard';
 import { PromptEditorDialog } from './dialogs/PromptEditorDialog';
@@ -29,15 +30,20 @@ export function PromptView() {
     getAllPrompts, 
     searchQuery, setSearchQuery, 
     deleteGroup, deletePrompt,
-    localPrompts, repoPrompts // 确保解构出来用于依赖检查
+    localPrompts, repoPrompts 
   } = usePromptStore();
 
   const { isPromptSidebarOpen, setPromptSidebarOpen, language } = useAppStore();
 
-  // 默认为 'prompt' (提示词) 或 'command' (指令)，看你偏好
   const [activeCategory, setActiveCategory] = useState<'command' | 'prompt'>('prompt');
 
-  const [showToast, setShowToast] = useState(false);
+  // 2. Toast 状态
+  const [toastState, setToastState] = useState<{ show: boolean; msg: string; type: ToastType }>({
+      show: false,
+      msg: '',
+      type: 'success'
+  });
+
   const [isEditorOpen, setIsEditorOpen] = useState(false);
   const [editingPrompt, setEditingPrompt] = useState<Prompt | null>(null);
   const [isFillerOpen, setIsFillerOpen] = useState(false);
@@ -49,25 +55,19 @@ export function PromptView() {
   const debouncedSearchQuery = useDebounce(searchQuery, 300); 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // 获取所有数据
   const allPrompts = useMemo(() => getAllPrompts(), [localPrompts, repoPrompts, groups]);
 
-  // 根据 activeCategory 将 Group 分类
   const { commandGroups, promptGroups } = useMemo(() => {
     const cGroups = new Set<string>();
     const pGroups = new Set<string>();
 
-    // 遍历所有 prompt 来归类 group
     allPrompts.forEach(p => {
-       // 默认如果没有 type，根据 source 或内容猜测，或者归为 prompt
        const type = p.type || (p.content.length < 50 ? 'command' : 'prompt');
        if (p.group && p.group !== 'Default') {
          if (type === 'command') cGroups.add(p.group);
          else pGroups.add(p.group);
        }
     });
-
-    // 将原本 store 中的 groups 列表(用户自定义的) 也分配一下
     
     return {
         commandGroups: Array.from(cGroups).sort(),
@@ -75,17 +75,14 @@ export function PromptView() {
     };
   }, [allPrompts]);
 
-  // 2. 过滤逻辑
   const filteredPrompts = useMemo(() => {
     const rawQuery = debouncedSearchQuery.trim().toLowerCase();
     
-    // Category (指令还是提示词)
     let baseList = allPrompts.filter(p => {
         const type = p.type || (p.content.length < 50 ? 'command' : 'prompt');
         return type === activeCategory;
     });
 
-    // 如果没搜索词，按分组过滤
     if (!rawQuery) {
       return baseList.filter(p => {
         if (activeGroup === 'all') return true;
@@ -94,12 +91,9 @@ export function PromptView() {
       });
     }
 
-    // 搜索逻辑 (保持不变，但作用于 baseList)
     const terms = rawQuery.split(/\s+/).filter(t => t.length > 0);
     return baseList
       .map(p => {
-        // 分组检查 (搜索模式下是否限制在当前组？通常搜索是全局的，但限制在当前 Category 下)
-        // 如果用户选了特定组，就在该组内搜；如果是 All，就在当前 Category 下搜
         const matchGroup = activeGroup === 'all' || activeGroup === 'favorite' ? true : p.group === activeGroup;
         if (!matchGroup) return { ...p, score: -1 };
 
@@ -113,11 +107,7 @@ export function PromptView() {
 
         for (const term of terms) {
             let termScore = 0;
-            if (title.includes(term)) {
-                termScore += 50;
-                if (title.startsWith(term)) termScore += 10; 
-                if (title === term) termScore += 20;
-            }
+            if (title.includes(term)) termScore += 50;
             if (tags.some(t => t.includes(term))) termScore += 30;
             if (desc.includes(term)) termScore += 5;
             if (content.includes(term)) termScore += 5;
@@ -135,7 +125,6 @@ export function PromptView() {
 
   }, [allPrompts, activeGroup, activeCategory, debouncedSearchQuery]);
 
-  // 3. 切片数据 (保持不变)
   const visiblePrompts = useMemo(() => filteredPrompts.slice(0, visibleCount), [filteredPrompts, visibleCount]);
 
   useEffect(() => {
@@ -152,7 +141,15 @@ export function PromptView() {
     }
   }, [filteredPrompts.length, visibleCount]);
   
-  const triggerToast = () => { setShowToast(true); setTimeout(() => setShowToast(false), 2000); };
+  // 3. 触发器
+  const triggerToast = (msg?: string) => { 
+      setToastState({ 
+          show: true, 
+          msg: msg || getText('prompts', 'copySuccess', language), 
+          type: 'success' 
+      }); 
+  };
+
   const handleCreate = () => { setEditingPrompt(null); setIsEditorOpen(true); };
   const handleEdit = (prompt: Prompt) => { setEditingPrompt(prompt); setIsEditorOpen(true); };
   const handleDeleteClick = (prompt: Prompt) => { setPromptToDelete(prompt); setIsDeleteConfirmOpen(true); };
@@ -177,19 +174,16 @@ export function PromptView() {
     }
   };
 
-  // --- 切换 Category 的处理 ---
   const switchCategory = (cat: 'command' | 'prompt') => {
       setActiveCategory(cat);
-      setActiveGroup('all'); // 切换大类时重置分组
+      setActiveGroup('all'); 
   };
 
   return (
     <div className="h-full flex flex-row overflow-hidden bg-background">
       
-      {/* --- Sidebar --- */}
+      {/* Sidebar */}
       <aside className={cn("flex flex-col bg-secondary/5 select-none transition-all duration-300 ease-in-out overflow-hidden", isPromptSidebarOpen ? "w-56 border-r border-border opacity-100" : "w-0 border-none opacity-0")}>
-        
-        {/* 1. 大类切换 (Tabs) */}
         <div className="p-3 pb-0 flex gap-1 shrink-0">
             <button 
                 onClick={() => switchCategory('prompt')}
@@ -210,7 +204,6 @@ export function PromptView() {
             <CategoryItem 
               icon={<Layers size={16} />} 
               label={getText('sidebar', 'all', language)} 
-              // 计算当前大类下的总数
               count={allPrompts.filter(p => (p.type || (p.content.length<50?'command':'prompt')) === activeCategory).length} 
               isActive={activeGroup === 'all'} 
               onClick={() => setActiveGroup('all')} 
@@ -218,7 +211,6 @@ export function PromptView() {
             <CategoryItem 
               icon={<Star size={16} />} 
               label={getText('sidebar', 'favorites', language)} 
-              // 计算当前大类下的收藏数
               count={allPrompts.filter(p => p.isFavorite && (p.type || (p.content.length<50?'command':'prompt')) === activeCategory).length}
               isActive={activeGroup === 'favorite'} 
               onClick={() => setActiveGroup('favorite')} 
@@ -234,7 +226,6 @@ export function PromptView() {
                 </button>
             </h2>
             <div className="space-y-1">
-                {/* 根据当前 Category 渲染对应的 Group 列表 */}
                 {(activeCategory === 'command' ? commandGroups : promptGroups).map(group => (
                    <CategoryItem 
                         key={group}
@@ -250,7 +241,7 @@ export function PromptView() {
         </div>
       </aside>
 
-      {/* --- Main Content --- */}
+      {/* Main Content */}
       <main className="flex-1 flex flex-col min-w-0 bg-background relative">
         <header className="h-14 border-b border-border flex items-center gap-3 px-4 shrink-0 bg-background/80 backdrop-blur z-10">
           <button onClick={() => setPromptSidebarOpen(!isPromptSidebarOpen)} className={cn("p-2 rounded-md text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors", !isPromptSidebarOpen && "text-primary bg-primary/10")}>
@@ -301,7 +292,7 @@ export function PromptView() {
         </div>
 
         <PromptEditorDialog isOpen={isEditorOpen} onClose={() => setIsEditorOpen(false)} initialData={editingPrompt} />
-        <VariableFillerDialog isOpen={isFillerOpen} onClose={() => setIsFillerOpen(false)} prompt={fillPrompt} variables={fillVars} onSuccess={triggerToast} />
+        <VariableFillerDialog isOpen={isFillerOpen} onClose={() => setIsFillerOpen(false)} prompt={fillPrompt} variables={fillVars} onSuccess={() => triggerToast()} />
 
         {isDeleteConfirmOpen && promptToDelete && (
           <div className="fixed inset-0 z-[70] bg-black/60 backdrop-blur-sm flex items-center justify-center animate-in fade-in duration-200">
@@ -329,12 +320,13 @@ export function PromptView() {
           </div>
         )}
 
-        <div className={cn("fixed bottom-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-out transform pointer-events-none", showToast ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0")}>
-          <div className="bg-foreground/90 text-background px-4 py-2 rounded-full shadow-lg flex items-center gap-2 text-sm font-medium backdrop-blur-sm">
-            <CheckCircle2 size={16} className="text-green-400" />
-            <span>{getText('prompts', 'copySuccess', language)}</span>
-          </div>
-        </div>
+        {/* ✨ 4. 使用统一的 Toast 组件 */}
+        <Toast 
+            message={toastState.msg} 
+            type={toastState.type} 
+            show={toastState.show} 
+            onDismiss={() => setToastState(prev => ({ ...prev, show: false }))} 
+        />
         
       </main>
     </div>

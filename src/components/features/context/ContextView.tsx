@@ -4,11 +4,11 @@ import { writeTextFile } from '@tauri-apps/api/fs';
 import { writeText as writeClipboard } from '@tauri-apps/api/clipboard';
 import { 
   FolderOpen, RefreshCw, Loader2, FileJson, 
-  PanelLeft, Search, ArrowRight, CheckCircle2, SlidersHorizontal, ChevronUp,
+  PanelLeft, Search, ArrowRight, SlidersHorizontal, ChevronUp,
   LayoutDashboard, FileText 
 } from 'lucide-react';
 import { useContextStore } from '@/store/useContextStore';
-import { useAppStore, DEFAULT_MODELS } from '@/store/useAppStore'; // 引入默认值
+import { useAppStore, DEFAULT_MODELS } from '@/store/useAppStore'; 
 import { scanProject } from '@/lib/fs_helper';
 import { calculateIdealTreeWidth } from '@/lib/tree_utils';
 import { calculateStats, generateContext } from '@/lib/context_assembler';
@@ -18,6 +18,7 @@ import { FilterManager } from './FilterManager';
 import { ContextPreview } from './ContextPreview';
 import { cn } from '@/lib/utils';
 import { getText } from '@/lib/i18n';
+import { Toast, ToastType } from '@/components/ui/Toast';
 
 export function ContextView() {
   const { 
@@ -36,12 +37,16 @@ export function ContextView() {
 
   const [pathInput, setPathInput] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState('');
   const [showFilters, setShowFilters] = useState(false); 
   const [rightViewMode, setRightViewMode] = useState<'dashboard' | 'preview'>('dashboard');
 
-  // 兜底逻辑：如果 store 里的 models 为空（比如还没 sync 下来），使用默认值
+  // 2. Toast 状态管理优化
+  const [toastState, setToastState] = useState<{ show: boolean; msg: string; type: ToastType }>({
+      show: false,
+      msg: '',
+      type: 'success'
+  });
+
   const activeModels = (models && models.length > 0) ? models : DEFAULT_MODELS;
 
   useEffect(() => {
@@ -59,10 +64,9 @@ export function ContextView() {
   }, [fileTree]);
 
   // --- Actions ---
-  const triggerToast = (msg: string) => {
-    setToastMessage(msg);
-    setShowToast(true);
-    setTimeout(() => setShowToast(false), 2000);
+  // 3. 更新触发函数
+  const triggerToast = (msg: string, type: ToastType = 'success') => {
+    setToastState({ show: true, msg, type });
   };
 
   const handleCopyContext = async () => {
@@ -72,10 +76,10 @@ export function ContextView() {
       const { text, tokenCount } = await generateContext(fileTree, { removeComments });
       await writeClipboard(text);
       console.log(`Context copied! Actual tokens: ${tokenCount}`);
-      triggerToast(getText('context', 'toastCopied', language));
+      triggerToast(getText('context', 'toastCopied', language), 'success');
     } catch (err) {
       console.error("Failed to copy:", err);
-      triggerToast(getText('context', 'toastCopyFail', language));
+      triggerToast(getText('context', 'toastCopyFail', language), 'error');
     } finally {
       setIsGenerating(false);
     }
@@ -95,10 +99,10 @@ export function ContextView() {
       }
       const { text } = await generateContext(fileTree, { removeComments });
       await writeTextFile(filePath, text);
-      triggerToast(getText('context', 'toastSaved', language));
+      triggerToast(getText('context', 'toastSaved', language), 'success');
     } catch (err) {
       console.error("Failed to save file:", err);
-      triggerToast(getText('context', 'toastSaveFail', language));
+      triggerToast(getText('context', 'toastSaveFail', language), 'error');
     } finally {
       setIsGenerating(false);
     }
@@ -108,7 +112,6 @@ export function ContextView() {
     if (!path.trim()) return;
     setIsScanning(true);
     try {
-      // 合并全局和项目配置
       const effectiveConfig = {
         dirs: Array.from(new Set([...globalIgnore.dirs, ...projectIgnore.dirs])),
         files: Array.from(new Set([...globalIgnore.files, ...projectIgnore.files])),
@@ -124,6 +127,7 @@ export function ContextView() {
       if (!isContextSidebarOpen) setContextSidebarOpen(true);
     } catch (err) {
       console.error("Scan failed:", err);
+      triggerToast("Scan failed. Check path.", 'error');
     } finally {
       setIsScanning(false);
     }
@@ -143,7 +147,6 @@ export function ContextView() {
     if (e.key === 'Enter') performScan(pathInput);
   };
 
-  // Resizing Logic
   const isResizingRef = useRef(false);
   const startResizing = () => { isResizingRef.current = true; };
   
@@ -198,8 +201,6 @@ export function ContextView() {
 
       {/* Main Split View */}
       <div className="flex-1 flex overflow-hidden relative">
-        
-        {/* Left Sidebar */}
         <div 
           className={cn("flex flex-col bg-secondary/5 border-r border-border transition-all duration-75 ease-linear overflow-hidden relative group/sidebar", !isContextSidebarOpen && "w-0 border-none opacity-0")}
           style={{ width: isContextSidebarOpen ? `${contextSidebarWidth}px` : 0 }}
@@ -209,7 +210,6 @@ export function ContextView() {
              <span className="bg-secondary/50 px-1.5 py-0.5 rounded text-[10px]">{getText('context', 'selectedCount', language, { count: stats.fileCount.toString() })}</span>
           </div>
           
-          {/* File Tree */}
           <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
             {!projectRoot ? (
               <div className="mt-10 flex flex-col items-center justify-center text-muted-foreground opacity-50 gap-2 text-center px-4"><p className="text-sm">{getText('context', 'enterPath', language)}</p></div>
@@ -222,7 +222,6 @@ export function ContextView() {
             )}
           </div>
 
-          {/* Filters */}
           <div className="border-t border-border bg-background shrink-0 flex flex-col z-10">
               <button 
                   onClick={() => setShowFilters(!showFilters)}
@@ -238,15 +237,12 @@ export function ContextView() {
               )}
           </div>
           
-          {/* Resize Handle */}
           {isContextSidebarOpen && <div onMouseDown={startResizing} className="absolute top-0 right-0 bottom-0 w-1 cursor-col-resize hover:bg-primary/50 active:bg-primary transition-colors z-20" />}
         </div>
 
-        {/* Right Content */}
         <div className="flex-1 bg-background min-w-0 flex flex-col relative">
             <div className="absolute inset-0 bg-grid-slate-900/[0.04] bg-[bottom_1px_center] dark:bg-grid-slate-400/[0.05] [mask-image:linear-gradient(to_bottom,transparent,black)] pointer-events-none" />
             
-            {/* View Toggle */}
             <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
                <div className="bg-secondary/80 backdrop-blur-md border border-border p-1 rounded-xl flex items-center shadow-sm pointer-events-auto">
                   <ViewToggleBtn 
@@ -264,13 +260,12 @@ export function ContextView() {
                </div>
             </div>
 
-            {/* Content Area */}
             <div className="flex-1 overflow-y-auto custom-scrollbar pt-20 pb-10 h-full"> 
                 {rightViewMode === 'dashboard' ? (
                    <TokenDashboard 
                      stats={stats}
                      fileTree={fileTree}
-                     models={activeModels} // ✨ 传入处理后的 models
+                     models={activeModels}
                      onCopy={handleCopyContext}
                      onSave={handleSaveToFile}
                      isGenerating={isGenerating}
@@ -284,13 +279,13 @@ export function ContextView() {
         </div>
       </div>
 
-      {/* Toast */}
-      <div className={cn("fixed bottom-8 left-1/2 -translate-x-1/2 z-50 transition-all duration-300 ease-out pointer-events-none", showToast ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0")}>
-        <div className="bg-foreground/90 text-background px-5 py-2.5 rounded-full shadow-2xl flex items-center gap-3 text-sm font-medium backdrop-blur-md border border-white/10">
-          <CheckCircle2 size={18} className="text-green-400" />
-          <span>{toastMessage}</span>
-        </div>
-      </div>
+      {/* 4. 替换旧 Toast 为新组件 */}
+      <Toast 
+        message={toastState.msg} 
+        type={toastState.type} 
+        show={toastState.show} 
+        onDismiss={() => setToastState(prev => ({ ...prev, show: false }))} 
+      />
     </div>
   );
 }
