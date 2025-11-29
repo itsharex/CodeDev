@@ -1,17 +1,9 @@
 import yaml from 'js-yaml';
+import { PatchOperation, FilePatch } from '@/components/features/patch/patch_types';
 
-// 定义了单个补丁操作的数据结构
-export interface PatchOperation {
-  // 操作类型: 'replace', 'insert_after', 'insert_before', 'delete'
-  type: 'replace' | 'insert_after' | 'insert_before' | 'delete';
-  // 用于定位的原始代码（上下文 + 目标行）
-  originalBlock: string;
-  // 应用变更后的代码（上下文 + 新增行）
-  modifiedBlock: string;
-}
-
-// 定义了 YAML 文件中单个条目的结构
 interface YamlPatchItem {
+  file?: string; // ✨ 新增：文件路径字段
+  // 操作字段
   replace?: {
     original: string;
     modified: string;
@@ -22,48 +14,61 @@ interface YamlPatchItem {
     anchor: string;
     content: string;
   };
-  // (未来可以扩展 insert_before, delete 等)
 }
 
 /**
- * 解析 "CodeForge YAML Patch" 格式的字符串。
- * @param yamlContent - 包含补丁指令的 YAML 字符串
- * @returns 返回一个 PatchOperation 对象数组，可供 applyPatches 函数使用
+ * 解析多文件 YAML Patch
+ * 格式示例：
+ * - file: src/App.tsx
+ *   replace: ...
+ * - replace: ... (继续上一个文件)
+ * - file: src/utils.ts (切换文件)
+ *   insert_after: ...
  */
-export function parseYamlPatch(yamlContent: string): PatchOperation[] {
-  const operations: PatchOperation[] = [];
+export function parseMultiFilePatch(yamlContent: string): FilePatch[] {
+  const filePatches: FilePatch[] = [];
+  let currentFile: FilePatch | null = null;
 
   try {
-    // 使用 js-yaml 库安全地加载 YAML 内容
     const doc = yaml.load(yamlContent);
+    if (!Array.isArray(doc)) return [];
 
-    // 检查解析结果是否为数组
-    if (!Array.isArray(doc)) {
-      console.warn("YAML patch is not a valid list.");
-      return [];
-    }
-    
-    // 遍历 YAML 文件中的每一个条目
     for (const item of doc as YamlPatchItem[]) {
-      if (item.replace) {
+      // 1. 如果遇到 file 字段，切换当前文件上下文
+      if (item.file) {
+        // 查找是否已经有这个文件的记录 (支持分散写，自动合并)
+        let existing = filePatches.find(f => f.filePath === item.file);
+        if (!existing) {
+          existing = { filePath: item.file, operations: [] };
+          filePatches.push(existing);
+        }
+        currentFile = existing;
+      }
+
+      // 如果还没有文件上下文，且操作出现了，这是非法格式（或者归为 unknown）
+      if (!currentFile && (item.replace || item.insert_after)) {
+         // 为了容错，可以创建一个 'unknown' 文件，或者跳过
+         currentFile = { filePath: 'unknown_file', operations: [] };
+         filePatches.push(currentFile);
+      }
+
+      // 2. 解析具体操作
+      if (item.replace && currentFile) {
         const { original, modified, context_before = '', context_after = '' } = item.replace;
-        // 精确地重建用于查找的原始代码块和用于替换的新代码块
         const originalBlock = `${context_before}\n${original}\n${context_after}`.trim();
         const modifiedBlock = `${context_before}\n${modified}\n${context_after}`.trim();
         
-        operations.push({
+        currentFile.operations.push({
           type: 'replace',
           originalBlock,
           modifiedBlock,
         });
-
-      } else if (item.insert_after) {
+      } else if (item.insert_after && currentFile) {
         const { anchor, content } = item.insert_after;
-        // 对于插入操作，原始块就是锚点，修改块是锚点+新内容
         const originalBlock = anchor;
         const modifiedBlock = `${anchor}\n${content}`;
 
-        operations.push({
+        currentFile.operations.push({
           type: 'insert_after',
           originalBlock,
           modifiedBlock,
@@ -71,36 +76,21 @@ export function parseYamlPatch(yamlContent: string): PatchOperation[] {
       }
     }
   } catch (e) {
-    console.error("Failed to parse YAML patch:", e);
-    // 如果解析失败，返回空数组，防止程序崩溃
-    return [];
+    console.error("YAML Parse Error", e);
   }
 
-  return operations;
+  return filePatches;
 }
 
 /**
- * 将一系列解析后的补丁操作应用到原始代码上。
- * @param originalCode - 原始的文件内容字符串
- * @param operations - 从 parseYamlPatch 函数得到的 PatchOperation 数组
- * @returns 返回应用了所有补丁之后的新代码字符串
+ * 保持原有的应用逻辑不变
  */
 export function applyPatches(originalCode: string, operations: PatchOperation[]): string {
   let resultCode = originalCode;
-  
-  // 依次执行每一个补丁操作
   for (const op of operations) {
-    // 核心逻辑：使用字符串替换来应用变更。
-    // 因为 originalBlock 包含了上下文，所以这种替换是高度精确的。
     if (resultCode.includes(op.originalBlock)) {
       resultCode = resultCode.replace(op.originalBlock, op.modifiedBlock);
-    } else {
-      console.warn("Patch skipped: Original block not found in the code.", {
-        originalBlock: op.originalBlock,
-      });
-      // 在一个更复杂的系统中，这里可以收集错误信息并反馈给用户
     }
   }
-
   return resultCode;
 }

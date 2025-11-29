@@ -66,6 +66,28 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
+  
+  @layer utilities {
+    .diagonal-stripes {
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 5px,
+        rgba(128, 128, 128, 0.05) 5px,
+        rgba(128, 128, 128, 0.05) 10px
+      );
+    }
+  }
+
+  .diagonal-stripes {
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 5px,
+      rgba(128, 128, 128, 0.05) 5px,
+      rgba(128, 128, 128, 0.05) 10px
+    );
+  }
 }
 
 @layer base {
