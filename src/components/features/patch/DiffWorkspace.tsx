@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Save, Copy, ArrowDownUp, PanelLeftClose, PanelLeftOpen } from 'lucide-react'; // ✨ 引入图标
+import { Save, Copy, ArrowDownUp, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
 import { DiffViewer } from './DiffViewer';
 import { PatchFileItem } from './patch_types';
 import { cn } from '@/lib/utils';
@@ -11,7 +11,6 @@ interface DiffWorkspaceProps {
   onSave: (file: PatchFileItem) => void;
   onCopy: (content: string) => void;
   onManualUpdate?: (original: string, modified: string) => void;
-  // ✨ 新增 Props
   isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
 }
@@ -23,9 +22,6 @@ export function DiffWorkspace({
   
   const { language } = useAppStore();
   const [showInputs, setShowInputs] = useState(true);
-
-  // 即使没有文件，我们现在也需要显示 Toolbar 以便能把 Sidebar 切换回来
-  // 所以我们把 Toolbar 提取出来或者直接修改结构
   
   const hasChanges = selectedFile ? selectedFile.original !== selectedFile.modified : false;
   const isManual = selectedFile ? !!selectedFile.isManual : false;
@@ -38,7 +34,6 @@ export function DiffWorkspace({
         
         {/* Left Side: Sidebar Toggle & File Info */}
         <div className="flex items-center gap-3 min-w-0 flex-1">
-            {/* ✨ 切换按钮 */}
             <button 
                 onClick={onToggleSidebar}
                 className="p-2 rounded-md hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors shrink-0"
@@ -139,13 +134,13 @@ export function DiffWorkspace({
                 </div>
             )}
 
-            {/* Diff Viewer */}
+            {/* Diff Viewer Container */}
             <div className="flex-1 relative overflow-hidden bg-background">
-                <div className="absolute inset-0 bg-grid-slate-900/[0.02] dark:bg-grid-slate-400/[0.02] bg-[bottom_1px_center] pointer-events-none" />
                 <DiffViewer 
-                original={selectedFile.original}
-                modified={selectedFile.modified}
-                placeholder={isManual ? "Paste text above to compare" : "Waiting for inputs..."}
+                  original={selectedFile.original}
+                  modified={selectedFile.modified}
+                  fileName={selectedFile.path} // ✨ 传递文件名，Monaco 会自动识别语言
+                  placeholder={isManual ? "Paste text above to compare" : "Waiting for inputs..."}
                 />
             </div>
           </>
