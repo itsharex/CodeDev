@@ -140,6 +140,17 @@ export default function SpotlightApp() {
   }, [theme, setTheme]);
 
   useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault(); 
+    };
+
+    document.addEventListener('contextmenu', handleContextMenu);
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu);
+    };
+  }, []);
+
+  useEffect(() => {
     const unlistenPromise = appWindow.onFocusChanged(async ({ payload: isFocused }) => {
       if (isFocused) {
         await usePromptStore.persist.rehydrate();
