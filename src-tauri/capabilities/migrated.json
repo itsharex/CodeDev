@@ -23,6 +23,11 @@
       "identifier": "fs:scope",
       "allow": ["$APP_LOCAL_DATA/**", "$HOME/**", "**"]
     },
+    "fs:allow-write-text-file",
+    "fs:allow-read-text-file",
+    "fs:allow-mkdir",
+    "fs:allow-remove",
+    "fs:allow-exists",
     "shell:allow-open",
     "dialog:default",
     "clipboard-manager:allow-write-text",

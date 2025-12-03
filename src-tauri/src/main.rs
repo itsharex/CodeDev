@@ -101,14 +101,9 @@ fn main() {
             #[cfg(desktop)]
             {
                 use tauri_plugin_global_shortcut::GlobalShortcutExt;
-                // 确保这里注册的是 Alt+S
-                if let Err(e) = app.global_shortcut().register("Alt+S") {
-                    println!("Error registering shortcut Alt+S: {:?}", e);
-                } else {
-                    println!("Successfully registered shortcut: Alt+S");
-                }
+                // 注册 Alt+S 快捷键
+                let _ = app.global_shortcut().register("Alt+S");
             }
-
             Ok(())
         })
         .on_window_event(|window, event| match event {
