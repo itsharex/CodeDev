@@ -41,9 +41,6 @@ fn main() {
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, shortcut, event| {
-                    // 打印日志方便调试：你可以在终端看到是否触发了按键
-                    println!("Global Shortcut Event: {:?} State: {:?}", shortcut.to_string(), event.state());
-
                     if event.state() == ShortcutState::Pressed {
                         // 兼容性判断：匹配 "Alt+S"
                         if shortcut.matches(Modifiers::ALT, Code::KeyS) {

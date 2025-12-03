@@ -56,6 +56,7 @@
         "decorations": false,
         "center": true,
         "transparent": true,
+        "shadow": false,
         "visible": false,
         "useHttpsScheme": true
       },
@@ -69,6 +70,7 @@
         "center": true,
         "decorations": false,
         "transparent": true,
+        "shadow": false,
         "alwaysOnTop": true,
         "visible": false,
         "skipTaskbar": true,
