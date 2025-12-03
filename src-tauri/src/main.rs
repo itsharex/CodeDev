@@ -62,7 +62,6 @@ fn main() {
         )
         .invoke_handler(tauri::generate_handler![greet, get_file_size])
         .setup(|app| {
-            // === 托盘菜单 ===
             let quit_i = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
             let show_i = MenuItem::with_id(app, "show", "显示主窗口", true, None::<&str>)?;
             
@@ -88,16 +87,13 @@ fn main() {
                     } => {
                         let app = tray.app_handle();
                         if let Some(window) = app.get_webview_window("main") {
-                            // 获取窗口当前状态
-                            let is_visible = window.is_visible().unwrap_or(false);
-                            let is_minimized = window.is_minimized().unwrap_or(false);
-                            if is_visible && !is_minimized {
-                                let _ = window.hide();
-                            } else {
+                            // 1. 如果窗口最小化了，先还原
+                            if window.is_minimized().unwrap_or(false) {
                                 let _ = window.unminimize();
-                                let _ = window.show();
-                                let _ = window.set_focus();
                             }
+                            // 这会强制将窗口带到最顶层
+                            let _ = window.show();
+                            let _ = window.set_focus();
                         }
                     }
                     _ => {}
