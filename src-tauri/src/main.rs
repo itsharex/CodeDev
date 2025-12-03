@@ -9,8 +9,7 @@ use tauri::{
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
     Manager, WindowEvent,
 };
-// 1. 引入 ShortcutState 用于判断按下/释放状态
-use tauri_plugin_global_shortcut::ShortcutState;
+use tauri_plugin_global_shortcut::{ShortcutState, Code, Modifiers};
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -42,15 +41,19 @@ fn main() {
         .plugin(
             tauri_plugin_global_shortcut::Builder::new()
                 .with_handler(|app, shortcut, event| {
-                    // 2. 修正判断逻辑：使用 state() 方法和 ShortcutState 枚举
-                    // 3. 修正快捷键匹配：使用 to_string() 获取字符串表示
-                    if event.state() == ShortcutState::Pressed && shortcut.to_string() == "Alt+S" {
-                        if let Some(window) = app.get_webview_window("spotlight") {
-                            if window.is_visible().unwrap_or(false) {
-                                let _ = window.hide();
-                            } else {
-                                let _ = window.show();
-                                let _ = window.set_focus();
+                    // 打印日志方便调试：你可以在终端看到是否触发了按键
+                    println!("Global Shortcut Event: {:?} State: {:?}", shortcut.to_string(), event.state());
+
+                    if event.state() == ShortcutState::Pressed {
+                        // 兼容性判断：匹配 "Alt+S"
+                        if shortcut.matches(Modifiers::ALT, Code::KeyS) {
+                             if let Some(window) = app.get_webview_window("spotlight") {
+                                if window.is_visible().unwrap_or(false) {
+                                    let _ = window.hide();
+                                } else {
+                                    let _ = window.show();
+                                    let _ = window.set_focus();
+                                }
                             }
                         }
                     }
@@ -85,10 +88,13 @@ fn main() {
                     } => {
                         let app = tray.app_handle();
                         if let Some(window) = app.get_webview_window("main") {
+                            // 获取窗口当前状态
                             let is_visible = window.is_visible().unwrap_or(false);
-                            if is_visible {
+                            let is_minimized = window.is_minimized().unwrap_or(false);
+                            if is_visible && !is_minimized {
                                 let _ = window.hide();
                             } else {
+                                let _ = window.unminimize();
                                 let _ = window.show();
                                 let _ = window.set_focus();
                             }
@@ -102,7 +108,12 @@ fn main() {
             #[cfg(desktop)]
             {
                 use tauri_plugin_global_shortcut::GlobalShortcutExt;
-                app.global_shortcut().register("Alt+S")?;
+                // 确保这里注册的是 Alt+S
+                if let Err(e) = app.global_shortcut().register("Alt+S") {
+                    println!("Error registering shortcut Alt+S: {:?}", e);
+                } else {
+                    println!("Successfully registered shortcut: Alt+S");
+                }
             }
 
             Ok(())

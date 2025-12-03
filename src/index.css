@@ -95,10 +95,10 @@
     @apply border-border;
   }
   body {
-    /* 关键：使用语义化变量 bg-background，而不是写死 bg-slate-950 */
-    @apply bg-background text-foreground transition-colors duration-300;
+    @apply text-foreground transition-colors duration-300;
     font-feature-settings: "rlig" 1, "calt" 1;
-    background-color: transparent; /* 配合 Tauri 透明窗口 */
+    background-color: transparent; 
+    border: none;
   }
 }
 
