@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
+import { getAllWebviewWindows } from '@tauri-apps/api/webviewWindow';
 import { listen } from '@tauri-apps/api/event';
+import { register, unregisterAll } from '@tauri-apps/plugin-global-shortcut'; 
+
 import { TitleBar } from "@/components/layout/TitleBar";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { SettingsModal } from "@/components/settings/SettingsModal";
@@ -9,11 +12,12 @@ import { PromptView } from '@/components/features/prompts/PromptView';
 import { ContextView } from '@/components/features/context/ContextView';
 import { PatchView } from '@/components/features/patch/PatchView';
 import { GlobalConfirmDialog } from "@/components/ui/GlobalConfirmDialog";
+
 const appWindow = getCurrentWebviewWindow()
 
 function App() {
   // 解构出 setTheme
-  const { currentView, theme, setTheme, syncModels, lastUpdated } = useAppStore();
+  const { currentView, theme, setTheme, syncModels, lastUpdated, spotlightShortcut } = useAppStore();
 
   useEffect(() => {
     // 1. 初始化 DOM 类名 (防止刚启动时颜色不对)
@@ -38,6 +42,43 @@ function App() {
         unlistenPromise.then(unlisten => unlisten());
     };
   }, []); // 空依赖数组，只在组件挂载时执行一次
+
+  useEffect(() => {
+    // 只有在 main 窗口才执行此逻辑，避免 spotlight 窗口重复注册
+    if (appWindow.label !== 'main') return;
+    const setupShortcut = async () => {
+      try {
+        // 1. 清除所有旧的快捷键，防止冲突
+        await unregisterAll();
+        if (!spotlightShortcut) return; // 如果用户清空了快捷键，就不注册
+        // 2. 注册新的快捷键
+        await register(spotlightShortcut, async (event) => {
+          if (event.state === 'Pressed') {
+            // 查找 spotlight 窗口
+            const windows = await getAllWebviewWindows();
+            const spotlight = windows.find(w => w.label === 'spotlight');
+            if (spotlight) {
+              const isVisible = await spotlight.isVisible();
+              if (isVisible) {
+                await spotlight.hide();
+              } else {
+                await spotlight.show();
+                await spotlight.setFocus();
+              }
+            }
+          }
+        });
+        console.log(`[Shortcut] Registered: ${spotlightShortcut}`);
+      } catch (err) {
+        console.error('[Shortcut] Registration failed:', err);
+      }
+    };
+
+    setupShortcut();
+    return () => {
+      // unregisterAll(); 
+    };
+  }, [spotlightShortcut]); // 当快捷键设置改变时重新执行
 
   useEffect(() => {
     const handleContextMenu = (e: MouseEvent) => {

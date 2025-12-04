@@ -37,6 +37,9 @@
     "clipboard-manager:allow-write-image",
     "clipboard-manager:allow-read-image",
     "global-shortcut:default",
+    "global-shortcut:allow-register",
+    "global-shortcut:allow-unregister-all",
+    "global-shortcut:allow-is-registered",
     {
       "identifier": "http:default",
       "allow": [

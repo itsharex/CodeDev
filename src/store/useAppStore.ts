@@ -71,7 +71,8 @@ interface AppState {
   theme: AppTheme;
   language: AppLang;
   spotlightAppearance: SpotlightAppearance;
-
+  //快捷键
+  spotlightShortcut: string; 
   // Filters
   globalIgnore: IgnoreConfig;
 
@@ -93,6 +94,7 @@ interface AppState {
   setLanguage: (lang: AppLang) => void;
   updateGlobalIgnore: (type: keyof IgnoreConfig, action: 'add' | 'remove', value: string) => void;
   setAIConfig: (config: Partial<AIProviderConfig>) => void;
+  setSpotlightShortcut: (shortcut: string) => void;
   // Async Actions
   syncModels: () => Promise<void>;
   resetModels: () => void;
@@ -112,6 +114,7 @@ export const useAppStore = create<AppState>()(
       contextSidebarWidth: 300,
       theme: 'dark',
       language: 'zh',
+      spotlightShortcut: 'Alt+S', 
       aiConfig: DEFAULT_AI_CONFIG,
       savedProviderSettings: DEFAULT_PROVIDER_SETTINGS,
       globalIgnore: DEFAULT_GLOBAL_IGNORE,
@@ -140,6 +143,7 @@ export const useAppStore = create<AppState>()(
         }
         return { theme };
       }),
+      setSpotlightShortcut: (shortcut) => set({ spotlightShortcut: shortcut }),
       setAIConfig: (config) => set((state) => {
         const newConfig = { ...state.aiConfig, ...config };
         const currentProviderId = newConfig.providerId;
@@ -237,6 +241,7 @@ export const useAppStore = create<AppState>()(
       partialize: (state) => ({
         theme: state.theme,
         language: state.language,
+        spotlightShortcut: state.spotlightShortcut,
         isSidebarOpen: state.isSidebarOpen,
         isPromptSidebarOpen: state.isPromptSidebarOpen,
         isContextSidebarOpen: state.isContextSidebarOpen,

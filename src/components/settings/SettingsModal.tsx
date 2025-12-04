@@ -5,6 +5,7 @@ import { getText } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 import { FilterManager } from '../features/context/FilterManager';
 import { PromptLibraryManager } from './PromptLibraryManager';
+import { ShortcutInput } from '@/components/ui/ShortcutInput';
 
 export function SettingsModal() {
   const { 
@@ -12,7 +13,8 @@ export function SettingsModal() {
     theme, setTheme, 
     language, setLanguage,
     globalIgnore, updateGlobalIgnore,
-    aiConfig, setAIConfig
+    aiConfig, setAIConfig,
+    spotlightShortcut, setSpotlightShortcut
   } = useAppStore();
 
   const [activeSection, setActiveSection] = useState<'appearance' | 'language' | 'filters' | 'library' | 'ai'>('appearance');
@@ -56,6 +58,11 @@ export function SettingsModal() {
                             <ThemeCard active={theme === 'dark'} onClick={() => setTheme('dark')} icon={<Moon size={24} />} label={getText('settings', 'themeDark', language)} />
                             <ThemeCard active={theme === 'light'} onClick={() => setTheme('light')} icon={<Sun size={24} />} label={getText('settings', 'themeLight', language)} />
                         </div>
+                        <div className="w-full h-px bg-border/50 my-4" />
+                        <ShortcutInput 
+                            value={spotlightShortcut} 
+                            onChange={setSpotlightShortcut} 
+                        />
                         <div className="space-y-4 pt-4 border-t border-border/50">
                             <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">
                                 {getText('settings', 'spotlightSize', language)}
