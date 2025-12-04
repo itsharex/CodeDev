@@ -19,6 +19,7 @@ import { getText } from './lib/i18n';
 import { CodeBlock } from '@/components/ui/CodeBlock';
 import { useSmartContextMenu } from '@/lib/hooks';
 import { parseVariables } from '@/lib/template';
+import { GlobalConfirmDialog } from "@/components/ui/GlobalConfirmDialog";
 
 // 导入核心执行模块和 store
 import { executeCommand } from './lib/command_executor';
@@ -552,6 +553,7 @@ export default function SpotlightApp() {
           </div>
         </div>
       </div>
+      <GlobalConfirmDialog /> 
     </>
   );
 }

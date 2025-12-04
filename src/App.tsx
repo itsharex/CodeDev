@@ -8,6 +8,7 @@ import { useAppStore, AppTheme } from "@/store/useAppStore";
 import { PromptView } from '@/components/features/prompts/PromptView';
 import { ContextView } from '@/components/features/context/ContextView';
 import { PatchView } from '@/components/features/patch/PatchView';
+import { GlobalConfirmDialog } from "@/components/ui/GlobalConfirmDialog";
 const appWindow = getCurrentWebviewWindow()
 
 function App() {
@@ -82,6 +83,7 @@ function App() {
         </main>
       </div>
       <SettingsModal />
+      <GlobalConfirmDialog /> 
     </div>
   );
 }
