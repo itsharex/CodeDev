@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Save, Copy, ArrowDownUp, PanelLeftClose, PanelLeftOpen } from 'lucide-react';
+import { Save, Copy, ArrowDownUp, PanelLeftClose, PanelLeftOpen, Trash2 } from 'lucide-react';
 import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { DiffViewer } from './DiffViewer';
 import { PatchFileItem } from './patch_types';
@@ -34,7 +34,6 @@ export function DiffWorkspace({
     textarea: HTMLTextAreaElement | null,
     inputType: 'original' | 'modified'
   ) => {
-    // --- 增加空值检查 ---
     if (!textarea || !onManualUpdate || !selectedFile) return;
 
     const { selectionStart, selectionEnd, value } = textarea;
@@ -47,7 +46,6 @@ export function DiffWorkspace({
     }
     
     setTimeout(() => {
-      // 在 timeout 内部再次检查
       if (textarea) {
         const newCursorPos = selectionStart + pastedText.length;
         textarea.focus();
@@ -67,7 +65,6 @@ export function DiffWorkspace({
   return (
     <div 
       className="flex-1 flex flex-col min-h-0 bg-background h-full animate-in fade-in duration-300"
-      // 全局右键只处理复制逻辑
       onContextMenu={async (e) => {
         const selection = window.getSelection()?.toString();
         if (selection && selection.length > 0) {
@@ -108,16 +105,26 @@ export function DiffWorkspace({
 
         {/* Right Side: Actions */}
         <div className="flex items-center gap-2 shrink-0">
+            {/* Manual Mode Controls Group */}
             {selectedFile && isManual && (
-                <button 
-                    onClick={() => setShowInputs(!showInputs)}
-                    className={cn(
-                        "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all mr-2",
-                        showInputs ? "bg-primary/10 text-primary" : "bg-secondary text-muted-foreground"
-                    )}
-                >
-                    <ArrowDownUp size={14} /> {showInputs ? "Hide Inputs" : "Edit Text"}
-                </button>
+                <>
+                    <button 
+                        onClick={() => setShowInputs(!showInputs)}
+                        className={cn(
+                            "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all",
+                            showInputs ? "bg-primary/10 text-primary" : "bg-secondary text-muted-foreground"
+                        )}
+                    >
+                        <ArrowDownUp size={14} /> {showInputs ? "Hide Inputs" : "Edit Text"}
+                    </button>
+                    <button 
+                        onClick={() => onManualUpdate?.('', '')}
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all bg-secondary hover:bg-destructive/10 hover:text-destructive text-muted-foreground mr-2"
+                        title="Clear all text"
+                    >
+                        <Trash2 size={14} /> Clear
+                    </button>
+                </>
             )}
 
             {selectedFile && (
