@@ -10620,6 +10620,36 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-sleep-4",
+    "type": "command",
+    "title": "sleep - Delay forever",
+    "content": "sleep {{[inf|infinity]}}",
+    "group": "Linux Ops",
+    "description": "sleep: Delay for a specified amount of time. (Delay forever)",
+    "tags": [
+      "linux",
+      "sleep",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-sleep-5",
+    "type": "command",
+    "title": "sleep - Display help",
+    "content": "sleep --help",
+    "group": "Linux Ops",
+    "description": "sleep: Delay for a specified amount of time. (Display help)",
+    "tags": [
+      "linux",
+      "sleep",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-eselect-profile-0",
     "type": "command",
     "title": "eselect-profile - List available profile symlink targets with their numbers",
@@ -48738,7 +48768,7 @@
     "id": "tldr-en-linux-chattr-0",
     "type": "command",
     "title": "chattr - Make a file or directory [i]mmutable to changes and deletion, even by superuser",
-    "content": "chattr +i {{path/to/file_or_directory}}",
+    "content": "sudo chattr +i {{path/to/file_or_directory}}",
     "group": "Linux Ops",
     "description": "chattr: Change attributes of files or directories. (Make a file or directory [i]mmutable to changes and deletion, even by superuser)",
     "tags": [
@@ -48753,7 +48783,7 @@
     "id": "tldr-en-linux-chattr-1",
     "type": "command",
     "title": "chattr - Make a file or directory mutable",
-    "content": "chattr -i {{path/to/file_or_directory}}",
+    "content": "sudo chattr -i {{path/to/file_or_directory}}",
     "group": "Linux Ops",
     "description": "chattr: Change attributes of files or directories. (Make a file or directory mutable)",
     "tags": [
@@ -48768,7 +48798,7 @@
     "id": "tldr-en-linux-chattr-2",
     "type": "command",
     "title": "chattr - [R]ecursively make an entire directory and contents immutable",
-    "content": "chattr -R +i {{path/to/directory}}",
+    "content": "sudo chattr -R +i {{path/to/directory}}",
     "group": "Linux Ops",
     "description": "chattr: Change attributes of files or directories. ([R]ecursively make an entire directory and contents immutable)",
     "tags": [
@@ -48798,7 +48828,7 @@
     "id": "tldr-en-linux-chattr-4",
     "type": "command",
     "title": "chattr - Set a file to only allow [a]ppending",
-    "content": "chattr +a {{path/to/file}}",
+    "content": "sudo chattr +a {{path/to/file}}",
     "group": "Linux Ops",
     "description": "chattr: Change attributes of files or directories. (Set a file to only allow [a]ppending)",
     "tags": [
@@ -62058,7 +62088,7 @@
     "id": "tldr-en-linux-dd-4",
     "type": "command",
     "title": "dd - Create a system backup, save it into an IMG file (can be restored later by swapping `if` and `of`), and show the progress",
-    "content": "dd if={{/dev/drive_device}} of={{path/to/file.img}} status=progress",
+    "content": "sudo dd if={{/dev/drive_device}} of={{path/to/file.img}} status=progress",
     "group": "Linux Ops",
     "description": "dd: Convert and copy a file. (Create a system backup, save it into an IMG file (can be restored later by swapping `if` and `of`), and show the progress)",
     "tags": [
@@ -65190,6 +65220,66 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-systemctl-mount-image-0",
+    "type": "command",
+    "title": "systemctl-mount-image - Mount an image at a specific path inside the unit's mount namespace",
+    "content": "systemctl mount-image {{unit}} /{{path/to/image}} /{{path/to/directory_inside_unit}}",
+    "group": "Linux Ops",
+    "description": "systemctl-mount-image: Mount an image file into a unit's mount namespace. Only supported for the units that run within a mountspace ie, with `RootImage=`, `PrivateMounts=`, etc. (Mount an image at a specific path inside the unit's mount namespace)",
+    "tags": [
+      "linux",
+      "systemctl-mount-image",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-systemctl-mount-image-1",
+    "type": "command",
+    "title": "systemctl-mount-image - Mount the image’s `root` partition with read-only and no-setuid options",
+    "content": "systemctl mount-image {{unit}} /{{path/to/image}} /{{path/to/directory_inside_unit}} root:ro,nosuid",
+    "group": "Linux Ops",
+    "description": "systemctl-mount-image: Mount an image file into a unit's mount namespace. Only supported for the units that run within a mountspace ie, with `RootImage=`, `PrivateMounts=`, etc. (Mount the image’s `root` partition with read-only and no-setuid options)",
+    "tags": [
+      "linux",
+      "systemctl-mount-image",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-systemctl-mount-image-2",
+    "type": "command",
+    "title": "systemctl-mount-image - Create the destination directory before mounting",
+    "content": "systemctl mount-image --mkdir {{unit}} /{{path/to/image}} /{{path/to/directory_inside_unit}}",
+    "group": "Linux Ops",
+    "description": "systemctl-mount-image: Mount an image file into a unit's mount namespace. Only supported for the units that run within a mountspace ie, with `RootImage=`, `PrivateMounts=`, etc. (Create the destination directory before mounting)",
+    "tags": [
+      "linux",
+      "systemctl-mount-image",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-systemctl-mount-image-3",
+    "type": "command",
+    "title": "systemctl-mount-image - Mount an image as read-only",
+    "content": "systemctl mount-image --read-only {{unit}} /{{path/to/image}} /{{path/to/directory_inside_unit}}",
+    "group": "Linux Ops",
+    "description": "systemctl-mount-image: Mount an image file into a unit's mount namespace. Only supported for the units that run within a mountspace ie, with `RootImage=`, `PrivateMounts=`, etc. (Mount an image as read-only)",
+    "tags": [
+      "linux",
+      "systemctl-mount-image",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-create_ap-0",
     "type": "command",
     "title": "create_ap - Create an open network with no passphrase",
@@ -65807,10 +65897,10 @@
   {
     "id": "tldr-en-linux-envycontrol-1",
     "type": "command",
-    "title": "envycontrol - Specify your display manager manually",
-    "content": "envycontrol --dm",
+    "title": "envycontrol - Specify your [d]isplay [m]anager manually",
+    "content": "envycontrol --dm {{gdm|gdm3|sddm|lightdm}}",
     "group": "Linux Ops",
-    "description": "envycontrol: GPU switching utility for Nvidia Optimus laptops. (Specify your display manager manually)",
+    "description": "envycontrol: GPU switching utility for Nvidia Optimus laptops. (Specify your [d]isplay [m]anager manually)",
     "tags": [
       "linux",
       "envycontrol",
@@ -76224,6 +76314,111 @@
     "tags": [
       "linux",
       "groupadd",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-natural-selection-2-0",
+    "type": "command",
+    "title": "natural-selection-2 - Start a server with the default settings",
+    "content": "{{path/to/server_linux}}",
+    "group": "Linux Ops",
+    "description": "natural-selection-2: Start a headless Natural Selection 2 server. (Start a server with the default settings)",
+    "tags": [
+      "linux",
+      "natural-selection-2",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-natural-selection-2-1",
+    "type": "command",
+    "title": "natural-selection-2 - Give a server a custom name that shows in the server browser",
+    "content": "{{path/to/server_linux}} -name '{{server_name}}'",
+    "group": "Linux Ops",
+    "description": "natural-selection-2: Start a headless Natural Selection 2 server. (Give a server a custom name that shows in the server browser)",
+    "tags": [
+      "linux",
+      "natural-selection-2",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-natural-selection-2-2",
+    "type": "command",
+    "title": "natural-selection-2 - Specify a connection port for the server",
+    "content": "{{path/to/server_linux}} -port {{27015}}",
+    "group": "Linux Ops",
+    "description": "natural-selection-2: Start a headless Natural Selection 2 server. (Specify a connection port for the server)",
+    "tags": [
+      "linux",
+      "natural-selection-2",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-natural-selection-2-3",
+    "type": "command",
+    "title": "natural-selection-2 - Specify maximum player count",
+    "content": "{{path/to/server_linux}} -limit {{2..24}}",
+    "group": "Linux Ops",
+    "description": "natural-selection-2: Start a headless Natural Selection 2 server. (Specify maximum player count)",
+    "tags": [
+      "linux",
+      "natural-selection-2",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-natural-selection-2-4",
+    "type": "command",
+    "title": "natural-selection-2 - Specify the initial map the server starts on",
+    "content": "{{path/to/server_linux}} -map {{ns2_summit}}",
+    "group": "Linux Ops",
+    "description": "natural-selection-2: Start a headless Natural Selection 2 server. (Specify the initial map the server starts on)",
+    "tags": [
+      "linux",
+      "natural-selection-2",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-natural-selection-2-5",
+    "type": "command",
+    "title": "natural-selection-2 - Limit access to the server with a password",
+    "content": "{{path/to/server_linux}} -password {{password}}",
+    "group": "Linux Ops",
+    "description": "natural-selection-2: Start a headless Natural Selection 2 server. (Limit access to the server with a password)",
+    "tags": [
+      "linux",
+      "natural-selection-2",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-natural-selection-2-6",
+    "type": "command",
+    "title": "natural-selection-2 - Start a server with webui admin interface",
+    "content": "{{path/to/server_linux}} -webadmin -webport {{8080}}",
+    "group": "Linux Ops",
+    "description": "natural-selection-2: Start a headless Natural Selection 2 server. (Start a server with webui admin interface)",
+    "tags": [
+      "linux",
+      "natural-selection-2",
       "tldr",
       "en"
     ],
@@ -88041,6 +88236,81 @@
     "content": "broot --install",
     "group": "Linux Ops",
     "description": "broot: Navigate directory trees interactively. (Install or reinstall the `br` shell function)",
+    "tags": [
+      "linux",
+      "broot",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-broot-1",
+    "type": "command",
+    "title": "broot - Start and navigate the current directory tree interactively",
+    "content": "broot",
+    "group": "Linux Ops",
+    "description": "broot: Navigate directory trees interactively. (Start and navigate the current directory tree interactively)",
+    "tags": [
+      "linux",
+      "broot",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-broot-2",
+    "type": "command",
+    "title": "broot - Start displaying the size of files and directories",
+    "content": "broot {{[-s|--sizes]}}",
+    "group": "Linux Ops",
+    "description": "broot: Navigate directory trees interactively. (Start displaying the size of files and directories)",
+    "tags": [
+      "linux",
+      "broot",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-broot-3",
+    "type": "command",
+    "title": "broot - Start displaying permissions",
+    "content": "broot {{[-p|--permissions]}}",
+    "group": "Linux Ops",
+    "description": "broot: Navigate directory trees interactively. (Start displaying permissions)",
+    "tags": [
+      "linux",
+      "broot",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-broot-4",
+    "type": "command",
+    "title": "broot - Start displaying directories only",
+    "content": "broot {{[-f|--only-folders]}}",
+    "group": "Linux Ops",
+    "description": "broot: Navigate directory trees interactively. (Start displaying directories only)",
+    "tags": [
+      "linux",
+      "broot",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-broot-5",
+    "type": "command",
+    "title": "broot - Start displaying hidden files and directories",
+    "content": "broot {{[-h|--hidden]}}",
+    "group": "Linux Ops",
+    "description": "broot: Navigate directory trees interactively. (Start displaying hidden files and directories)",
     "tags": [
       "linux",
       "broot",
@@ -108452,70 +108722,10 @@
   {
     "id": "tldr-en-linux-br-0",
     "type": "command",
-    "title": "br - Start and navigate the current directory tree interactively",
-    "content": "br",
+    "title": "br - View documentation for the original command",
+    "content": "tldr broot",
     "group": "Linux Ops",
-    "description": "br: Navigate directory trees interactively. (Start and navigate the current directory tree interactively)",
-    "tags": [
-      "linux",
-      "br",
-      "tldr",
-      "en"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-en-linux-br-1",
-    "type": "command",
-    "title": "br - Start displaying the size of files and directories",
-    "content": "br {{[-s|--sizes]}}",
-    "group": "Linux Ops",
-    "description": "br: Navigate directory trees interactively. (Start displaying the size of files and directories)",
-    "tags": [
-      "linux",
-      "br",
-      "tldr",
-      "en"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-en-linux-br-2",
-    "type": "command",
-    "title": "br - Start displaying permissions",
-    "content": "br {{[-p|--permissions]}}",
-    "group": "Linux Ops",
-    "description": "br: Navigate directory trees interactively. (Start displaying permissions)",
-    "tags": [
-      "linux",
-      "br",
-      "tldr",
-      "en"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-en-linux-br-3",
-    "type": "command",
-    "title": "br - Start displaying directories only",
-    "content": "br {{[-f|--only-folders]}}",
-    "group": "Linux Ops",
-    "description": "br: Navigate directory trees interactively. (Start displaying directories only)",
-    "tags": [
-      "linux",
-      "br",
-      "tldr",
-      "en"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-en-linux-br-4",
-    "type": "command",
-    "title": "br - Start displaying hidden files and directories",
-    "content": "br {{[-h|--hidden]}}",
-    "group": "Linux Ops",
-    "description": "br: Navigate directory trees interactively. (Start displaying hidden files and directories)",
+    "description": "br: This command is an alias of `broot`. (View documentation for the original command)",
     "tags": [
       "linux",
       "br",

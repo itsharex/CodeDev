@@ -7203,7 +7203,7 @@
     "id": "tldr-zh-linux-mkfs-0",
     "type": "command",
     "title": "mkfs - 在分区上建立一个 Linux ext2 文件系统",
-    "content": "mkfs {{path/to/partition}}",
+    "content": "sudo mkfs {{path/to/partition}}",
     "group": "Linux 运维",
     "description": "mkfs: 在硬盘分区上建立一个 Linux 文件系统。 该命令已被废弃，建议使用特定文件系统的 mkfs. 工具。 (在分区上建立一个 Linux ext2 文件系统)",
     "tags": [
@@ -7218,7 +7218,7 @@
     "id": "tldr-zh-linux-mkfs-1",
     "type": "command",
     "title": "mkfs - 建立指定类型的文件系统",
-    "content": "mkfs -t {{ext4}} {{path/to/partition}}",
+    "content": "sudo mkfs {{[-t|--type]}} {{ext4}} {{path/to/partition}}",
     "group": "Linux 运维",
     "description": "mkfs: 在硬盘分区上建立一个 Linux 文件系统。 该命令已被废弃，建议使用特定文件系统的 mkfs. 工具。 (建立指定类型的文件系统)",
     "tags": [
@@ -7233,7 +7233,7 @@
     "id": "tldr-zh-linux-mkfs-2",
     "type": "command",
     "title": "mkfs - 建立指定类型的文件系统并检查坏块",
-    "content": "mkfs -c -t {{ntfs}} {{path/to/partition}}",
+    "content": "sudo mkfs -c {{[-t|--type]}} {{ntfs}} {{path/to/partition}}",
     "group": "Linux 运维",
     "description": "mkfs: 在硬盘分区上建立一个 Linux 文件系统。 该命令已被废弃，建议使用特定文件系统的 mkfs. 工具。 (建立指定类型的文件系统并检查坏块)",
     "tags": [
