@@ -59,6 +59,11 @@ export interface SpotlightAppearance {
   maxChatHeight: number; // 聊天模式最大高度，默认 600
 }
 
+export interface RestReminderConfig {
+  enabled: boolean;     // 是否启用
+  intervalMinutes: number; // 提醒间隔（分钟），默认 45
+}
+
 // --- 3. Store 接口 ---
 interface AppState {
   // UI State
@@ -75,6 +80,8 @@ interface AppState {
   spotlightShortcut: string; 
   // Filters
   globalIgnore: IgnoreConfig;
+  // Rest Reminder
+  restReminder: RestReminderConfig;
 
   // Models State
   models: AIModelConfig[];
@@ -95,6 +102,7 @@ interface AppState {
   updateGlobalIgnore: (type: keyof IgnoreConfig, action: 'add' | 'remove', value: string) => void;
   setAIConfig: (config: Partial<AIProviderConfig>) => void;
   setSpotlightShortcut: (shortcut: string) => void;
+  setRestReminder: (config: Partial<RestReminderConfig>) => void;
   // Async Actions
   syncModels: () => Promise<void>;
   resetModels: () => void;
@@ -118,6 +126,10 @@ export const useAppStore = create<AppState>()(
       aiConfig: DEFAULT_AI_CONFIG,
       savedProviderSettings: DEFAULT_PROVIDER_SETTINGS,
       globalIgnore: DEFAULT_GLOBAL_IGNORE,
+      restReminder: {
+        enabled: false,
+        intervalMinutes: 45
+      },
       
       // 模型初始值
       models: DEFAULT_MODELS,
@@ -144,6 +156,9 @@ export const useAppStore = create<AppState>()(
         return { theme };
       }),
       setSpotlightShortcut: (shortcut) => set({ spotlightShortcut: shortcut }),
+      setRestReminder: (config) => set((state) => ({
+        restReminder: { ...state.restReminder, ...config }
+      })),
       setAIConfig: (config) => set((state) => {
         const newConfig = { ...state.aiConfig, ...config };
         const currentProviderId = newConfig.providerId;
@@ -252,7 +267,8 @@ export const useAppStore = create<AppState>()(
         lastUpdated: state.lastUpdated,
         aiConfig: state.aiConfig,
         savedProviderSettings: state.savedProviderSettings,
-        spotlightAppearance: state.spotlightAppearance
+        spotlightAppearance: state.spotlightAppearance,
+        restReminder: state.restReminder
       }),
     }
   )

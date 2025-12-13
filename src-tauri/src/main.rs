@@ -4,10 +4,12 @@
 )]
 
 use std::fs;
+use std::sync::{Arc, Mutex};
+use sysinfo::System;
 use tauri::{
     menu::{Menu, MenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
-    Manager, WindowEvent,
+    Manager, State, WindowEvent,
 };
 
 #[tauri::command]
@@ -23,6 +25,53 @@ fn get_file_size(path: String) -> u64 {
     }
 }
 
+#[derive(serde::Serialize)]
+struct SystemInfo {
+    cpu_usage: f64,           // 系统整体 CPU 使用率（所有核心的平均值）
+    memory_usage: u64,       // 系统已用内存
+    memory_total: u64,       // 系统总内存
+    memory_available: u64,   // 系统可用内存
+    uptime: u64,             // 系统运行时间（秒）
+}
+
+#[tauri::command]
+fn get_system_info(
+    system: State<'_, Arc<Mutex<System>>>,
+) -> SystemInfo {
+    let mut sys = system.lock().unwrap();
+    
+    // 刷新系统信息（CPU 使用率需要两次刷新才能准确计算）
+    sys.refresh_cpu_all();
+    sys.refresh_memory();
+    
+    // 获取系统整体 CPU 使用率（所有 CPU 核心的平均值）
+    let cpu_usage = {
+        let cpus = sys.cpus();
+        if !cpus.is_empty() {
+            let total_cpu: f64 = cpus.iter().map(|cpu| cpu.cpu_usage() as f64).sum();
+            total_cpu / cpus.len() as f64
+        } else {
+            0.0
+        }
+    };
+    
+    // 获取系统整体内存信息
+    let memory_total = sys.total_memory();
+    let memory_used = sys.used_memory();
+    let memory_available = sys.available_memory();
+    
+    // 系统运行时间（秒）
+    let uptime = System::uptime();
+    
+    SystemInfo {
+        cpu_usage,
+        memory_usage: memory_used,
+        memory_total,
+        memory_available,
+        uptime,
+    }
+}
+
 fn main() {
     tauri::Builder::default()
         .plugin(tauri_plugin_clipboard_manager::init())
@@ -31,6 +80,7 @@ fn main() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_os::init())
+        .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
             if let Some(window) = app.get_webview_window("main") {
@@ -39,8 +89,13 @@ fn main() {
                 let _ = window.set_focus();
             }
         }))
-        .invoke_handler(tauri::generate_handler![greet, get_file_size])
+        .invoke_handler(tauri::generate_handler![greet, get_file_size, get_system_info])
         .setup(|app| {
+            // 初始化系统信息收集器
+            let mut system = System::new();
+            system.refresh_all();
+            app.manage(Arc::new(Mutex::new(system)));
+            
             let quit_i = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
             let show_i = MenuItem::with_id(app, "show", "显示主窗口", true, None::<&str>)?;
             

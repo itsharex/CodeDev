@@ -140,7 +140,12 @@ const translations = {
       temp: "Temperature",
       tempTip: "Controls randomness: Lower values are more deterministic, higher values are more creative.",
       baseUrl: "Base URL (Optional)",
-      modelId: "Model ID"
+      modelId: "Model ID",
+      restReminder: "Rest Reminder",
+      restReminderEnabled: "Enable Rest Reminder",
+      restReminderDesc: "Get notified to take breaks at regular intervals",
+      restReminderInterval: "Reminder Interval",
+      minutes: "minutes"
     },
     library: {
       title: "Official Library",
@@ -176,6 +181,21 @@ const translations = {
       edit: "Edit",
       delete: "Delete",
       copy: "Copy"
+    },
+    clock: {
+      timeDetails: "Time Details",
+      fullTime: "Full Time",
+      weekday: "Weekday",
+      timezone: "Timezone",
+      systemInfo: "System Info",
+      cpuUsage: "CPU Usage",
+      memory: "Memory",
+      available: "Available",
+      systemUptime: "System Uptime",
+      quickActions: "Quick Actions",
+      copyTimestamp: "Timestamp",
+      copyISO: "ISO Format",
+      copyFull: "Full Time"
     }
   },
   zh: {
@@ -317,7 +337,12 @@ const translations = {
       temp: "温度 (Temperature)",
       tempTip: "控制随机性：数值越低越严谨，数值越高越有创造力。",
       baseUrl: "API 地址 (可选)",
-      modelId: "模型 ID"
+      modelId: "模型 ID",
+      restReminder: "休息提醒",
+      restReminderEnabled: "启用休息提醒",
+      restReminderDesc: "定期提醒您休息，保护眼睛和健康",
+      restReminderInterval: "提醒间隔",
+      minutes: "分钟"
     },
     library: {
       title: "官方指令库",
@@ -353,6 +378,21 @@ const translations = {
       edit: "编辑",
       delete: "删除",
       copy: "复制"
+    },
+    clock: {
+      timeDetails: "时间详情",
+      fullTime: "完整时间",
+      weekday: "星期",
+      timezone: "时区",
+      systemInfo: "系统信息",
+      cpuUsage: "CPU 使用率",
+      memory: "内存",
+      available: "可用",
+      systemUptime: "系统运行时长",
+      quickActions: "快速操作",
+      copyTimestamp: "时间戳",
+      copyISO: "ISO 格式",
+      copyFull: "完整时间"
     }
   }
 };

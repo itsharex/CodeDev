@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Monitor, Moon, Sun, Languages, Check, Filter, DownloadCloud, Bot } from 'lucide-react';
+import { X, Monitor, Moon, Sun, Languages, Check, Filter, DownloadCloud, Bot, Bell } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { getText } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
@@ -14,7 +14,8 @@ export function SettingsModal() {
     language, setLanguage,
     globalIgnore, updateGlobalIgnore,
     aiConfig, setAIConfig,
-    spotlightShortcut, setSpotlightShortcut
+    spotlightShortcut, setSpotlightShortcut,
+    restReminder, setRestReminder
   } = useAppStore();
 
   const [activeSection, setActiveSection] = useState<'appearance' | 'language' | 'filters' | 'library' | 'ai'>('appearance');
@@ -110,6 +111,69 @@ export function SettingsModal() {
                                     value={useAppStore.getState().spotlightAppearance.maxChatHeight}
                                     onChange={(e) => useAppStore.getState().setSpotlightAppearance({ maxChatHeight: parseInt(e.target.value) })}
                                 />
+                            </div>
+                        </div>
+
+                        <div className="w-full h-px bg-border/50 my-4" />
+
+                        {/* 休息提醒设置 */}
+                        <div className="space-y-4">
+                            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+                                <Bell size={14} />
+                                {getText('settings', 'restReminder', language)}
+                            </h3>
+                            
+                            <div className="space-y-3">
+                                {/* 启用开关 */}
+                                <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/30 border border-border">
+                                    <div>
+                                        <div className="text-sm font-medium text-foreground">
+                                            {getText('settings', 'restReminderEnabled', language)}
+                                        </div>
+                                        <div className="text-xs text-muted-foreground mt-0.5">
+                                            {getText('settings', 'restReminderDesc', language)}
+                                        </div>
+                                    </div>
+                                    <button
+                                        onClick={() => setRestReminder({ enabled: !restReminder.enabled })}
+                                        className={cn(
+                                            "relative w-11 h-6 rounded-full transition-colors",
+                                            restReminder.enabled ? "bg-primary" : "bg-secondary"
+                                        )}
+                                    >
+                                        <div className={cn(
+                                            "absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white transition-transform",
+                                            restReminder.enabled ? "translate-x-5" : "translate-x-0"
+                                        )} />
+                                    </button>
+                                </div>
+
+                                {/* 间隔时间设置 */}
+                                {restReminder.enabled && (
+                                    <div className="space-y-3 p-3 rounded-lg bg-secondary/10 border border-border">
+                                        <div className="flex justify-between text-xs">
+                                            <span className="text-foreground">
+                                                {getText('settings', 'restReminderInterval', language)}
+                                            </span>
+                                            <span className="font-mono text-muted-foreground">
+                                                {restReminder.intervalMinutes} {getText('settings', 'minutes', language)}
+                                            </span>
+                                        </div>
+                                        <input 
+                                            type="range" 
+                                            min="15" 
+                                            max="120" 
+                                            step="5"
+                                            className="w-full h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
+                                            value={restReminder.intervalMinutes}
+                                            onChange={(e) => setRestReminder({ intervalMinutes: parseInt(e.target.value) })}
+                                        />
+                                        <div className="flex justify-between text-[10px] text-muted-foreground">
+                                            <span>15 {getText('settings', 'minutes', language)}</span>
+                                            <span>120 {getText('settings', 'minutes', language)}</span>
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
