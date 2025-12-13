@@ -39,11 +39,11 @@ export function ClockPopover({ currentTime, isOpen, onClose, triggerRef }: Clock
         console.error('Failed to fetch system info:', err);
         // 如果后端不支持，使用默认值
         setSystemInfo({
-          cpuUsage: 0,
-          memoryUsage: 0,
-          memoryTotal: 0,
-          uptime: 0,
-          appUptime: 0
+          cpu_usage: 0,
+          memory_usage: 0,
+          memory_total: 0,
+          memory_available: 0, 
+          uptime: 0
         });
       }
     };

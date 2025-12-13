@@ -44,6 +44,8 @@ function MessageCopyMenu({ content }: { content: string }) {
   const [isCopied, setIsCopied] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
+  const { language } = useAppStore(); 
+
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
