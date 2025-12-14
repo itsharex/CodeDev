@@ -59,6 +59,7 @@
         { "name": "x-terminal-emulator", "cmd": "x-terminal-emulator", "args": true }
       ]
     },
-    "core:app:allow-identifier"
+    "core:app:allow-identifier",
+    "notification:default"
   ]
 }

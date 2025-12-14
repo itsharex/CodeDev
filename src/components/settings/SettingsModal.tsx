@@ -169,8 +169,8 @@ export function SettingsModal() {
                                             onChange={(e) => setRestReminder({ intervalMinutes: parseInt(e.target.value) })}
                                         />
                                         <div className="flex justify-between text-[10px] text-muted-foreground">
-                                            <span>15 {getText('settings', 'minutes', language)}</span>
-                                            <span>120 {getText('settings', 'minutes', language)}</span>
+                                            <span>1 {getText('settings', 'minutes', language)}</span>
+                                            <span>180 {getText('settings', 'minutes', language)}</span>
                                         </div>
                                     </div>
                                 )}
