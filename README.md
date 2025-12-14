@@ -8,7 +8,7 @@
   <p align="center">
     <strong>Forge your code with intelligence.</strong>
     <br />
-    专为开发者打造的 AI 辅助生产力终端：上下文组装 · 提示词管理 · 全局 AI 对话
+    专为开发者打造的 AI 辅助生产力工具：上下文组装 · 提示词管理 · 全局 AI 对话 · 代码对比
   </p>
 
   <p align="center">
