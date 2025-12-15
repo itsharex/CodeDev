@@ -240,8 +240,13 @@ export function ContextView() {
         <div className="flex-1 bg-background min-w-0 flex flex-col relative">
             <div className="absolute inset-0 bg-grid-slate-900/[0.04] bg-[bottom_1px_center] dark:bg-grid-slate-400/[0.05] [mask-image:linear-gradient(to_bottom,transparent,black)] pointer-events-none" />
             
+            {/* 视图切换按钮 */}
             <div className="absolute top-6 left-1/2 -translate-x-1/2 z-20 pointer-events-none">
-               <div className="bg-secondary/80 backdrop-blur-md border border-border p-1 rounded-xl flex items-center shadow-sm pointer-events-auto">
+               <div className={cn(
+                  "pointer-events-auto bg-background/80 backdrop-blur-md border border-border p-1 rounded-xl flex items-center shadow-sm",
+                  "transition-all duration-300 ease-out", // 动画设置
+                  "opacity-10 hover:opacity-100 hover:shadow-md hover:scale-[1.02]" // 核心交互逻辑
+               )}>
                   <ViewToggleBtn 
                     active={rightViewMode === 'dashboard'} 
                     onClick={() => setRightViewMode('dashboard')}
@@ -257,6 +262,7 @@ export function ContextView() {
                </div>
             </div>
 
+            {/* 内容区域 */}
             <div className="flex-1 overflow-y-auto custom-scrollbar pb-10 h-full"> 
                 {rightViewMode === 'dashboard' ? (
                    <TokenDashboard 
