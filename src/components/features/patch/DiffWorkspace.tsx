@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { Save, Copy, ArrowDownUp, PanelLeftClose, PanelLeftOpen, Trash2 } from 'lucide-react';
 import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { DiffViewer } from './DiffViewer';
@@ -25,10 +25,41 @@ export function DiffWorkspace({
   const { language } = useAppStore();
   const [showInputs, setShowInputs] = useState(true);
   
+  const [inputHeight, setInputHeight] = useState(200);
+  const isResizingRef = useRef(false);
+
   const hasChanges = selectedFile ? selectedFile.original !== selectedFile.modified : false;
   const isManual = selectedFile ? !!selectedFile.isManual : false;
 
-  // 为两个输入框分别定义粘贴逻辑和 Hook 实例
+  // 拖拽逻辑
+  const startResizing = () => { isResizingRef.current = true; };
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!isResizingRef.current) return;
+      
+      // 新高度：鼠标Y坐标 - 顶部偏移量 (标题栏 + 工具栏 ≈ 88px)
+      const newHeight = e.clientY - 88;
+      
+      // 限制最小和最大高度
+      if (newHeight > 100 && newHeight < window.innerHeight - 200) {
+        setInputHeight(newHeight);
+      }
+    };
+
+    const handleMouseUp = () => {
+      isResizingRef.current = false;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, []);
+
   const handlePaste = (
     pastedText: string, 
     textarea: HTMLTextAreaElement | null,
@@ -163,30 +194,43 @@ export function DiffWorkspace({
           </div>
       ) : (
           <>
-            {/* Manual Inputs */}
+            {/* Manual Inputs (Resizable) */}
             {isManual && showInputs && (
-                <div className="h-[200px] shrink-0 flex border-b border-border bg-secondary/5">
-                    <div className="flex-1 flex flex-col border-r border-border">
-                        <div className="px-3 py-1 text-[10px] font-bold text-muted-foreground uppercase bg-secondary/10 border-b border-border/50">{getText('patch', 'originalText', language)}</div>
-                        <textarea 
-                            onContextMenu={onOriginalContextMenu}
-                            value={selectedFile.original}
-                            onChange={(e) => onManualUpdate?.(e.target.value, selectedFile.modified)}
-                            className="flex-1 bg-transparent p-3 resize-none outline-none font-mono text-xs leading-relaxed custom-scrollbar placeholder:text-muted-foreground/30"
-                            placeholder={getText('patch', 'pasteOriginal', language)}
-                            spellCheck={false}
-                        />
+                <div 
+                    className="shrink-0 flex flex-col border-b border-border bg-secondary/5 relative"
+                    style={{ height: inputHeight }} 
+                >
+                    <div className="flex-1 flex min-h-0">
+                        <div className="flex-1 flex flex-col border-r border-border">
+                            <div className="px-3 py-1 text-[10px] font-bold text-muted-foreground uppercase bg-secondary/10 border-b border-border/50">{getText('patch', 'originalText', language)}</div>
+                            <textarea 
+                                onContextMenu={onOriginalContextMenu}
+                                value={selectedFile.original}
+                                onChange={(e) => onManualUpdate?.(e.target.value, selectedFile.modified)}
+                                className="flex-1 bg-transparent p-3 resize-none outline-none font-mono text-xs leading-relaxed custom-scrollbar placeholder:text-muted-foreground/30"
+                                placeholder={getText('patch', 'pasteOriginal', language)}
+                                spellCheck={false}
+                            />
+                        </div>
+                        <div className="flex-1 flex flex-col">
+                            <div className="px-3 py-1 text-[10px] font-bold text-muted-foreground uppercase bg-secondary/10 border-b border-border/50">{getText('patch', 'modifiedText', language)}</div>
+                            <textarea 
+                                onContextMenu={onModifiedContextMenu}
+                                value={selectedFile.modified}
+                                onChange={(e) => onManualUpdate?.(selectedFile.original, e.target.value)}
+                                className="flex-1 bg-transparent p-3 resize-none outline-none font-mono text-xs leading-relaxed custom-scrollbar placeholder:text-muted-foreground/30"
+                                placeholder={getText('patch', 'pasteModified', language)}
+                                spellCheck={false}
+                            />
+                        </div>
                     </div>
-                    <div className="flex-1 flex flex-col">
-                        <div className="px-3 py-1 text-[10px] font-bold text-muted-foreground uppercase bg-secondary/10 border-b border-border/50">{getText('patch', 'modifiedText', language)}</div>
-                        <textarea 
-                            onContextMenu={onModifiedContextMenu}
-                            value={selectedFile.modified}
-                            onChange={(e) => onManualUpdate?.(selectedFile.original, e.target.value)}
-                            className="flex-1 bg-transparent p-3 resize-none outline-none font-mono text-xs leading-relaxed custom-scrollbar placeholder:text-muted-foreground/30"
-                            placeholder={getText('patch', 'pasteModified', language)}
-                            spellCheck={false}
-                        />
+
+                    {/* Drag Handle */}
+                    <div 
+                        onMouseDown={startResizing}
+                        className="absolute bottom-0 left-0 right-0 h-1.5 cursor-row-resize bg-transparent hover:bg-primary/20 flex justify-center items-center z-10 group"
+                    >
+                        <div className="w-12 h-1 rounded-full bg-border/50 group-hover:bg-primary/40 transition-colors" />
                     </div>
                 </div>
             )}

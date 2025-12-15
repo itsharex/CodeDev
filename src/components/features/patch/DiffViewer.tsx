@@ -1,9 +1,8 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { DiffEditor, DiffOnMount } from '@monaco-editor/react';
 import { Columns, Rows, FileCode, Loader2 } from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
 
 interface DiffViewerProps {
   original: string;
@@ -38,22 +37,20 @@ export function DiffViewer({ original, modified, fileName = '', placeholder }: D
 
   const language = getLanguage(fileName);
 
-  const handleEditorDidMount: DiffOnMount = (editor, monaco) => {
+  const handleEditorDidMount: DiffOnMount = (_editor, monaco) => {
     monacoRef.current = monaco;
 
-    // 定义与 ContextPreview 一致的主题，但增加 Diff 专用颜色
     monaco.editor.defineTheme('codeforge-dark', {
       base: 'vs-dark',
       inherit: true,
       rules: [],
       colors: {
-        'editor.background': '#020817', // 匹配 App 深色背景
+        'editor.background': '#020817', 
         'editor.lineHighlightBackground': '#1e293b20',
         'scrollbarSlider.background': '#33415550',
         'scrollbarSlider.hoverBackground': '#33415580',
         'editor.selectionBackground': '#3b82f640',
         'editorGutter.background': '#020817',
-        // Diff 颜色优化：更柔和的红绿
         'diffEditor.insertedTextBackground': '#22c55e15',
         'diffEditor.removedTextBackground': '#ef444415',
         'diffEditor.diagonalFill': '#33415540',
@@ -80,14 +77,12 @@ export function DiffViewer({ original, modified, fileName = '', placeholder }: D
     monaco.editor.setTheme(theme === 'dark' ? 'codeforge-dark' : 'codeforge-light');
   };
 
-  // 监听主题切换
   useEffect(() => {
     if (monacoRef.current) {
       monacoRef.current.editor.setTheme(theme === 'dark' ? 'codeforge-dark' : 'codeforge-light');
     }
   }, [theme]);
 
-  
   if (!modified && !original) {
     return (
       <div className="flex flex-col items-center justify-center h-full text-muted-foreground/40 gap-3 bg-background animate-in fade-in duration-300">
@@ -101,7 +96,6 @@ export function DiffViewer({ original, modified, fileName = '', placeholder }: D
 
   return (
     <div className="flex flex-col h-full overflow-hidden bg-background">
-      {/* Toolbar */}
       <div className="flex items-center justify-between px-6 py-2 border-b border-border/50 bg-secondary/5 shrink-0 h-12">
          <div className="flex items-center gap-2 text-xs font-medium text-foreground">
             <FileCode size={14} className="text-primary" />
@@ -133,7 +127,6 @@ export function DiffViewer({ original, modified, fileName = '', placeholder }: D
          </div>
       </div>
 
-      {/* Editor Container */}
       <div className="flex-1 relative group">
          <DiffEditor
             height="100%"
@@ -160,9 +153,9 @@ export function DiffViewer({ original, modified, fileName = '', placeholder }: D
                 diffWordWrap: 'off',
                 wordWrap: 'on', 
                 ignoreTrimWhitespace: false,
-                renderLineHighlight: 'none', // 视觉降噪
+                renderLineHighlight: 'none',
                 matchBrackets: 'never',
-                folding: false, // 预览模式更清爽
+                folding: false,
             }}
          />
       </div>
