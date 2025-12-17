@@ -88,8 +88,9 @@ async fn export_git_diff(
     old_hash: String,
     new_hash: String,
     format: export::ExportFormat,
+    layout: export::ExportLayout,
     save_path: String,
-    selected_paths: Vec<String>, // 接收前端过滤后的路径列表
+    selected_paths: Vec<String>,
 ) -> Result<(), String> {
     
     // 1. 复用 git 模块获取完整文件数据
@@ -106,7 +107,7 @@ async fn export_git_diff(
     }
 
     // 3. 使用 export 模块生成格式化字符串
-    let content = export::generate_export_content(filtered_files, format);
+    let content = export::generate_export_content(filtered_files, format, layout);
 
     // 4. 写入文件
     fs::write(&save_path, content).map_err(|e| format!("Failed to write file: {}", e))?;

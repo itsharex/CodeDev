@@ -1,11 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { 
   Save, Copy, ArrowDownUp, PanelLeftClose, PanelLeftOpen, Trash2, 
-  FileDown, ChevronDown, FileJson, FileCode, FileType, FileText 
+  FileDown 
 } from 'lucide-react';
 import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { DiffViewer } from './DiffViewer';
-import { PatchFileItem, ExportFormat } from './patch_types';
+import { PatchFileItem } from './patch_types';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/store/useAppStore';
 import { getText } from '@/lib/i18n';
@@ -19,7 +19,8 @@ interface DiffWorkspaceProps {
   isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
   isReadOnly?: boolean;
-  onExport?: (format: ExportFormat) => void; 
+  // 修改：不再需要参数，点击只触发动作（比如打开父组件的弹窗）
+  onExport?: () => void; 
 }
 
 export function DiffWorkspace({ 
@@ -30,51 +31,53 @@ export function DiffWorkspace({
   const { language } = useAppStore();
   const [showInputs, setShowInputs] = useState(true);
   
-  // 导出菜单状态
-  const [isExportMenuOpen, setIsExportMenuOpen] = useState(false);
-  const exportMenuRef = useRef<HTMLDivElement>(null);
-
   const [inputHeight, setInputHeight] = useState(200);
   const isResizingRef = useRef(false);
 
   const hasChanges = selectedFile ? selectedFile.original !== selectedFile.modified : false;
   const isManual = selectedFile ? !!selectedFile.isManual : false;
 
-  // 点击外部关闭导出菜单
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (exportMenuRef.current && !exportMenuRef.current.contains(event.target as Node)) {
-        setIsExportMenuOpen(false);
-      }
-    };
-    if (isExportMenuOpen) {
-        document.addEventListener('mousedown', handleClickOutside);
-    }
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isExportMenuOpen]);
-
+  // 拖拽调整高度逻辑
   const startResizing = () => { isResizingRef.current = true; };
+
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       if (!isResizingRef.current) return;
       const newHeight = e.clientY - 88;
-      if (newHeight > 100 && newHeight < window.innerHeight - 200) setInputHeight(newHeight);
+      if (newHeight > 100 && newHeight < window.innerHeight - 200) {
+        setInputHeight(newHeight);
+      }
     };
-    const handleMouseUp = () => { isResizingRef.current = false; };
+
+    const handleMouseUp = () => {
+      isResizingRef.current = false;
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
+
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
   }, []);
 
-  const handlePaste = (pastedText: string, textarea: HTMLTextAreaElement | null, inputType: 'original' | 'modified') => {
+  const handlePaste = (
+    pastedText: string, 
+    textarea: HTMLTextAreaElement | null, 
+    inputType: 'original' | 'modified'
+  ) => {
     if (!textarea || !onManualUpdate || !selectedFile) return;
+
     const { selectionStart, selectionEnd, value } = textarea;
     const newValue = value.substring(0, selectionStart) + pastedText + value.substring(selectionEnd);
-    if (inputType === 'original') onManualUpdate(newValue, selectedFile.modified);
-    else onManualUpdate(selectedFile.original, newValue);
+
+    if (inputType === 'original') {
+      onManualUpdate(newValue, selectedFile.modified);
+    } else {
+      onManualUpdate(selectedFile.original, newValue);
+    }
+    
     setTimeout(() => {
       if (textarea) {
         const newCursorPos = selectionStart + pastedText.length;
@@ -83,19 +86,14 @@ export function DiffWorkspace({
       }
     }, 0);
   };
-  const { onContextMenu: onOriginalContextMenu } = useSmartContextMenu<HTMLTextAreaElement>({ onPaste: (text, textarea) => handlePaste(text, textarea, 'original') });
-  const { onContextMenu: onModifiedContextMenu } = useSmartContextMenu<HTMLTextAreaElement>({ onPaste: (text, textarea) => handlePaste(text, textarea, 'modified') });
-
-  // 辅助组件：导出菜单项
-  const ExportOption = ({ format, icon: Icon, label }: { format: ExportFormat, icon: any, label: string }) => (
-    <button 
-        onClick={() => { onExport?.(format); setIsExportMenuOpen(false); }}
-        className="w-full flex items-center gap-2 px-3 py-2 text-xs text-foreground hover:bg-secondary transition-colors text-left"
-    >
-        <Icon size={14} className="text-muted-foreground" />
-        <span>{label}</span>
-    </button>
-  );
+  
+  const { onContextMenu: onOriginalContextMenu } = useSmartContextMenu<HTMLTextAreaElement>({ 
+    onPaste: (text, textarea) => handlePaste(text, textarea, 'original') 
+  });
+  
+  const { onContextMenu: onModifiedContextMenu } = useSmartContextMenu<HTMLTextAreaElement>({ 
+    onPaste: (text, textarea) => handlePaste(text, textarea, 'modified') 
+  });
 
   return (
     <div 
@@ -170,40 +168,27 @@ export function DiffWorkspace({
                 </button>
             )}
             
-            {/* === Export 按钮 (带下拉菜单) === */}
+            {/* === Export 按钮 (简化版，点击触发 onExport 回调) === */}
             {onExport && (
-              <div className="relative" ref={exportMenuRef}>
-                  <button 
-                      onClick={() => setIsExportMenuOpen(!isExportMenuOpen)}
-                      className={cn(
-                          "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all active:scale-95",
-                          isExportMenuOpen 
-                            ? "bg-primary text-primary-foreground shadow-sm" 
-                            : "bg-secondary hover:bg-secondary/80 text-foreground"
-                      )}
-                  >
-                      <FileDown size={14} /> 
-                      Export 
-                      <ChevronDown size={12} className={cn("opacity-50 transition-transform duration-200", isExportMenuOpen && "rotate-180")} />
-                  </button>
-
-                  {/* 自绘下拉菜单 */}
-                  {isExportMenuOpen && (
-                      <div className="absolute top-full right-0 mt-1 w-40 p-1 bg-popover border border-border rounded-lg shadow-xl z-50 animate-in fade-in zoom-in-95 duration-100 flex flex-col">
-                          <div className="px-2 py-1.5 text-[10px] font-bold text-muted-foreground uppercase tracking-wider border-b border-border/50 mb-1">
-                              Select Format
-                          </div>
-                          <ExportOption format="Markdown" icon={FileText} label="Markdown (AI Best)" />
-                          <ExportOption format="Json" icon={FileJson} label="JSON (Raw Data)" />
-                          <ExportOption format="Xml" icon={FileCode} label="XML (Strict)" />
-                          <ExportOption format="Txt" icon={FileType} label="Text (Simple)" />
-                      </div>
-                  )}
-              </div>
+              <button 
+                  onClick={onExport}
+                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-secondary hover:bg-secondary/80 text-foreground transition-colors active:scale-95"
+              >
+                  <FileDown size={14} /> Export
+              </button>
             )}
             
             {selectedFile && !isManual && !isReadOnly && (
-                <button onClick={() => onSave(selectedFile)} disabled={!hasChanges} className={cn("flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all shadow-sm active:scale-95", hasChanges ? "bg-primary text-primary-foreground hover:bg-primary/90" : "bg-secondary text-muted-foreground opacity-50 cursor-not-allowed")}>
+                <button 
+                    onClick={() => onSave(selectedFile)}
+                    disabled={!hasChanges}
+                    className={cn(
+                        "flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium transition-all shadow-sm active:scale-95",
+                        hasChanges 
+                            ? "bg-primary text-primary-foreground hover:bg-primary/90" 
+                            : "bg-secondary text-muted-foreground opacity-50 cursor-not-allowed"
+                    )}
+                >
                     <Save size={14} /> {getText('patch', 'saveChanges', language)}
                 </button>
             )}
@@ -225,18 +210,44 @@ export function DiffWorkspace({
                     <div className="flex-1 flex min-h-0">
                         <div className="flex-1 flex flex-col border-r border-border">
                             <div className="px-3 py-1 text-[10px] font-bold text-muted-foreground uppercase bg-secondary/10 border-b border-border/50">{getText('patch', 'originalText', language)}</div>
-                            <textarea onContextMenu={onOriginalContextMenu} value={selectedFile.original} onChange={(e) => onManualUpdate?.(e.target.value, selectedFile.modified)} className="flex-1 bg-transparent p-3 resize-none outline-none font-mono text-xs leading-relaxed custom-scrollbar placeholder:text-muted-foreground/30" placeholder={getText('patch', 'pasteOriginal', language)} spellCheck={false} />
+                            <textarea 
+                                onContextMenu={onOriginalContextMenu}
+                                value={selectedFile.original}
+                                onChange={(e) => onManualUpdate?.(e.target.value, selectedFile.modified)}
+                                className="flex-1 bg-transparent p-3 resize-none outline-none font-mono text-xs leading-relaxed custom-scrollbar placeholder:text-muted-foreground/30"
+                                placeholder={getText('patch', 'pasteOriginal', language)}
+                                spellCheck={false}
+                            />
                         </div>
                         <div className="flex-1 flex flex-col">
                             <div className="px-3 py-1 text-[10px] font-bold text-muted-foreground uppercase bg-secondary/10 border-b border-border/50">{getText('patch', 'modifiedText', language)}</div>
-                            <textarea onContextMenu={onModifiedContextMenu} value={selectedFile.modified} onChange={(e) => onManualUpdate?.(selectedFile.original, e.target.value)} className="flex-1 bg-transparent p-3 resize-none outline-none font-mono text-xs leading-relaxed custom-scrollbar placeholder:text-muted-foreground/30" placeholder={getText('patch', 'pasteModified', language)} spellCheck={false} />
+                            <textarea 
+                                onContextMenu={onModifiedContextMenu}
+                                value={selectedFile.modified}
+                                onChange={(e) => onManualUpdate?.(selectedFile.original, e.target.value)}
+                                className="flex-1 bg-transparent p-3 resize-none outline-none font-mono text-xs leading-relaxed custom-scrollbar placeholder:text-muted-foreground/30"
+                                placeholder={getText('patch', 'pasteModified', language)}
+                                spellCheck={false}
+                            />
                         </div>
                     </div>
-                    <div onMouseDown={startResizing} className="absolute bottom-0 left-0 right-0 h-1.5 cursor-row-resize bg-transparent hover:bg-primary/20 flex justify-center items-center z-10 group"><div className="w-12 h-1 rounded-full bg-border/50 group-hover:bg-primary/40 transition-colors" /></div>
+                    
+                    {/* Drag Handle */}
+                    <div 
+                        onMouseDown={startResizing}
+                        className="absolute bottom-0 left-0 right-0 h-1.5 cursor-row-resize bg-transparent hover:bg-primary/20 flex justify-center items-center z-10 group"
+                    >
+                        <div className="w-12 h-1 rounded-full bg-border/50 group-hover:bg-primary/40 transition-colors" />
+                    </div>
                 </div>
             )}
             <div className="flex-1 relative overflow-hidden bg-background">
-                <DiffViewer original={selectedFile.original} modified={selectedFile.modified} fileName={selectedFile.path} placeholder={isManual ? getText('patch', 'pasteToCompare', language) : getText('common', 'waitingForInputs', language)} />
+                <DiffViewer 
+                    original={selectedFile.original}
+                    modified={selectedFile.modified}
+                    fileName={selectedFile.path}
+                    placeholder={isManual ? getText('patch', 'pasteToCompare', language) : getText('common', 'waitingForInputs', language)}
+                />
             </div>
           </>
       )}

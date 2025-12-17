@@ -7,12 +7,13 @@ import { getText } from '@/lib/i18n';
 import { parseMultiFilePatch, applyPatches } from '@/lib/patch_parser';
 import { PatchSidebar } from './PatchSidebar';
 import { DiffWorkspace } from './DiffWorkspace';
-import { PatchMode, PatchFileItem, ExportFormat } from './patch_types';
+import { PatchMode, PatchFileItem, ExportFormat, ExportLayout } from './patch_types';
 import { Toast, ToastType } from '@/components/ui/Toast';
 import { cn } from '@/lib/utils';
 import { Loader2, Wand2, AlertTriangle, FileText, Check } from 'lucide-react';
 import { streamChatCompletion } from '@/lib/llm';
 import { invoke } from '@tauri-apps/api/core';
+import { ExportDialog } from './dialogs/ExportDialog';
 
 const MANUAL_DIFF_ID = 'manual-scratchpad';
 
@@ -29,13 +30,13 @@ interface GitDiffFile {
   status: 'Added' | 'Modified' | 'Deleted' | 'Renamed';
   original_content: string;
   modified_content: string;
-  is_binary: boolean; // 新增
-  is_large: boolean;  // 新增
+  is_binary: boolean; 
+  is_large: boolean;  
 }
 
 export function PatchView() {
   const { language, aiConfig } = useAppStore();
-  
+  const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [mode, setMode] = useState<PatchMode>('patch');
   
@@ -272,14 +273,13 @@ export function PatchView() {
         modified: f.modified_content,
         status: 'success', 
         gitStatus: f.status,
-        // === 映射新字段 ===
         isBinary: f.is_binary,
         isLarge: f.is_large
       }));
 
       setFiles(prev => [...prev.filter(p => p.isManual), ...newFiles]);
       
-      // === 智能默认选中：排除二进制和大文件 ===
+      // 智能默认选中：排除二进制和大文件
       const autoSelected = new Set(
           newFiles
             .filter(f => !f.isBinary && !f.isLarge)
@@ -302,7 +302,7 @@ export function PatchView() {
 
   const [_isExporting, setIsExporting] = useState(false);
 
-  // === 切换单个文件选中状态 ===
+  // 切换单个文件选中状态
   const toggleFileExport = (id: string, checked: boolean) => {
       setSelectedExportIds(prev => {
           const next = new Set(prev);
@@ -312,18 +312,20 @@ export function PatchView() {
       });
   };
 
-  // === 更新后的导出函数：支持选择和多种格式 ===
-  const handleExport = async (format: ExportFormat = 'Markdown') => {
-    if (!gitProjectRoot || !baseHash || !compareHash) return;
+  const handleExportTrigger = () => {
+      if (!gitProjectRoot || !baseHash || !compareHash) return;
+      if (selectedExportIds.size === 0) {
+          showNotification("Please select at least one file.", "warning");
+          return;
+      }
+      setIsExportDialogOpen(true);
+  };
 
-    // 1. 验证选中状态
-    const selectedList = Array.from(selectedExportIds);
-    if (selectedList.length === 0) {
-        showNotification("Please select at least one file to export.", "warning");
-        return;
-    }
-
+  // 实际的导出逻辑
+  const performExport = async (format: ExportFormat, layout: ExportLayout) => {
+    setIsExportDialogOpen(false); 
     setIsExporting(true);
+    
     try {
         const extMap: Record<ExportFormat, string> = {
             'Markdown': 'md',
@@ -333,24 +335,25 @@ export function PatchView() {
         };
 
         const filePath = await save({
-            title: `Export Diff as ${format}`,
-            defaultPath: `diff_export_${baseHash.slice(0,7)}_${compareHash.slice(0,7)}.${extMap[format]}`,
+            title: `Export ${layout} Diff as ${format}`,
+            defaultPath: `diff_${layout.toLowerCase()}_${baseHash.slice(0,7)}_${compareHash.slice(0,7)}.${extMap[format]}`,
             filters: [{ name: format, extensions: [extMap[format]] }]
         });
 
         if (filePath) {
-            // 2. 调用新命令，传递选中的路径列表
+            const selectedList = Array.from(selectedExportIds);
+            
             await invoke('export_git_diff', {
                 projectPath: gitProjectRoot,
                 oldHash: baseHash,
                 newHash: compareHash,
                 format: format,
+                layout: layout, 
                 savePath: filePath,
-                selectedPaths: selectedList // === 传递选中列表 ===
+                selectedPaths: selectedList
             });
-            showNotification(`${format} exported successfully!`, "success");
+            showNotification(`Exported successfully!`, "success");
         }
-
     } catch (err: any) {
         showNotification(`Export failed: ${err.toString()}`, 'error');
     } finally {
@@ -373,7 +376,6 @@ export function PatchView() {
                 commits={commits} baseHash={baseHash} setBaseHash={setBaseHash}
                 compareHash={compareHash} setCompareHash={setCompareHash}
                 onCompare={handleGenerateDiff} isGitLoading={isGitLoading}
-                // === 传递新 Props ===
                 selectedExportIds={selectedExportIds}
                 onToggleExport={toggleFileExport}
             />
@@ -398,9 +400,15 @@ export function PatchView() {
              isSidebarOpen={isSidebarOpen}
              onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
              isReadOnly={currentFile?.isManual !== true}
-             onExport={mode === 'diff' && gitProjectRoot ? handleExport : undefined} 
+             onExport={mode === 'diff' && gitProjectRoot ? handleExportTrigger : undefined} 
           />
       </div>
+      <ExportDialog 
+        isOpen={isExportDialogOpen}
+        onClose={() => setIsExportDialogOpen(false)}
+        onConfirm={performExport}
+        count={selectedExportIds.size}
+      />
 
       {confirmDialog.show && confirmDialog.file && (
           <div className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm flex items-center justify-center animate-in fade-in duration-200 p-4">
