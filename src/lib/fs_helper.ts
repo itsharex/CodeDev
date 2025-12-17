@@ -3,76 +3,99 @@ import { invoke } from '@tauri-apps/api/core';
 import { join } from '@tauri-apps/api/path';
 import { FileNode, IgnoreConfig } from '@/types/context';
 
-/**
- * 核心递归扫描函数
- */
+// 并发控制队列
+class TaskQueue {
+  private running = 0;
+  private queue: (() => void)[] = [];
+  constructor(private concurrency: number) {}
+
+  async run<T>(task: () => Promise<T>): Promise<T> {
+    if (this.running >= this.concurrency) {
+      await new Promise<void>(resolve => this.queue.push(resolve));
+    }
+    this.running++;
+    try {
+      return await task();
+    } finally {
+      this.running--;
+      const next = this.queue.shift();
+      if (next) next();
+    }
+  }
+}
+
+const scanQueue = new TaskQueue(50); // 限制最大 50 个并发 FS 操作
+
 export async function scanProject(
   path: string, 
-  config: IgnoreConfig
+  config: IgnoreConfig,
+  visitedPaths = new Set<string>() // 防止循环引用
 ): Promise<FileNode[]> {
   try {
-    const entries = await readDir(path);
+    // 防止循环扫描
+    if (visitedPaths.has(path)) return [];
+    visitedPaths.add(path);
+
+    const entries = await scanQueue.run(() => readDir(path));
     
-    // 并行处理
-    const nodes = await Promise.all(entries.map(async (entry) => {
-      const name = entry.name;
-      // 手动拼接完整路径
-      const fullPath = await join(path, name);
-      
-      // 1. 黑名单过滤 (保持原有逻辑)
-      // 这里简单按名称过滤，未区分文件/文件夹
-      if (config.dirs.includes(name)) return null;
-      if (config.files.includes(name)) return null;
-      
-      const ext = name.split('.').pop()?.toLowerCase();
-      if (ext && config.extensions.includes(ext)) return null;
-
-      // 2. 探测类型 & 递归
-      const isDir = entry.isDirectory;
-      
-      let children: FileNode[] | undefined = undefined;
-      let size = 0;
-
-      if (isDir) {
-        try {
-          // 如果是文件夹，递归扫描
-          children = await scanProject(fullPath, config);
-        } catch (e) {
-          // 如果递归失败（如权限问题），视为空文件夹或被忽略
-          console.warn(`Failed to scan dir: ${fullPath}`, e);
-        }
-      } else {
-        // 如果是文件，调用 Rust 获取真实大小
-        try {
-          size = await invoke('get_file_size', { path: fullPath });
-        } catch (err) {
-          console.warn('Failed to get size:', err);
-        }
-      }
-
-      // 3. 构造节点
-      const node: FileNode = {
-        id: fullPath,
-        name: name,
-        path: fullPath,
-        kind: isDir ? 'dir' : 'file',
-        size: size,
-        children: isDir ? children : undefined,
-        isSelected: true, 
-        isExpanded: false
-      };
-      
-      return node;
-    }));
-
-    // 过滤 null 并排序
-    const validNodes = nodes.filter((n): n is FileNode => n !== null);
-    return validNodes.sort((a, b) => {
-      if (a.kind === b.kind) return a.name.localeCompare(b.name);
-      return a.kind === 'dir' ? -1 : 1;
+    // 分批处理，避免 Promise.all 一次性过大
+    const nodes: (FileNode | null)[] = [];
+    
+    // 先进行简单的名字过滤，减少后续操作
+    const validEntries = entries.filter(entry => {
+        const name = entry.name;
+        if (config.dirs.includes(name)) return false;
+        if (config.files.includes(name)) return false;
+        const ext = name.split('.').pop()?.toLowerCase();
+        if (ext && config.extensions.includes(ext) && !entry.isDirectory) return false;
+        return true;
     });
 
+    // 串行或受控并发处理子项
+    for (const entry of validEntries) {
+        const fullPath = await join(path, entry.name);
+        const isDir = entry.isDirectory;
+        
+        if (entry.isSymlink) continue; 
+
+        let children: FileNode[] | undefined = undefined;
+        let size = 0;
+
+        if (isDir) {
+            try {
+                children = await scanProject(fullPath, config, visitedPaths);
+            } catch (e) {
+                console.warn(`Failed to scan dir: ${fullPath}`, e);
+            }
+        } else {
+            try {
+                size = await scanQueue.run(() => invoke('get_file_size', { path: fullPath }));
+            } catch (err) {
+                // ignore error
+            }
+        }
+
+        nodes.push({
+            id: fullPath,
+            name: entry.name,
+            path: fullPath,
+            kind: isDir ? 'dir' : 'file',
+            size: size,
+            children: isDir ? children : undefined,
+            isSelected: true,
+            isExpanded: false
+        });
+    }
+
+    return nodes
+        .filter((n): n is FileNode => n !== null)
+        .sort((a, b) => {
+            if (a.kind === b.kind) return a.name.localeCompare(b.name);
+            return a.kind === 'dir' ? -1 : 1;
+        });
+
   } catch (err) {
+    console.error(`Error scanning ${path}:`, err);
     throw err;
   }
 }
