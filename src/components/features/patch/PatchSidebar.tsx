@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { 
   FolderOpen, FileText, Sparkles, FileCode, 
   CheckCircle2, ArrowRightLeft, Loader2, 
-  Copy, ChevronDown, ChevronRight, Trash2, Info, GitMerge 
+  Copy, ChevronDown, ChevronRight, Trash2, Info, GitMerge,
+  CheckSquare, Square, FileImage, AlertOctagon
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { CommitSelector } from './CommitSelector';
@@ -72,6 +73,10 @@ interface PatchSidebarProps {
   setCompareHash: (h: string) => void;
   onCompare: () => void;
   isGitLoading: boolean;
+
+  // === 新增 Props ===
+  selectedExportIds?: Set<string>;
+  onToggleExport?: (id: string, checked: boolean) => void;
 }
 
 export function PatchSidebar({
@@ -81,7 +86,9 @@ export function PatchSidebar({
   files, selectedFileId, onSelectFile,
   gitProjectRoot, onBrowseGitProject, commits,
   baseHash, setBaseHash, compareHash, setCompareHash,
-  onCompare, isGitLoading
+  onCompare, isGitLoading,
+  selectedExportIds,
+  onToggleExport
 }: PatchSidebarProps) {
   
   const [isPromptOpen, setIsPromptOpen] = useState(false);
@@ -224,17 +231,71 @@ export function PatchSidebar({
 
                   {gitFiles.length > 0 && manualFile && <div className="h-px bg-border/50 my-2"/>}
 
-                  {/* Git 文件列表 */}
-                  {gitFiles.map(file => (
-                    <button key={file.id} onClick={() => onSelectFile(file.id)} className={cn("w-full flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-xs transition-all group border border-transparent", selectedFileId === file.id ? "bg-background text-primary border-border shadow-sm" : "hover:bg-background/60 text-muted-foreground hover:text-foreground hover:border-border/50")}>
-                      <div className="flex items-center gap-3 min-w-0">
-                        <span className="truncate font-medium text-left" title={file.path}>{file.path}</span>
-                      </div>
-                      <span className={cn("text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded shrink-0", file.gitStatus === 'Added' && "bg-green-500/20 text-green-500", file.gitStatus === 'Modified' && "bg-blue-500/20 text-blue-500", file.gitStatus === 'Deleted' && "bg-red-500/20 text-red-600", file.gitStatus === 'Renamed' && "bg-purple-500/20 text-purple-500")}>
-                        {file.gitStatus?.charAt(0)}
-                      </span>
-                    </button>
-                  ))}
+                  {/* Git 文件列表 - 修改为带复选框的行 */}
+                  {gitFiles.map(file => {
+                    const isSelected = selectedFileId === file.id;
+                    const isChecked = selectedExportIds?.has(file.id);
+                    const isDisabled = file.isBinary || file.isLarge;
+
+                    return (
+                        <div key={file.id} className={cn("flex items-center gap-1 rounded-lg transition-all group/row mb-1", isSelected ? "bg-background border border-border shadow-sm" : "hover:bg-background/60 border border-transparent")}>
+                            
+                            {/* 复选框区域 */}
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (!isDisabled && onToggleExport) {
+                                        onToggleExport(file.id, !isChecked);
+                                    }
+                                }}
+                                disabled={isDisabled}
+                                className={cn(
+                                    "pl-2 py-2 pr-1 cursor-pointer transition-opacity flex items-center justify-center",
+                                    isDisabled ? "opacity-30 cursor-not-allowed" : "hover:text-primary opacity-60 hover:opacity-100"
+                                )}
+                                title={isDisabled ? "Cannot export binary or large files" : "Include in export"}
+                            >
+                                {isDisabled ? (
+                                   <Square size={14} className="text-muted-foreground" />
+                                ) : isChecked ? (
+                                   <CheckSquare size={14} className="text-primary" />
+                                ) : (
+                                   <Square size={14} className="text-muted-foreground" />
+                                )}
+                            </button>
+
+                            {/* 文件名按钮 */}
+                            <button 
+                                onClick={() => onSelectFile(file.id)} 
+                                className={cn(
+                                    "flex-1 flex items-center justify-between gap-2 pr-3 py-2 text-xs overflow-hidden",
+                                    isSelected ? "text-primary font-medium" : "text-muted-foreground group-hover/row:text-foreground"
+                                )}
+                            >
+                                <div className="flex items-center gap-2 min-w-0">
+                                    {/* 特殊状态图标 */}
+                                    {file.isBinary ? (
+                                        <div title="Binary File" className="shrink-0 text-orange-400 flex items-center">
+                                            <FileImage size={12} />
+                                        </div>
+                                    ) : file.isLarge ? (
+                                        <div title="Large File" className="shrink-0 text-red-400 flex items-center">
+                                            <AlertOctagon size={12} />
+                                        </div>
+                                    ) : null}
+                                    
+                                    <span className={cn("truncate text-left", isDisabled && "opacity-60 decoration-slate-400")}>
+                                        {file.path}
+                                    </span>
+                                </div>
+                                
+                                <span className={cn("text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded shrink-0", file.gitStatus === 'Added' && "bg-green-500/20 text-green-500", file.gitStatus === 'Modified' && "bg-blue-500/20 text-blue-500", file.gitStatus === 'Deleted' && "bg-red-500/20 text-red-600", file.gitStatus === 'Renamed' && "bg-purple-500/20 text-purple-500")}>
+                                    {file.gitStatus?.charAt(0)}
+                                </span>
+                            </button>
+                        </div>
+                    );
+                  })}
 
                   {files.length <= 1 && !gitProjectRoot && (
                     <div className="text-center text-xs text-muted-foreground/60 p-4">

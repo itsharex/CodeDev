@@ -7,7 +7,7 @@ import { getText } from '@/lib/i18n';
 import { parseMultiFilePatch, applyPatches } from '@/lib/patch_parser';
 import { PatchSidebar } from './PatchSidebar';
 import { DiffWorkspace } from './DiffWorkspace';
-import { PatchMode, PatchFileItem } from './patch_types';
+import { PatchMode, PatchFileItem, ExportFormat } from './patch_types';
 import { Toast, ToastType } from '@/components/ui/Toast';
 import { cn } from '@/lib/utils';
 import { Loader2, Wand2, AlertTriangle, FileText, Check } from 'lucide-react';
@@ -29,6 +29,8 @@ interface GitDiffFile {
   status: 'Added' | 'Modified' | 'Deleted' | 'Renamed';
   original_content: string;
   modified_content: string;
+  is_binary: boolean; // 新增
+  is_large: boolean;  // 新增
 }
 
 export function PatchView() {
@@ -46,6 +48,7 @@ export function PatchView() {
   const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
   
   // Toast 状态
+  const [selectedExportIds, setSelectedExportIds] = useState<Set<string>>(new Set());
   const [toastState, setToastState] = useState<{ show: boolean; msg: string; type: ToastType }>({
     show: false,
     msg: '',
@@ -221,7 +224,7 @@ export function PatchView() {
   };
 
   // =================================================================
-  // Git 相关逻辑函数
+  // Git 相关逻辑函数 (更新)
   // =================================================================
 
   const handleBrowseGitProject = async () => {
@@ -261,11 +264,29 @@ export function PatchView() {
         oldHash: baseHash,
         newHash: compareHash,
       });
+      
       const newFiles: PatchFileItem[] = result.map(f => ({
-        id: f.path, path: f.path, original: f.original_content, modified: f.modified_content,
-        status: 'success', gitStatus: f.status,
+        id: f.path, 
+        path: f.path, 
+        original: f.original_content, 
+        modified: f.modified_content,
+        status: 'success', 
+        gitStatus: f.status,
+        // === 映射新字段 ===
+        isBinary: f.is_binary,
+        isLarge: f.is_large
       }));
+
       setFiles(prev => [...prev.filter(p => p.isManual), ...newFiles]);
+      
+      // === 智能默认选中：排除二进制和大文件 ===
+      const autoSelected = new Set(
+          newFiles
+            .filter(f => !f.isBinary && !f.isLarge)
+            .map(f => f.id)
+      );
+      setSelectedExportIds(autoSelected);
+
       if (newFiles.length > 0) {
         setSelectedFileId(newFiles[0].id);
       } else {
@@ -281,32 +302,53 @@ export function PatchView() {
 
   const [_isExporting, setIsExporting] = useState(false);
 
-  const handleExport = async () => {
+  // === 切换单个文件选中状态 ===
+  const toggleFileExport = (id: string, checked: boolean) => {
+      setSelectedExportIds(prev => {
+          const next = new Set(prev);
+          if (checked) next.add(id);
+          else next.delete(id);
+          return next;
+      });
+  };
+
+  // === 更新后的导出函数：支持选择和多种格式 ===
+  const handleExport = async (format: ExportFormat = 'Markdown') => {
     if (!gitProjectRoot || !baseHash || !compareHash) return;
 
-    const filesToExport = files.filter(f => f.gitStatus);
-    if (filesToExport.length === 0) {
-        showNotification("No changes to export.", "info");
+    // 1. 验证选中状态
+    const selectedList = Array.from(selectedExportIds);
+    if (selectedList.length === 0) {
+        showNotification("Please select at least one file to export.", "warning");
         return;
     }
 
     setIsExporting(true);
     try {
-        const diffText = await invoke<string>('get_git_diff_text', {
-            projectPath: gitProjectRoot,
-            oldHash: baseHash,
-            newHash: compareHash,
-        });
+        const extMap: Record<ExportFormat, string> = {
+            'Markdown': 'md',
+            'Json': 'json',
+            'Xml': 'xml',
+            'Txt': 'txt'
+        };
 
         const filePath = await save({
-            title: "Export Git Diff",
-            defaultPath: `diff_${baseHash.slice(0,7)}_${compareHash.slice(0,7)}.diff`,
-            filters: [{ name: "Diff File", extensions: ["diff", "patch", "txt"] }]
+            title: `Export Diff as ${format}`,
+            defaultPath: `diff_export_${baseHash.slice(0,7)}_${compareHash.slice(0,7)}.${extMap[format]}`,
+            filters: [{ name: format, extensions: [extMap[format]] }]
         });
 
         if (filePath) {
-            await writeTextFile(filePath, diffText);
-            showNotification("Diff exported successfully!", "success");
+            // 2. 调用新命令，传递选中的路径列表
+            await invoke('export_git_diff', {
+                projectPath: gitProjectRoot,
+                oldHash: baseHash,
+                newHash: compareHash,
+                format: format,
+                savePath: filePath,
+                selectedPaths: selectedList // === 传递选中列表 ===
+            });
+            showNotification(`${format} exported successfully!`, "success");
         }
 
     } catch (err: any) {
@@ -331,6 +373,9 @@ export function PatchView() {
                 commits={commits} baseHash={baseHash} setBaseHash={setBaseHash}
                 compareHash={compareHash} setCompareHash={setCompareHash}
                 onCompare={handleGenerateDiff} isGitLoading={isGitLoading}
+                // === 传递新 Props ===
+                selectedExportIds={selectedExportIds}
+                onToggleExport={toggleFileExport}
             />
         </div>
       </div>
@@ -353,7 +398,8 @@ export function PatchView() {
              isSidebarOpen={isSidebarOpen}
              onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
              isReadOnly={currentFile?.isManual !== true}
-             onExport={mode === 'diff' && gitProjectRoot ? handleExport : undefined}
+             // === 修改导出逻辑调用 ===
+             onExport={mode === 'diff' && gitProjectRoot ? () => handleExport('Markdown') : undefined} // 默认 Markdown，后续 DiffWorkspace 可以扩展下拉菜单
           />
       </div>
 

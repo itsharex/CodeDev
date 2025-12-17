@@ -1,4 +1,5 @@
 export type PatchMode = 'patch' | 'diff';
+export type ExportFormat = 'Markdown' | 'Json' | 'Xml' | 'Txt';
 
 export interface PatchOperation {
   originalBlock: string;
@@ -21,4 +22,8 @@ export interface PatchFileItem {
   isManual?: boolean;
 
   gitStatus?: 'Added' | 'Modified' | 'Deleted' | 'Renamed'; 
+  
+  // === 新增字段，用于标记文件状态 ===
+  isBinary?: boolean;
+  isLarge?: boolean;
 }

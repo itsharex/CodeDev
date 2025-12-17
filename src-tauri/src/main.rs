@@ -14,6 +14,7 @@ use tauri::{
 
 // 引入模块
 mod git;
+mod export; // 新增模块引入
 
 // =================================================================
 // 系统监控相关数据结构
@@ -78,12 +79,47 @@ fn get_system_info(
 }
 
 // =================================================================
+// 导出命令 (新增)
+// =================================================================
+
+#[tauri::command]
+async fn export_git_diff(
+    project_path: String,
+    old_hash: String,
+    new_hash: String,
+    format: export::ExportFormat,
+    save_path: String,
+    selected_paths: Vec<String>, // 接收前端过滤后的路径列表
+) -> Result<(), String> {
+    
+    // 1. 复用 git 模块获取完整文件数据
+    let all_files = git::get_git_diff(project_path, old_hash, new_hash)?;
+    
+    // 2. 根据前端传来的路径进行过滤
+    let filtered_files: Vec<git::GitDiffFile> = all_files
+        .into_iter()
+        .filter(|f| selected_paths.contains(&f.path))
+        .collect();
+
+    if filtered_files.is_empty() {
+        return Err("No files selected for export.".to_string());
+    }
+
+    // 3. 使用 export 模块生成格式化字符串
+    let content = export::generate_export_content(filtered_files, format);
+
+    // 4. 写入文件
+    fs::write(&save_path, content).map_err(|e| format!("Failed to write file: {}", e))?;
+
+    Ok(())
+}
+
+// =================================================================
 // Main Entry
 // =================================================================
 
 fn main() {
     tauri::Builder::default()
-        // 注册插件
         .plugin(tauri_plugin_clipboard_manager::init())
         .plugin(tauri_plugin_http::init())
         .plugin(tauri_plugin_dialog::init())
@@ -99,7 +135,6 @@ fn main() {
                 let _ = window.set_focus();
             }
         }))
-        // 注意：这里我们使用 git::前缀引用模块中的函数
         .invoke_handler(tauri::generate_handler![
             greet, 
             get_file_size, 
@@ -107,15 +142,15 @@ fn main() {
             // Git 模块命令
             git::get_git_commits,
             git::get_git_diff,
-            git::get_git_diff_text
+            git::get_git_diff_text,
+            // 导出命令
+            export_git_diff
         ])
         .setup(|app| {
-            // 初始化系统监控状态
             let mut system = System::new();
             system.refresh_all();
             app.manage(Arc::new(Mutex::new(system)));
             
-            // 配置托盘菜单
             let quit_i = MenuItem::with_id(app, "quit", "退出 / Quit", true, None::<&str>)?;
             let show_i = MenuItem::with_id(app, "show", "显示主窗口 / Show Main Window", true, None::<&str>)?;
             
@@ -156,7 +191,6 @@ fn main() {
         .on_window_event(|window, event| match event {
             WindowEvent::CloseRequested { api: _api, .. } => {
                 let _label = window.label();
-                
                 #[cfg(not(dev))]
                 if _label == "main" || _label == "spotlight" {
                     _api.prevent_close();

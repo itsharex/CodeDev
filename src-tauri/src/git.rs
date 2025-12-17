@@ -1,26 +1,29 @@
 use chrono::{DateTime, Local};
 use git2::{Delta, DiffFormat, DiffOptions, Oid, Repository};
-use serde::Serialize;
+use serde::{Deserialize, Serialize}; // 添加 Deserialize
 
 // =================================================================
 // Git 数据结构定义
 // =================================================================
 
-#[derive(Serialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct GitCommit {
-    hash: String,
-    author: String,
-    date: String,
-    message: String,
+    pub hash: String,
+    pub author: String,
+    pub date: String,
+    pub message: String,
 }
 
-#[derive(Serialize, Clone)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct GitDiffFile {
-    path: String,
-    status: String,
-    old_path: Option<String>,
-    original_content: String,
-    modified_content: String,
+    pub path: String,
+    pub status: String,
+    pub old_path: Option<String>,
+    pub original_content: String,
+    pub modified_content: String,
+    // === 新增字段 ===
+    pub is_binary: bool,
+    pub is_large: bool,
 }
 
 // =================================================================
@@ -36,7 +39,7 @@ pub fn get_git_commits(project_path: String) -> Result<Vec<GitCommit>, String> {
         .revwalk()
         .map_err(|e| format!("无法读取历史记录: {}", e))?;
 
-    // 从 HEAD 开始遍历，如果 HEAD 不存在(空仓库)，则返回空列表
+    // 从 HEAD 开始遍历
     if revwalk.push_head().is_err() {
         return Ok(Vec::new());
     }
@@ -50,11 +53,8 @@ pub fn get_git_commits(project_path: String) -> Result<Vec<GitCommit>, String> {
         let oid = id.map_err(|e| e.to_string())?;
         let commit = repo.find_commit(oid).map_err(|e| e.to_string())?;
 
-        // 处理时间戳
         let time = commit.time();
         let dt = DateTime::from_timestamp(time.seconds(), 0).unwrap_or_default();
-
-        // 格式化为本地时间字符串 YYYY-MM-DD HH:MM
         let date_str = dt
             .with_timezone(&Local)
             .format("%Y-%m-%d %H:%M")
@@ -67,7 +67,6 @@ pub fn get_git_commits(project_path: String) -> Result<Vec<GitCommit>, String> {
             message: commit.summary().unwrap_or("").to_string(),
         });
 
-        // 限制返回最近 50 条，防止大量 Commit 导致前端卡顿
         if commits.len() >= 50 {
             break;
         }
@@ -101,13 +100,13 @@ pub fn get_git_diff(
         .map_err(|e| format!("Diff generation failed: {}", e))?;
 
     let mut files: Vec<GitDiffFile> = Vec::new();
+    const MAX_SIZE: usize = 2 * 1024 * 1024; // 2MB 限制
 
     // 遍历每一个变更的文件 (Delta)
     for delta in diff.deltas() {
         let old_file = delta.old_file();
         let new_file = delta.new_file();
 
-        // 优先使用新路径，如果是删除则使用旧路径
         let file_path = new_file.path().or(old_file.path()).unwrap();
         let path_str = file_path.to_string_lossy().to_string();
 
@@ -119,45 +118,40 @@ pub fn get_git_diff(
             _ => "Modified",
         };
 
-        // --- 读取原始内容 ---
-        let original_content = if delta.status() == Delta::Added {
-            String::new()
-        } else {
-            match repo.find_blob(old_file.id()) {
+        // 辅助闭包：读取 Blob 并判断属性
+        let read_blob_content = |id: git2::Oid| -> (String, bool, bool) {
+            if id.is_zero() {
+                return (String::new(), false, false);
+            }
+
+            match repo.find_blob(id) {
                 Ok(blob) => {
-                    if blob.is_binary() {
-                        "[Binary File]".to_string()
+                    let is_binary = blob.is_binary();
+                    let is_large = blob.size() > MAX_SIZE;
+
+                    let content = if is_binary {
+                        "[Binary File Omitted]".to_string()
+                    } else if is_large {
+                        format!("[File Too Large: {} bytes]", blob.size())
                     } else {
-                        if blob.size() > 2 * 1024 * 1024 {
-                            "[File too large to display]".to_string()
-                        } else {
-                            String::from_utf8_lossy(blob.content()).to_string()
-                        }
-                    }
+                        String::from_utf8_lossy(blob.content()).to_string()
+                    };
+
+                    (content, is_binary, is_large)
                 }
-                Err(_) => String::new(),
+                Err(_) => (String::new(), false, false),
             }
         };
 
-        // --- 读取修改后内容 ---
-        let modified_content = if delta.status() == Delta::Deleted {
-            String::new()
-        } else {
-            match repo.find_blob(new_file.id()) {
-                Ok(blob) => {
-                    if blob.is_binary() {
-                        "[Binary File]".to_string()
-                    } else {
-                        if blob.size() > 2 * 1024 * 1024 {
-                            "[File too large to display]".to_string()
-                        } else {
-                            String::from_utf8_lossy(blob.content()).to_string()
-                        }
-                    }
-                }
-                Err(_) => String::new(),
-            }
-        };
+        // 获取原始内容及属性
+        let (original_content, old_binary, old_large) = read_blob_content(old_file.id());
+
+        // 获取修改后内容及属性
+        let (modified_content, new_binary, new_large) = read_blob_content(new_file.id());
+
+        // 只要任一版本是二进制或大文件，就标记该文件
+        let is_binary = old_binary || new_binary;
+        let is_large = old_large || new_large;
 
         files.push(GitDiffFile {
             path: path_str,
@@ -175,6 +169,8 @@ pub fn get_git_diff(
             },
             original_content,
             modified_content,
+            is_binary, // 新增
+            is_large,  // 新增
         });
     }
 
