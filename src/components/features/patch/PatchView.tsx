@@ -398,8 +398,7 @@ export function PatchView() {
              isSidebarOpen={isSidebarOpen}
              onToggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
              isReadOnly={currentFile?.isManual !== true}
-             // === 修改导出逻辑调用 ===
-             onExport={mode === 'diff' && gitProjectRoot ? () => handleExport('Markdown') : undefined} // 默认 Markdown，后续 DiffWorkspace 可以扩展下拉菜单
+             onExport={mode === 'diff' && gitProjectRoot ? handleExport : undefined} 
           />
       </div>
 
