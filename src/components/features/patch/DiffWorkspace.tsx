@@ -19,7 +19,6 @@ interface DiffWorkspaceProps {
   isSidebarOpen?: boolean;
   onToggleSidebar?: () => void;
   isReadOnly?: boolean;
-  // 修改：不再需要参数，点击只触发动作（比如打开父组件的弹窗）
   onExport?: () => void; 
 }
 
@@ -168,7 +167,7 @@ export function DiffWorkspace({
                 </button>
             )}
             
-            {/* === Export 按钮 (简化版，点击触发 onExport 回调) === */}
+            {/* === Export 按钮 === */}
             {onExport && (
               <button 
                   onClick={onExport}

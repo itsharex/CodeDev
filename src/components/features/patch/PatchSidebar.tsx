@@ -74,7 +74,6 @@ interface PatchSidebarProps {
   onCompare: () => void;
   isGitLoading: boolean;
 
-  // === 新增 Props ===
   selectedExportIds?: Set<string>;
   onToggleExport?: (id: string, checked: boolean) => void;
 }
@@ -180,7 +179,6 @@ export function PatchSidebar({
                 <div className="flex-1 overflow-y-auto p-2 space-y-1 custom-scrollbar">
                   {aiPatchFiles.map(file => (
                      <button key={file.id} onClick={() => onSelectFile(file.id)} className={cn("w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs transition-all group border border-transparent", selectedFileId === file.id ? "bg-background text-primary border-border shadow-sm" : "hover:bg-background/60 text-muted-foreground hover:text-foreground hover:border-border/50")}>
-                        {/* ... AI 文件列表项渲染 ... */}
                      </button>
                   ))}
                 </div>

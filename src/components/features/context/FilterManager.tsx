@@ -9,7 +9,7 @@ type FilterType = keyof IgnoreConfig;
 
 interface FilterManagerProps {
   localConfig: IgnoreConfig;
-  globalConfig?: IgnoreConfig; // 全局配置（可选，如果有则开启锁定模式）
+  globalConfig?: IgnoreConfig; // 全局配置
   onUpdate: (type: FilterType, action: 'add' | 'remove', value: string) => void;
 }
 
@@ -37,10 +37,10 @@ export function FilterManager({ localConfig, globalConfig, onUpdate }: FilterMan
               <div className="flex items-center gap-2">
                 <input 
                   type="checkbox"
-                  checked={true} // 只要在列表中就是选中（忽略）
+                  checked={true} // 只要在列表中就是选中
                   disabled={isLocked} // 如果是全局的，禁止取消
                   onChange={() => {
-                    // 如果在本地列表中，点击则移除；如果不在，点击则添加（虽然这里全是已存在的）
+                    // 如果在本地列表中，点击则移除；如果不在，点击则添加
                     if (isLocal) onUpdate(activeTab, 'remove', item);
                   }}
                   className={cn(

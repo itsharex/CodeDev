@@ -13,7 +13,6 @@ import { PromptCard } from './PromptCard';
 import { PromptEditorDialog } from './dialogs/PromptEditorDialog';
 import { VariableFillerDialog } from './dialogs/VariableFillerDialog';
 
-// 导入核心执行模块和 store
 import { executeCommand } from '@/lib/command_executor';
 import { useContextStore } from '@/store/useContextStore';
 

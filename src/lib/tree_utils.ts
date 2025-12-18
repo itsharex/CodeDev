@@ -1,4 +1,3 @@
-// src/lib/tree_utils.ts
 import { FileNode } from "@/types/context";
 
 // 配置常量

@@ -20,7 +20,7 @@ export interface ModelCostStat {
 export interface AnalyticsData {
   languages: LanguageStat[];
   topFiles: FileNode[];
-  modelCosts: ModelCostStat[]; // ✨ 动态数组
+  modelCosts: ModelCostStat[]; // 动态数组
 }
 
 // 语言颜色映射

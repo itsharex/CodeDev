@@ -1,5 +1,3 @@
-// src/types/context.ts
-
 export interface IgnoreConfig {
   dirs: string[];
   files: string[];

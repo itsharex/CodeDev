@@ -50,8 +50,8 @@ export const DEFAULT_MODELS: AIModelConfig[] = [
 // 配置 URL 列表 (CDN 优先 + GitHub 原站)
 const REMOTE_CONFIG_URLS = [
   'https://gitee.com/winriseF/models/raw/master/models/models.json',
-  'https://cdn.jsdelivr.net/gh/WinriseF/Code-Forge-AI@main/models/models.json', // 方案一：jsDelivr CDN (国内快)
-  'https://raw.githubusercontent.com/WinriseF/Code-Forge-AI/main/models/models.json' // 方案二：GitHub 原站 (备用)
+  'https://cdn.jsdelivr.net/gh/WinriseF/Code-Forge-AI@main/models/models.json', // 方案一：jsDelivr CDN
+  'https://raw.githubusercontent.com/WinriseF/Code-Forge-AI/main/models/models.json' // 方案二：GitHub 原站
 ];
 
 export interface SpotlightAppearance {

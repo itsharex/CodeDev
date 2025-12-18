@@ -23,7 +23,6 @@ export function parseVariables(template: string): string[] {
  */
 export function fillTemplate(template: string, values: Record<string, string>): string {
   return template.replace(/\{\{\s*(.+?)\s*\}\}/g, (_, key) => {
-    // 如果用户没填这个变量，保留原样或者替换为空？通常替换为空字符串或保留
     // 这里策略：如果没填，保留原样，避免代码损坏；或者替换为对应值
     const val = values[key];
     return val !== undefined ? val : _; 

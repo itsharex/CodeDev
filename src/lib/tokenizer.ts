@@ -1,4 +1,3 @@
-// src/lib/tokenizer.ts
 import { getEncoding, Tiktoken } from 'js-tiktoken';
 
 let encoder: Tiktoken | null = null;

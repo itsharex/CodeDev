@@ -24,7 +24,7 @@ export function FileTreeNode({ node, level = 0, onToggleSelect }: FileTreeNodePr
   };
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (node.isLocked) return; // ✨ 锁定时禁止改变
+    if (node.isLocked) return; // 锁定时禁止改变
     onToggleSelect(node.id, e.target.checked);
   };
 
@@ -37,7 +37,7 @@ export function FileTreeNode({ node, level = 0, onToggleSelect }: FileTreeNodePr
         className={cn(
           "flex items-center py-1 pr-2 cursor-pointer select-none transition-colors text-sm group",
           node.isLocked 
-            ? "opacity-40 cursor-not-allowed bg-secondary/20" // ✨ 锁定样式：变淡，不可点
+            ? "opacity-40 cursor-not-allowed bg-secondary/20" // 锁定样式：变淡，不可点
             : "hover:bg-secondary/50",
           !node.isSelected && !node.isLocked && "opacity-60 hover:opacity-100"
         )}
@@ -51,7 +51,7 @@ export function FileTreeNode({ node, level = 0, onToggleSelect }: FileTreeNodePr
 
         <div className="mr-2 flex items-center" onClick={e => e.stopPropagation()}>
           {node.isLocked ? (
-             // ✨ 如果锁定，显示一个小锁或者禁用的 Checkbox
+             // 如果锁定，显示一个小锁或者禁用的 Checkbox
              <Lock size={12} className="text-muted-foreground" />
           ) : (
              <input 

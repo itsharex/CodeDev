@@ -140,8 +140,7 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
   return (
     <div className="flex flex-col h-full animate-in fade-in duration-300">
       {/* 
-        修复逻辑：
-        1. 默认状态（隐藏状态）：强制 top: -60px。这解决了你说的“退出不全”问题。
+        1. 默认状态（隐藏状态）：强制 top: -60px。
            即使 Monaco 内部设为 -30px，我们这里强制把它拉得更远。
         2. .visible 状态：强制 top: 40px。这是显示位置，留出空间给 Tooltip。
         3. transition：添加过渡动画，解决“闪一下”的问题，让它平滑地在 -60px 和 40px 之间移动。
@@ -168,8 +167,6 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
           top: -60px !important;
           visibility: hidden;
         }
-
-        /* 微调搜索框内部输入框高度 */
         .monaco-editor .find-widget .monaco-inputbox {
           height: 24px !important;
           min-height: 24px !important;
