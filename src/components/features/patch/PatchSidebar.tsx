@@ -191,7 +191,7 @@ export function PatchSidebar({
               <div className="p-4 border-b border-border bg-background/80 space-y-3 shrink-0">
                 <h3 className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5"><GitMerge size={12}/> Git Snapshot Compare</h3>
                 
-                <button onClick={onBrowseGitProject} className={cn("...")} title={gitProjectRoot || getText('patch', 'browseGit', language)}>
+                <button onClick={onBrowseGitProject} className={cn("w-full flex items-center justify-between px-3 py-2 rounded-lg border text-xs transition-all", gitProjectRoot ? "bg-background border-border text-foreground shadow-sm hover:border-primary/50" : "bg-primary/5 border-dashed border-primary/30 text-primary hover:bg-primary/10")} title={gitProjectRoot || getText('patch', 'browseGit', language)}>
                   <div className="flex items-center gap-2 truncate"><FolderOpen size={14} className={gitProjectRoot ? "text-blue-500" : ""} /> <span className="truncate font-medium">{gitProjectRoot || getText('patch', 'browseGit', language)}</span></div>
                   {gitProjectRoot && <span className="w-2 h-2 rounded-full bg-green-500 shrink-0" />}
                 </button>
@@ -206,7 +206,7 @@ export function PatchSidebar({
                       <label className="text-[10px] font-medium text-muted-foreground">{getText('patch', 'compareVersion', language)}</label>
                       <CommitSelector commits={commits} selectedValue={compareHash} onSelect={setCompareHash} disabled={isGitLoading} />
                     </div>
-                    <button onClick={onCompare} disabled={isGitLoading || !baseHash || !compareHash} className="...">
+                    <button onClick={onCompare} disabled={isGitLoading || !baseHash || !compareHash} className="w-full flex items-center justify-center gap-2 py-2 rounded-md text-xs font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition-all disabled:opacity-50 active:scale-95 shadow-sm shadow-primary/20">
                       {isGitLoading ? <Loader2 size={14} className="animate-spin"/> : <GitMerge size={14}/>}
                       {isGitLoading ? getText('patch', 'comparing', language) : getText('patch', 'generateDiff', language)}
                     </button>
