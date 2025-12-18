@@ -173,7 +173,7 @@ export function DiffWorkspace({
                   onClick={onExport}
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-medium bg-secondary hover:bg-secondary/80 text-foreground transition-colors active:scale-95"
               >
-                  <FileDown size={14} /> Export
+                  <FileDown size={14} />{getText('patch', 'export', language)}
               </button>
             )}
             

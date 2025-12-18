@@ -291,7 +291,7 @@ export function PatchView() {
         setSelectedFileId(newFiles[0].id);
       } else {
          setSelectedFileId(MANUAL_DIFF_ID);
-         showNotification('No differences found between the selected commits.', 'info');
+         showNotification(getText('patch', 'noDiff', language), 'info');
       }
     } catch (err: any) {
       showNotification(`Error generating diff: ${err.toString()}`, 'error');
@@ -315,7 +315,7 @@ export function PatchView() {
   const handleExportTrigger = () => {
       if (!gitProjectRoot || !baseHash || !compareHash) return;
       if (selectedExportIds.size === 0) {
-          showNotification("Please select at least one file.", "warning");
+          showNotification(getText('patch', 'selectOne', language), "warning");
           return;
       }
       setIsExportDialogOpen(true);
@@ -352,7 +352,7 @@ export function PatchView() {
                 savePath: filePath,
                 selectedPaths: selectedList
             });
-            showNotification(`Exported successfully!`, "success");
+            showNotification(getText('patch', 'exportSuccess', language), "success");
         }
     } catch (err: any) {
         showNotification(`Export failed: ${err.toString()}`, 'error');
@@ -387,7 +387,7 @@ export function PatchView() {
               <div className="absolute bottom-6 right-6 z-50 animate-in fade-in slide-in-from-bottom-2">
                   <button onClick={() => handleAiFix(currentFile)} disabled={isFixing} className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-full shadow-lg shadow-purple-500/20 transition-all active:scale-95 disabled:opacity-50">
                       {isFixing ? <Loader2 className="animate-spin" size={16} /> : <Wand2 size={16} />}
-                      {isFixing ? "AI is fixing..." : "Fix with AI"}
+                      {isFixing ? getText('patch', 'aiFixing', language) : getText('patch', 'fixAI', language)}
                   </button>
               </div>
           )}
@@ -431,7 +431,7 @@ export function PatchView() {
                   <div className="p-4 bg-secondary/5 border-t border-border flex justify-end gap-3">
                       <button onClick={() => setConfirmDialog({ show: false, file: null })} className="px-4 py-2 text-sm font-medium rounded-lg hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors">{getText('patch', 'cancel', language)}</button>
                       <button onClick={executeSave} className={cn("px-4 py-2 text-sm font-medium rounded-lg flex items-center gap-2 shadow-sm transition-colors", confirmDialog.file.status === 'error' ? "bg-destructive text-destructive-foreground hover:bg-destructive/90" : "bg-primary text-primary-foreground hover:bg-primary/90")}>
-                          {confirmDialog.file.status === 'error' ? (<><AlertTriangle size={16} /> Force Save</>) : (<><Check size={16} /> {getText('patch', 'confirm', language)}</>)}
+                          {confirmDialog.file.status === 'error' ? (<><AlertTriangle size={16} />{getText('patch', 'forceSave', language)}</>) : (<><Check size={16} /> {getText('patch', 'confirm', language)}</>)}
                       </button>
                   </div>
               </div>
