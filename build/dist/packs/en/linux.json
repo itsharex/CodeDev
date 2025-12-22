@@ -935,7 +935,7 @@
     "title": "pdftohtml - Convert a PDF file to an HTML file",
     "content": "pdftohtml {{path/to/file.pdf}} {{path/to/output_file.html}}",
     "group": "Linux Ops",
-    "description": "pdftohtml: Convert PDF files into HTML, XML and PNG images. (Convert a PDF file to an HTML file)",
+    "description": "pdftohtml: Convert PDF files into HTML, XML, and PNG images. (Convert a PDF file to an HTML file)",
     "tags": [
       "linux",
       "pdftohtml",
@@ -950,7 +950,7 @@
     "title": "pdftohtml - Ignore images in the PDF file",
     "content": "pdftohtml -i {{path/to/file.pdf}} {{path/to/output_file.html}}",
     "group": "Linux Ops",
-    "description": "pdftohtml: Convert PDF files into HTML, XML and PNG images. (Ignore images in the PDF file)",
+    "description": "pdftohtml: Convert PDF files into HTML, XML, and PNG images. (Ignore images in the PDF file)",
     "tags": [
       "linux",
       "pdftohtml",
@@ -965,7 +965,7 @@
     "title": "pdftohtml - Generate a single HTML file that includes all PDF pages",
     "content": "pdftohtml -s {{path/to/file.pdf}} {{path/to/output_file.html}}",
     "group": "Linux Ops",
-    "description": "pdftohtml: Convert PDF files into HTML, XML and PNG images. (Generate a single HTML file that includes all PDF pages)",
+    "description": "pdftohtml: Convert PDF files into HTML, XML, and PNG images. (Generate a single HTML file that includes all PDF pages)",
     "tags": [
       "linux",
       "pdftohtml",
@@ -980,7 +980,7 @@
     "title": "pdftohtml - Convert a PDF file to an XML file",
     "content": "pdftohtml -xml {{path/to/file.pdf}} {{path/to/output_file.xml}}",
     "group": "Linux Ops",
-    "description": "pdftohtml: Convert PDF files into HTML, XML and PNG images. (Convert a PDF file to an XML file)",
+    "description": "pdftohtml: Convert PDF files into HTML, XML, and PNG images. (Convert a PDF file to an XML file)",
     "tags": [
       "linux",
       "pdftohtml",
@@ -1892,10 +1892,10 @@
   {
     "id": "tldr-en-linux-slapt-src-2",
     "type": "command",
-    "title": "slapt-src - Fetch, build and install the specified slackbuild(s)",
+    "title": "slapt-src - Fetch, build, and install the specified slackbuild(s)",
     "content": "slapt-src {{[-i|--install]}} {{slackbuild_name}}",
     "group": "Linux Ops",
-    "description": "slapt-src: A utility to automate building of slackbuilds. SlackBuild sources need to be configured in the slapt-srcrc file. (Fetch, build and install the specified slackbuild(s))",
+    "description": "slapt-src: A utility to automate building of slackbuilds. SlackBuild sources need to be configured in the slapt-srcrc file. (Fetch, build, and install the specified slackbuild(s))",
     "tags": [
       "linux",
       "slapt-src",
@@ -1985,7 +1985,7 @@
     "title": "utmpdump - Dump the `/var/log/wtmp` file to `stdout` as plain text",
     "content": "utmpdump {{/var/log/wtmp}}",
     "group": "Linux Ops",
-    "description": "utmpdump: Dump and load btmp, utmp and wtmp accounting files. (Dump the `/var/log/wtmp` file to `stdout` as plain text)",
+    "description": "utmpdump: Dump and load btmp, utmp, and wtmp accounting files. (Dump the `/var/log/wtmp` file to `stdout` as plain text)",
     "tags": [
       "linux",
       "utmpdump",
@@ -2000,7 +2000,7 @@
     "title": "utmpdump - Load a previously dumped file into `/var/log/wtmp`",
     "content": "utmpdump {{[-r|--reverse]}} {{dumpfile}} > {{/var/log/wtmp}}",
     "group": "Linux Ops",
-    "description": "utmpdump: Dump and load btmp, utmp and wtmp accounting files. (Load a previously dumped file into `/var/log/wtmp`)",
+    "description": "utmpdump: Dump and load btmp, utmp, and wtmp accounting files. (Load a previously dumped file into `/var/log/wtmp`)",
     "tags": [
       "linux",
       "utmpdump",
@@ -3032,10 +3032,10 @@
   {
     "id": "tldr-en-linux-bootctl-3",
     "type": "command",
-    "title": "bootctl - Specify the path to the EFI system partition (defaults to `/efi/`, `/boot/` or `/boot/efi`)",
+    "title": "bootctl - Specify the path to the EFI system partition (defaults to `/efi/`, `/boot/`, or `/boot/efi`)",
     "content": "bootctl --esp-path /{{path/to/efi_system_partition}}/",
     "group": "Linux Ops",
-    "description": "bootctl: Control EFI firmware boot settings and manage boot loader. (Specify the path to the EFI system partition (defaults to `/efi/`, `/boot/` or `/boot/efi`))",
+    "description": "bootctl: Control EFI firmware boot settings and manage boot loader. (Specify the path to the EFI system partition (defaults to `/efi/`, `/boot/`, or `/boot/efi`))",
     "tags": [
       "linux",
       "bootctl",
@@ -6542,10 +6542,10 @@
   {
     "id": "tldr-en-linux-importctl-1",
     "type": "command",
-    "title": "importctl - Pull or download from a remote source that is either raw or qcow2 file, and stores it as a raw file",
+    "title": "importctl - Pull or download from a remote source that is either raw or `.qcow2` file, and stores it as a raw file",
     "content": "sudo importctl pull-raw {{https://example.com/source.ext}} {{name}} --class={{machine|portable|sysext|confext}}",
     "group": "Linux Ops",
-    "description": "importctl: Download, Import, or Export disk images. (Pull or download from a remote source that is either raw or qcow2 file, and stores it as a raw file)",
+    "description": "importctl: Download, Import, or Export disk images. (Pull or download from a remote source that is either raw or `.qcow2` file, and stores it as a raw file)",
     "tags": [
       "linux",
       "importctl",
@@ -7427,10 +7427,10 @@
   {
     "id": "tldr-en-linux-tcpkill-0",
     "type": "command",
-    "title": "tcpkill - Kill in-progress connections at a specified interface, host and port",
+    "title": "tcpkill - Kill in-progress connections at a specified interface, host, and port",
     "content": "tcpkill -i {{eth1}} host {{192.95.4.27}} and port {{2266}}",
     "group": "Linux Ops",
-    "description": "tcpkill: Kill specified in-progress TCP connections. (Kill in-progress connections at a specified interface, host and port)",
+    "description": "tcpkill: Kill specified in-progress TCP connections. (Kill in-progress connections at a specified interface, host, and port)",
     "tags": [
       "linux",
       "tcpkill",
@@ -9950,7 +9950,7 @@
     "title": "pw-cli - Print information of all object of a specific type",
     "content": "pw-cli {{[ls|list-objects]}} {{Node|Link|Port|Client|Device|Metadata|Factory|Module|Profiler|SecurityContext|Core}}",
     "group": "Linux Ops",
-    "description": "pw-cli: Manage a PipeWire instance's modules, objects, nodes, devices, links and much more. (Print information of all object of a specific type)",
+    "description": "pw-cli: Manage a PipeWire instance's modules, objects, nodes, devices, links, and much more. (Print information of all object of a specific type)",
     "tags": [
       "linux",
       "pw-cli",
@@ -9965,7 +9965,7 @@
     "title": "pw-cli - Print information about an object with a specific ID",
     "content": "pw-cli {{[i|info]}} {{4}}",
     "group": "Linux Ops",
-    "description": "pw-cli: Manage a PipeWire instance's modules, objects, nodes, devices, links and much more. (Print information about an object with a specific ID)",
+    "description": "pw-cli: Manage a PipeWire instance's modules, objects, nodes, devices, links, and much more. (Print information about an object with a specific ID)",
     "tags": [
       "linux",
       "pw-cli",
@@ -9980,7 +9980,7 @@
     "title": "pw-cli - Print all objects' information",
     "content": "pw-cli {{[i|info]}} all",
     "group": "Linux Ops",
-    "description": "pw-cli: Manage a PipeWire instance's modules, objects, nodes, devices, links and much more. (Print all objects' information)",
+    "description": "pw-cli: Manage a PipeWire instance's modules, objects, nodes, devices, links, and much more. (Print all objects' information)",
     "tags": [
       "linux",
       "pw-cli",
@@ -9995,7 +9995,7 @@
     "title": "pw-cli - Monitor for object changes",
     "content": "pw-cli {{[-m|--monitor]}}",
     "group": "Linux Ops",
-    "description": "pw-cli: Manage a PipeWire instance's modules, objects, nodes, devices, links and much more. (Monitor for object changes)",
+    "description": "pw-cli: Manage a PipeWire instance's modules, objects, nodes, devices, links, and much more. (Monitor for object changes)",
     "tags": [
       "linux",
       "pw-cli",
@@ -10010,7 +10010,7 @@
     "title": "pw-cli - Display help",
     "content": "pw-cli {{[h|help]}}",
     "group": "Linux Ops",
-    "description": "pw-cli: Manage a PipeWire instance's modules, objects, nodes, devices, links and much more. (Display help)",
+    "description": "pw-cli: Manage a PipeWire instance's modules, objects, nodes, devices, links, and much more. (Display help)",
     "tags": [
       "linux",
       "pw-cli",
@@ -12905,7 +12905,7 @@
     "title": "nft - View current configuration",
     "content": "sudo nft list ruleset",
     "group": "Linux Ops",
-    "description": "nft: Allows configuration of tables, chains and rules provided by the Linux kernel firewall. Nftables replaces iptables. (View current configuration)",
+    "description": "nft: Allows configuration of tables, chains, and rules provided by the Linux kernel firewall. Nftables replaces iptables. (View current configuration)",
     "tags": [
       "linux",
       "nft",
@@ -12920,7 +12920,7 @@
     "title": "nft - Add a new table with family \"inet\" and table \"filter\"",
     "content": "sudo nft add table {{inet}} {{filter}}",
     "group": "Linux Ops",
-    "description": "nft: Allows configuration of tables, chains and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Add a new table with family \"inet\" and table \"filter\")",
+    "description": "nft: Allows configuration of tables, chains, and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Add a new table with family \"inet\" and table \"filter\")",
     "tags": [
       "linux",
       "nft",
@@ -12935,7 +12935,7 @@
     "title": "nft - Add a new chain to accept all inbound traffic",
     "content": "sudo nft add chain {{inet}} {{filter}} {{input}} \\{ type {{filter}} hook {{input}} priority {{0}} \\; policy {{accept}} \\; \\}",
     "group": "Linux Ops",
-    "description": "nft: Allows configuration of tables, chains and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Add a new chain to accept all inbound traffic)",
+    "description": "nft: Allows configuration of tables, chains, and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Add a new chain to accept all inbound traffic)",
     "tags": [
       "linux",
       "nft",
@@ -12950,7 +12950,7 @@
     "title": "nft - Add a new rule to accept several TCP ports",
     "content": "sudo nft add rule {{inet}} {{filter}} {{input}} {{tcp}} {{dport \\{ telnet, ssh, http, https \\} accept}}",
     "group": "Linux Ops",
-    "description": "nft: Allows configuration of tables, chains and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Add a new rule to accept several TCP ports)",
+    "description": "nft: Allows configuration of tables, chains, and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Add a new rule to accept several TCP ports)",
     "tags": [
       "linux",
       "nft",
@@ -12965,7 +12965,7 @@
     "title": "nft - Add a NAT rule to translate all traffic from the `192.168.0.0/24` subnet to the host's public IP",
     "content": "sudo nft add rule {{nat}} {{postrouting}} ip saddr {{192.168.0.0/24}} {{masquerade}}",
     "group": "Linux Ops",
-    "description": "nft: Allows configuration of tables, chains and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Add a NAT rule to translate all traffic from the `192.168.0.0/24` subnet to the host's public IP)",
+    "description": "nft: Allows configuration of tables, chains, and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Add a NAT rule to translate all traffic from the `192.168.0.0/24` subnet to the host's public IP)",
     "tags": [
       "linux",
       "nft",
@@ -12980,7 +12980,7 @@
     "title": "nft - Show rule handles",
     "content": "sudo nft --handle --numeric list chain {{family}} {{table}} {{chain}}",
     "group": "Linux Ops",
-    "description": "nft: Allows configuration of tables, chains and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Show rule handles)",
+    "description": "nft: Allows configuration of tables, chains, and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Show rule handles)",
     "tags": [
       "linux",
       "nft",
@@ -12995,7 +12995,7 @@
     "title": "nft - Delete a rule",
     "content": "sudo nft delete rule {{inet}} {{filter}} {{input}} handle {{3}}",
     "group": "Linux Ops",
-    "description": "nft: Allows configuration of tables, chains and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Delete a rule)",
+    "description": "nft: Allows configuration of tables, chains, and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Delete a rule)",
     "tags": [
       "linux",
       "nft",
@@ -13010,7 +13010,7 @@
     "title": "nft - Save current configuration",
     "content": "sudo nft list ruleset > {{/etc/nftables.conf}}",
     "group": "Linux Ops",
-    "description": "nft: Allows configuration of tables, chains and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Save current configuration)",
+    "description": "nft: Allows configuration of tables, chains, and rules provided by the Linux kernel firewall. Nftables replaces iptables. (Save current configuration)",
     "tags": [
       "linux",
       "nft",
@@ -13157,10 +13157,10 @@
   {
     "id": "tldr-en-linux-fuser-1",
     "type": "command",
-    "title": "fuser - Show more fields (`USER`, `PID`, `ACCESS` and `COMMAND`)",
+    "title": "fuser - Show more fields (`USER`, `PID`, `ACCESS`, and `COMMAND`)",
     "content": "fuser {{[-v|--verbose]}} {{path/to/file_or_directory}}",
     "group": "Linux Ops",
-    "description": "fuser: Display process IDs currently using files or sockets. (Show more fields (`USER`, `PID`, `ACCESS` and `COMMAND`))",
+    "description": "fuser: Display process IDs currently using files or sockets. (Show more fields (`USER`, `PID`, `ACCESS`, and `COMMAND`))",
     "tags": [
       "linux",
       "fuser",
@@ -15662,10 +15662,10 @@
   {
     "id": "tldr-en-linux-addr2line-1",
     "type": "command",
-    "title": "addr2line - Display the function name, filename and line number",
+    "title": "addr2line - Display the function name, filename, and line number",
     "content": "addr2line {{[-e|--exe]}} {{path/to/executable}} {{[-f|--functions]}} {{address}}",
     "group": "Linux Ops",
-    "description": "addr2line: Convert addresses of a binary into file names and line numbers. (Display the function name, filename and line number)",
+    "description": "addr2line: Convert addresses of a binary into file names and line numbers. (Display the function name, filename, and line number)",
     "tags": [
       "linux",
       "addr2line",
@@ -16112,10 +16112,10 @@
   {
     "id": "tldr-en-linux-iptables-0",
     "type": "command",
-    "title": "iptables - View chains, rules, packet/byte counters and line numbers for the filter table",
+    "title": "iptables - View chains, rules, packet/byte counters, and line numbers for the filter table",
     "content": "sudo iptables {{[-vnL --line-numbers|--verbose --numeric --list --line-numbers]}}",
     "group": "Linux Ops",
-    "description": "iptables: Configure tables, chains and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (View chains, rules, packet/byte counters and line numbers for the filter table)",
+    "description": "iptables: Configure tables, chains, and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (View chains, rules, packet/byte counters, and line numbers for the filter table)",
     "tags": [
       "linux",
       "iptables",
@@ -16130,7 +16130,7 @@
     "title": "iptables - Set chain policy rule",
     "content": "sudo iptables {{[-P|--policy]}} {{chain}} {{rule}}",
     "group": "Linux Ops",
-    "description": "iptables: Configure tables, chains and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (Set chain policy rule)",
+    "description": "iptables: Configure tables, chains, and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (Set chain policy rule)",
     "tags": [
       "linux",
       "iptables",
@@ -16145,7 +16145,7 @@
     "title": "iptables - Append rule to chain policy for IP",
     "content": "sudo iptables {{[-A|--append]}} {{chain}} {{[-s|--source]}} {{ip}} {{[-j|--jump]}} {{rule}}",
     "group": "Linux Ops",
-    "description": "iptables: Configure tables, chains and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (Append rule to chain policy for IP)",
+    "description": "iptables: Configure tables, chains, and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (Append rule to chain policy for IP)",
     "tags": [
       "linux",
       "iptables",
@@ -16160,7 +16160,7 @@
     "title": "iptables - Append rule to chain policy for IP considering protocol and port",
     "content": "sudo iptables {{[-A|--append]}} {{chain}} {{[-s|--source]}} {{ip}} {{[-p|--protocol]}} {{tcp|udp|icmp|...}} --dport {{port}} {{[-j|--jump]}} {{rule}}",
     "group": "Linux Ops",
-    "description": "iptables: Configure tables, chains and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (Append rule to chain policy for IP considering protocol and port)",
+    "description": "iptables: Configure tables, chains, and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (Append rule to chain policy for IP considering protocol and port)",
     "tags": [
       "linux",
       "iptables",
@@ -16175,7 +16175,7 @@
     "title": "iptables - Add a NAT rule to translate all traffic from the `192.168.0.0/24` subnet to the host's public IP",
     "content": "sudo iptables {{[-t|--table]}} {{nat}} {{[-A|--append]}} {{POSTROUTING}} {{[-s|--source]}} {{192.168.0.0/24}} {{[-j|--jump]}} {{MASQUERADE}}",
     "group": "Linux Ops",
-    "description": "iptables: Configure tables, chains and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (Add a NAT rule to translate all traffic from the `192.168.0.0/24` subnet to the host's public IP)",
+    "description": "iptables: Configure tables, chains, and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (Add a NAT rule to translate all traffic from the `192.168.0.0/24` subnet to the host's public IP)",
     "tags": [
       "linux",
       "iptables",
@@ -16190,7 +16190,7 @@
     "title": "iptables - Delete chain rule",
     "content": "sudo iptables {{[-D|--delete]}} {{chain}} {{rule_line_number}}",
     "group": "Linux Ops",
-    "description": "iptables: Configure tables, chains and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (Delete chain rule)",
+    "description": "iptables: Configure tables, chains, and rules of the Linux kernel IPv4 firewall. Use `ip6tables` to set rules for IPv6 traffic. (Delete chain rule)",
     "tags": [
       "linux",
       "iptables",
@@ -16682,10 +16682,10 @@
   {
     "id": "tldr-en-linux-xclock-3",
     "type": "command",
-    "title": "xclock - Display a 24-hour digital clock with the hour, minute and second fields that updates every second",
+    "title": "xclock - Display a 24-hour digital clock with the hour, minute, and second fields that updates every second",
     "content": "xclock -digital -strftime '%H:%M:%S' -update 1",
     "group": "Linux Ops",
-    "description": "xclock: Display the time in analog or digital form. (Display a 24-hour digital clock with the hour, minute and second fields that updates every second)",
+    "description": "xclock: Display the time in analog or digital form. (Display a 24-hour digital clock with the hour, minute, and second fields that updates every second)",
     "tags": [
       "linux",
       "xclock",
@@ -16715,7 +16715,7 @@
     "title": "guix-package - Install a new package",
     "content": "guix package {{[-i|--install]}} {{package}}",
     "group": "Linux Ops",
-    "description": "guix-package: Install, upgrade and remove Guix packages, or rollback to previous configurations. (Install a new package)",
+    "description": "guix-package: Install, upgrade, and remove Guix packages or rollback to previous configurations. (Install a new package)",
     "tags": [
       "linux",
       "guix-package",
@@ -16730,7 +16730,7 @@
     "title": "guix-package - Remove a package",
     "content": "guix package {{[-r|--remove]}} {{package}}",
     "group": "Linux Ops",
-    "description": "guix-package: Install, upgrade and remove Guix packages, or rollback to previous configurations. (Remove a package)",
+    "description": "guix-package: Install, upgrade, and remove Guix packages or rollback to previous configurations. (Remove a package)",
     "tags": [
       "linux",
       "guix-package",
@@ -16745,7 +16745,7 @@
     "title": "guix-package - Search the package database for a `regex`",
     "content": "guix package {{[-s|--search]}} \"{{search_pattern}}\"",
     "group": "Linux Ops",
-    "description": "guix-package: Install, upgrade and remove Guix packages, or rollback to previous configurations. (Search the package database for a `regex`)",
+    "description": "guix-package: Install, upgrade, and remove Guix packages or rollback to previous configurations. (Search the package database for a `regex`)",
     "tags": [
       "linux",
       "guix-package",
@@ -16760,7 +16760,7 @@
     "title": "guix-package - List installed packages",
     "content": "guix package {{[-I|--list-installed]}}",
     "group": "Linux Ops",
-    "description": "guix-package: Install, upgrade and remove Guix packages, or rollback to previous configurations. (List installed packages)",
+    "description": "guix-package: Install, upgrade, and remove Guix packages or rollback to previous configurations. (List installed packages)",
     "tags": [
       "linux",
       "guix-package",
@@ -16775,7 +16775,7 @@
     "title": "guix-package - List generations",
     "content": "guix package {{[-l|--list-generations]}}",
     "group": "Linux Ops",
-    "description": "guix-package: Install, upgrade and remove Guix packages, or rollback to previous configurations. (List generations)",
+    "description": "guix-package: Install, upgrade, and remove Guix packages or rollback to previous configurations. (List generations)",
     "tags": [
       "linux",
       "guix-package",
@@ -16790,7 +16790,7 @@
     "title": "guix-package - Roll back to the previous generation",
     "content": "guix package --roll-back",
     "group": "Linux Ops",
-    "description": "guix-package: Install, upgrade and remove Guix packages, or rollback to previous configurations. (Roll back to the previous generation)",
+    "description": "guix-package: Install, upgrade, and remove Guix packages or rollback to previous configurations. (Roll back to the previous generation)",
     "tags": [
       "linux",
       "guix-package",
@@ -17390,7 +17390,7 @@
     "title": "unsquashfs - Extract a squashfs filesystem to `squashfs-root` in the current working directory",
     "content": "unsquashfs {{filesystem.squashfs}}",
     "group": "Linux Ops",
-    "description": "unsquashfs: Uncompress, extract and list files in squashfs filesystems. (Extract a squashfs filesystem to `squashfs-root` in the current working directory)",
+    "description": "unsquashfs: Uncompress, extract, and list files in squashfs filesystems. (Extract a squashfs filesystem to `squashfs-root` in the current working directory)",
     "tags": [
       "linux",
       "unsquashfs",
@@ -17405,7 +17405,7 @@
     "title": "unsquashfs - Extract a squashfs filesystem to the specified directory",
     "content": "unsquashfs {{[-d|-dest]}} {{path/to/directory}} {{filesystem.squashfs}}",
     "group": "Linux Ops",
-    "description": "unsquashfs: Uncompress, extract and list files in squashfs filesystems. (Extract a squashfs filesystem to the specified directory)",
+    "description": "unsquashfs: Uncompress, extract, and list files in squashfs filesystems. (Extract a squashfs filesystem to the specified directory)",
     "tags": [
       "linux",
       "unsquashfs",
@@ -17420,7 +17420,7 @@
     "title": "unsquashfs - Display the names of files as they are extracted",
     "content": "unsquashfs {{[-i|-info]}} {{filesystem.squashfs}}",
     "group": "Linux Ops",
-    "description": "unsquashfs: Uncompress, extract and list files in squashfs filesystems. (Display the names of files as they are extracted)",
+    "description": "unsquashfs: Uncompress, extract, and list files in squashfs filesystems. (Display the names of files as they are extracted)",
     "tags": [
       "linux",
       "unsquashfs",
@@ -17435,7 +17435,7 @@
     "title": "unsquashfs - Display the names of files and their attributes as they are extracted",
     "content": "unsquashfs {{[-li|-linfo]}} {{filesystem.squashfs}}",
     "group": "Linux Ops",
-    "description": "unsquashfs: Uncompress, extract and list files in squashfs filesystems. (Display the names of files and their attributes as they are extracted)",
+    "description": "unsquashfs: Uncompress, extract, and list files in squashfs filesystems. (Display the names of files and their attributes as they are extracted)",
     "tags": [
       "linux",
       "unsquashfs",
@@ -17450,7 +17450,7 @@
     "title": "unsquashfs - List files inside the squashfs filesystem (without extracting)",
     "content": "unsquashfs {{[-l|-ls]}} {{filesystem.squashfs}}",
     "group": "Linux Ops",
-    "description": "unsquashfs: Uncompress, extract and list files in squashfs filesystems. (List files inside the squashfs filesystem (without extracting))",
+    "description": "unsquashfs: Uncompress, extract, and list files in squashfs filesystems. (List files inside the squashfs filesystem (without extracting))",
     "tags": [
       "linux",
       "unsquashfs",
@@ -17465,7 +17465,7 @@
     "title": "unsquashfs - List files and their attributes inside the squashfs filesystem (without extracting)",
     "content": "unsquashfs {{[-ll|-lls]}} {{filesystem.squashfs}}",
     "group": "Linux Ops",
-    "description": "unsquashfs: Uncompress, extract and list files in squashfs filesystems. (List files and their attributes inside the squashfs filesystem (without extracting))",
+    "description": "unsquashfs: Uncompress, extract, and list files in squashfs filesystems. (List files and their attributes inside the squashfs filesystem (without extracting))",
     "tags": [
       "linux",
       "unsquashfs",
@@ -19640,7 +19640,7 @@
     "title": "ldapdomaindump - Dump all information using the given LDAP account",
     "content": "ldapdomaindump {{[-u|--user]}} {{domain}}\\{{username}} {{[-p|--password]}} {{password|ntlm_hash}} {{hostname|ip}}",
     "group": "Linux Ops",
-    "description": "ldapdomaindump: Dump users, computers, groups, OS and membership information via LDAP to HTML, JSON and greppable output. (Dump all information using the given LDAP account)",
+    "description": "ldapdomaindump: Dump users, computers, groups, OS, and membership information via LDAP to HTML, JSON, and greppable output. (Dump all information using the given LDAP account)",
     "tags": [
       "linux",
       "ldapdomaindump",
@@ -19655,7 +19655,7 @@
     "title": "ldapdomaindump - Dump all information, resolving computer hostnames",
     "content": "ldapdomaindump {{[-r|--resolve]}} {{[-u|--user]}} {{domain}}\\{{username}} {{[-p|--password]}}{{password}} {{hostname|ip}}",
     "group": "Linux Ops",
-    "description": "ldapdomaindump: Dump users, computers, groups, OS and membership information via LDAP to HTML, JSON and greppable output. (Dump all information, resolving computer hostnames)",
+    "description": "ldapdomaindump: Dump users, computers, groups, OS, and membership information via LDAP to HTML, JSON, and greppable output. (Dump all information, resolving computer hostnames)",
     "tags": [
       "linux",
       "ldapdomaindump",
@@ -19670,7 +19670,7 @@
     "title": "ldapdomaindump - Dump all information, resolving computer hostnames with the selected DNS server",
     "content": "ldapdomaindump {{[-r|--resolve]}} {{[-n|--dns-server]}} {{domain_controller_ip}} {{[-u|--user]}} {{domain}}\\{{username}} {{[-p|--password]}}{{password}} {{hostname|ip}}",
     "group": "Linux Ops",
-    "description": "ldapdomaindump: Dump users, computers, groups, OS and membership information via LDAP to HTML, JSON and greppable output. (Dump all information, resolving computer hostnames with the selected DNS server)",
+    "description": "ldapdomaindump: Dump users, computers, groups, OS, and membership information via LDAP to HTML, JSON, and greppable output. (Dump all information, resolving computer hostnames with the selected DNS server)",
     "tags": [
       "linux",
       "ldapdomaindump",
@@ -19685,7 +19685,7 @@
     "title": "ldapdomaindump - Dump all information to the given directory without JSON output",
     "content": "ldapdomaindump --no-json {{[-o|--outdir]}} {{path/to/directory}} {{[-u|--user]}} {{domain}}\\{{username}} {{[-p|--password]}}{{password}} {{hostname|ip}}",
     "group": "Linux Ops",
-    "description": "ldapdomaindump: Dump users, computers, groups, OS and membership information via LDAP to HTML, JSON and greppable output. (Dump all information to the given directory without JSON output)",
+    "description": "ldapdomaindump: Dump users, computers, groups, OS, and membership information via LDAP to HTML, JSON, and greppable output. (Dump all information to the given directory without JSON output)",
     "tags": [
       "linux",
       "ldapdomaindump",
@@ -22277,10 +22277,10 @@
   {
     "id": "tldr-en-linux-urpmq-5",
     "type": "command",
-    "title": "urpmq - Search for a package printing [g]roup, version and [r]elease",
+    "title": "urpmq - Search for a package printing [g]roup, version, and [r]elease",
     "content": "urpmq -g -r {{[-y|--fuzzy]}} {{keyword}}",
     "group": "Linux Ops",
-    "description": "urpmq: Query information about packages and media in Mageia. (Search for a package printing [g]roup, version and [r]elease)",
+    "description": "urpmq: Query information about packages and media in Mageia. (Search for a package printing [g]roup, version, and [r]elease)",
     "tags": [
       "linux",
       "urpmq",
@@ -23132,10 +23132,10 @@
   {
     "id": "tldr-en-linux-qm-disk-import-0",
     "type": "command",
-    "title": "qm-disk-import - Import a VMDK/qcow2/raw disk image using a specific storage name",
+    "title": "qm-disk-import - Import a VMDK/`.qcow2`/raw disk image using a specific storage name",
     "content": "qm {{[di|disk]}} {{[i|import]}} {{vm_id}} {{path/to/disk}} {{storage_name}} --format {{qcow2|raw|vmdk}}",
     "group": "Linux Ops",
-    "description": "qm-disk-import: Import a disk image to a virtual machine as an unused disk. The supported image formats for `qemu-img`, such as raw, qcow2, qed, vdi, vmdk, and vhd must be used. (Import a VMDK/qcow2/raw disk image using a specific storage name)",
+    "description": "qm-disk-import: Import a disk image to a virtual machine as an unused disk. The supported image formats for `qemu-img`, such as raw, qcow2, qed, vdi, vmdk, and vhd must be used. (Import a VMDK/`.qcow2`/raw disk image using a specific storage name)",
     "tags": [
       "linux",
       "qm-disk-import",
@@ -23987,10 +23987,10 @@
   {
     "id": "tldr-en-linux-btrfs-inspect-internal-5",
     "type": "command",
-    "title": "btrfs-inspect-internal - Print stats of root, extent, csum and fs trees",
+    "title": "btrfs-inspect-internal - Print stats of root, extent, csum, and fs trees",
     "content": "sudo btrfs {{[i|inspect-internal]}} {{[t|tree-stats]}} {{path/to/partition}}",
     "group": "Linux Ops",
-    "description": "btrfs-inspect-internal: Query internal information of a btrfs filesystem. (Print stats of root, extent, csum and fs trees)",
+    "description": "btrfs-inspect-internal: Query internal information of a btrfs filesystem. (Print stats of root, extent, csum, and fs trees)",
     "tags": [
       "linux",
       "btrfs-inspect-internal",
@@ -24572,10 +24572,10 @@
   {
     "id": "tldr-en-linux-genkernel-1",
     "type": "command",
-    "title": "genkernel - Build and install the bzImage|initramfs|kernel|ramdisk only",
+    "title": "genkernel - Build and install the bzImage, initramfs, kernel, or ramdisk only",
     "content": "sudo genkernel {{bzImage|initramfs|kernel|ramdisk}}",
     "group": "Linux Ops",
-    "description": "genkernel: Gentoo Linux utility to compile and install kernels. (Build and install the bzImage|initramfs|kernel|ramdisk only)",
+    "description": "genkernel: Gentoo Linux utility to compile and install kernels. (Build and install the bzImage, initramfs, kernel, or ramdisk only)",
     "tags": [
       "linux",
       "genkernel",
@@ -25352,10 +25352,10 @@
   {
     "id": "tldr-en-linux-dstat-0",
     "type": "command",
-    "title": "dstat - Display CPU, disk, net, paging and system statistics",
+    "title": "dstat - Display CPU, disk, net, paging, and system statistics",
     "content": "dstat",
     "group": "Linux Ops",
-    "description": "dstat: Versatile tool for generating system resource statistics. Note: dstat is deprecated and no longer maintained. (Display CPU, disk, net, paging and system statistics)",
+    "description": "dstat: Versatile tool for generating system resource statistics. Note: dstat is deprecated and no longer maintained. (Display CPU, disk, net, paging, and system statistics)",
     "tags": [
       "linux",
       "dstat",
@@ -25550,7 +25550,7 @@
     "title": "distrobox-create - Create a Distrobox container using the Ubuntu image",
     "content": "distrobox-create {{container_name}} {{[-i|--image]}} {{ubuntu:latest}}",
     "group": "Linux Ops",
-    "description": "distrobox-create: Create a Distrobox container. The container created will be tightly integrated with the host, allowing sharing of the user's HOME directory, external storage, external USB devices, graphical apps (X11/Wayland), and audio. (Create a Distrobox container using the Ubuntu image)",
+    "description": "distrobox-create: Create a Distrobox container. The container created will be tightly integrated with the host, allowing sharing of the user's `$HOME` directory, external storage, external USB devices, graphical apps (X11/Wayland), and audio. (Create a Distrobox container using the Ubuntu image)",
     "tags": [
       "linux",
       "distrobox-create",
@@ -25565,7 +25565,7 @@
     "title": "distrobox-create - Clone a Distrobox container",
     "content": "distrobox-create {{[-c|--clone]}} {{container_name}} {{cloned_container_name}}",
     "group": "Linux Ops",
-    "description": "distrobox-create: Create a Distrobox container. The container created will be tightly integrated with the host, allowing sharing of the user's HOME directory, external storage, external USB devices, graphical apps (X11/Wayland), and audio. (Clone a Distrobox container)",
+    "description": "distrobox-create: Create a Distrobox container. The container created will be tightly integrated with the host, allowing sharing of the user's `$HOME` directory, external storage, external USB devices, graphical apps (X11/Wayland), and audio. (Clone a Distrobox container)",
     "tags": [
       "linux",
       "distrobox-create",
@@ -25712,10 +25712,10 @@
   {
     "id": "tldr-en-linux-avifenc-1",
     "type": "command",
-    "title": "avifenc - Encode with a specific speed (6=default, 0=slowest and 10=fastest)",
+    "title": "avifenc - Encode with a specific speed (6=default, 0=slowest, and 10=fastest)",
     "content": "avifenc --speed {{2}} {{path/to/input.png}} {{path/to/output.avif}}",
     "group": "Linux Ops",
-    "description": "avifenc: AV1 Image File Format (AVIF) encoder. (Encode with a specific speed (6=default, 0=slowest and 10=fastest))",
+    "description": "avifenc: AV1 Image File Format (AVIF) encoder. (Encode with a specific speed (6=default, 0=slowest, and 10=fastest))",
     "tags": [
       "linux",
       "avifenc",
@@ -28787,10 +28787,10 @@
   {
     "id": "tldr-en-linux-eject-2",
     "type": "command",
-    "title": "eject - Eject a specific device (the default order is cd-rom, scsi, floppy and tape)",
+    "title": "eject - Eject a specific device (the default order is cd-rom, scsi, floppy, and tape)",
     "content": "eject {{/dev/cdrom}}",
     "group": "Linux Ops",
-    "description": "eject: Eject CDs, floppy disks, tape drives, and USB sticks. (Eject a specific device (the default order is cd-rom, scsi, floppy and tape))",
+    "description": "eject: Eject CDs, floppy disks, tape drives, and USB sticks. (Eject a specific device (the default order is cd-rom, scsi, floppy, and tape))",
     "tags": [
       "linux",
       "eject",
@@ -28880,7 +28880,7 @@
     "title": "resize2fs - Automatically resize a filesystem to its maximum possible size",
     "content": "resize2fs {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "resize2fs: Resize an ext2, ext3 or ext4 filesystem. Does not resize the underlying partition. The filesystem may have to be unmounted first, read the man page for more details. (Automatically resize a filesystem to its maximum possible size)",
+    "description": "resize2fs: Resize an ext2, ext3, or ext4 filesystem. Does not resize the underlying partition. The filesystem may have to be unmounted first, read the man page for more details. (Automatically resize a filesystem to its maximum possible size)",
     "tags": [
       "linux",
       "resize2fs",
@@ -28895,7 +28895,7 @@
     "title": "resize2fs - Resize the filesystem to a size of 40G, displaying a progress bar",
     "content": "resize2fs -p {{/dev/sdXN}} {{40G}}",
     "group": "Linux Ops",
-    "description": "resize2fs: Resize an ext2, ext3 or ext4 filesystem. Does not resize the underlying partition. The filesystem may have to be unmounted first, read the man page for more details. (Resize the filesystem to a size of 40G, displaying a progress bar)",
+    "description": "resize2fs: Resize an ext2, ext3, or ext4 filesystem. Does not resize the underlying partition. The filesystem may have to be unmounted first, read the man page for more details. (Resize the filesystem to a size of 40G, displaying a progress bar)",
     "tags": [
       "linux",
       "resize2fs",
@@ -28910,7 +28910,7 @@
     "title": "resize2fs - Shrink the filesystem to its minimum possible size",
     "content": "resize2fs -M {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "resize2fs: Resize an ext2, ext3 or ext4 filesystem. Does not resize the underlying partition. The filesystem may have to be unmounted first, read the man page for more details. (Shrink the filesystem to its minimum possible size)",
+    "description": "resize2fs: Resize an ext2, ext3, or ext4 filesystem. Does not resize the underlying partition. The filesystem may have to be unmounted first, read the man page for more details. (Shrink the filesystem to its minimum possible size)",
     "tags": [
       "linux",
       "resize2fs",
@@ -29462,10 +29462,10 @@
   {
     "id": "tldr-en-linux-apt-clone-1",
     "type": "command",
-    "title": "apt-clone - Create a clone file (`tar.gz`) for backup purposes",
+    "title": "apt-clone - Create a clone file (`.tar.gz`) for backup purposes",
     "content": "apt-clone clone --destination {{path/to/backup.tar.gz}}",
     "group": "Linux Ops",
-    "description": "apt-clone: Clone/backup/restore the package state of a Debian-based system. (Create a clone file (`tar.gz`) for backup purposes)",
+    "description": "apt-clone: Clone/backup/restore the package state of a Debian-based system. (Create a clone file (`.tar.gz`) for backup purposes)",
     "tags": [
       "linux",
       "apt-clone",
@@ -30350,7 +30350,7 @@
     "title": "rpmconf - List leftover files and interactively choose what to do with each of them",
     "content": "sudo rpmconf {{[-a|--all]}}",
     "group": "Linux Ops",
-    "description": "rpmconf: Handle RPMNEW, RPMSAVE and RPMORIG files left over by package upgrades. (List leftover files and interactively choose what to do with each of them)",
+    "description": "rpmconf: Handle `.rpmnew`, `.rpmsave`, and `.rpmorig` files left over by package upgrades. (List leftover files and interactively choose what to do with each of them)",
     "tags": [
       "linux",
       "rpmconf",
@@ -30362,10 +30362,10 @@
   {
     "id": "tldr-en-linux-rpmconf-1",
     "type": "command",
-    "title": "rpmconf - Delete orphaned RPMNEW and RPMSAVE files",
+    "title": "rpmconf - Delete orphaned `.rpmnew` and `.rpmsave` files",
     "content": "sudo rpmconf {{[-a|--all]}} {{[-c|--clean]}}",
     "group": "Linux Ops",
-    "description": "rpmconf: Handle RPMNEW, RPMSAVE and RPMORIG files left over by package upgrades. (Delete orphaned RPMNEW and RPMSAVE files)",
+    "description": "rpmconf: Handle `.rpmnew`, `.rpmsave`, and `.rpmorig` files left over by package upgrades. (Delete orphaned `.rpmnew` and `.rpmsave` files)",
     "tags": [
       "linux",
       "rpmconf",
@@ -30407,10 +30407,10 @@
   {
     "id": "tldr-en-linux-pdfcrop-2",
     "type": "command",
-    "title": "pdfcrop - Set the margins of each page to a specific value, using the same value for left, top, right and bottom",
+    "title": "pdfcrop - Set the margins of each page to a specific value, using the same value for left, top, right, and bottom",
     "content": "pdfcrop {{path/to/input_file.pdf}} --margins {{300}} {{path/to/output_file.pdf}}",
     "group": "Linux Ops",
-    "description": "pdfcrop: Detect and remove margins in each page in a PDF file. (Set the margins of each page to a specific value, using the same value for left, top, right and bottom)",
+    "description": "pdfcrop: Detect and remove margins in each page in a PDF file. (Set the margins of each page to a specific value, using the same value for left, top, right, and bottom)",
     "tags": [
       "linux",
       "pdfcrop",
@@ -30680,7 +30680,7 @@
     "title": "systemd-creds - Encrypt a file and set a specific name",
     "content": "systemd-creds encrypt --name {{name}} {{path/to/input_file}} {{path/to/output}}",
     "group": "Linux Ops",
-    "description": "systemd-creds: List, show, encrypt and decrypt service credentials. (Encrypt a file and set a specific name)",
+    "description": "systemd-creds: List, show, encrypt, and decrypt service credentials. (Encrypt a file and set a specific name)",
     "tags": [
       "linux",
       "systemd-creds",
@@ -30695,7 +30695,7 @@
     "title": "systemd-creds - Decrypt the file again",
     "content": "systemd-creds decrypt {{path/to/input_file}} {{path/to/output_file}}",
     "group": "Linux Ops",
-    "description": "systemd-creds: List, show, encrypt and decrypt service credentials. (Decrypt the file again)",
+    "description": "systemd-creds: List, show, encrypt, and decrypt service credentials. (Decrypt the file again)",
     "tags": [
       "linux",
       "systemd-creds",
@@ -30710,7 +30710,7 @@
     "title": "systemd-creds - Encrypt text from `stdin`",
     "content": "echo -n {{text}} | systemd-creds encrypt --name {{name}} - {{path/to/output}}",
     "group": "Linux Ops",
-    "description": "systemd-creds: List, show, encrypt and decrypt service credentials. (Encrypt text from `stdin`)",
+    "description": "systemd-creds: List, show, encrypt, and decrypt service credentials. (Encrypt text from `stdin`)",
     "tags": [
       "linux",
       "systemd-creds",
@@ -30722,10 +30722,10 @@
   {
     "id": "tldr-en-linux-systemd-creds-3",
     "type": "command",
-    "title": "systemd-creds - Encrypt the text and append it to the service file (the credentials will be available in `$CREDENTIALS_DIRECTORY`)",
+    "title": "systemd-creds - Encrypt the text and append it to the `.service` file (the credentials will be available in `$CREDENTIALS_DIRECTORY`)",
     "content": "echo -n {{text}} | systemd-creds encrypt --name {{name}} --pretty - - >> {{service}}",
     "group": "Linux Ops",
-    "description": "systemd-creds: List, show, encrypt and decrypt service credentials. (Encrypt the text and append it to the service file (the credentials will be available in `$CREDENTIALS_DIRECTORY`))",
+    "description": "systemd-creds: List, show, encrypt, and decrypt service credentials. (Encrypt the text and append it to the `.service` file (the credentials will be available in `$CREDENTIALS_DIRECTORY`))",
     "tags": [
       "linux",
       "systemd-creds",
@@ -30740,7 +30740,7 @@
     "title": "systemd-creds - Create a credential that is only valid until the given timestamp",
     "content": "systemd-creds encrypt --not-after \"{{timestamp}}\" {{path/to/input_file}} {{path/to/output_file}}",
     "group": "Linux Ops",
-    "description": "systemd-creds: List, show, encrypt and decrypt service credentials. (Create a credential that is only valid until the given timestamp)",
+    "description": "systemd-creds: List, show, encrypt, and decrypt service credentials. (Create a credential that is only valid until the given timestamp)",
     "tags": [
       "linux",
       "systemd-creds",
@@ -30872,10 +30872,10 @@
   {
     "id": "tldr-en-linux-datamash-0",
     "type": "command",
-    "title": "datamash - Get max, min, mean and median of a single column of numbers",
+    "title": "datamash - Get max, min, mean, and median of a single column of numbers",
     "content": "seq 3 | datamash max 1 min 1 mean 1 median 1",
     "group": "Linux Ops",
-    "description": "datamash: Perform basic numeric, textual and statistical operations on input textual data files. (Get max, min, mean and median of a single column of numbers)",
+    "description": "datamash: Perform basic numeric, textual, and statistical operations on input textual data files. (Get max, min, mean, and median of a single column of numbers)",
     "tags": [
       "linux",
       "datamash",
@@ -30890,7 +30890,7 @@
     "title": "datamash - Get the mean of a single column of float numbers (floats must use \",\" and not \".\")",
     "content": "echo -e '1.0\\n2.5\\n3.1\\n4.3\\n5.6\\n5.7' | tr '.' ',' | datamash mean 1",
     "group": "Linux Ops",
-    "description": "datamash: Perform basic numeric, textual and statistical operations on input textual data files. (Get the mean of a single column of float numbers (floats must use \",\" and not \".\"))",
+    "description": "datamash: Perform basic numeric, textual, and statistical operations on input textual data files. (Get the mean of a single column of float numbers (floats must use \",\" and not \".\"))",
     "tags": [
       "linux",
       "datamash",
@@ -30905,7 +30905,7 @@
     "title": "datamash - Get the mean of a single column of numbers with a given decimal precision",
     "content": "echo -e '1\\n2\\n3\\n4\\n5\\n5' | datamash {{[-R|--round]}} {{number_of_decimals_wanted}} mean 1",
     "group": "Linux Ops",
-    "description": "datamash: Perform basic numeric, textual and statistical operations on input textual data files. (Get the mean of a single column of numbers with a given decimal precision)",
+    "description": "datamash: Perform basic numeric, textual, and statistical operations on input textual data files. (Get the mean of a single column of numbers with a given decimal precision)",
     "tags": [
       "linux",
       "datamash",
@@ -30920,7 +30920,7 @@
     "title": "datamash - Get the mean of a single column of numbers ignoring \"Na\" and \"NaN\" (literal) strings",
     "content": "echo -e '1\\n2\\nNa\\n3\\nNaN' | datamash --narm mean 1",
     "group": "Linux Ops",
-    "description": "datamash: Perform basic numeric, textual and statistical operations on input textual data files. (Get the mean of a single column of numbers ignoring \"Na\" and \"NaN\" (literal) strings)",
+    "description": "datamash: Perform basic numeric, textual, and statistical operations on input textual data files. (Get the mean of a single column of numbers ignoring \"Na\" and \"NaN\" (literal) strings)",
     "tags": [
       "linux",
       "datamash",
@@ -32282,10 +32282,10 @@
   {
     "id": "tldr-en-linux-tcpick-0",
     "type": "command",
-    "title": "tcpick - Capture traffic on a specific interface, port and host",
+    "title": "tcpick - Capture traffic on a specific interface, port, and host",
     "content": "sudo tcpick {{[-i|--interface]}} {{interface}} {{[-C|--colors]}} -h {{host}} -p {{port}}",
     "group": "Linux Ops",
-    "description": "tcpick: Packet sniffing and network traffic analysis tool. It can capture and display TCP connections and data. It can also monitor network traffic on a interface, host, or port. (Capture traffic on a specific interface, port and host)",
+    "description": "tcpick: Packet sniffing and network traffic analysis tool. It can capture and display TCP connections and data. It can also monitor network traffic on a interface, host, or port. (Capture traffic on a specific interface, port, and host)",
     "tags": [
       "linux",
       "tcpick",
@@ -32585,7 +32585,7 @@
     "title": "steghide - Embed data in a PNG, prompting for a passphrase",
     "content": "steghide embed {{[-cf|--coverfile]}} {{path/to/image.png}} {{[-ef|--embedfile]}} {{path/to/data.txt}}",
     "group": "Linux Ops",
-    "description": "steghide: Steganography tool for JPEG, BMP, WAV and AU file formats. (Embed data in a PNG, prompting for a passphrase)",
+    "description": "steghide: Steganography tool for JPEG, BMP, WAV, and AU file formats. (Embed data in a PNG, prompting for a passphrase)",
     "tags": [
       "linux",
       "steghide",
@@ -32600,7 +32600,7 @@
     "title": "steghide - Extract data from a WAV audio file",
     "content": "steghide extract {{[-sf|--stegofile]}} {{path/to/sound.wav}}",
     "group": "Linux Ops",
-    "description": "steghide: Steganography tool for JPEG, BMP, WAV and AU file formats. (Extract data from a WAV audio file)",
+    "description": "steghide: Steganography tool for JPEG, BMP, WAV, and AU file formats. (Extract data from a WAV audio file)",
     "tags": [
       "linux",
       "steghide",
@@ -32615,7 +32615,7 @@
     "title": "steghide - Display file information, trying to detect an embedded file",
     "content": "steghide info {{path/to/file.jpg}}",
     "group": "Linux Ops",
-    "description": "steghide: Steganography tool for JPEG, BMP, WAV and AU file formats. (Display file information, trying to detect an embedded file)",
+    "description": "steghide: Steganography tool for JPEG, BMP, WAV, and AU file formats. (Display file information, trying to detect an embedded file)",
     "tags": [
       "linux",
       "steghide",
@@ -32630,7 +32630,7 @@
     "title": "steghide - Embed data in a JPEG image, using maximum compression",
     "content": "steghide embed {{[-cf|--coverfile]}} {{path/to/image.jpg}} {{[-ef|--embedfile]}} {{path/to/data.txt}} {{[-z|--compress]}} {{9}}",
     "group": "Linux Ops",
-    "description": "steghide: Steganography tool for JPEG, BMP, WAV and AU file formats. (Embed data in a JPEG image, using maximum compression)",
+    "description": "steghide: Steganography tool for JPEG, BMP, WAV, and AU file formats. (Embed data in a JPEG image, using maximum compression)",
     "tags": [
       "linux",
       "steghide",
@@ -32645,7 +32645,7 @@
     "title": "steghide - Get the list of supported encryption algorithms and modes",
     "content": "steghide encinfo",
     "group": "Linux Ops",
-    "description": "steghide: Steganography tool for JPEG, BMP, WAV and AU file formats. (Get the list of supported encryption algorithms and modes)",
+    "description": "steghide: Steganography tool for JPEG, BMP, WAV, and AU file formats. (Get the list of supported encryption algorithms and modes)",
     "tags": [
       "linux",
       "steghide",
@@ -32660,7 +32660,7 @@
     "title": "steghide - Embed encrypted data in a JPEG image, e.g. with Blowfish in CBC mode",
     "content": "steghide embed {{[-cf|--coverfile]}} {{path/to/image.jpg}} {{[-ef|--embedfile]}} {{path/to/data.txt}} {{[-e|--encryption]}} {{blowfish|...}} {{cbc|...}}",
     "group": "Linux Ops",
-    "description": "steghide: Steganography tool for JPEG, BMP, WAV and AU file formats. (Embed encrypted data in a JPEG image, e.g. with Blowfish in CBC mode)",
+    "description": "steghide: Steganography tool for JPEG, BMP, WAV, and AU file formats. (Embed encrypted data in a JPEG image, e.g. with Blowfish in CBC mode)",
     "tags": [
       "linux",
       "steghide",
@@ -32747,10 +32747,10 @@
   {
     "id": "tldr-en-linux-quickget-0",
     "type": "command",
-    "title": "quickget - Display the list of all supported guest operating systems, versions and variants",
+    "title": "quickget - Display the list of all supported guest operating systems, versions, and variants",
     "content": "quickget list",
     "group": "Linux Ops",
-    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is always optional. (Display the list of all supported guest operating systems, versions and variants)",
+    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is always optional. (Display the list of all supported guest operating systems, versions, and variants)",
     "tags": [
       "linux",
       "quickget",
@@ -35075,7 +35075,7 @@
     "title": "flatpak - Run an installed application",
     "content": "flatpak run {{com.example.app}}",
     "group": "Linux Ops",
-    "description": "flatpak: Build, install and run flatpak applications and runtimes. (Run an installed application)",
+    "description": "flatpak: Build, install, and run flatpak applications and runtimes. (Run an installed application)",
     "tags": [
       "linux",
       "flatpak",
@@ -35090,7 +35090,7 @@
     "title": "flatpak - Install an application from a remote source",
     "content": "flatpak install {{remote_name}} {{com.example.app}}",
     "group": "Linux Ops",
-    "description": "flatpak: Build, install and run flatpak applications and runtimes. (Install an application from a remote source)",
+    "description": "flatpak: Build, install, and run flatpak applications and runtimes. (Install an application from a remote source)",
     "tags": [
       "linux",
       "flatpak",
@@ -35105,7 +35105,7 @@
     "title": "flatpak - List installed applications, ignoring runtimes",
     "content": "flatpak list --app",
     "group": "Linux Ops",
-    "description": "flatpak: Build, install and run flatpak applications and runtimes. (List installed applications, ignoring runtimes)",
+    "description": "flatpak: Build, install, and run flatpak applications and runtimes. (List installed applications, ignoring runtimes)",
     "tags": [
       "linux",
       "flatpak",
@@ -35120,7 +35120,7 @@
     "title": "flatpak - Update all installed applications and runtimes",
     "content": "flatpak update",
     "group": "Linux Ops",
-    "description": "flatpak: Build, install and run flatpak applications and runtimes. (Update all installed applications and runtimes)",
+    "description": "flatpak: Build, install, and run flatpak applications and runtimes. (Update all installed applications and runtimes)",
     "tags": [
       "linux",
       "flatpak",
@@ -35135,7 +35135,7 @@
     "title": "flatpak - Add a remote source",
     "content": "flatpak remote-add --if-not-exists {{remote_name}} {{remote_url}}",
     "group": "Linux Ops",
-    "description": "flatpak: Build, install and run flatpak applications and runtimes. (Add a remote source)",
+    "description": "flatpak: Build, install, and run flatpak applications and runtimes. (Add a remote source)",
     "tags": [
       "linux",
       "flatpak",
@@ -35150,7 +35150,7 @@
     "title": "flatpak - Remove an installed application",
     "content": "flatpak remove {{com.example.app}}",
     "group": "Linux Ops",
-    "description": "flatpak: Build, install and run flatpak applications and runtimes. (Remove an installed application)",
+    "description": "flatpak: Build, install, and run flatpak applications and runtimes. (Remove an installed application)",
     "tags": [
       "linux",
       "flatpak",
@@ -35165,7 +35165,7 @@
     "title": "flatpak - Remove all unused applications",
     "content": "flatpak remove --unused",
     "group": "Linux Ops",
-    "description": "flatpak: Build, install and run flatpak applications and runtimes. (Remove all unused applications)",
+    "description": "flatpak: Build, install, and run flatpak applications and runtimes. (Remove all unused applications)",
     "tags": [
       "linux",
       "flatpak",
@@ -35180,7 +35180,7 @@
     "title": "flatpak - Show information about an installed application",
     "content": "flatpak info {{com.example.app}}",
     "group": "Linux Ops",
-    "description": "flatpak: Build, install and run flatpak applications and runtimes. (Show information about an installed application)",
+    "description": "flatpak: Build, install, and run flatpak applications and runtimes. (Show information about an installed application)",
     "tags": [
       "linux",
       "flatpak",
@@ -42362,10 +42362,10 @@
   {
     "id": "tldr-en-linux-dumpe2fs-0",
     "type": "command",
-    "title": "dumpe2fs - Display ext2, ext3 and ext4 filesystem information",
+    "title": "dumpe2fs - Display ext2, ext3, and ext4 filesystem information",
     "content": "dumpe2fs {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "dumpe2fs: Print the super block and blocks group information for ext2/ext3/ext4 filesystems. Unmount the partition before running this command using `umount {{device}}`. (Display ext2, ext3 and ext4 filesystem information)",
+    "description": "dumpe2fs: Print the super block and blocks group information for ext2/ext3/ext4 filesystems. Unmount the partition before running this command using `umount device`. (Display ext2, ext3, and ext4 filesystem information)",
     "tags": [
       "linux",
       "dumpe2fs",
@@ -42380,7 +42380,7 @@
     "title": "dumpe2fs - Display the blocks which are reserved as bad in the filesystem",
     "content": "dumpe2fs -b {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "dumpe2fs: Print the super block and blocks group information for ext2/ext3/ext4 filesystems. Unmount the partition before running this command using `umount {{device}}`. (Display the blocks which are reserved as bad in the filesystem)",
+    "description": "dumpe2fs: Print the super block and blocks group information for ext2/ext3/ext4 filesystems. Unmount the partition before running this command using `umount device`. (Display the blocks which are reserved as bad in the filesystem)",
     "tags": [
       "linux",
       "dumpe2fs",
@@ -42395,7 +42395,7 @@
     "title": "dumpe2fs - Force display filesystem information even with unrecognizable feature flags",
     "content": "dumpe2fs -f {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "dumpe2fs: Print the super block and blocks group information for ext2/ext3/ext4 filesystems. Unmount the partition before running this command using `umount {{device}}`. (Force display filesystem information even with unrecognizable feature flags)",
+    "description": "dumpe2fs: Print the super block and blocks group information for ext2/ext3/ext4 filesystems. Unmount the partition before running this command using `umount device`. (Force display filesystem information even with unrecognizable feature flags)",
     "tags": [
       "linux",
       "dumpe2fs",
@@ -42410,7 +42410,7 @@
     "title": "dumpe2fs - Only display the superblock information and not any of the block group descriptor detail information",
     "content": "dumpe2fs -h {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "dumpe2fs: Print the super block and blocks group information for ext2/ext3/ext4 filesystems. Unmount the partition before running this command using `umount {{device}}`. (Only display the superblock information and not any of the block group descriptor detail information)",
+    "description": "dumpe2fs: Print the super block and blocks group information for ext2/ext3/ext4 filesystems. Unmount the partition before running this command using `umount device`. (Only display the superblock information and not any of the block group descriptor detail information)",
     "tags": [
       "linux",
       "dumpe2fs",
@@ -42425,7 +42425,7 @@
     "title": "dumpe2fs - Print the detailed group information block numbers in hexadecimal format",
     "content": "dumpe2fs -x {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "dumpe2fs: Print the super block and blocks group information for ext2/ext3/ext4 filesystems. Unmount the partition before running this command using `umount {{device}}`. (Print the detailed group information block numbers in hexadecimal format)",
+    "description": "dumpe2fs: Print the super block and blocks group information for ext2/ext3/ext4 filesystems. Unmount the partition before running this command using `umount device`. (Print the detailed group information block numbers in hexadecimal format)",
     "tags": [
       "linux",
       "dumpe2fs",
@@ -43547,10 +43547,10 @@
   {
     "id": "tldr-en-linux-ebuild-7",
     "type": "command",
-    "title": "ebuild - Fetch, unpack, compile, install and qmerge the specified ebuild file",
+    "title": "ebuild - Fetch, unpack, compile, install, and qmerge the specified ebuild file",
     "content": "ebuild {{path/to/file.ebuild}} merge",
     "group": "Linux Ops",
-    "description": "ebuild: A low level interface to the Gentoo Portage system. (Fetch, unpack, compile, install and qmerge the specified ebuild file)",
+    "description": "ebuild: A low level interface to the Gentoo Portage system. (Fetch, unpack, compile, install, and qmerge the specified ebuild file)",
     "tags": [
       "linux",
       "ebuild",
@@ -44717,10 +44717,10 @@
   {
     "id": "tldr-en-linux-counter-strike-2-3",
     "type": "command",
-    "title": "counter-strike-2 - Shut the server down",
+    "title": "counter-strike-2 - [Interactive] Shut the server down",
     "content": "quit",
     "group": "Linux Ops",
-    "description": "counter-strike-2: Host a headless Counter Strike 2 server. (Shut the server down)",
+    "description": "counter-strike-2: Host a headless Counter Strike 2 server. ([Interactive] Shut the server down)",
     "tags": [
       "linux",
       "counter-strike-2",
@@ -45065,7 +45065,7 @@
     "title": "i7z - Start i7z (needs to be run in superuser mode)",
     "content": "sudo i7z",
     "group": "Linux Ops",
-    "description": "i7z: An Intel CPU (only i3, i5 and i7) realtime reporting tool. (Start i7z (needs to be run in superuser mode))",
+    "description": "i7z: An Intel CPU (only i3, i5, and i7) realtime reporting tool. (Start i7z (needs to be run in superuser mode))",
     "tags": [
       "linux",
       "i7z",
@@ -46292,10 +46292,10 @@
   {
     "id": "tldr-en-linux-busctl-0",
     "type": "command",
-    "title": "busctl - Show all peers on the bus, by their service names",
+    "title": "busctl - Show all peers on the bus by their service names",
     "content": "busctl list",
     "group": "Linux Ops",
-    "description": "busctl: Introspect and monitor the D-Bus bus. (Show all peers on the bus, by their service names)",
+    "description": "busctl: Introspect and monitor the D-Bus bus. (Show all peers on the bus by their service names)",
     "tags": [
       "linux",
       "busctl",
@@ -46352,10 +46352,10 @@
   {
     "id": "tldr-en-linux-busctl-4",
     "type": "command",
-    "title": "busctl - Show interfaces, methods, properties and signals of the specified object on the specified service",
+    "title": "busctl - Show interfaces, methods, properties, and signals of the specified object on the specified service",
     "content": "busctl introspect {{service}} {{path/to/object}}",
     "group": "Linux Ops",
-    "description": "busctl: Introspect and monitor the D-Bus bus. (Show interfaces, methods, properties and signals of the specified object on the specified service)",
+    "description": "busctl: Introspect and monitor the D-Bus bus. (Show interfaces, methods, properties, and signals of the specified object on the specified service)",
     "tags": [
       "linux",
       "busctl",
@@ -48662,10 +48662,10 @@
   {
     "id": "tldr-en-linux-tftp-0",
     "type": "command",
-    "title": "tftp - Connect to a TFTP server specifying its IP address and port",
+    "title": "tftp - Connect to a TFTP server with an interactive shell, specifying its IP address and port",
     "content": "tftp {{server_ip}} {{port}}",
     "group": "Linux Ops",
-    "description": "tftp: Trivial File Transfer Protocol client. (Connect to a TFTP server specifying its IP address and port)",
+    "description": "tftp: Trivial File Transfer Protocol client. (Connect to a TFTP server with an interactive shell, specifying its IP address and port)",
     "tags": [
       "linux",
       "tftp",
@@ -48707,10 +48707,10 @@
   {
     "id": "tldr-en-linux-tftp-3",
     "type": "command",
-    "title": "tftp - Set the transfer mode to binary or ASCII through the tftp client",
+    "title": "tftp - [Interactive] Set the transfer mode to binary or ASCII through the tftp client",
     "content": "mode {{binary|ascii}}",
     "group": "Linux Ops",
-    "description": "tftp: Trivial File Transfer Protocol client. (Set the transfer mode to binary or ASCII through the tftp client)",
+    "description": "tftp: Trivial File Transfer Protocol client. ([Interactive] Set the transfer mode to binary or ASCII through the tftp client)",
     "tags": [
       "linux",
       "tftp",
@@ -48722,10 +48722,10 @@
   {
     "id": "tldr-en-linux-tftp-4",
     "type": "command",
-    "title": "tftp - Download file from a server through the tftp client",
+    "title": "tftp - [Interactive] Download file from a server through the tftp client",
     "content": "get {{file}}",
     "group": "Linux Ops",
-    "description": "tftp: Trivial File Transfer Protocol client. (Download file from a server through the tftp client)",
+    "description": "tftp: Trivial File Transfer Protocol client. ([Interactive] Download file from a server through the tftp client)",
     "tags": [
       "linux",
       "tftp",
@@ -48737,10 +48737,10 @@
   {
     "id": "tldr-en-linux-tftp-5",
     "type": "command",
-    "title": "tftp - Upload file to a server through the tftp client",
+    "title": "tftp - [Interactive] Upload file to a server through the tftp client",
     "content": "put {{file}}",
     "group": "Linux Ops",
-    "description": "tftp: Trivial File Transfer Protocol client. (Upload file to a server through the tftp client)",
+    "description": "tftp: Trivial File Transfer Protocol client. ([Interactive] Upload file to a server through the tftp client)",
     "tags": [
       "linux",
       "tftp",
@@ -48752,10 +48752,10 @@
   {
     "id": "tldr-en-linux-tftp-6",
     "type": "command",
-    "title": "tftp - Exit the tftp client",
+    "title": "tftp - [Interactive] Exit the tftp client",
     "content": "quit",
     "group": "Linux Ops",
-    "description": "tftp: Trivial File Transfer Protocol client. (Exit the tftp client)",
+    "description": "tftp: Trivial File Transfer Protocol client. ([Interactive] Exit the tftp client)",
     "tags": [
       "linux",
       "tftp",
@@ -50102,10 +50102,10 @@
   {
     "id": "tldr-en-linux-lftp-1",
     "type": "command",
-    "title": "lftp - Download multiple files (glob expression)",
+    "title": "lftp - [Interactive] Download multiple files (glob expression)",
     "content": "mget {{path/to/*.png}}",
     "group": "Linux Ops",
-    "description": "lftp: Sophisticated file transfer program. (Download multiple files (glob expression))",
+    "description": "lftp: Sophisticated file transfer program. ([Interactive] Download multiple files (glob expression))",
     "tags": [
       "linux",
       "lftp",
@@ -50117,10 +50117,10 @@
   {
     "id": "tldr-en-linux-lftp-2",
     "type": "command",
-    "title": "lftp - Upload multiple files (glob expression)",
+    "title": "lftp - [Interactive] Upload multiple files (glob expression)",
     "content": "mput {{path/to/*.zip}}",
     "group": "Linux Ops",
-    "description": "lftp: Sophisticated file transfer program. (Upload multiple files (glob expression))",
+    "description": "lftp: Sophisticated file transfer program. ([Interactive] Upload multiple files (glob expression))",
     "tags": [
       "linux",
       "lftp",
@@ -50132,10 +50132,10 @@
   {
     "id": "tldr-en-linux-lftp-3",
     "type": "command",
-    "title": "lftp - Delete multiple files on the remote server",
+    "title": "lftp - [Interactive] Delete multiple files on the remote server",
     "content": "mrm {{path/to/*.txt}}",
     "group": "Linux Ops",
-    "description": "lftp: Sophisticated file transfer program. (Delete multiple files on the remote server)",
+    "description": "lftp: Sophisticated file transfer program. ([Interactive] Delete multiple files on the remote server)",
     "tags": [
       "linux",
       "lftp",
@@ -50147,10 +50147,10 @@
   {
     "id": "tldr-en-linux-lftp-4",
     "type": "command",
-    "title": "lftp - Rename a file on the remote server",
+    "title": "lftp - [Interactive] Rename a file on the remote server",
     "content": "mv {{original_filename}} {{new_filename}}",
     "group": "Linux Ops",
-    "description": "lftp: Sophisticated file transfer program. (Rename a file on the remote server)",
+    "description": "lftp: Sophisticated file transfer program. ([Interactive] Rename a file on the remote server)",
     "tags": [
       "linux",
       "lftp",
@@ -50162,10 +50162,10 @@
   {
     "id": "tldr-en-linux-lftp-5",
     "type": "command",
-    "title": "lftp - Download or update an entire directory",
+    "title": "lftp - [Interactive] Download or update an entire directory",
     "content": "mirror {{path/to/remote_directory}} {{path/to/local_output_directory}}",
     "group": "Linux Ops",
-    "description": "lftp: Sophisticated file transfer program. (Download or update an entire directory)",
+    "description": "lftp: Sophisticated file transfer program. ([Interactive] Download or update an entire directory)",
     "tags": [
       "linux",
       "lftp",
@@ -50177,10 +50177,10 @@
   {
     "id": "tldr-en-linux-lftp-6",
     "type": "command",
-    "title": "lftp - Upload or update an entire directory",
+    "title": "lftp - [Interactive] Upload or update an entire directory",
     "content": "mirror {{[-R|--reverse]}} {{path/to/local_directory}} {{path/to/remote_output_directory}}",
     "group": "Linux Ops",
-    "description": "lftp: Sophisticated file transfer program. (Upload or update an entire directory)",
+    "description": "lftp: Sophisticated file transfer program. ([Interactive] Upload or update an entire directory)",
     "tags": [
       "linux",
       "lftp",
@@ -50885,7 +50885,7 @@
     "title": "phar - Add one or more files or directories to a Phar file",
     "content": "phar add -f {{path/to/phar_file}} {{path/to/file_or_directory1 path/to/file_or_directory2 ...}}",
     "group": "Linux Ops",
-    "description": "phar: Create, update or extract PHP archives (PHAR). (Add one or more files or directories to a Phar file)",
+    "description": "phar: Create, update, or extract PHP archives (PHAR). (Add one or more files or directories to a Phar file)",
     "tags": [
       "linux",
       "phar",
@@ -50900,7 +50900,7 @@
     "title": "phar - Display the contents of a Phar file",
     "content": "phar list -f {{path/to/phar_file}}",
     "group": "Linux Ops",
-    "description": "phar: Create, update or extract PHP archives (PHAR). (Display the contents of a Phar file)",
+    "description": "phar: Create, update, or extract PHP archives (PHAR). (Display the contents of a Phar file)",
     "tags": [
       "linux",
       "phar",
@@ -50915,7 +50915,7 @@
     "title": "phar - Delete the specified file or directory from a Phar file",
     "content": "phar delete -f {{path/to/phar_file}} -e {{file_or_directory}}",
     "group": "Linux Ops",
-    "description": "phar: Create, update or extract PHP archives (PHAR). (Delete the specified file or directory from a Phar file)",
+    "description": "phar: Create, update, or extract PHP archives (PHAR). (Delete the specified file or directory from a Phar file)",
     "tags": [
       "linux",
       "phar",
@@ -50930,7 +50930,7 @@
     "title": "phar - Compress or uncompress files and directories in a Phar file",
     "content": "phar compress -f {{path/to/phar_file}} -c {{algorithm}}",
     "group": "Linux Ops",
-    "description": "phar: Create, update or extract PHP archives (PHAR). (Compress or uncompress files and directories in a Phar file)",
+    "description": "phar: Create, update, or extract PHP archives (PHAR). (Compress or uncompress files and directories in a Phar file)",
     "tags": [
       "linux",
       "phar",
@@ -50945,7 +50945,7 @@
     "title": "phar - Get information about a Phar file",
     "content": "phar info -f {{path/to/phar_file}}",
     "group": "Linux Ops",
-    "description": "phar: Create, update or extract PHP archives (PHAR). (Get information about a Phar file)",
+    "description": "phar: Create, update, or extract PHP archives (PHAR). (Get information about a Phar file)",
     "tags": [
       "linux",
       "phar",
@@ -50960,7 +50960,7 @@
     "title": "phar - Sign a Phar file with a specific hash algorithm",
     "content": "phar sign -f {{path/to/phar_file}} -h {{algorithm}}",
     "group": "Linux Ops",
-    "description": "phar: Create, update or extract PHP archives (PHAR). (Sign a Phar file with a specific hash algorithm)",
+    "description": "phar: Create, update, or extract PHP archives (PHAR). (Sign a Phar file with a specific hash algorithm)",
     "tags": [
       "linux",
       "phar",
@@ -50975,7 +50975,7 @@
     "title": "phar - Sign a Phar file with an OpenSSL private key",
     "content": "phar sign -f {{path/to/phar_file}} -h openssl -y {{path/to/private_key}}",
     "group": "Linux Ops",
-    "description": "phar: Create, update or extract PHP archives (PHAR). (Sign a Phar file with an OpenSSL private key)",
+    "description": "phar: Create, update, or extract PHP archives (PHAR). (Sign a Phar file with an OpenSSL private key)",
     "tags": [
       "linux",
       "phar",
@@ -50990,7 +50990,7 @@
     "title": "phar - Display help and available hashing/compression algorithms",
     "content": "phar help",
     "group": "Linux Ops",
-    "description": "phar: Create, update or extract PHP archives (PHAR). (Display help and available hashing/compression algorithms)",
+    "description": "phar: Create, update, or extract PHP archives (PHAR). (Display help and available hashing/compression algorithms)",
     "tags": [
       "linux",
       "phar",
@@ -53930,7 +53930,7 @@
     "title": "lvmdump - Generate a basic dump",
     "content": "lvmdump",
     "group": "Linux Ops",
-    "description": "lvmdump: Collect diagnostic information about LVM2 (Logical Volume Manager). By default, outputs a compressed tar archive with system and configuration data in the home directory. (Generate a basic dump)",
+    "description": "lvmdump: Collect diagnostic information about LVM2 (Logical Volume Manager). By default, outputs a compressed `.tar` archive with system and configuration data in the home directory. (Generate a basic dump)",
     "tags": [
       "linux",
       "lvmdump",
@@ -53945,7 +53945,7 @@
     "title": "lvmdump - Generate an extended dump with metadata and daemon info",
     "content": "lvmdump -a -l -m",
     "group": "Linux Ops",
-    "description": "lvmdump: Collect diagnostic information about LVM2 (Logical Volume Manager). By default, outputs a compressed tar archive with system and configuration data in the home directory. (Generate an extended dump with metadata and daemon info)",
+    "description": "lvmdump: Collect diagnostic information about LVM2 (Logical Volume Manager). By default, outputs a compressed `.tar` archive with system and configuration data in the home directory. (Generate an extended dump with metadata and daemon info)",
     "tags": [
       "linux",
       "lvmdump",
@@ -53960,7 +53960,7 @@
     "title": "lvmdump - Dump the information into a directory instead of a tarball",
     "content": "lvmdump -d {{path/to/directory}}",
     "group": "Linux Ops",
-    "description": "lvmdump: Collect diagnostic information about LVM2 (Logical Volume Manager). By default, outputs a compressed tar archive with system and configuration data in the home directory. (Dump the information into a directory instead of a tarball)",
+    "description": "lvmdump: Collect diagnostic information about LVM2 (Logical Volume Manager). By default, outputs a compressed `.tar` archive with system and configuration data in the home directory. (Dump the information into a directory instead of a tarball)",
     "tags": [
       "linux",
       "lvmdump",
@@ -53975,7 +53975,7 @@
     "title": "lvmdump - Display help",
     "content": "lvmdump -h",
     "group": "Linux Ops",
-    "description": "lvmdump: Collect diagnostic information about LVM2 (Logical Volume Manager). By default, outputs a compressed tar archive with system and configuration data in the home directory. (Display help)",
+    "description": "lvmdump: Collect diagnostic information about LVM2 (Logical Volume Manager). By default, outputs a compressed `.tar` archive with system and configuration data in the home directory. (Display help)",
     "tags": [
       "linux",
       "lvmdump",
@@ -55322,10 +55322,10 @@
   {
     "id": "tldr-en-linux-restorecond-3",
     "type": "command",
-    "title": "restorecond - Use alternative restorecond.conf file",
+    "title": "restorecond - Use alternative `restorecond.conf` file",
     "content": "sudo restorecond -f restorecond_file",
     "group": "Linux Ops",
-    "description": "restorecond: Daemon that monitors file creation and automatically restores SELinux contexts. Useful for directories where files are frequently created with incorrect contexts. (Use alternative restorecond.conf file)",
+    "description": "restorecond: Daemon that monitors file creation and automatically restores SELinux contexts. Useful for directories where files are frequently created with incorrect contexts. (Use alternative `restorecond.conf` file)",
     "tags": [
       "linux",
       "restorecond",
@@ -56240,7 +56240,7 @@
     "title": "userdbctl - List all known user records",
     "content": "userdbctl user",
     "group": "Linux Ops",
-    "description": "userdbctl: Inspect users, groups and group memberships on the system. (List all known user records)",
+    "description": "userdbctl: Inspect users, groups, and group memberships on the system. (List all known user records)",
     "tags": [
       "linux",
       "userdbctl",
@@ -56255,7 +56255,7 @@
     "title": "userdbctl - Show details of a specific user",
     "content": "userdbctl user {{username}}",
     "group": "Linux Ops",
-    "description": "userdbctl: Inspect users, groups and group memberships on the system. (Show details of a specific user)",
+    "description": "userdbctl: Inspect users, groups, and group memberships on the system. (Show details of a specific user)",
     "tags": [
       "linux",
       "userdbctl",
@@ -56270,7 +56270,7 @@
     "title": "userdbctl - List all known groups",
     "content": "userdbctl group",
     "group": "Linux Ops",
-    "description": "userdbctl: Inspect users, groups and group memberships on the system. (List all known groups)",
+    "description": "userdbctl: Inspect users, groups, and group memberships on the system. (List all known groups)",
     "tags": [
       "linux",
       "userdbctl",
@@ -56285,7 +56285,7 @@
     "title": "userdbctl - Show details of a specific group",
     "content": "userdbctl group {{groupname}}",
     "group": "Linux Ops",
-    "description": "userdbctl: Inspect users, groups and group memberships on the system. (Show details of a specific group)",
+    "description": "userdbctl: Inspect users, groups, and group memberships on the system. (Show details of a specific group)",
     "tags": [
       "linux",
       "userdbctl",
@@ -56300,7 +56300,7 @@
     "title": "userdbctl - List all services currently providing user/group definitions to the system",
     "content": "userdbctl services",
     "group": "Linux Ops",
-    "description": "userdbctl: Inspect users, groups and group memberships on the system. (List all services currently providing user/group definitions to the system)",
+    "description": "userdbctl: Inspect users, groups, and group memberships on the system. (List all services currently providing user/group definitions to the system)",
     "tags": [
       "linux",
       "userdbctl",
@@ -57407,10 +57407,10 @@
   {
     "id": "tldr-en-linux-ttyplot-0",
     "type": "command",
-    "title": "ttyplot - Plot the values `1`, `2` and `3` (Note: `cat` prevents `ttyplot` from exiting)",
+    "title": "ttyplot - Plot the values `1`, `2`, and `3` (Note: `cat` prevents `ttyplot` from exiting)",
     "content": "{ echo {{1 2 3}}; cat; } | ttyplot",
     "group": "Linux Ops",
-    "description": "ttyplot: A realtime plotting utility for the command-line with data input from `stdin`. (Plot the values `1`, `2` and `3` (Note: `cat` prevents `ttyplot` from exiting))",
+    "description": "ttyplot: A realtime plotting utility for the command-line with data input from `stdin`. (Plot the values `1`, `2`, and `3` (Note: `cat` prevents `ttyplot` from exiting))",
     "tags": [
       "linux",
       "ttyplot",
@@ -57947,10 +57947,10 @@
   {
     "id": "tldr-en-linux-parted.interactive-1",
     "type": "command",
-    "title": "parted.interactive - Show partition information in interactive mode",
+    "title": "parted.interactive - [Interactive] Show partition information in interactive mode",
     "content": "print",
     "group": "Linux Ops",
-    "description": "parted.interactive: A partition manipulation program. (Show partition information in interactive mode)",
+    "description": "parted.interactive: A partition manipulation program. ([Interactive] Show partition information in interactive mode)",
     "tags": [
       "linux",
       "parted.interactive",
@@ -57962,10 +57962,10 @@
   {
     "id": "tldr-en-linux-parted.interactive-2",
     "type": "command",
-    "title": "parted.interactive - Select a disk in interactive mode",
+    "title": "parted.interactive - [Interactive] Select a disk in interactive mode",
     "content": "select {{/dev/sdX}}",
     "group": "Linux Ops",
-    "description": "parted.interactive: A partition manipulation program. (Select a disk in interactive mode)",
+    "description": "parted.interactive: A partition manipulation program. ([Interactive] Select a disk in interactive mode)",
     "tags": [
       "linux",
       "parted.interactive",
@@ -57977,10 +57977,10 @@
   {
     "id": "tldr-en-linux-parted.interactive-3",
     "type": "command",
-    "title": "parted.interactive - Create a 16 GB partition with the specified filesystem in interactive mode (`GPT` partition table)",
+    "title": "parted.interactive - [Interactive] Create a 16 GB partition with the specified filesystem in interactive mode (`GPT` partition table)",
     "content": "mkpart {{partition_name}} {{btrfs|ext2|ext3|ext4|fat16|fat32|hfs|hfs+|linux-swap|ntfs|reiserfs|udf|xfs}} {{0%}} {{16G}}",
     "group": "Linux Ops",
-    "description": "parted.interactive: A partition manipulation program. (Create a 16 GB partition with the specified filesystem in interactive mode (`GPT` partition table))",
+    "description": "parted.interactive: A partition manipulation program. ([Interactive] Create a 16 GB partition with the specified filesystem in interactive mode (`GPT` partition table))",
     "tags": [
       "linux",
       "parted.interactive",
@@ -57992,10 +57992,10 @@
   {
     "id": "tldr-en-linux-parted.interactive-4",
     "type": "command",
-    "title": "parted.interactive - Create a 16 GB partition with the specified filesystem in interactive mode (`MBR` partition table)",
+    "title": "parted.interactive - [Interactive] Create a 16 GB partition with the specified filesystem in interactive mode (`MBR` partition table)",
     "content": "mkpart {{primary|logical|extended}} {{btrfs|ext2|ext3|ext4|fat16|fat32|hfs|hfs+|linux-swap|ntfs|reiserfs|udf|xfs}} {{0%}} {{16G}}",
     "group": "Linux Ops",
-    "description": "parted.interactive: A partition manipulation program. (Create a 16 GB partition with the specified filesystem in interactive mode (`MBR` partition table))",
+    "description": "parted.interactive: A partition manipulation program. ([Interactive] Create a 16 GB partition with the specified filesystem in interactive mode (`MBR` partition table))",
     "tags": [
       "linux",
       "parted.interactive",
@@ -58007,10 +58007,10 @@
   {
     "id": "tldr-en-linux-parted.interactive-5",
     "type": "command",
-    "title": "parted.interactive - Resize a partition in interactive mode",
+    "title": "parted.interactive - [Interactive] Resize a partition in interactive mode",
     "content": "resizepart {{/dev/sdXN}} {{end_position_of_partition}}",
     "group": "Linux Ops",
-    "description": "parted.interactive: A partition manipulation program. (Resize a partition in interactive mode)",
+    "description": "parted.interactive: A partition manipulation program. ([Interactive] Resize a partition in interactive mode)",
     "tags": [
       "linux",
       "parted.interactive",
@@ -58022,10 +58022,10 @@
   {
     "id": "tldr-en-linux-parted.interactive-6",
     "type": "command",
-    "title": "parted.interactive - Remove a partition in interactive mode",
+    "title": "parted.interactive - [Interactive] Remove a partition in interactive mode",
     "content": "rm {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "parted.interactive: A partition manipulation program. (Remove a partition in interactive mode)",
+    "description": "parted.interactive: A partition manipulation program. ([Interactive] Remove a partition in interactive mode)",
     "tags": [
       "linux",
       "parted.interactive",
@@ -58037,10 +58037,10 @@
   {
     "id": "tldr-en-linux-parted.interactive-7",
     "type": "command",
-    "title": "parted.interactive - Display help",
+    "title": "parted.interactive - [Interactive] Display help",
     "content": "?",
     "group": "Linux Ops",
-    "description": "parted.interactive: A partition manipulation program. (Display help)",
+    "description": "parted.interactive: A partition manipulation program. ([Interactive] Display help)",
     "tags": [
       "linux",
       "parted.interactive",
@@ -60140,7 +60140,7 @@
     "title": "systemd-tmpfiles - Create files and directories as specified in the configuration",
     "content": "systemd-tmpfiles --create",
     "group": "Linux Ops",
-    "description": "systemd-tmpfiles: Create, delete and clean up volatile and temporary files and directories. This command is automatically invoked on boot by systemd services, and running it manually is usually not needed. (Create files and directories as specified in the configuration)",
+    "description": "systemd-tmpfiles: Create, delete, and clean up volatile and temporary files and directories. This command is automatically invoked on boot by systemd services and running it manually is usually not needed. (Create files and directories as specified in the configuration)",
     "tags": [
       "linux",
       "systemd-tmpfiles",
@@ -60155,7 +60155,7 @@
     "title": "systemd-tmpfiles - Clean up files and directories with age parameters configured",
     "content": "systemd-tmpfiles --clean",
     "group": "Linux Ops",
-    "description": "systemd-tmpfiles: Create, delete and clean up volatile and temporary files and directories. This command is automatically invoked on boot by systemd services, and running it manually is usually not needed. (Clean up files and directories with age parameters configured)",
+    "description": "systemd-tmpfiles: Create, delete, and clean up volatile and temporary files and directories. This command is automatically invoked on boot by systemd services and running it manually is usually not needed. (Clean up files and directories with age parameters configured)",
     "tags": [
       "linux",
       "systemd-tmpfiles",
@@ -60170,7 +60170,7 @@
     "title": "systemd-tmpfiles - Remove files and directories as specified in the configuration",
     "content": "systemd-tmpfiles --remove",
     "group": "Linux Ops",
-    "description": "systemd-tmpfiles: Create, delete and clean up volatile and temporary files and directories. This command is automatically invoked on boot by systemd services, and running it manually is usually not needed. (Remove files and directories as specified in the configuration)",
+    "description": "systemd-tmpfiles: Create, delete, and clean up volatile and temporary files and directories. This command is automatically invoked on boot by systemd services and running it manually is usually not needed. (Remove files and directories as specified in the configuration)",
     "tags": [
       "linux",
       "systemd-tmpfiles",
@@ -60185,7 +60185,7 @@
     "title": "systemd-tmpfiles - Apply operations for user-specific configurations",
     "content": "systemd-tmpfiles --create --user",
     "group": "Linux Ops",
-    "description": "systemd-tmpfiles: Create, delete and clean up volatile and temporary files and directories. This command is automatically invoked on boot by systemd services, and running it manually is usually not needed. (Apply operations for user-specific configurations)",
+    "description": "systemd-tmpfiles: Create, delete, and clean up volatile and temporary files and directories. This command is automatically invoked on boot by systemd services and running it manually is usually not needed. (Apply operations for user-specific configurations)",
     "tags": [
       "linux",
       "systemd-tmpfiles",
@@ -60200,7 +60200,7 @@
     "title": "systemd-tmpfiles - Execute lines marked for early boot",
     "content": "systemd-tmpfiles --create --boot",
     "group": "Linux Ops",
-    "description": "systemd-tmpfiles: Create, delete and clean up volatile and temporary files and directories. This command is automatically invoked on boot by systemd services, and running it manually is usually not needed. (Execute lines marked for early boot)",
+    "description": "systemd-tmpfiles: Create, delete, and clean up volatile and temporary files and directories. This command is automatically invoked on boot by systemd services and running it manually is usually not needed. (Execute lines marked for early boot)",
     "tags": [
       "linux",
       "systemd-tmpfiles",
@@ -60647,10 +60647,10 @@
   {
     "id": "tldr-en-linux-factorio-3",
     "type": "command",
-    "title": "factorio - Shut the server gracefully",
+    "title": "factorio - [Interactive] Shut the server gracefully",
     "content": "/quit",
     "group": "Linux Ops",
-    "description": "factorio: Create and start a headless Factorio server. (Shut the server gracefully)",
+    "description": "factorio: Create and start a headless Factorio server. ([Interactive] Shut the server gracefully)",
     "tags": [
       "linux",
       "factorio",
@@ -67352,10 +67352,10 @@
   {
     "id": "tldr-en-linux-postconf-3",
     "type": "command",
-    "title": "postconf - Display parameters only from the specified class. The class can be one of builtin, service, user or all",
-    "content": "postconf -C {{class}}",
+    "title": "postconf - Display parameters only from the specified class",
+    "content": "postconf -C {{builtin|service|user|all}}",
     "group": "Linux Ops",
-    "description": "postconf: Postfix configuration utility. This command displays the values of the `main.cf` configuration parameters by default and warns about possible mistyped parameter names. It can also change the `main.cf` configuration parameter values. (Display parameters only from the specified class. The class can be one of builtin, service, user or all)",
+    "description": "postconf: Postfix configuration utility. This command displays the values of the `main.cf` configuration parameters by default and warns about possible mistyped parameter names. It can also change the `main.cf` configuration parameter values. (Display parameters only from the specified class)",
     "tags": [
       "linux",
       "postconf",
@@ -67832,10 +67832,10 @@
   {
     "id": "tldr-en-linux-lsipc-1",
     "type": "command",
-    "title": "lsipc - Show information about active shared [m]emory segments, message [q]ueues or [s]empahore sets",
+    "title": "lsipc - Show information about active shared [m]emory segments, message [q]ueues, or [s]empahore sets",
     "content": "lsipc {{--shmems|--queues|--semaphores}}",
     "group": "Linux Ops",
-    "description": "lsipc: Show information on System V IPC facilities currently employed in the system. (Show information about active shared [m]emory segments, message [q]ueues or [s]empahore sets)",
+    "description": "lsipc: Show information on System V IPC facilities currently employed in the system. (Show information about active shared [m]emory segments, message [q]ueues, or [s]empahore sets)",
     "tags": [
       "linux",
       "lsipc",
@@ -67877,10 +67877,10 @@
   {
     "id": "tldr-en-linux-lsipc-4",
     "type": "command",
-    "title": "lsipc - Use [r]aw, [J]SON, [l]ist or [e]xport (key=\"value\") format",
+    "title": "lsipc - Use [r]aw, [J]SON, [l]ist, or [e]xport (key=\"value\") format",
     "content": "lsipc {{--raw|--json|--list|--export}}",
     "group": "Linux Ops",
-    "description": "lsipc: Show information on System V IPC facilities currently employed in the system. (Use [r]aw, [J]SON, [l]ist or [e]xport (key=\"value\") format)",
+    "description": "lsipc: Show information on System V IPC facilities currently employed in the system. (Use [r]aw, [J]SON, [l]ist, or [e]xport (key=\"value\") format)",
     "tags": [
       "linux",
       "lsipc",
@@ -73775,7 +73775,7 @@
     "title": "machinectl - Start a machine as a service using `systemd-nspawn`",
     "content": "sudo machinectl start {{machine_name}}",
     "group": "Linux Ops",
-    "description": "machinectl: Control the systemd machine manager. Execute operations on virtual machines, containers and images. (Start a machine as a service using `systemd-nspawn`)",
+    "description": "machinectl: Control the systemd machine manager. Execute operations on virtual machines, containers, and images. (Start a machine as a service using `systemd-nspawn`)",
     "tags": [
       "linux",
       "machinectl",
@@ -73790,7 +73790,7 @@
     "title": "machinectl - Stop a running machine",
     "content": "sudo machinectl stop {{machine_name}}",
     "group": "Linux Ops",
-    "description": "machinectl: Control the systemd machine manager. Execute operations on virtual machines, containers and images. (Stop a running machine)",
+    "description": "machinectl: Control the systemd machine manager. Execute operations on virtual machines, containers, and images. (Stop a running machine)",
     "tags": [
       "linux",
       "machinectl",
@@ -73805,7 +73805,7 @@
     "title": "machinectl - Display a list of running machines",
     "content": "machinectl list",
     "group": "Linux Ops",
-    "description": "machinectl: Control the systemd machine manager. Execute operations on virtual machines, containers and images. (Display a list of running machines)",
+    "description": "machinectl: Control the systemd machine manager. Execute operations on virtual machines, containers, and images. (Display a list of running machines)",
     "tags": [
       "linux",
       "machinectl",
@@ -73820,7 +73820,7 @@
     "title": "machinectl - Open an interactive shell inside the machine",
     "content": "sudo machinectl shell {{machine_name}}",
     "group": "Linux Ops",
-    "description": "machinectl: Control the systemd machine manager. Execute operations on virtual machines, containers and images. (Open an interactive shell inside the machine)",
+    "description": "machinectl: Control the systemd machine manager. Execute operations on virtual machines, containers, and images. (Open an interactive shell inside the machine)",
     "tags": [
       "linux",
       "machinectl",
@@ -75047,10 +75047,10 @@
   {
     "id": "tldr-en-linux-networkctl-5",
     "type": "command",
-    "title": "networkctl - Reload configuration files (.netdev and .network)",
+    "title": "networkctl - Reload configuration files (`.netdev` and `.network`)",
     "content": "networkctl reload",
     "group": "Linux Ops",
-    "description": "networkctl: Query the status of network links. Manage the network configuration using `systemd-networkd`. (Reload configuration files (.netdev and .network))",
+    "description": "networkctl: Query the status of network links. Manage the network configuration using `systemd-networkd`. (Reload configuration files (`.netdev` and `.network`))",
     "tags": [
       "linux",
       "networkctl",
@@ -77372,10 +77372,10 @@
   {
     "id": "tldr-en-linux-grub-reboot-0",
     "type": "command",
-    "title": "grub-reboot - Set the default boot entry to an entry number, name or identifier for the next boot",
+    "title": "grub-reboot - Set the default boot entry to an entry number, name, or identifier for the next boot",
     "content": "sudo grub-reboot {{entry_number}}",
     "group": "Linux Ops",
-    "description": "grub-reboot: Set the default boot entry for GRUB, for the next boot only. (Set the default boot entry to an entry number, name or identifier for the next boot)",
+    "description": "grub-reboot: Set the default boot entry for GRUB, for the next boot only. (Set the default boot entry to an entry number, name, or identifier for the next boot)",
     "tags": [
       "linux",
       "grub-reboot",
@@ -77387,10 +77387,10 @@
   {
     "id": "tldr-en-linux-grub-reboot-1",
     "type": "command",
-    "title": "grub-reboot - Set the default boot entry to an entry number, name or identifier for an alternative boot directory for the next boot",
+    "title": "grub-reboot - Set the default boot entry to an entry number, name, or identifier for an alternative boot directory for the next boot",
     "content": "sudo grub-reboot --boot-directory /{{path/to/boot_directory}} {{entry_number}}",
     "group": "Linux Ops",
-    "description": "grub-reboot: Set the default boot entry for GRUB, for the next boot only. (Set the default boot entry to an entry number, name or identifier for an alternative boot directory for the next boot)",
+    "description": "grub-reboot: Set the default boot entry for GRUB, for the next boot only. (Set the default boot entry to an entry number, name, or identifier for an alternative boot directory for the next boot)",
     "tags": [
       "linux",
       "grub-reboot",
@@ -81605,7 +81605,7 @@
     "title": "tune2fs - Set the max number of counts before a filesystem is checked to 2",
     "content": "sudo tune2fs -c 2 {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "tune2fs: Adjust parameters of an ext2, ext3 or ext4 filesystem. May be used on mounted filesystems. (Set the max number of counts before a filesystem is checked to 2)",
+    "description": "tune2fs: Adjust parameters of an ext2, ext3, or ext4 filesystem. May be used on mounted filesystems. (Set the max number of counts before a filesystem is checked to 2)",
     "tags": [
       "linux",
       "tune2fs",
@@ -81620,7 +81620,7 @@
     "title": "tune2fs - Set the filesystem label to `MY_LABEL`",
     "content": "sudo tune2fs -L 'MY_LABEL' {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "tune2fs: Adjust parameters of an ext2, ext3 or ext4 filesystem. May be used on mounted filesystems. (Set the filesystem label to `MY_LABEL`)",
+    "description": "tune2fs: Adjust parameters of an ext2, ext3, or ext4 filesystem. May be used on mounted filesystems. (Set the filesystem label to `MY_LABEL`)",
     "tags": [
       "linux",
       "tune2fs",
@@ -81635,7 +81635,7 @@
     "title": "tune2fs - Enable discard and user-specified extended attributes for a filesystem",
     "content": "sudo tune2fs -o discard,user_xattr {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "tune2fs: Adjust parameters of an ext2, ext3 or ext4 filesystem. May be used on mounted filesystems. (Enable discard and user-specified extended attributes for a filesystem)",
+    "description": "tune2fs: Adjust parameters of an ext2, ext3, or ext4 filesystem. May be used on mounted filesystems. (Enable discard and user-specified extended attributes for a filesystem)",
     "tags": [
       "linux",
       "tune2fs",
@@ -81650,7 +81650,7 @@
     "title": "tune2fs - Enable journaling for a filesystem",
     "content": "sudo tune2fs -o has_journal {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "tune2fs: Adjust parameters of an ext2, ext3 or ext4 filesystem. May be used on mounted filesystems. (Enable journaling for a filesystem)",
+    "description": "tune2fs: Adjust parameters of an ext2, ext3, or ext4 filesystem. May be used on mounted filesystems. (Enable journaling for a filesystem)",
     "tags": [
       "linux",
       "tune2fs",
@@ -81665,7 +81665,7 @@
     "title": "tune2fs - Assign a new randomly-generated UUID to a filesystem",
     "content": "sudo tune2fs -U random {{/dev/sdXN}}",
     "group": "Linux Ops",
-    "description": "tune2fs: Adjust parameters of an ext2, ext3 or ext4 filesystem. May be used on mounted filesystems. (Assign a new randomly-generated UUID to a filesystem)",
+    "description": "tune2fs: Adjust parameters of an ext2, ext3, or ext4 filesystem. May be used on mounted filesystems. (Assign a new randomly-generated UUID to a filesystem)",
     "tags": [
       "linux",
       "tune2fs",
@@ -82472,10 +82472,10 @@
   {
     "id": "tldr-en-linux-btrfs-check-4",
     "type": "command",
-    "title": "btrfs-check - Use the `n`-th superblock (`n` can be 0, 1 or 2)",
+    "title": "btrfs-check - Use the `n`-th superblock (`n` can be 0, 1, or 2)",
     "content": "sudo btrfs {{[c|check]}} {{[-s|--super]}} {{n}} {{path/to/partition}}",
     "group": "Linux Ops",
-    "description": "btrfs-check: Check or repair a btrfs filesystem. (Use the `n`-th superblock (`n` can be 0, 1 or 2))",
+    "description": "btrfs-check: Check or repair a btrfs filesystem. (Use the `n`-th superblock (`n` can be 0, 1, or 2))",
     "tags": [
       "linux",
       "btrfs-check",
@@ -82847,10 +82847,10 @@
   {
     "id": "tldr-en-linux-ionice-1",
     "type": "command",
-    "title": "ionice - Set I/O scheduling class of a running process with a specific [p]id, [P]gid or [u]id",
+    "title": "ionice - Set I/O scheduling class of a running process with a specific [p]id, [P]gid, or [u]id",
     "content": "ionice {{[-c|--class]}} {{scheduling_class}} -{{p|P|u}} {{id}}",
     "group": "Linux Ops",
-    "description": "ionice: Get or set program I/O scheduling class and priority. Scheduling classes: 1 (realtime), 2 (best-effort), 3 (idle). Priority levels: 0 (the highest) - 7 (the lowest). (Set I/O scheduling class of a running process with a specific [p]id, [P]gid or [u]id)",
+    "description": "ionice: Get or set program I/O scheduling class and priority. Scheduling classes: 1 (realtime), 2 (best-effort), 3 (idle). Priority levels: 0 (the highest) - 7 (the lowest). (Set I/O scheduling class of a running process with a specific [p]id, [P]gid, or [u]id)",
     "tags": [
       "linux",
       "ionice",
@@ -84305,7 +84305,7 @@
     "title": "distrobox-enter - Enter a Distrobox container",
     "content": "distrobox-enter {{container_name}}",
     "group": "Linux Ops",
-    "description": "distrobox-enter: Enter a Distrobox container. Default command executed is your SHELL, but you can specify different shells or entire commands to execute. If used inside a script, an application, or a service, you can use the `--headless` mode to disable the tty and interactivity. (Enter a Distrobox container)",
+    "description": "distrobox-enter: Enter a Distrobox container. Default command executed is your `$SHELL`, but you can specify different shells or entire commands to execute. If used inside a script, an application, or a service, you can use the `--headless` mode to disable the tty and interactivity. (Enter a Distrobox container)",
     "tags": [
       "linux",
       "distrobox-enter",
@@ -84320,7 +84320,7 @@
     "title": "distrobox-enter - Enter a Distrobox container and run a command at login",
     "content": "distrobox-enter {{container_name}} -- {{sh -l}}",
     "group": "Linux Ops",
-    "description": "distrobox-enter: Enter a Distrobox container. Default command executed is your SHELL, but you can specify different shells or entire commands to execute. If used inside a script, an application, or a service, you can use the `--headless` mode to disable the tty and interactivity. (Enter a Distrobox container and run a command at login)",
+    "description": "distrobox-enter: Enter a Distrobox container. Default command executed is your `$SHELL`, but you can specify different shells or entire commands to execute. If used inside a script, an application, or a service, you can use the `--headless` mode to disable the tty and interactivity. (Enter a Distrobox container and run a command at login)",
     "tags": [
       "linux",
       "distrobox-enter",
@@ -84335,7 +84335,7 @@
     "title": "distrobox-enter - Enter a Distrobox container without instantiating a tty",
     "content": "distrobox-enter {{[-n|--name]}} {{container_name}} -- {{uptime --pretty}}",
     "group": "Linux Ops",
-    "description": "distrobox-enter: Enter a Distrobox container. Default command executed is your SHELL, but you can specify different shells or entire commands to execute. If used inside a script, an application, or a service, you can use the `--headless` mode to disable the tty and interactivity. (Enter a Distrobox container without instantiating a tty)",
+    "description": "distrobox-enter: Enter a Distrobox container. Default command executed is your `$SHELL`, but you can specify different shells or entire commands to execute. If used inside a script, an application, or a service, you can use the `--headless` mode to disable the tty and interactivity. (Enter a Distrobox container without instantiating a tty)",
     "tags": [
       "linux",
       "distrobox-enter",
@@ -86672,10 +86672,10 @@
   {
     "id": "tldr-en-linux-debugfs-3",
     "type": "command",
-    "title": "debugfs - View the filesystem stats in debugfs console",
+    "title": "debugfs - [Interactive] View the filesystem stats in debugfs console",
     "content": "stats",
     "group": "Linux Ops",
-    "description": "debugfs: An interactive ext2/ext3/ext4 filesystem debugger. (View the filesystem stats in debugfs console)",
+    "description": "debugfs: An interactive ext2/ext3/ext4 filesystem debugger. ([Interactive] View the filesystem stats in debugfs console)",
     "tags": [
       "linux",
       "debugfs",
@@ -86687,10 +86687,10 @@
   {
     "id": "tldr-en-linux-debugfs-4",
     "type": "command",
-    "title": "debugfs - Close the filesystem",
+    "title": "debugfs - [Interactive] Close the filesystem",
     "content": "close -a",
     "group": "Linux Ops",
-    "description": "debugfs: An interactive ext2/ext3/ext4 filesystem debugger. (Close the filesystem)",
+    "description": "debugfs: An interactive ext2/ext3/ext4 filesystem debugger. ([Interactive] Close the filesystem)",
     "tags": [
       "linux",
       "debugfs",
@@ -86702,10 +86702,10 @@
   {
     "id": "tldr-en-linux-debugfs-5",
     "type": "command",
-    "title": "debugfs - List all available commands",
+    "title": "debugfs - [Interactive] List all available commands",
     "content": "lr",
     "group": "Linux Ops",
-    "description": "debugfs: An interactive ext2/ext3/ext4 filesystem debugger. (List all available commands)",
+    "description": "debugfs: An interactive ext2/ext3/ext4 filesystem debugger. ([Interactive] List all available commands)",
     "tags": [
       "linux",
       "debugfs",
@@ -89672,10 +89672,10 @@
   {
     "id": "tldr-en-linux-jhead-4",
     "type": "command",
-    "title": "jhead - Rotate losslessly all JPEG images by 90, 180 or 270 based on the EXIF orientation tag",
+    "title": "jhead - Rotate losslessly all JPEG images by 90, 180, or 270 degrees based on the EXIF orientation tag",
     "content": "jhead -autorot *.jpg",
     "group": "Linux Ops",
-    "description": "jhead: Image timestamp and EXIF data manipulation. (Rotate losslessly all JPEG images by 90, 180 or 270 based on the EXIF orientation tag)",
+    "description": "jhead: Image timestamp and EXIF data manipulation. (Rotate losslessly all JPEG images by 90, 180, or 270 degrees based on the EXIF orientation tag)",
     "tags": [
       "linux",
       "jhead",
@@ -90890,7 +90890,7 @@
     "title": "microcom - Open a serial port using the specified baud rate",
     "content": "microcom {{[-p|--port]}} {{/dev/ttyXYZ}} {{[-s|--speed]}} {{baud_rate}}",
     "group": "Linux Ops",
-    "description": "microcom: A minimalistic terminal program, used to access remote devices via a serial, CAN or telnet connection from the console. (Open a serial port using the specified baud rate)",
+    "description": "microcom: A minimalistic terminal program, used to access remote devices via a serial, CAN, or telnet connection from the console. (Open a serial port using the specified baud rate)",
     "tags": [
       "linux",
       "microcom",
@@ -90905,7 +90905,7 @@
     "title": "microcom - Establish a telnet connection to the specified host",
     "content": "microcom {{[-t|--telnet]}} {{hostname}}:{{port}}",
     "group": "Linux Ops",
-    "description": "microcom: A minimalistic terminal program, used to access remote devices via a serial, CAN or telnet connection from the console. (Establish a telnet connection to the specified host)",
+    "description": "microcom: A minimalistic terminal program, used to access remote devices via a serial, CAN, or telnet connection from the console. (Establish a telnet connection to the specified host)",
     "tags": [
       "linux",
       "microcom",
@@ -94010,7 +94010,7 @@
     "title": "sysdig - Capture all the events from the live system and print them to screen",
     "content": "sysdig",
     "group": "Linux Ops",
-    "description": "sysdig: System troubleshooting, analysis and exploration. Capture, filter and store systemcalls. (Capture all the events from the live system and print them to screen)",
+    "description": "sysdig: System troubleshooting, analysis, and exploration. Capture, filter, and store systemcalls. (Capture all the events from the live system and print them to screen)",
     "tags": [
       "linux",
       "sysdig",
@@ -94025,7 +94025,7 @@
     "title": "sysdig - Capture all the events from the live system and save them to disk",
     "content": "sysdig {{[-w|--write]}} {{path/to/file}}.scap",
     "group": "Linux Ops",
-    "description": "sysdig: System troubleshooting, analysis and exploration. Capture, filter and store systemcalls. (Capture all the events from the live system and save them to disk)",
+    "description": "sysdig: System troubleshooting, analysis, and exploration. Capture, filter, and store systemcalls. (Capture all the events from the live system and save them to disk)",
     "tags": [
       "linux",
       "sysdig",
@@ -94040,7 +94040,7 @@
     "title": "sysdig - Read events from a file and print them to screen",
     "content": "sysdig {{[-r|--read]}} {{path/to/file}}.scap",
     "group": "Linux Ops",
-    "description": "sysdig: System troubleshooting, analysis and exploration. Capture, filter and store systemcalls. (Read events from a file and print them to screen)",
+    "description": "sysdig: System troubleshooting, analysis, and exploration. Capture, filter, and store systemcalls. (Read events from a file and print them to screen)",
     "tags": [
       "linux",
       "sysdig",
@@ -94055,7 +94055,7 @@
     "title": "sysdig - Filter and Print all the open system calls invoked by cat",
     "content": "sysdig proc.name=cat and evt.type=open",
     "group": "Linux Ops",
-    "description": "sysdig: System troubleshooting, analysis and exploration. Capture, filter and store systemcalls. (Filter and Print all the open system calls invoked by cat)",
+    "description": "sysdig: System troubleshooting, analysis, and exploration. Capture, filter, and store systemcalls. (Filter and Print all the open system calls invoked by cat)",
     "tags": [
       "linux",
       "sysdig",
@@ -94070,7 +94070,7 @@
     "title": "sysdig - Register any found plugin and use dummy as input source passing to it open params",
     "content": "sysdig -I dummy:'{{parameter}}'",
     "group": "Linux Ops",
-    "description": "sysdig: System troubleshooting, analysis and exploration. Capture, filter and store systemcalls. (Register any found plugin and use dummy as input source passing to it open params)",
+    "description": "sysdig: System troubleshooting, analysis, and exploration. Capture, filter, and store systemcalls. (Register any found plugin and use dummy as input source passing to it open params)",
     "tags": [
       "linux",
       "sysdig",
@@ -94085,7 +94085,7 @@
     "title": "sysdig - List the available chisels",
     "content": "sysdig {{[-cl|--list-chisels]}}",
     "group": "Linux Ops",
-    "description": "sysdig: System troubleshooting, analysis and exploration. Capture, filter and store systemcalls. (List the available chisels)",
+    "description": "sysdig: System troubleshooting, analysis, and exploration. Capture, filter, and store systemcalls. (List the available chisels)",
     "tags": [
       "linux",
       "sysdig",
@@ -94100,7 +94100,7 @@
     "title": "sysdig - Use the spy_ip chisel to look at the data exchanged with ip address",
     "content": "sysdig {{[-c|--chisel]}} spy_ip {{ip_address}}",
     "group": "Linux Ops",
-    "description": "sysdig: System troubleshooting, analysis and exploration. Capture, filter and store systemcalls. (Use the spy_ip chisel to look at the data exchanged with ip address)",
+    "description": "sysdig: System troubleshooting, analysis, and exploration. Capture, filter, and store systemcalls. (Use the spy_ip chisel to look at the data exchanged with ip address)",
     "tags": [
       "linux",
       "sysdig",
@@ -94355,7 +94355,7 @@
     "title": "virt-viewer - Launch `virt-viewer` with a prompt to select running virtual machines",
     "content": "virt-viewer",
     "group": "Linux Ops",
-    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID or ID for the existing VMs. (Launch `virt-viewer` with a prompt to select running virtual machines)",
+    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Launch `virt-viewer` with a prompt to select running virtual machines)",
     "tags": [
       "linux",
       "virt-viewer",
@@ -94367,10 +94367,10 @@
   {
     "id": "tldr-en-linux-virt-viewer-1",
     "type": "command",
-    "title": "virt-viewer - Launch `virt-viewer` for a specific virtual machine by ID, UUID or name",
+    "title": "virt-viewer - Launch `virt-viewer` for a specific virtual machine by ID, UUID, or name",
     "content": "virt-viewer \"{{domain}}\"",
     "group": "Linux Ops",
-    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID or ID for the existing VMs. (Launch `virt-viewer` for a specific virtual machine by ID, UUID or name)",
+    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Launch `virt-viewer` for a specific virtual machine by ID, UUID, or name)",
     "tags": [
       "linux",
       "virt-viewer",
@@ -94385,7 +94385,7 @@
     "title": "virt-viewer - Wait for a virtual machine to start and automatically reconnect if it shutdown and restarts",
     "content": "virt-viewer --reconnect --wait \"{{domain}}\"",
     "group": "Linux Ops",
-    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID or ID for the existing VMs. (Wait for a virtual machine to start and automatically reconnect if it shutdown and restarts)",
+    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Wait for a virtual machine to start and automatically reconnect if it shutdown and restarts)",
     "tags": [
       "linux",
       "virt-viewer",
@@ -94400,7 +94400,7 @@
     "title": "virt-viewer - Connect to a specific remote virtual machine over TLS",
     "content": "virt-viewer --connect \"xen//{{url}}\" \"{{domain}}\"",
     "group": "Linux Ops",
-    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID or ID for the existing VMs. (Connect to a specific remote virtual machine over TLS)",
+    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Connect to a specific remote virtual machine over TLS)",
     "tags": [
       "linux",
       "virt-viewer",
@@ -94415,7 +94415,7 @@
     "title": "virt-viewer - Connect to a specific remote virtual machine over SSH",
     "content": "virt-viewer --connect \"qemu+ssh//{{username}}@{{url}}/system\" \"{{domain}}\"",
     "group": "Linux Ops",
-    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID or ID for the existing VMs. (Connect to a specific remote virtual machine over SSH)",
+    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Connect to a specific remote virtual machine over SSH)",
     "tags": [
       "linux",
       "virt-viewer",
@@ -95372,10 +95372,10 @@
   {
     "id": "tldr-en-linux-fcrackzip-0",
     "type": "command",
-    "title": "fcrackzip - Brute-force a password with a length of 4 to 8 characters, and contains only alphanumeric characters (order matters)",
+    "title": "fcrackzip - Brute-force a password with a length of 4 to 8 characters and contains only alphanumeric characters (order matters)",
     "content": "fcrackzip {{[-b|--brute-force]}} {{[-l|--length]}} 4-8 {{[-c|--charset]}} aA1 {{archive}}",
     "group": "Linux Ops",
-    "description": "fcrackzip: ZIP archive password cracking utility. (Brute-force a password with a length of 4 to 8 characters, and contains only alphanumeric characters (order matters))",
+    "description": "fcrackzip: ZIP archive password cracking utility. (Brute-force a password with a length of 4 to 8 characters and contains only alphanumeric characters (order matters))",
     "tags": [
       "linux",
       "fcrackzip",
@@ -95387,10 +95387,10 @@
   {
     "id": "tldr-en-linux-fcrackzip-1",
     "type": "command",
-    "title": "fcrackzip - Brute-force a password in verbose mode with a length of 3 characters that only contains lowercase characters, `$` and `%`",
+    "title": "fcrackzip - Brute-force a password in verbose mode with a length of 3 characters that only contains lowercase characters, `$`, and `%`",
     "content": "fcrackzip {{[-v|--verbose]}} {{[-b|--brute-force]}} {{[-l|--length]}} 3 {{[-c|--charset]}} a:$% {{archive}}",
     "group": "Linux Ops",
-    "description": "fcrackzip: ZIP archive password cracking utility. (Brute-force a password in verbose mode with a length of 3 characters that only contains lowercase characters, `$` and `%`)",
+    "description": "fcrackzip: ZIP archive password cracking utility. (Brute-force a password in verbose mode with a length of 3 characters that only contains lowercase characters, `$`, and `%`)",
     "tags": [
       "linux",
       "fcrackzip",
@@ -95657,10 +95657,10 @@
   {
     "id": "tldr-en-linux-nmcli-connection-0",
     "type": "command",
-    "title": "nmcli-connection - List all NetworkManager connections (shows name, UUID, type and device)",
+    "title": "nmcli-connection - List all NetworkManager connections (shows name, UUID, type, and device)",
     "content": "nmcli {{[c|connection]}}",
     "group": "Linux Ops",
-    "description": "nmcli-connection: Manage connections with NetworkManager. (List all NetworkManager connections (shows name, UUID, type and device))",
+    "description": "nmcli-connection: Manage connections with NetworkManager. (List all NetworkManager connections (shows name, UUID, type, and device))",
     "tags": [
       "linux",
       "nmcli-connection",
@@ -98735,7 +98735,7 @@
     "title": "homectl - List user accounts and their associated home directories",
     "content": "homectl list",
     "group": "Linux Ops",
-    "description": "homectl: Create, remove, change or inspect home directories using the systemd-homed service. (List user accounts and their associated home directories)",
+    "description": "homectl: Create, remove, change, or inspect home directories using the systemd-homed service. (List user accounts and their associated home directories)",
     "tags": [
       "linux",
       "homectl",
@@ -98750,7 +98750,7 @@
     "title": "homectl - Create a user account and their associated home directory",
     "content": "sudo homectl create {{username}}",
     "group": "Linux Ops",
-    "description": "homectl: Create, remove, change or inspect home directories using the systemd-homed service. (Create a user account and their associated home directory)",
+    "description": "homectl: Create, remove, change, or inspect home directories using the systemd-homed service. (Create a user account and their associated home directory)",
     "tags": [
       "linux",
       "homectl",
@@ -98765,7 +98765,7 @@
     "title": "homectl - Remove a specific user and the associated home directory",
     "content": "sudo homectl remove {{username}}",
     "group": "Linux Ops",
-    "description": "homectl: Create, remove, change or inspect home directories using the systemd-homed service. (Remove a specific user and the associated home directory)",
+    "description": "homectl: Create, remove, change, or inspect home directories using the systemd-homed service. (Remove a specific user and the associated home directory)",
     "tags": [
       "linux",
       "homectl",
@@ -98780,7 +98780,7 @@
     "title": "homectl - Change the password for a specific user",
     "content": "sudo homectl passwd {{username}}",
     "group": "Linux Ops",
-    "description": "homectl: Create, remove, change or inspect home directories using the systemd-homed service. (Change the password for a specific user)",
+    "description": "homectl: Create, remove, change, or inspect home directories using the systemd-homed service. (Change the password for a specific user)",
     "tags": [
       "linux",
       "homectl",
@@ -98795,7 +98795,7 @@
     "title": "homectl - Run a shell or a command with access to a specific home directory",
     "content": "sudo homectl with {{username}} -- {{command}} {{command_arguments}}",
     "group": "Linux Ops",
-    "description": "homectl: Create, remove, change or inspect home directories using the systemd-homed service. (Run a shell or a command with access to a specific home directory)",
+    "description": "homectl: Create, remove, change, or inspect home directories using the systemd-homed service. (Run a shell or a command with access to a specific home directory)",
     "tags": [
       "linux",
       "homectl",
@@ -98810,7 +98810,7 @@
     "title": "homectl - Lock or unlock a specific home directory",
     "content": "sudo homectl {{lock|unlock}} {{username}}",
     "group": "Linux Ops",
-    "description": "homectl: Create, remove, change or inspect home directories using the systemd-homed service. (Lock or unlock a specific home directory)",
+    "description": "homectl: Create, remove, change, or inspect home directories using the systemd-homed service. (Lock or unlock a specific home directory)",
     "tags": [
       "linux",
       "homectl",
@@ -98825,7 +98825,7 @@
     "title": "homectl - Change the disk space assigned to a specific home directory to 100 GiB",
     "content": "sudo homectl resize {{username}} {{100G}}",
     "group": "Linux Ops",
-    "description": "homectl: Create, remove, change or inspect home directories using the systemd-homed service. (Change the disk space assigned to a specific home directory to 100 GiB)",
+    "description": "homectl: Create, remove, change, or inspect home directories using the systemd-homed service. (Change the disk space assigned to a specific home directory to 100 GiB)",
     "tags": [
       "linux",
       "homectl",
@@ -98840,7 +98840,7 @@
     "title": "homectl - Display help",
     "content": "homectl {{[-h|--help]}}",
     "group": "Linux Ops",
-    "description": "homectl: Create, remove, change or inspect home directories using the systemd-homed service. (Display help)",
+    "description": "homectl: Create, remove, change, or inspect home directories using the systemd-homed service. (Display help)",
     "tags": [
       "linux",
       "homectl",
@@ -100802,10 +100802,10 @@
   {
     "id": "tldr-en-linux-tuxi-2",
     "type": "command",
-    "title": "tuxi - Display only search results (silences \"Did you mean?\", greetings and usage)",
+    "title": "tuxi - Display only search results (silences \"Did you mean?\", greetings, and usage)",
     "content": "tuxi -q {{search_terms}}",
     "group": "Linux Ops",
-    "description": "tuxi: Scrape Google search results and SERPs and provide instant and concise answers. (Display only search results (silences \"Did you mean?\", greetings and usage))",
+    "description": "tuxi: Scrape Google search results and SERPs and provide instant and concise answers. (Display only search results (silences \"Did you mean?\", greetings, and usage))",
     "tags": [
       "linux",
       "tuxi",
@@ -101972,10 +101972,10 @@
   {
     "id": "tldr-en-linux-sqfstar-0",
     "type": "command",
-    "title": "sqfstar - Create a squashfs filesystem (compressed using `gzip` by default) from an uncompressed tar archive",
+    "title": "sqfstar - Create a squashfs filesystem (compressed using `gzip` by default) from an uncompressed `.tar` archive",
     "content": "sqfstar < {{archive.tar}} {{filesystem.squashfs}}",
     "group": "Linux Ops",
-    "description": "sqfstar: Create a squashfs filesystem from a tar archive. (Create a squashfs filesystem (compressed using `gzip` by default) from an uncompressed tar archive)",
+    "description": "sqfstar: Create a squashfs filesystem from a `.tar` archive. (Create a squashfs filesystem (compressed using `gzip` by default) from an uncompressed `.tar` archive)",
     "tags": [
       "linux",
       "sqfstar",
@@ -101987,10 +101987,10 @@
   {
     "id": "tldr-en-linux-sqfstar-1",
     "type": "command",
-    "title": "sqfstar - Create a squashfs filesystem from a tar archive compressed with `gzip`, and [comp]ress the filesystem using a specific algorithm",
+    "title": "sqfstar - Create a squashfs filesystem from a `.tar` archive compressed with `gzip`, and [comp]ress the filesystem using a specific algorithm",
     "content": "zcat {{archive.tar.gz}} | sqfstar -comp {{gzip|lzo|lz4|xz|zstd|lzma}} {{filesystem.squashfs}}",
     "group": "Linux Ops",
-    "description": "sqfstar: Create a squashfs filesystem from a tar archive. (Create a squashfs filesystem from a tar archive compressed with `gzip`, and [comp]ress the filesystem using a specific algorithm)",
+    "description": "sqfstar: Create a squashfs filesystem from a `.tar` archive. (Create a squashfs filesystem from a `.tar` archive compressed with `gzip`, and [comp]ress the filesystem using a specific algorithm)",
     "tags": [
       "linux",
       "sqfstar",
@@ -102002,10 +102002,10 @@
   {
     "id": "tldr-en-linux-sqfstar-2",
     "type": "command",
-    "title": "sqfstar - Create a squashfs filesystem from a tar archive compressed with `xz`, excluding some of the files",
+    "title": "sqfstar - Create a squashfs filesystem from a `.tar` archive compressed with `xz`, excluding some of the files",
     "content": "xzcat {{archive.tar.xz}} | sqfstar {{filesystem.squashfs}} {{file1 file2 ...}}",
     "group": "Linux Ops",
-    "description": "sqfstar: Create a squashfs filesystem from a tar archive. (Create a squashfs filesystem from a tar archive compressed with `xz`, excluding some of the files)",
+    "description": "sqfstar: Create a squashfs filesystem from a `.tar` archive. (Create a squashfs filesystem from a `.tar` archive compressed with `xz`, excluding some of the files)",
     "tags": [
       "linux",
       "sqfstar",
@@ -102017,10 +102017,10 @@
   {
     "id": "tldr-en-linux-sqfstar-3",
     "type": "command",
-    "title": "sqfstar - Create a squashfs filesystem from a tar archive compressed with `zstd`, excluding files ending with `.gz`",
+    "title": "sqfstar - Create a squashfs filesystem from a `.tar` archive compressed with `zstd`, excluding files ending with `.gz`",
     "content": "zstdcat {{archive.tar.zst}} | sqfstar {{filesystem.squashfs}} \"{{*.gz}}\"",
     "group": "Linux Ops",
-    "description": "sqfstar: Create a squashfs filesystem from a tar archive. (Create a squashfs filesystem from a tar archive compressed with `zstd`, excluding files ending with `.gz`)",
+    "description": "sqfstar: Create a squashfs filesystem from a `.tar` archive. (Create a squashfs filesystem from a `.tar` archive compressed with `zstd`, excluding files ending with `.gz`)",
     "tags": [
       "linux",
       "sqfstar",
@@ -102032,10 +102032,10 @@
   {
     "id": "tldr-en-linux-sqfstar-4",
     "type": "command",
-    "title": "sqfstar - Create a squashfs filesystem from a tar archive compressed with `lz4`, excluding files matching a `regex`",
+    "title": "sqfstar - Create a squashfs filesystem from a `.tar` archive compressed with `lz4`, excluding files matching a `regex`",
     "content": "lz4cat {{archive.tar.lz4}} | sqfstar {{filesystem.squashfs}} -regex \"{{regex}}\"",
     "group": "Linux Ops",
-    "description": "sqfstar: Create a squashfs filesystem from a tar archive. (Create a squashfs filesystem from a tar archive compressed with `lz4`, excluding files matching a `regex`)",
+    "description": "sqfstar: Create a squashfs filesystem from a `.tar` archive. (Create a squashfs filesystem from a `.tar` archive compressed with `lz4`, excluding files matching a `regex`)",
     "tags": [
       "linux",
       "sqfstar",
@@ -102437,10 +102437,10 @@
   {
     "id": "tldr-en-linux-whereis-0",
     "type": "command",
-    "title": "whereis - Locate binary, source and man pages for SSH",
+    "title": "whereis - Locate binary, source, and man pages for SSH",
     "content": "whereis {{ssh}}",
     "group": "Linux Ops",
-    "description": "whereis: Locate the binary, source, and manual page files for a command. (Locate binary, source and man pages for SSH)",
+    "description": "whereis: Locate the binary, source, and manual page files for a command. (Locate binary, source, and man pages for SSH)",
     "tags": [
       "linux",
       "whereis",
@@ -102575,7 +102575,7 @@
     "title": "flashrom - Probe the chip, ensuring the wiring is correct",
     "content": "flashrom {{[-p|--programmer]}} {{programmer}}",
     "group": "Linux Ops",
-    "description": "flashrom: Read, write, verify and erase flash chips. (Probe the chip, ensuring the wiring is correct)",
+    "description": "flashrom: Read, write, verify, and erase flash chips. (Probe the chip, ensuring the wiring is correct)",
     "tags": [
       "linux",
       "flashrom",
@@ -102590,7 +102590,7 @@
     "title": "flashrom - Read flash and save it to a file",
     "content": "flashrom {{[-p|--programmer]}} {{programmer}} {{[-r|--read]}} {{path/to/file}}",
     "group": "Linux Ops",
-    "description": "flashrom: Read, write, verify and erase flash chips. (Read flash and save it to a file)",
+    "description": "flashrom: Read, write, verify, and erase flash chips. (Read flash and save it to a file)",
     "tags": [
       "linux",
       "flashrom",
@@ -102605,7 +102605,7 @@
     "title": "flashrom - Write a file to the flash",
     "content": "flashrom {{[-p|--programmer]}} {{programmer}} {{[-w|--write]}} {{path/to/file}}",
     "group": "Linux Ops",
-    "description": "flashrom: Read, write, verify and erase flash chips. (Write a file to the flash)",
+    "description": "flashrom: Read, write, verify, and erase flash chips. (Write a file to the flash)",
     "tags": [
       "linux",
       "flashrom",
@@ -102620,7 +102620,7 @@
     "title": "flashrom - Verify the flash against a file",
     "content": "flashrom {{[-p|--programmer]}} {{programmer}} {{[-v|--verify]}} {{path/to/file}}",
     "group": "Linux Ops",
-    "description": "flashrom: Read, write, verify and erase flash chips. (Verify the flash against a file)",
+    "description": "flashrom: Read, write, verify, and erase flash chips. (Verify the flash against a file)",
     "tags": [
       "linux",
       "flashrom",
@@ -102635,7 +102635,7 @@
     "title": "flashrom - Probe the chip using Raspberry Pi",
     "content": "flashrom {{[-p|--programmer]}} {{linux_spi:dev=/dev/spidev0.0}}",
     "group": "Linux Ops",
-    "description": "flashrom: Read, write, verify and erase flash chips. (Probe the chip using Raspberry Pi)",
+    "description": "flashrom: Read, write, verify, and erase flash chips. (Probe the chip using Raspberry Pi)",
     "tags": [
       "linux",
       "flashrom",
@@ -102935,7 +102935,7 @@
     "title": "dpkg-deb - Display information about a package",
     "content": "dpkg-deb {{[-I|--info]}} {{path/to/file.deb}}",
     "group": "Linux Ops",
-    "description": "dpkg-deb: Pack, unpack and provide information about Debian archives. (Display information about a package)",
+    "description": "dpkg-deb: Pack, unpack, and provide information about Debian archives. (Display information about a package)",
     "tags": [
       "linux",
       "dpkg-deb",
@@ -102950,7 +102950,7 @@
     "title": "dpkg-deb - Display the package's name and version on one line",
     "content": "dpkg-deb {{[-W|--show]}} {{path/to/file.deb}}",
     "group": "Linux Ops",
-    "description": "dpkg-deb: Pack, unpack and provide information about Debian archives. (Display the package's name and version on one line)",
+    "description": "dpkg-deb: Pack, unpack, and provide information about Debian archives. (Display the package's name and version on one line)",
     "tags": [
       "linux",
       "dpkg-deb",
@@ -102965,7 +102965,7 @@
     "title": "dpkg-deb - List the package's contents",
     "content": "dpkg-deb {{[-c|--contents]}} {{path/to/file.deb}}",
     "group": "Linux Ops",
-    "description": "dpkg-deb: Pack, unpack and provide information about Debian archives. (List the package's contents)",
+    "description": "dpkg-deb: Pack, unpack, and provide information about Debian archives. (List the package's contents)",
     "tags": [
       "linux",
       "dpkg-deb",
@@ -102980,7 +102980,7 @@
     "title": "dpkg-deb - Extract package's contents into a directory",
     "content": "dpkg-deb {{[-x|--extract]}} {{path/to/file.deb}} {{path/to/directory}}",
     "group": "Linux Ops",
-    "description": "dpkg-deb: Pack, unpack and provide information about Debian archives. (Extract package's contents into a directory)",
+    "description": "dpkg-deb: Pack, unpack, and provide information about Debian archives. (Extract package's contents into a directory)",
     "tags": [
       "linux",
       "dpkg-deb",
@@ -102995,7 +102995,7 @@
     "title": "dpkg-deb - Create a package from a specified directory",
     "content": "dpkg-deb {{[-b|--build]}} {{path/to/directory}}",
     "group": "Linux Ops",
-    "description": "dpkg-deb: Pack, unpack and provide information about Debian archives. (Create a package from a specified directory)",
+    "description": "dpkg-deb: Pack, unpack, and provide information about Debian archives. (Create a package from a specified directory)",
     "tags": [
       "linux",
       "dpkg-deb",
@@ -103262,10 +103262,10 @@
   {
     "id": "tldr-en-linux-obabel-0",
     "type": "command",
-    "title": "obabel - Convert a .mol file to XYZ coordinates",
+    "title": "obabel - Convert a `.mol` file to XYZ coordinates",
     "content": "obabel {{path/to/file.mol}} -O {{path/to/output_file.xyz}}",
     "group": "Linux Ops",
-    "description": "obabel: Translate chemistry-related data. (Convert a .mol file to XYZ coordinates)",
+    "description": "obabel: Translate chemistry-related data. (Convert a `.mol` file to XYZ coordinates)",
     "tags": [
       "linux",
       "obabel",
@@ -103292,10 +103292,10 @@
   {
     "id": "tldr-en-linux-obabel-2",
     "type": "command",
-    "title": "obabel - Convert a file of SMILES string to separate 3D .mol files",
+    "title": "obabel - Convert a file of SMILES string to separate 3D `.mol` files",
     "content": "obabel {{path/to/file.smi}} -O {{path/to/output_file.mol}} --gen3D -m",
     "group": "Linux Ops",
-    "description": "obabel: Translate chemistry-related data. (Convert a file of SMILES string to separate 3D .mol files)",
+    "description": "obabel: Translate chemistry-related data. (Convert a file of SMILES string to separate 3D `.mol` files)",
     "tags": [
       "linux",
       "obabel",
@@ -103847,10 +103847,10 @@
   {
     "id": "tldr-en-linux-jpegtran-1",
     "type": "command",
-    "title": "jpegtran - Rotate an image 90, 180 or 270 degrees clockwise",
+    "title": "jpegtran - Rotate an image 90, 180, or 270 degrees clockwise",
     "content": "jpegtran {{[-ro|-rotate]}} {{90|180|270}} {{path/to/image.jpg}} > {{path/to/output.jpg}}",
     "group": "Linux Ops",
-    "description": "jpegtran: Perform lossless transformation of JPEG files. (Rotate an image 90, 180 or 270 degrees clockwise)",
+    "description": "jpegtran: Perform lossless transformation of JPEG files. (Rotate an image 90, 180, or 270 degrees clockwise)",
     "tags": [
       "linux",
       "jpegtran",
@@ -105197,10 +105197,10 @@
   {
     "id": "tldr-en-linux-grub-set-default-0",
     "type": "command",
-    "title": "grub-set-default - Set the default boot entry to an entry number, name or identifier",
+    "title": "grub-set-default - Set the default boot entry to an entry number, name, or identifier",
     "content": "sudo grub-set-default {{entry_number}}",
     "group": "Linux Ops",
-    "description": "grub-set-default: Set the default boot entry for GRUB. (Set the default boot entry to an entry number, name or identifier)",
+    "description": "grub-set-default: Set the default boot entry for GRUB. (Set the default boot entry to an entry number, name, or identifier)",
     "tags": [
       "linux",
       "grub-set-default",
@@ -105212,10 +105212,10 @@
   {
     "id": "tldr-en-linux-grub-set-default-1",
     "type": "command",
-    "title": "grub-set-default - Set the default boot entry to an entry number, name or identifier for an alternative boot directory",
+    "title": "grub-set-default - Set the default boot entry to an entry number, name, or identifier for an alternative boot directory",
     "content": "sudo grub-set-default --boot-directory /{{path/to/boot_directory}} {{entry_number}}",
     "group": "Linux Ops",
-    "description": "grub-set-default: Set the default boot entry for GRUB. (Set the default boot entry to an entry number, name or identifier for an alternative boot directory)",
+    "description": "grub-set-default: Set the default boot entry for GRUB. (Set the default boot entry to an entry number, name, or identifier for an alternative boot directory)",
     "tags": [
       "linux",
       "grub-set-default",
@@ -106577,10 +106577,10 @@
   {
     "id": "tldr-en-linux-lnav-0",
     "type": "command",
-    "title": "lnav - View logs of a program, specifying log files, directories or URLs",
+    "title": "lnav - View logs of a program, specifying log files, directories, or URLs",
     "content": "lnav {{path/to/log_or_directory|url}}",
     "group": "Linux Ops",
-    "description": "lnav: Advanced log file viewer to analyze logs with little to no setup. (View logs of a program, specifying log files, directories or URLs)",
+    "description": "lnav: Advanced log file viewer to analyze logs with little to no setup. (View logs of a program, specifying log files, directories, or URLs)",
     "tags": [
       "linux",
       "lnav",
@@ -107852,10 +107852,10 @@
   {
     "id": "tldr-en-linux-qm-disk-3",
     "type": "command",
-    "title": "qm-disk - Import a VMDK/qcow2/raw disk image using a specific storage name",
+    "title": "qm-disk - Import a VMDK/`.qcow2`/raw disk image using a specific storage name",
     "content": "qm {{[di|disk]}} {{[i|import]}} {{vm_id}} {{path/to/disk}} {{storage_name}} --format {{qcow2|raw|vmdk}}",
     "group": "Linux Ops",
-    "description": "qm-disk: Manage disk images. (Import a VMDK/qcow2/raw disk image using a specific storage name)",
+    "description": "qm-disk: Manage disk images. (Import a VMDK/`.qcow2`/raw disk image using a specific storage name)",
     "tags": [
       "linux",
       "qm-disk",
@@ -107867,10 +107867,10 @@
   {
     "id": "tldr-en-linux-switch_root-0",
     "type": "command",
-    "title": "switch_root - Move `/proc`, `/dev`, `/sys` and `/run` to the specified filesystem, use this filesystem as the new root and start the specified init process",
+    "title": "switch_root - Move `/proc`, `/dev`, `/sys`, and `/run` to the specified filesystem, use this filesystem as the new root and start the specified init process",
     "content": "switch_root {{new_root}} {{/sbin/init}}",
     "group": "Linux Ops",
-    "description": "switch_root: Use a different filesystem as the root of the mount tree. Note: `switch_root` will fail to function if the new root is not the root of a mount. Use bind-mounting as a workaround. (Move `/proc`, `/dev`, `/sys` and `/run` to the specified filesystem, use this filesystem as the new root and start the specified init process)",
+    "description": "switch_root: Use a different filesystem as the root of the mount tree. Note: `switch_root` will fail to function if the new root is not the root of a mount. Use bind-mounting as a workaround. (Move `/proc`, `/dev`, `/sys`, and `/run` to the specified filesystem, use this filesystem as the new root and start the specified init process)",
     "tags": [
       "linux",
       "switch_root",
@@ -107900,7 +107900,7 @@
     "title": "iw-dev - Set device to monitor mode (interface must be down first. See also: `ip link`)",
     "content": "sudo iw dev {{wlp}} set type monitor",
     "group": "Linux Ops",
-    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies and reg information: . (Set device to monitor mode (interface must be down first. See also: `ip link`))",
+    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies, and reg information: . (Set device to monitor mode (interface must be down first. See also: `ip link`))",
     "tags": [
       "linux",
       "iw-dev",
@@ -107915,7 +107915,7 @@
     "title": "iw-dev - Set device to managed mode (interface must be down first)",
     "content": "sudo iw dev {{wlp}} set type managed",
     "group": "Linux Ops",
-    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies and reg information: . (Set device to managed mode (interface must be down first))",
+    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies, and reg information: . (Set device to managed mode (interface must be down first))",
     "tags": [
       "linux",
       "iw-dev",
@@ -107930,7 +107930,7 @@
     "title": "iw-dev - Set device Wi-Fi channel (device must first be in monitor mode with the interface up)",
     "content": "sudo iw dev {{wlp}} set channel {{channel_number}}",
     "group": "Linux Ops",
-    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies and reg information: . (Set device Wi-Fi channel (device must first be in monitor mode with the interface up))",
+    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies, and reg information: . (Set device Wi-Fi channel (device must first be in monitor mode with the interface up))",
     "tags": [
       "linux",
       "iw-dev",
@@ -107945,7 +107945,7 @@
     "title": "iw-dev - Set device Wi-Fi frequency in Mhz (device must first be in monitor mode with the interface up)",
     "content": "sudo iw dev {{wlp}} set freq {{freq_in_mhz}}",
     "group": "Linux Ops",
-    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies and reg information: . (Set device Wi-Fi frequency in Mhz (device must first be in monitor mode with the interface up))",
+    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies, and reg information: . (Set device Wi-Fi frequency in Mhz (device must first be in monitor mode with the interface up))",
     "tags": [
       "linux",
       "iw-dev",
@@ -107960,7 +107960,7 @@
     "title": "iw-dev - Show all known station info",
     "content": "iw dev {{wlp}} station dump",
     "group": "Linux Ops",
-    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies and reg information: . (Show all known station info)",
+    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies, and reg information: . (Show all known station info)",
     "tags": [
       "linux",
       "iw-dev",
@@ -107975,7 +107975,7 @@
     "title": "iw-dev - Create a virtual interface in monitor mode with a specific MAC address",
     "content": "sudo iw dev {{wlp}} interface add \"{{vif_name}}\" type monitor addr {{12:34:56:aa:bb:cc}}",
     "group": "Linux Ops",
-    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies and reg information: . (Create a virtual interface in monitor mode with a specific MAC address)",
+    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies, and reg information: . (Create a virtual interface in monitor mode with a specific MAC address)",
     "tags": [
       "linux",
       "iw-dev",
@@ -107990,7 +107990,7 @@
     "title": "iw-dev - Delete virtual interface",
     "content": "sudo iw dev \"{{vif_name}}\" del",
     "group": "Linux Ops",
-    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies and reg information: . (Delete virtual interface)",
+    "description": "iw-dev: Show and manipulate wireless devices. For a list of channels, frequencies, and reg information: . (Delete virtual interface)",
     "tags": [
       "linux",
       "iw-dev",
@@ -110222,10 +110222,10 @@
   {
     "id": "tldr-en-linux-dex-6",
     "type": "command",
-    "title": "dex - Execute a single program (with `Terminal=true` in the desktop file) in the given terminal",
+    "title": "dex - Execute a single program (with `Terminal=true` in the `.desktop` file) in the given terminal",
     "content": "dex --term {{terminal}} {{path/to/file.desktop}}",
     "group": "Linux Ops",
-    "description": "dex: DesktopEntry Execution is a program to generate and execute DesktopEntry files of the Application type. (Execute a single program (with `Terminal=true` in the desktop file) in the given terminal)",
+    "description": "dex: DesktopEntry Execution is a program to generate and execute DesktopEntry files of the Application type. (Execute a single program (with `Terminal=true` in the `.desktop` file) in the given terminal)",
     "tags": [
       "linux",
       "dex",
@@ -111107,10 +111107,10 @@
   {
     "id": "tldr-en-linux-pipewire-2",
     "type": "command",
-    "title": "pipewire - Set the verbosity level (error, warn, info, debug or trace)",
+    "title": "pipewire - Set the verbosity level (error, warn, info, debug, or trace)",
     "content": "pipewire -{{v|vv|...|vvvvv}}",
     "group": "Linux Ops",
-    "description": "pipewire: Start the PipeWire daemon. (Set the verbosity level (error, warn, info, debug or trace))",
+    "description": "pipewire: Start the PipeWire daemon. (Set the verbosity level (error, warn, info, debug, or trace))",
     "tags": [
       "linux",
       "pipewire",
@@ -111350,7 +111350,7 @@
     "title": "quotacheck - Check quotas on all mounted non-NFS filesystems",
     "content": "sudo quotacheck --all",
     "group": "Linux Ops",
-    "description": "quotacheck: Scan a filesystem for disk usage; create, check and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Check quotas on all mounted non-NFS filesystems)",
+    "description": "quotacheck: Scan a filesystem for disk usage; create, check, and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Check quotas on all mounted non-NFS filesystems)",
     "tags": [
       "linux",
       "quotacheck",
@@ -111365,7 +111365,7 @@
     "title": "quotacheck - Force check even if quotas are enabled (this can cause damage or loss to quota files)",
     "content": "sudo quotacheck --force {{mountpoint}}",
     "group": "Linux Ops",
-    "description": "quotacheck: Scan a filesystem for disk usage; create, check and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Force check even if quotas are enabled (this can cause damage or loss to quota files))",
+    "description": "quotacheck: Scan a filesystem for disk usage; create, check, and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Force check even if quotas are enabled (this can cause damage or loss to quota files))",
     "tags": [
       "linux",
       "quotacheck",
@@ -111380,7 +111380,7 @@
     "title": "quotacheck - Check quotas on a given filesystem in debug mode",
     "content": "sudo quotacheck --debug {{mountpoint}}",
     "group": "Linux Ops",
-    "description": "quotacheck: Scan a filesystem for disk usage; create, check and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Check quotas on a given filesystem in debug mode)",
+    "description": "quotacheck: Scan a filesystem for disk usage; create, check, and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Check quotas on a given filesystem in debug mode)",
     "tags": [
       "linux",
       "quotacheck",
@@ -111395,7 +111395,7 @@
     "title": "quotacheck - Check quotas on a given filesystem, displaying the progress",
     "content": "sudo quotacheck --verbose {{mountpoint}}",
     "group": "Linux Ops",
-    "description": "quotacheck: Scan a filesystem for disk usage; create, check and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Check quotas on a given filesystem, displaying the progress)",
+    "description": "quotacheck: Scan a filesystem for disk usage; create, check, and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Check quotas on a given filesystem, displaying the progress)",
     "tags": [
       "linux",
       "quotacheck",
@@ -111410,7 +111410,7 @@
     "title": "quotacheck - Check user quotas",
     "content": "sudo quotacheck --user {{user}} {{mountpoint}}",
     "group": "Linux Ops",
-    "description": "quotacheck: Scan a filesystem for disk usage; create, check and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Check user quotas)",
+    "description": "quotacheck: Scan a filesystem for disk usage; create, check, and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Check user quotas)",
     "tags": [
       "linux",
       "quotacheck",
@@ -111425,7 +111425,7 @@
     "title": "quotacheck - Check group quotas",
     "content": "sudo quotacheck --group {{group}} {{mountpoint}}",
     "group": "Linux Ops",
-    "description": "quotacheck: Scan a filesystem for disk usage; create, check and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Check group quotas)",
+    "description": "quotacheck: Scan a filesystem for disk usage; create, check, and repair quota files. It is best to run quota check with quotas turned off to prevent damage or loss to quota files. (Check group quotas)",
     "tags": [
       "linux",
       "quotacheck",
@@ -111845,7 +111845,7 @@
     "title": "vmstat - Display virtual memory statistics",
     "content": "vmstat",
     "group": "Linux Ops",
-    "description": "vmstat: Report information about processes, memory, paging, block IO, traps, disks and CPU activity. (Display virtual memory statistics)",
+    "description": "vmstat: Report information about processes, memory, paging, block IO, traps, disks, and CPU activity. (Display virtual memory statistics)",
     "tags": [
       "linux",
       "vmstat",
@@ -111860,7 +111860,7 @@
     "title": "vmstat - Display reports every 2 seconds for 5 times",
     "content": "vmstat {{2}} {{5}}",
     "group": "Linux Ops",
-    "description": "vmstat: Report information about processes, memory, paging, block IO, traps, disks and CPU activity. (Display reports every 2 seconds for 5 times)",
+    "description": "vmstat: Report information about processes, memory, paging, block IO, traps, disks, and CPU activity. (Display reports every 2 seconds for 5 times)",
     "tags": [
       "linux",
       "vmstat",
@@ -113750,7 +113750,7 @@
     "title": "virt-xml - List all the suboptions for a specific option",
     "content": "virt-xml --{{option}}=?",
     "group": "Linux Ops",
-    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID or ID for the existing VMs. (List all the suboptions for a specific option)",
+    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID, or ID for the existing VMs. (List all the suboptions for a specific option)",
     "tags": [
       "linux",
       "virt-xml",
@@ -113765,7 +113765,7 @@
     "title": "virt-xml - List all the suboptions for disk, network, and boot",
     "content": "virt-xml --disk=? --network=? --boot=?",
     "group": "Linux Ops",
-    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID or ID for the existing VMs. (List all the suboptions for disk, network, and boot)",
+    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID, or ID for the existing VMs. (List all the suboptions for disk, network, and boot)",
     "tags": [
       "linux",
       "virt-xml",
@@ -113780,7 +113780,7 @@
     "title": "virt-xml - Edit a value for a specific domain",
     "content": "virt-xml {{domain}} --edit --{{option}} {{suboption}}={{new_value}}",
     "group": "Linux Ops",
-    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID or ID for the existing VMs. (Edit a value for a specific domain)",
+    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Edit a value for a specific domain)",
     "tags": [
       "linux",
       "virt-xml",
@@ -113795,7 +113795,7 @@
     "title": "virt-xml - Change the description for a specific domain",
     "content": "virt-xml {{domain}} --edit --metadata description=\"{{new_description}}\"",
     "group": "Linux Ops",
-    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID or ID for the existing VMs. (Change the description for a specific domain)",
+    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Change the description for a specific domain)",
     "tags": [
       "linux",
       "virt-xml",
@@ -113810,7 +113810,7 @@
     "title": "virt-xml - Enable/Disable the boot device menu for a specific domain",
     "content": "virt-xml {{domain}} --edit --boot bootmenu={{on|off}}",
     "group": "Linux Ops",
-    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID or ID for the existing VMs. (Enable/Disable the boot device menu for a specific domain)",
+    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Enable/Disable the boot device menu for a specific domain)",
     "tags": [
       "linux",
       "virt-xml",
@@ -113825,7 +113825,7 @@
     "title": "virt-xml - Attach host USB hub to a running VM (run `lsusb` to see a list of USB devices with their IDs)",
     "content": "virt-xml {{domain}} --update --add-device --hostdev {{bus}}.{{device}}",
     "group": "Linux Ops",
-    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID or ID for the existing VMs. (Attach host USB hub to a running VM (run `lsusb` to see a list of USB devices with their IDs))",
+    "description": "virt-xml: Edit libvirt Domain XML files with explicit command-line options. Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Attach host USB hub to a running VM (run `lsusb` to see a list of USB devices with their IDs))",
     "tags": [
       "linux",
       "virt-xml",

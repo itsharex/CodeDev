@@ -182,10 +182,10 @@
   {
     "id": "tldr-zh-windows-choco-install-2",
     "type": "command",
-    "title": "choco-install - 安装一个特定的 \"nuspec\" 或 \"nupkg\" 文件",
+    "title": "choco-install - 安装一个特定的 `.nuspec` 或 `.nupkg` 文件",
     "content": "choco install {{文件的路径}}",
     "group": "Windows",
-    "description": "choco-install: 使用 Chocolatey 下载一个或多个包。 (安装一个特定的 \"nuspec\" 或 \"nupkg\" 文件)",
+    "description": "choco-install: 使用 Chocolatey 下载一个或多个包。 (安装一个特定的 `.nuspec` 或 `.nupkg` 文件)",
     "tags": [
       "windows",
       "choco-install",
@@ -962,10 +962,10 @@
   {
     "id": "tldr-zh-windows-wsl-4",
     "type": "command",
-    "title": "wsl - 将发行版导出到 .tar 文件",
+    "title": "wsl - 将发行版导出到 `.tar` 文件",
     "content": "wsl --export {{发行版}} {{路径/distro_fs.tar}}",
     "group": "Windows",
-    "description": "wsl: 从命令行管理适用于 Linux 的 Windows 子系统。 (将发行版导出到 .tar 文件)",
+    "description": "wsl: 从命令行管理适用于 Linux 的 Windows 子系统。 (将发行版导出到 `.tar` 文件)",
     "tags": [
       "windows",
       "wsl",
@@ -977,10 +977,10 @@
   {
     "id": "tldr-zh-windows-wsl-5",
     "type": "command",
-    "title": "wsl - 从 .tar 文件导入发行版",
+    "title": "wsl - 从 `.tar` 文件导入发行版",
     "content": "wsl --import {{发行版}} {{路径/安装位置}} {{路径/distro_fs.tar}}",
     "group": "Windows",
-    "description": "wsl: 从命令行管理适用于 Linux 的 Windows 子系统。 (从 .tar 文件导入发行版)",
+    "description": "wsl: 从命令行管理适用于 Linux 的 Windows 子系统。 (从 `.tar` 文件导入发行版)",
     "tags": [
       "windows",
       "wsl",
@@ -2915,7 +2915,7 @@
     "title": "where - 显示匹配的文件的位置",
     "content": "where {{文件模式}}",
     "group": "Windows",
-    "description": "where: 显示与搜索模式匹配的文件的位置。 在默认情况下，搜索是在当前目录和 PATH 环境变量指定的路径中执行的。 (显示匹配的文件的位置)",
+    "description": "where: 显示与搜索模式匹配的文件的位置。 在默认情况下，搜索是在当前目录和 `%PATH%` 环境变量指定的路径中执行的。 (显示匹配的文件的位置)",
     "tags": [
       "windows",
       "where",
@@ -2930,7 +2930,7 @@
     "title": "where - 显示匹配的文件的位置、大小和日期",
     "content": "where /T {{文件模式}}",
     "group": "Windows",
-    "description": "where: 显示与搜索模式匹配的文件的位置。 在默认情况下，搜索是在当前目录和 PATH 环境变量指定的路径中执行的。 (显示匹配的文件的位置、大小和日期)",
+    "description": "where: 显示与搜索模式匹配的文件的位置。 在默认情况下，搜索是在当前目录和 `%PATH%` 环境变量指定的路径中执行的。 (显示匹配的文件的位置、大小和日期)",
     "tags": [
       "windows",
       "where",
@@ -2945,7 +2945,7 @@
     "title": "where - 在指定的路径下递归搜索要匹配的文件",
     "content": "where /R {{目录的路径}} {{文件模式}}",
     "group": "Windows",
-    "description": "where: 显示与搜索模式匹配的文件的位置。 在默认情况下，搜索是在当前目录和 PATH 环境变量指定的路径中执行的。 (在指定的路径下递归搜索要匹配的文件)",
+    "description": "where: 显示与搜索模式匹配的文件的位置。 在默认情况下，搜索是在当前目录和 `%PATH%` 环境变量指定的路径中执行的。 (在指定的路径下递归搜索要匹配的文件)",
     "tags": [
       "windows",
       "where",
@@ -2960,7 +2960,7 @@
     "title": "where - 只返回退出代码，不显示匹配文件列表",
     "content": "where /Q {{文件模式}}",
     "group": "Windows",
-    "description": "where: 显示与搜索模式匹配的文件的位置。 在默认情况下，搜索是在当前目录和 PATH 环境变量指定的路径中执行的。 (只返回退出代码，不显示匹配文件列表)",
+    "description": "where: 显示与搜索模式匹配的文件的位置。 在默认情况下，搜索是在当前目录和 `%PATH%` 环境变量指定的路径中执行的。 (只返回退出代码，不显示匹配文件列表)",
     "tags": [
       "windows",
       "where",
@@ -4067,10 +4067,10 @@
   {
     "id": "tldr-zh-windows-choco-pack-0",
     "type": "command",
-    "title": "choco-pack - 将 nuspec 打包到已编译的 nupkg",
+    "title": "choco-pack - 将 `.nuspec` 打包到已编译的 `.nupkg`",
     "content": "choco pack {{nuspec 的路径}}",
     "group": "Windows",
-    "description": "choco-pack: 将 nuspec 打包到已编译的 nupkg。 (将 nuspec 打包到已编译的 nupkg)",
+    "description": "choco-pack: 将 `.nuspec` 打包到已编译的 `.nupkg`。 (将 `.nuspec` 打包到已编译的 `.nupkg`)",
     "tags": [
       "windows",
       "choco-pack",
@@ -4082,10 +4082,10 @@
   {
     "id": "tldr-zh-windows-choco-pack-1",
     "type": "command",
-    "title": "choco-pack - 将 nuspec 打包到已编译的 nupkg, 并指定生成的版本",
+    "title": "choco-pack - 将 `.nuspec` 打包到已编译的 `.nupkg`, 并指定生成的版本",
     "content": "choco pack {{nuspec 的路径}} --version {{版本号}}",
     "group": "Windows",
-    "description": "choco-pack: 将 nuspec 打包到已编译的 nupkg。 (将 nuspec 打包到已编译的 nupkg, 并指定生成的版本)",
+    "description": "choco-pack: 将 `.nuspec` 打包到已编译的 `.nupkg`。 (将 `.nuspec` 打包到已编译的 `.nupkg`, 并指定生成的版本)",
     "tags": [
       "windows",
       "choco-pack",
@@ -4097,10 +4097,10 @@
   {
     "id": "tldr-zh-windows-choco-pack-2",
     "type": "command",
-    "title": "choco-pack - 将 nuspec 打包到已编译的 nupkg, 并输出到指定的目录",
+    "title": "choco-pack - 将 `.nuspec` 打包到已编译的 `.nupkg`, 并输出到指定的目录",
     "content": "choco pack {{nuspec 的路径}} --output-directory {{输出目录的路径}}",
     "group": "Windows",
-    "description": "choco-pack: 将 nuspec 打包到已编译的 nupkg。 (将 nuspec 打包到已编译的 nupkg, 并输出到指定的目录)",
+    "description": "choco-pack: 将 `.nuspec` 打包到已编译的 `.nupkg`。 (将 `.nuspec` 打包到已编译的 `.nupkg`, 并输出到指定的目录)",
     "tags": [
       "windows",
       "choco-pack",
@@ -4638,7 +4638,7 @@
     "id": "tldr-zh-windows-findstr-2",
     "type": "command",
     "title": "findstr - 查找时不区分大小写",
-    "content": "findstr /i \"{{查询语句}}\" *\"",
+    "content": "findstr /i \"{{查询语句}}\" *",
     "group": "Windows",
     "description": "findstr: 在一个或多个文件中查找指定的文本。 (查找时不区分大小写)",
     "tags": [

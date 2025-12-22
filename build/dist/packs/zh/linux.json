@@ -3542,10 +3542,10 @@
   {
     "id": "tldr-zh-linux-apt-clone-1",
     "type": "command",
-    "title": "apt-clone - 创建克隆文件（tar.gz）用于备份",
+    "title": "apt-clone - 创建克隆文件（`.tar.gz`）用于备份",
     "content": "apt-clone clone --destination {{路径/到/备份文件.tar.gz}}",
     "group": "Linux 运维",
-    "description": "apt-clone: 克隆/备份/恢复基于 Debian 系统的软件包状态。 (创建克隆文件（tar.gz）用于备份)",
+    "description": "apt-clone: 克隆/备份/恢复基于 Debian 系统的软件包状态。 (创建克隆文件（`.tar.gz`）用于备份)",
     "tags": [
       "linux",
       "apt-clone",
@@ -4727,70 +4727,10 @@
   {
     "id": "tldr-zh-linux-dir-0",
     "type": "command",
-    "title": "dir - 列出所有文件，包括隐藏文件",
-    "content": "dir {{[-a|--all]}}",
+    "title": "dir - 查看原命令的文档",
+    "content": "tldr ls",
     "group": "Linux 运维",
-    "description": "dir: 使用每行一个文件的格式列出目录内容，特殊字符使用反斜杠转义序列表示。 功能等同于 `ls -C --escape`。 (列出所有文件，包括隐藏文件)",
-    "tags": [
-      "linux",
-      "dir",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-linux-dir-1",
-    "type": "command",
-    "title": "dir - 列出文件并显示其作者（需要 `-l` 参数）",
-    "content": "dir -l --author",
-    "group": "Linux 运维",
-    "description": "dir: 使用每行一个文件的格式列出目录内容，特殊字符使用反斜杠转义序列表示。 功能等同于 `ls -C --escape`。 (列出文件并显示其作者（需要 `-l` 参数）)",
-    "tags": [
-      "linux",
-      "dir",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-linux-dir-2",
-    "type": "command",
-    "title": "dir - 列出文件，排除匹配指定通配符模式的文件",
-    "content": "dir --hide {{模式}}",
-    "group": "Linux 运维",
-    "description": "dir: 使用每行一个文件的格式列出目录内容，特殊字符使用反斜杠转义序列表示。 功能等同于 `ls -C --escape`。 (列出文件，排除匹配指定通配符模式的文件)",
-    "tags": [
-      "linux",
-      "dir",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-linux-dir-3",
-    "type": "command",
-    "title": "dir - 递归列出子目录",
-    "content": "dir {{[-R|--recursive]}}",
-    "group": "Linux 运维",
-    "description": "dir: 使用每行一个文件的格式列出目录内容，特殊字符使用反斜杠转义序列表示。 功能等同于 `ls -C --escape`。 (递归列出子目录)",
-    "tags": [
-      "linux",
-      "dir",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-linux-dir-4",
-    "type": "command",
-    "title": "dir - 显示帮助信息",
-    "content": "dir --help",
-    "group": "Linux 运维",
-    "description": "dir: 使用每行一个文件的格式列出目录内容，特殊字符使用反斜杠转义序列表示。 功能等同于 `ls -C --escape`。 (显示帮助信息)",
+    "description": "dir: 此命令为 `ls -C --escape` 的别名。 (查看原命令的文档)",
     "tags": [
       "linux",
       "dir",
@@ -9755,7 +9695,7 @@
     "title": "dnf - 更新已安装的包到最新可用版本",
     "content": "sudo dnf upgrade",
     "group": "Linux 运维",
-    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 . (更新已安装的包到最新可用版本)",
+    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 。 (更新已安装的包到最新可用版本)",
     "tags": [
       "linux",
       "dnf",
@@ -9770,7 +9710,7 @@
     "title": "dnf - 通过关键词搜索包",
     "content": "dnf search {{关键词1 关键词2 ...}}",
     "group": "Linux 运维",
-    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 . (通过关键词搜索包)",
+    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 。 (通过关键词搜索包)",
     "tags": [
       "linux",
       "dnf",
@@ -9785,7 +9725,7 @@
     "title": "dnf - 显示软件包的描述",
     "content": "dnf info {{包}}",
     "group": "Linux 运维",
-    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 . (显示软件包的描述)",
+    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 。 (显示软件包的描述)",
     "tags": [
       "linux",
       "dnf",
@@ -9800,7 +9740,7 @@
     "title": "dnf - 安装软件包（使用 `-y` 自动确认所有提示）",
     "content": "sudo dnf install {{包1 包2 ...}}",
     "group": "Linux 运维",
-    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 . (安装软件包（使用 `-y` 自动确认所有提示）)",
+    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 。 (安装软件包（使用 `-y` 自动确认所有提示）)",
     "tags": [
       "linux",
       "dnf",
@@ -9815,7 +9755,7 @@
     "title": "dnf - 删除软件包",
     "content": "sudo dnf remove {{包1 包2 ...}}",
     "group": "Linux 运维",
-    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 . (删除软件包)",
+    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 。 (删除软件包)",
     "tags": [
       "linux",
       "dnf",
@@ -9830,7 +9770,7 @@
     "title": "dnf - 列出已安装的包",
     "content": "dnf list --installed",
     "group": "Linux 运维",
-    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 . (列出已安装的包)",
+    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 。 (列出已安装的包)",
     "tags": [
       "linux",
       "dnf",
@@ -9845,7 +9785,7 @@
     "title": "dnf - 查找哪些包提供给定命令",
     "content": "dnf provides {{命令}}",
     "group": "Linux 运维",
-    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 . (查找哪些包提供给定命令)",
+    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 。 (查找哪些包提供给定命令)",
     "tags": [
       "linux",
       "dnf",
@@ -9860,7 +9800,7 @@
     "title": "dnf - 查看所有过去的操作",
     "content": "dnf history",
     "group": "Linux 运维",
-    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 . (查看所有过去的操作)",
+    "description": "dnf: RHEL, Fedora 和 CentOS 的软件包管理工具（yum 的替代品）。 对于其他包管理器中的等效命令，请见 。 (查看所有过去的操作)",
     "tags": [
       "linux",
       "dnf",

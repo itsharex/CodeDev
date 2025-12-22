@@ -165,6 +165,21 @@
     "source": "official"
   },
   {
+    "id": "tldr-zh-common-docker-rename-0",
+    "type": "command",
+    "title": "docker-rename - 查看原命令的文档",
+    "content": "tldr docker container rename",
+    "group": "通用工具 (Common)",
+    "description": "docker-rename: 此命令为 `docker container rename` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-rename",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-zh-common-yolo-0",
     "type": "command",
     "title": "yolo - 在当前工作目录中创建默认配置的副本",
@@ -242,10 +257,55 @@
   {
     "id": "tldr-zh-common-docker-container-rm-0",
     "type": "command",
-    "title": "docker-container-rm - 查看原命令的文档",
-    "content": "tldr docker rm",
+    "title": "docker-container-rm - 移除容器",
+    "content": "docker rm {{容器1 容器2 ...}}",
     "group": "通用工具 (Common)",
-    "description": "docker-container-rm: 此命令为 `docker rm` 的别名。 (查看原命令的文档)",
+    "description": "docker-container-rm: 移除容器。 (移除容器)",
+    "tags": [
+      "common",
+      "docker-container-rm",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-rm-1",
+    "type": "command",
+    "title": "docker-container-rm - 强制移除容器",
+    "content": "docker rm {{[-f|--force]}} {{容器1 容器2 ...}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-rm: 移除容器。 (强制移除容器)",
+    "tags": [
+      "common",
+      "docker-container-rm",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-rm-2",
+    "type": "command",
+    "title": "docker-container-rm - 移除容器以及其文件卷",
+    "content": "docker rm {{[-v|--volumes]}} {{容器}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-rm: 移除容器。 (移除容器以及其文件卷)",
+    "tags": [
+      "common",
+      "docker-container-rm",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-rm-3",
+    "type": "command",
+    "title": "docker-container-rm - 显示帮助信息",
+    "content": "docker rm {{[-h|--help]}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-rm: 移除容器。 (显示帮助信息)",
     "tags": [
       "common",
       "docker-container-rm",
@@ -489,6 +549,21 @@
     "tags": [
       "common",
       "go-bug",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-start-0",
+    "type": "command",
+    "title": "docker-start - 查看原命令的文档",
+    "content": "tldr docker container start",
+    "group": "通用工具 (Common)",
+    "description": "docker-start: 此命令为 `docker container start` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-start",
       "tldr",
       "zh"
     ],
@@ -819,6 +894,81 @@
     "tags": [
       "common",
       "git-coauthor",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-logs-0",
+    "type": "command",
+    "title": "docker-container-logs - 显示一个容器的日志",
+    "content": "docker logs {{容器_名称}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-logs: 显示容器的日志。 (显示一个容器的日志)",
+    "tags": [
+      "common",
+      "docker-container-logs",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-logs-1",
+    "type": "command",
+    "title": "docker-container-logs - 显示历史日志，然后跟踪容器日志",
+    "content": "docker logs {{[-f|--follow]}} {{容器_名称}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-logs: 显示容器的日志。 (显示历史日志，然后跟踪容器日志)",
+    "tags": [
+      "common",
+      "docker-container-logs",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-logs-2",
+    "type": "command",
+    "title": "docker-container-logs - 显示最后 5 行日志",
+    "content": "docker logs {{容器_名称}} {{[-n|--tail]}} {{5}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-logs: 显示容器的日志。 (显示最后 5 行日志)",
+    "tags": [
+      "common",
+      "docker-container-logs",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-logs-3",
+    "type": "command",
+    "title": "docker-container-logs - 显示带有时间戳的日志",
+    "content": "docker logs {{[-t|--timestamps]}} {{容器_名称}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-logs: 显示容器的日志。 (显示带有时间戳的日志)",
+    "tags": [
+      "common",
+      "docker-container-logs",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-logs-4",
+    "type": "command",
+    "title": "docker-container-logs - 展示容器运行过程中，自某个时间点以来的日志（也就是，23m、10s、2013-01-02T13:23:37）",
+    "content": "docker logs {{容器_名称}} --until {{时间点}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-logs: 显示容器的日志。 (展示容器运行过程中，自某个时间点以来的日志（也就是，23m、10s、2013-01-02T13:23:37）)",
+    "tags": [
+      "common",
+      "docker-container-logs",
       "tldr",
       "zh"
     ],
@@ -1995,21 +2145,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-common-docker-rmi-0",
-    "type": "command",
-    "title": "docker-rmi - 查看原命令的文档",
-    "content": "tldr docker image rm",
-    "group": "通用工具 (Common)",
-    "description": "docker-rmi: 此命令为 `docker image rm` 的别名。 (查看原命令的文档)",
-    "tags": [
-      "common",
-      "docker-rmi",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-common-joe-0",
     "type": "command",
     "title": "joe - 在 JOE 中打开一个新文件",
@@ -2484,6 +2619,96 @@
     "tags": [
       "common",
       "bun-list",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-exec-0",
+    "type": "command",
+    "title": "docker-container-exec - 在正在运行的容器内，启动交互式 shell 会话",
+    "content": "docker exec {{[-it|--interactive --tty]}} {{容器_名称}} {{/bin/bash}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (在正在运行的容器内，启动交互式 shell 会话)",
+    "tags": [
+      "common",
+      "docker-container-exec",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-exec-1",
+    "type": "command",
+    "title": "docker-container-exec - 在一个运行的容器内部，后台（分离）执行一个命令",
+    "content": "docker exec {{[-d|--detach]}} {{容器_名称}} {{命令}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (在一个运行的容器内部，后台（分离）执行一个命令)",
+    "tags": [
+      "common",
+      "docker-container-exec",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-exec-2",
+    "type": "command",
+    "title": "docker-container-exec - 指定要运行命令的运行目录",
+    "content": "docker exec {{[-it|--interactive --tty]}} {{[-w|--workdir]}} {{路径/到/文件夹}} {{容器_名称}} {{命令}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (指定要运行命令的运行目录)",
+    "tags": [
+      "common",
+      "docker-container-exec",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-exec-3",
+    "type": "command",
+    "title": "docker-container-exec - 在现存容器内部，后台执行一个命令，但是保持 `stdin` 开启",
+    "content": "docker exec {{[-i|--interactive]}} {{[-d|--detach]}} {{容器_名称}} {{命令}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (在现存容器内部，后台执行一个命令，但是保持 `stdin` 开启)",
+    "tags": [
+      "common",
+      "docker-container-exec",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-exec-4",
+    "type": "command",
+    "title": "docker-container-exec - 在运行中容器的 Bash 内，设置环境变量",
+    "content": "docker exec {{[-it|--interactive --tty]}} {{[-e|--env]}} {{变量_名称}}={{值}} {{容器_名称}} {{/bin/bash}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (在运行中容器的 Bash 内，设置环境变量)",
+    "tags": [
+      "common",
+      "docker-container-exec",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-exec-5",
+    "type": "command",
+    "title": "docker-container-exec - 作为特定用户执行命令",
+    "content": "docker exec {{[-u|--user]}} {{用户名}} {{容器_名称}} {{命令}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (作为特定用户执行命令)",
+    "tags": [
+      "common",
+      "docker-container-exec",
       "tldr",
       "zh"
     ],
@@ -3744,6 +3969,21 @@
     "tags": [
       "common",
       "bpytop",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-top-0",
+    "type": "command",
+    "title": "docker-top - 查看原命令的文档",
+    "content": "tldr docker container top",
+    "group": "通用工具 (Common)",
+    "description": "docker-top: 此命令为 `docker container top` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-top",
       "tldr",
       "zh"
     ],
@@ -5495,7 +5735,7 @@
     "title": "git-alias - 列出所有别名",
     "content": "git alias",
     "group": "通用工具 (Common)",
-    "description": "git-alias: 为 Git 命令创建快捷方式。 属于 `git-extras`的一部分 (列出所有别名)",
+    "description": "git-alias: 为 Git 命令创建快捷方式。 属于 `git-extras`的一部分。 (列出所有别名)",
     "tags": [
       "common",
       "git-alias",
@@ -5510,7 +5750,7 @@
     "title": "git-alias - 为命令创建一个别名",
     "content": "git alias \"{{别名}}\" \"{{命令}}\"",
     "group": "通用工具 (Common)",
-    "description": "git-alias: 为 Git 命令创建快捷方式。 属于 `git-extras`的一部分 (为命令创建一个别名)",
+    "description": "git-alias: 为 Git 命令创建快捷方式。 属于 `git-extras`的一部分。 (为命令创建一个别名)",
     "tags": [
       "common",
       "git-alias",
@@ -5525,7 +5765,7 @@
     "title": "git-alias - 搜索一个现有的别名",
     "content": "git alias ^{{别名}}",
     "group": "通用工具 (Common)",
-    "description": "git-alias: 为 Git 命令创建快捷方式。 属于 `git-extras`的一部分 (搜索一个现有的别名)",
+    "description": "git-alias: 为 Git 命令创建快捷方式。 属于 `git-extras`的一部分。 (搜索一个现有的别名)",
     "tags": [
       "common",
       "git-alias",
@@ -7952,10 +8192,10 @@
   {
     "id": "tldr-zh-common-clear-2",
     "type": "command",
-    "title": "clear - 指明要清空的终端类型（默认为环境变量 `TERM` 的值）",
+    "title": "clear - 指明要清空的终端类型（默认为环境变量 `$TERM` 的值）",
     "content": "clear -T {{type_of_terminal}}",
     "group": "通用工具 (Common)",
-    "description": "clear: 清空终端的屏幕。 (指明要清空的终端类型（默认为环境变量 `TERM` 的值）)",
+    "description": "clear: 清空终端的屏幕。 (指明要清空的终端类型（默认为环境变量 `$TERM` 的值）)",
     "tags": [
       "common",
       "clear",
@@ -8087,10 +8327,10 @@
   {
     "id": "tldr-zh-common-man-1",
     "type": "command",
-    "title": "man - 在浏览器中打开一条命令的使用手册分页 (`BROWSER` 环境变量可以替换 `=browser_name`)",
+    "title": "man - 在浏览器中打开一条命令的使用手册分页 (`$BROWSER` 环境变量可以替换 `=browser_name`)",
     "content": "man {{[-Hbrowser_name|--html=browser_name]}} {{command}}",
     "group": "通用工具 (Common)",
-    "description": "man: 展示手册分页 (manual page)。 (在浏览器中打开一条命令的使用手册分页 (`BROWSER` 环境变量可以替换 `=browser_name`))",
+    "description": "man: 展示手册分页 (manual page)。 (在浏览器中打开一条命令的使用手册分页 (`$BROWSER` 环境变量可以替换 `=browser_name`))",
     "tags": [
       "common",
       "man",
@@ -9245,7 +9485,7 @@
     "title": "rustup-update - 更新所有已安装的工具链和 `rustup`",
     "content": "rustup update",
     "group": "通用工具 (Common)",
-    "description": "rustup-update: 更新 Rust 工具链以及 `rustup` 本身（如果不是通过包管理器安装的） (更新所有已安装的工具链和 `rustup`)",
+    "description": "rustup-update: 更新 Rust 工具链以及 `rustup` 本身（如果不是通过包管理器安装的）。 (更新所有已安装的工具链和 `rustup`)",
     "tags": [
       "common",
       "rustup-update",
@@ -9260,7 +9500,7 @@
     "title": "rustup-update - 安装或更新指定工具链（有关工具链的更多信息，请参见 `rustup help toolchain`）",
     "content": "rustup update {{工具链}}",
     "group": "通用工具 (Common)",
-    "description": "rustup-update: 更新 Rust 工具链以及 `rustup` 本身（如果不是通过包管理器安装的） (安装或更新指定工具链（有关工具链的更多信息，请参见 `rustup help toolchain`）)",
+    "description": "rustup-update: 更新 Rust 工具链以及 `rustup` 本身（如果不是通过包管理器安装的）。 (安装或更新指定工具链（有关工具链的更多信息，请参见 `rustup help toolchain`）)",
     "tags": [
       "common",
       "rustup-update",
@@ -9474,6 +9714,21 @@
     "tags": [
       "common",
       "kite",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-tag-0",
+    "type": "command",
+    "title": "docker-tag - 查看原命令的文档",
+    "content": "tldr docker image tag",
+    "group": "通用工具 (Common)",
+    "description": "docker-tag: 此命令为 `docker image tag` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-tag",
       "tldr",
       "zh"
     ],
@@ -10292,10 +10547,10 @@
   {
     "id": "tldr-zh-common-pip-install-3",
     "type": "command",
-    "title": "pip-install - 通过 URL 或源码存档文件安装（如 *.tar.gz 或 *.whl）",
+    "title": "pip-install - 通过 URL 或源码存档文件安装（如 `.tar.gz` 或 `.whl`）",
     "content": "pip install {{[-f|--find-links]}} {{url|存档文件}}",
     "group": "通用工具 (Common)",
-    "description": "pip-install: 用于安装 Python 包。 (通过 URL 或源码存档文件安装（如 *.tar.gz 或 *.whl）)",
+    "description": "pip-install: 用于安装 Python 包。 (通过 URL 或源码存档文件安装（如 `.tar.gz` 或 `.whl`）)",
     "tags": [
       "common",
       "pip-install",
@@ -11490,6 +11745,21 @@
     "source": "official"
   },
   {
+    "id": "tldr-zh-common-docker-load-0",
+    "type": "command",
+    "title": "docker-load - 查看原命令的文档",
+    "content": "tldr docker image load",
+    "group": "通用工具 (Common)",
+    "description": "docker-load: 此命令为 `docker image load` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-load",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-zh-common-docker-images-0",
     "type": "command",
     "title": "docker-images - 查看原命令的文档",
@@ -11507,10 +11777,10 @@
   {
     "id": "tldr-zh-common-yes-0",
     "type": "command",
-    "title": "yes - 重复输出“{{消息}}”",
+    "title": "yes - 重复输出“消息”",
     "content": "yes {{消息}}",
     "group": "通用工具 (Common)",
-    "description": "yes: 重复输出某些内容。 此命令通常用于对安装命令（如 `apt-get`）每个提示回答是。 (重复输出“{{消息}}”)",
+    "description": "yes: 重复输出某些内容。 此命令通常用于对安装命令（如 `apt-get`）每个提示回答是。 (重复输出“消息”)",
     "tags": [
       "common",
       "yes",
@@ -11859,6 +12129,21 @@
     "tags": [
       "common",
       "zdb",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-podman-image-load-0",
+    "type": "command",
+    "title": "podman-image-load - 查看原命令的文档",
+    "content": "tldr podman load",
+    "group": "通用工具 (Common)",
+    "description": "podman-image-load: 此命令为 `podman load` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "podman-image-load",
       "tldr",
       "zh"
     ],
@@ -17987,10 +18272,10 @@
   {
     "id": "tldr-zh-common-export-1",
     "type": "command",
-    "title": "export - 向环境变量 `PATH` 追加一个路径名",
+    "title": "export - 向环境变量 `$PATH` 追加一个路径名",
     "content": "export PATH=$PATH:{{追加的 path 路径}}",
     "group": "通用工具 (Common)",
-    "description": "export: 命令为当前 shell 中的子进程进行环境变量设置。 (向环境变量 `PATH` 追加一个路径名)",
+    "description": "export: 命令为当前 shell 中的子进程进行环境变量设置。 (向环境变量 `$PATH` 追加一个路径名)",
     "tags": [
       "common",
       "export",
@@ -18405,6 +18690,21 @@
     "source": "official"
   },
   {
+    "id": "tldr-zh-common-docker-stats-0",
+    "type": "command",
+    "title": "docker-stats - 查看原命令的文档",
+    "content": "tldr docker container stats",
+    "group": "通用工具 (Common)",
+    "description": "docker-stats: 此命令为 `docker container stats` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-stats",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-zh-common-hashcat-0",
     "type": "command",
     "title": "hashcat - 使用默认的 hashcat 掩码执行暴力破解攻击（模式 3）",
@@ -18602,10 +18902,10 @@
   {
     "id": "tldr-zh-common-ugrep-5",
     "type": "command",
-    "title": "ugrep - 也递归搜索压缩文件、Zip 和 tar 存档",
+    "title": "ugrep - 也递归搜索压缩文件、Zip 和 `.tar` 存档",
     "content": "ugrep --decompress \"{{search_pattern}}\"",
     "group": "通用工具 (Common)",
-    "description": "ugrep: 超快速搜索工具，带有查询 TUI。 (也递归搜索压缩文件、Zip 和 tar 存档)",
+    "description": "ugrep: 超快速搜索工具，带有查询 TUI。 (也递归搜索压缩文件、Zip 和 `.tar` 存档)",
     "tags": [
       "common",
       "ugrep",
@@ -18725,7 +19025,7 @@
     "title": "updog - 为当前目录启动 HTTP 服务器",
     "content": "updog",
     "group": "通用工具 (Common)",
-    "description": "updog: Python {{SimpleHTTPServer}} 的替代方案。 它允许通过 HTTP/S 上传和下载，可以设置临时 SSL 证书，并使用 HTTP 基本认证。 (为当前目录启动 HTTP 服务器)",
+    "description": "updog: Python SimpleHTTPServer 的替代方案。 它允许通过 HTTP/S 上传和下载，可以设置临时 SSL 证书，并使用 HTTP 基本认证。 (为当前目录启动 HTTP 服务器)",
     "tags": [
       "common",
       "updog",
@@ -18740,7 +19040,7 @@
     "title": "updog - 为指定目录启动 HTTP 服务器",
     "content": "updog --directory {{/路径/到/目录}}",
     "group": "通用工具 (Common)",
-    "description": "updog: Python {{SimpleHTTPServer}} 的替代方案。 它允许通过 HTTP/S 上传和下载，可以设置临时 SSL 证书，并使用 HTTP 基本认证。 (为指定目录启动 HTTP 服务器)",
+    "description": "updog: Python SimpleHTTPServer 的替代方案。 它允许通过 HTTP/S 上传和下载，可以设置临时 SSL 证书，并使用 HTTP 基本认证。 (为指定目录启动 HTTP 服务器)",
     "tags": [
       "common",
       "updog",
@@ -18755,7 +19055,7 @@
     "title": "updog - 在指定端口上启动 HTTP 服务器",
     "content": "updog --port {{端口}}",
     "group": "通用工具 (Common)",
-    "description": "updog: Python {{SimpleHTTPServer}} 的替代方案。 它允许通过 HTTP/S 上传和下载，可以设置临时 SSL 证书，并使用 HTTP 基本认证。 (在指定端口上启动 HTTP 服务器)",
+    "description": "updog: Python SimpleHTTPServer 的替代方案。 它允许通过 HTTP/S 上传和下载，可以设置临时 SSL 证书，并使用 HTTP 基本认证。 (在指定端口上启动 HTTP 服务器)",
     "tags": [
       "common",
       "updog",
@@ -18770,7 +19070,7 @@
     "title": "updog - 使用密码启动 HTTP 服务器（要登录，请将用户名留空，并在密码字段中输入密码）",
     "content": "updog --password {{密码}}",
     "group": "通用工具 (Common)",
-    "description": "updog: Python {{SimpleHTTPServer}} 的替代方案。 它允许通过 HTTP/S 上传和下载，可以设置临时 SSL 证书，并使用 HTTP 基本认证。 (使用密码启动 HTTP 服务器（要登录，请将用户名留空，并在密码字段中输入密码）)",
+    "description": "updog: Python SimpleHTTPServer 的替代方案。 它允许通过 HTTP/S 上传和下载，可以设置临时 SSL 证书，并使用 HTTP 基本认证。 (使用密码启动 HTTP 服务器（要登录，请将用户名留空，并在密码字段中输入密码）)",
     "tags": [
       "common",
       "updog",
@@ -18785,7 +19085,7 @@
     "title": "updog - 通过 SSL 启用传输加密",
     "content": "updog --ssl",
     "group": "通用工具 (Common)",
-    "description": "updog: Python {{SimpleHTTPServer}} 的替代方案。 它允许通过 HTTP/S 上传和下载，可以设置临时 SSL 证书，并使用 HTTP 基本认证。 (通过 SSL 启用传输加密)",
+    "description": "updog: Python SimpleHTTPServer 的替代方案。 它允许通过 HTTP/S 上传和下载，可以设置临时 SSL 证书，并使用 HTTP 基本认证。 (通过 SSL 启用传输加密)",
     "tags": [
       "common",
       "updog",
@@ -21125,7 +21425,7 @@
     "title": "git - 执行 git 的子命令",
     "content": "git {{子命令}}",
     "group": "通用工具 (Common)",
-    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档，可以通过 `tldr git {{子命令}}` 的形式查阅。 (执行 git 的子命令)",
+    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档。 (执行 git 的子命令)",
     "tags": [
       "common",
       "git",
@@ -21140,7 +21440,7 @@
     "title": "git - 在自定义的 git 仓库根路径下执行子命令",
     "content": "git -C {{仓库地址}} {{子命令}}",
     "group": "通用工具 (Common)",
-    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档，可以通过 `tldr git {{子命令}}` 的形式查阅。 (在自定义的 git 仓库根路径下执行子命令)",
+    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档。 (在自定义的 git 仓库根路径下执行子命令)",
     "tags": [
       "common",
       "git",
@@ -21155,7 +21455,7 @@
     "title": "git - 在给定参数条件下，执行 git 的子命令",
     "content": "git -c '{{配置项}}={{值}}' {{子命令}}",
     "group": "通用工具 (Common)",
-    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档，可以通过 `tldr git {{子命令}}` 的形式查阅。 (在给定参数条件下，执行 git 的子命令)",
+    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档。 (在给定参数条件下，执行 git 的子命令)",
     "tags": [
       "common",
       "git",
@@ -21170,7 +21470,7 @@
     "title": "git - 显示帮助文档",
     "content": "git --help",
     "group": "通用工具 (Common)",
-    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档，可以通过 `tldr git {{子命令}}` 的形式查阅。 (显示帮助文档)",
+    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档。 (显示帮助文档)",
     "tags": [
       "common",
       "git",
@@ -21185,7 +21485,7 @@
     "title": "git - 显示 git 子命令的详细帮助文档（如 `clone`, `add`, `push`, `log` 等子命令）",
     "content": "git help {{子命令}}",
     "group": "通用工具 (Common)",
-    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档，可以通过 `tldr git {{子命令}}` 的形式查阅。 (显示 git 子命令的详细帮助文档（如 `clone`, `add`, `push`, `log` 等子命令）)",
+    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档。 (显示 git 子命令的详细帮助文档（如 `clone`, `add`, `push`, `log` 等子命令）)",
     "tags": [
       "common",
       "git",
@@ -21200,7 +21500,7 @@
     "title": "git - 检查 git 的版本号",
     "content": "git --version",
     "group": "通用工具 (Common)",
-    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档，可以通过 `tldr git {{子命令}}` 的形式查阅。 (检查 git 的版本号)",
+    "description": "git: 分布式版本控制系统。 类似如 `commit`、`add`、`branch`、`checkout`、`push` 等子命令都有自己的使用文档。 (检查 git 的版本号)",
     "tags": [
       "common",
       "git",
@@ -21335,7 +21635,7 @@
     "title": "where - 报告所有已知命令入口",
     "content": "where {{command}}",
     "group": "通用工具 (Common)",
-    "description": "where: 报告所有已知的命令入口。 它可以是一个在`PATH`中的可执行文件，一个别名，或者一个 shell 內建命令。 (报告所有已知命令入口)",
+    "description": "where: 报告所有已知的命令入口。 它可以是一个在`$PATH`中的可执行文件，一个别名，或者一个 shell 內建命令。 (报告所有已知命令入口)",
     "tags": [
       "common",
       "where",
@@ -23987,10 +24287,10 @@
   {
     "id": "tldr-zh-common-jarsigner-0",
     "type": "command",
-    "title": "jarsigner - 签名一个 `JAR` 文件",
+    "title": "jarsigner - 签名一个 `.jar` 文件",
     "content": "jarsigner {{path/to/file.jar}} {{keystore_alias}}",
     "group": "通用工具 (Common)",
-    "description": "jarsigner: 签名并验证 Java 存档（JAR）文件。 (签名一个 `JAR` 文件)",
+    "description": "jarsigner: 签名并验证 Java 存档（`.jar`）文件。 (签名一个 `.jar` 文件)",
     "tags": [
       "common",
       "jarsigner",
@@ -24002,10 +24302,10 @@
   {
     "id": "tldr-zh-common-jarsigner-1",
     "type": "command",
-    "title": "jarsigner - 使用特定算法对 `JAR` 文件进行签名",
+    "title": "jarsigner - 使用特定算法对 `.jar` 文件进行签名",
     "content": "jarsigner -sigalg {{algorithm}} {{path/to/file.jar}} {{keystore_alias}}",
     "group": "通用工具 (Common)",
-    "description": "jarsigner: 签名并验证 Java 存档（JAR）文件。 (使用特定算法对 `JAR` 文件进行签名)",
+    "description": "jarsigner: 签名并验证 Java 存档（`.jar`）文件。 (使用特定算法对 `.jar` 文件进行签名)",
     "tags": [
       "common",
       "jarsigner",
@@ -24017,10 +24317,10 @@
   {
     "id": "tldr-zh-common-jarsigner-2",
     "type": "command",
-    "title": "jarsigner - 验证 `JAR` 文件的签名",
+    "title": "jarsigner - 验证 `.jar` 文件的签名",
     "content": "jarsigner -verify {{path/to/file.jar}}",
     "group": "通用工具 (Common)",
-    "description": "jarsigner: 签名并验证 Java 存档（JAR）文件。 (验证 `JAR` 文件的签名)",
+    "description": "jarsigner: 签名并验证 Java 存档（`.jar`）文件。 (验证 `.jar` 文件的签名)",
     "tags": [
       "common",
       "jarsigner",
@@ -26312,115 +26612,10 @@
   {
     "id": "tldr-zh-common-docker-run-0",
     "type": "command",
-    "title": "docker-run - 使用打上标签的 Docker 镜像的新容器中执行命令",
-    "content": "docker run {{镜像:标签}} {{命令}}",
+    "title": "docker-run - 查看原命令的文档",
+    "content": "tldr docker container run",
     "group": "通用工具 (Common)",
-    "description": "docker-run: 创建一个新的容器并运行命令。 (使用打上标签的 Docker 镜像的新容器中执行命令)",
-    "tags": [
-      "common",
-      "docker-run",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-run-1",
-    "type": "command",
-    "title": "docker-run - 在后台运行新容器中的命令，并输出其容器ID",
-    "content": "docker run {{[-d|--detach]}} {{镜像}} {{命令}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-run: 创建一个新的容器并运行命令。 (在后台运行新容器中的命令，并输出其容器ID)",
-    "tags": [
-      "common",
-      "docker-run",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-run-2",
-    "type": "command",
-    "title": "docker-run - 以交互模式和伪终端启动一个容器，并执行指定的命令",
-    "content": "docker run --rm {{[-it|--interactive --tty]}} {{镜像}} {{命令}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-run: 创建一个新的容器并运行命令。 (以交互模式和伪终端启动一个容器，并执行指定的命令)",
-    "tags": [
-      "common",
-      "docker-run",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-run-3",
-    "type": "command",
-    "title": "docker-run - 在新容器中传入环境变量并运行指定命令",
-    "content": "docker run {{[-e|--env]}} '{{变量名}}={{变量值}}' {{[-e|--env]}} {{变量名=变量值}} {{镜像}} {{命令}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-run: 创建一个新的容器并运行命令。 (在新容器中传入环境变量并运行指定命令)",
-    "tags": [
-      "common",
-      "docker-run",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-run-4",
-    "type": "command",
-    "title": "docker-run - 在新容器中挂载目录卷并运行指定命令",
-    "content": "docker run {{[-v|--volume]}} {{宿主机路径}}:{{容器内路径}} {{镜像}} {{命令}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-run: 创建一个新的容器并运行命令。 (在新容器中挂载目录卷并运行指定命令)",
-    "tags": [
-      "common",
-      "docker-run",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-run-5",
-    "type": "command",
-    "title": "docker-run - 在新容器中开放映射端口并运行指定命令",
-    "content": "docker run {{[-p|--publish]}} {{宿主机端口}}:{{容器内端口}} {{镜像}} {{命令}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-run: 创建一个新的容器并运行命令。 (在新容器中开放映射端口并运行指定命令)",
-    "tags": [
-      "common",
-      "docker-run",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-run-6",
-    "type": "command",
-    "title": "docker-run - 在新容器中覆盖镜像中 ENTRYPOINT 并运行指定命令",
-    "content": "docker run --entrypoint {{命令}} {{镜像}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-run: 创建一个新的容器并运行命令。 (在新容器中覆盖镜像中 ENTRYPOINT 并运行指定命令)",
-    "tags": [
-      "common",
-      "docker-run",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-run-7",
-    "type": "command",
-    "title": "docker-run - 在新容器中设定使用需使用的网络并运行指定命令",
-    "content": "docker run --network {{网络}} {{镜像}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-run: 创建一个新的容器并运行命令。 (在新容器中设定使用需使用的网络并运行指定命令)",
+    "description": "docker-run: 此命令为 `docker container run` 的别名。 (查看原命令的文档)",
     "tags": [
       "common",
       "docker-run",
@@ -26865,6 +27060,21 @@
     "source": "official"
   },
   {
+    "id": "tldr-zh-common-docker-cp-0",
+    "type": "command",
+    "title": "docker-cp - 查看原命令的文档",
+    "content": "tldr docker container cp",
+    "group": "通用工具 (Common)",
+    "description": "docker-cp: 此命令为 `docker container cp` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-cp",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-zh-common-git-apply-0",
     "type": "command",
     "title": "git-apply - 显示补丁文件的应用详情",
@@ -27257,85 +27467,10 @@
   {
     "id": "tldr-zh-common-docker-exec-0",
     "type": "command",
-    "title": "docker-exec - 在正在运行的容器内，启动交互式 shell 会话",
-    "content": "docker exec {{[-it|--interactive --tty]}} {{容器_名称}} {{/bin/bash}}",
+    "title": "docker-exec - 查看原命令的文档",
+    "content": "tldr docker container exec",
     "group": "通用工具 (Common)",
-    "description": "docker-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (在正在运行的容器内，启动交互式 shell 会话)",
-    "tags": [
-      "common",
-      "docker-exec",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-exec-1",
-    "type": "command",
-    "title": "docker-exec - 在一个运行的容器内部，后台（分离）执行一个命令",
-    "content": "docker exec {{[-d|--detach]}} {{容器_名称}} {{命令}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (在一个运行的容器内部，后台（分离）执行一个命令)",
-    "tags": [
-      "common",
-      "docker-exec",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-exec-2",
-    "type": "command",
-    "title": "docker-exec - 指定要运行命令的运行目录",
-    "content": "docker exec {{[-it|--interactive --tty]}} {{[-w|--workdir]}} {{路径/到/文件夹}} {{容器_名称}} {{命令}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (指定要运行命令的运行目录)",
-    "tags": [
-      "common",
-      "docker-exec",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-exec-3",
-    "type": "command",
-    "title": "docker-exec - 在现存容器内部，后台执行一个命令，但是保持 `stdin` 开启",
-    "content": "docker exec {{[-i|--interactive]}} {{[-d|--detach]}} {{容器_名称}} {{命令}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (在现存容器内部，后台执行一个命令，但是保持 `stdin` 开启)",
-    "tags": [
-      "common",
-      "docker-exec",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-exec-4",
-    "type": "command",
-    "title": "docker-exec - 在运行中容器的 Bash 内，设置环境变量",
-    "content": "docker exec {{[-it|--interactive --tty]}} {{[-e|--env]}} {{变量_名称}}={{值}} {{容器_名称}} {{/bin/bash}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (在运行中容器的 Bash 内，设置环境变量)",
-    "tags": [
-      "common",
-      "docker-exec",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-exec-5",
-    "type": "command",
-    "title": "docker-exec - 作为特定用户执行命令",
-    "content": "docker exec {{[-u|--user]}} {{用户名}} {{容器_名称}} {{命令}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-exec: 在一个正在运行的 Docker 容器内部，执行一个命令。 (作为特定用户执行命令)",
+    "description": "docker-exec: 此命令为 `docker container exec` 的别名。 (查看原命令的文档)",
     "tags": [
       "common",
       "docker-exec",
@@ -28005,6 +28140,21 @@
     "source": "official"
   },
   {
+    "id": "tldr-zh-common-docker-update-0",
+    "type": "command",
+    "title": "docker-update - 查看原命令的文档",
+    "content": "tldr docker container update",
+    "group": "通用工具 (Common)",
+    "description": "docker-update: 此命令为 `docker container update` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-update",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-zh-common-qemu-img-0",
     "type": "command",
     "title": "qemu-img - 创建一个指定大小（以 GB 为单位）的磁盘镜像",
@@ -28067,10 +28217,10 @@
   {
     "id": "tldr-zh-common-qemu-img-4",
     "type": "command",
-    "title": "qemu-img - 将 VMware 的 .vmdk 磁盘镜像转换为 KVM 的 .qcow2 磁盘镜像",
+    "title": "qemu-img - 将 VMware 的 `.vmdk` 磁盘镜像转换为 KVM 的 `.qcow2` 磁盘镜像",
     "content": "qemu-img convert -f {{vmdk}} -O {{qcow2}} {{路径/到/文件.vmdk}} {{路径/到/文件.qcow2}}",
     "group": "通用工具 (Common)",
-    "description": "qemu-img: 创建和操作 Quick Emulator 虚拟硬盘镜像。 (将 VMware 的 .vmdk 磁盘镜像转换为 KVM 的 .qcow2 磁盘镜像)",
+    "description": "qemu-img: 创建和操作 Quick Emulator 虚拟硬盘镜像。 (将 VMware 的 `.vmdk` 磁盘镜像转换为 KVM 的 `.qcow2` 磁盘镜像)",
     "tags": [
       "common",
       "qemu-img",
@@ -28593,7 +28743,7 @@
     "id": "tldr-zh-common-cargo-7",
     "type": "command",
     "title": "cargo - 使用特定数量的线程构建 （默认为逻辑 CPU 的数量)",
-    "content": "cargo {{[b|build]}} --jobs {{线程数}}",
+    "content": "cargo {{[b|build]}} {{[-j|--jobs]}} {{线程数}}",
     "group": "通用工具 (Common)",
     "description": "cargo: 管理 Rust 项目及其模块依赖项（crates）。 一些子命令，如 `build`，具有自己的用法文档。 (使用特定数量的线程构建 （默认为逻辑 CPU 的数量))",
     "tags": [
@@ -30452,55 +30602,10 @@
   {
     "id": "tldr-zh-common-docker-rm-0",
     "type": "command",
-    "title": "docker-rm - 移除容器",
-    "content": "docker rm {{容器1 容器2 ...}}",
+    "title": "docker-rm - 查看原命令的文档",
+    "content": "tldr docker container rm",
     "group": "通用工具 (Common)",
-    "description": "docker-rm: 移除容器。 (移除容器)",
-    "tags": [
-      "common",
-      "docker-rm",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-rm-1",
-    "type": "command",
-    "title": "docker-rm - 强制移除容器",
-    "content": "docker rm {{[-f|--force]}} {{容器1 容器2 ...}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-rm: 移除容器。 (强制移除容器)",
-    "tags": [
-      "common",
-      "docker-rm",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-rm-2",
-    "type": "command",
-    "title": "docker-rm - 移除容器以及其文件卷",
-    "content": "docker rm {{[-v|--volumes]}} {{容器}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-rm: 移除容器。 (移除容器以及其文件卷)",
-    "tags": [
-      "common",
-      "docker-rm",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-rm-3",
-    "type": "command",
-    "title": "docker-rm - 显示帮助信息",
-    "content": "docker rm {{[-h|--help]}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-rm: 移除容器。 (显示帮助信息)",
+    "description": "docker-rm: 此命令为 `docker container rm` 的别名。 (查看原命令的文档)",
     "tags": [
       "common",
       "docker-rm",
@@ -32559,6 +32664,126 @@
     "tags": [
       "common",
       "q",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-run-0",
+    "type": "command",
+    "title": "docker-container-run - 使用打上标签的 Docker 镜像的新容器中执行命令",
+    "content": "docker run {{镜像:标签}} {{命令}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-run: 创建一个新的容器并运行命令。 (使用打上标签的 Docker 镜像的新容器中执行命令)",
+    "tags": [
+      "common",
+      "docker-container-run",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-run-1",
+    "type": "command",
+    "title": "docker-container-run - 在后台运行新容器中的命令，并输出其容器ID",
+    "content": "docker run {{[-d|--detach]}} {{镜像}} {{命令}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-run: 创建一个新的容器并运行命令。 (在后台运行新容器中的命令，并输出其容器ID)",
+    "tags": [
+      "common",
+      "docker-container-run",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-run-2",
+    "type": "command",
+    "title": "docker-container-run - 以交互模式和伪终端启动一个容器，并执行指定的命令",
+    "content": "docker run --rm {{[-it|--interactive --tty]}} {{镜像}} {{命令}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-run: 创建一个新的容器并运行命令。 (以交互模式和伪终端启动一个容器，并执行指定的命令)",
+    "tags": [
+      "common",
+      "docker-container-run",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-run-3",
+    "type": "command",
+    "title": "docker-container-run - 在新容器中传入环境变量并运行指定命令",
+    "content": "docker run {{[-e|--env]}} '{{变量名}}={{变量值}}' {{[-e|--env]}} {{变量名=变量值}} {{镜像}} {{命令}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-run: 创建一个新的容器并运行命令。 (在新容器中传入环境变量并运行指定命令)",
+    "tags": [
+      "common",
+      "docker-container-run",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-run-4",
+    "type": "command",
+    "title": "docker-container-run - 在新容器中挂载目录卷并运行指定命令",
+    "content": "docker run {{[-v|--volume]}} {{宿主机路径}}:{{容器内路径}} {{镜像}} {{命令}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-run: 创建一个新的容器并运行命令。 (在新容器中挂载目录卷并运行指定命令)",
+    "tags": [
+      "common",
+      "docker-container-run",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-run-5",
+    "type": "command",
+    "title": "docker-container-run - 在新容器中开放映射端口并运行指定命令",
+    "content": "docker run {{[-p|--publish]}} {{宿主机端口}}:{{容器内端口}} {{镜像}} {{命令}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-run: 创建一个新的容器并运行命令。 (在新容器中开放映射端口并运行指定命令)",
+    "tags": [
+      "common",
+      "docker-container-run",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-run-6",
+    "type": "command",
+    "title": "docker-container-run - 在新容器中覆盖镜像中 ENTRYPOINT 并运行指定命令",
+    "content": "docker run --entrypoint {{命令}} {{镜像}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-run: 创建一个新的容器并运行命令。 (在新容器中覆盖镜像中 ENTRYPOINT 并运行指定命令)",
+    "tags": [
+      "common",
+      "docker-container-run",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-container-run-7",
+    "type": "command",
+    "title": "docker-container-run - 在新容器中设定使用需使用的网络并运行指定命令",
+    "content": "docker run --network {{网络}} {{镜像}}",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-run: 创建一个新的容器并运行命令。 (在新容器中设定使用需使用的网络并运行指定命令)",
+    "tags": [
+      "common",
+      "docker-container-run",
       "tldr",
       "zh"
     ],
@@ -34892,10 +35117,10 @@
   {
     "id": "tldr-zh-common-git-archive-0",
     "type": "command",
-    "title": "git-archive - 从当前 HEAD 内容创建 tar 归档并输出到标准输出",
+    "title": "git-archive - 从当前 HEAD 内容创建 `.tar` 归档并输出到标准输出",
     "content": "git archive {{[-v|--verbose]}} HEAD",
     "group": "通用工具 (Common)",
-    "description": "git-archive: 从代码树创建文件归档。 (从当前 HEAD 内容创建 tar 归档并输出到标准输出)",
+    "description": "git-archive: 从代码树创建文件归档。 (从当前 HEAD 内容创建 `.tar` 归档并输出到标准输出)",
     "tags": [
       "common",
       "git-archive",
@@ -34937,10 +35162,10 @@
   {
     "id": "tldr-zh-common-git-archive-3",
     "type": "command",
-    "title": "git-archive - 从指定分支的最新提交内容创建 tar 归档",
+    "title": "git-archive - 从指定分支的最新提交内容创建 `.tar` 归档",
     "content": "git archive {{[-o|--output]}} {{路径/到/文件.tar}} {{指定分支}}",
     "group": "通用工具 (Common)",
-    "description": "git-archive: 从代码树创建文件归档。 (从指定分支的最新提交内容创建 tar 归档)",
+    "description": "git-archive: 从代码树创建文件归档。 (从指定分支的最新提交内容创建 `.tar` 归档)",
     "tags": [
       "common",
       "git-archive",
@@ -35270,7 +35495,7 @@
     "title": "uv-add - 添加一个包（最新版本）",
     "content": "uv add {{包名}}",
     "group": "通用工具 (Common)",
-    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 . (添加一个包（最新版本）)",
+    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 。 (添加一个包（最新版本）)",
     "tags": [
       "common",
       "uv-add",
@@ -35285,7 +35510,7 @@
     "title": "uv-add - 添加多个包",
     "content": "uv add {{包1 包2 ...}}",
     "group": "通用工具 (Common)",
-    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 . (添加多个包)",
+    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 。 (添加多个包)",
     "tags": [
       "common",
       "uv-add",
@@ -35300,7 +35525,7 @@
     "title": "uv-add - 添加一个包，并限制其版本",
     "content": "uv add {{包名>=1.2.3}}",
     "group": "通用工具 (Common)",
-    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 . (添加一个包，并限制其版本)",
+    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 。 (添加一个包，并限制其版本)",
     "tags": [
       "common",
       "uv-add",
@@ -35315,7 +35540,7 @@
     "title": "uv-add - 将包添加到可选依赖组，并在发布时包含在内",
     "content": "uv add --optional {{可选依赖组}} {{包1 包2 ...}}",
     "group": "通用工具 (Common)",
-    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 . (将包添加到可选依赖组，并在发布时包含在内)",
+    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 。 (将包添加到可选依赖组，并在发布时包含在内)",
     "tags": [
       "common",
       "uv-add",
@@ -35330,7 +35555,7 @@
     "title": "uv-add - 将包添加到本地依赖组，发布时不会包含在内",
     "content": "uv add --group {{本地依赖组}} {{package1 package2 ...}}",
     "group": "通用工具 (Common)",
-    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 . (将包添加到本地依赖组，发布时不会包含在内)",
+    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 。 (将包添加到本地依赖组，发布时不会包含在内)",
     "tags": [
       "common",
       "uv-add",
@@ -35345,7 +35570,7 @@
     "title": "uv-add - 将包添加到 dev 本地依赖组，作为 `--group dev` 的简写",
     "content": "uv add --dev {{包1 包2 ...}}",
     "group": "通用工具 (Common)",
-    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 . (将包添加到 dev 本地依赖组，作为 `--group dev` 的简写)",
+    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 。 (将包添加到 dev 本地依赖组，作为 `--group dev` 的简写)",
     "tags": [
       "common",
       "uv-add",
@@ -35360,7 +35585,7 @@
     "title": "uv-add - 添加包，并设定为可编辑的",
     "content": "uv add --editable {{路径/到/包}}/",
     "group": "通用工具 (Common)",
-    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 . (添加包，并设定为可编辑的)",
+    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 。 (添加包，并设定为可编辑的)",
     "tags": [
       "common",
       "uv-add",
@@ -35375,7 +35600,7 @@
     "title": "uv-add - 安装包时，启用一个附加功能（可以多次提供该参数）",
     "content": "uv add {{包名}} --extra {{附加_功能}}",
     "group": "通用工具 (Common)",
-    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 . (安装包时，启用一个附加功能（可以多次提供该参数）)",
+    "description": "uv-add: 将包依赖添加到 `pyproject.toml` 文件。 包的详细解释，请参考 。 (安装包时，启用一个附加功能（可以多次提供该参数）)",
     "tags": [
       "common",
       "uv-add",
@@ -35462,10 +35687,10 @@
   {
     "id": "tldr-zh-common-which-0",
     "type": "command",
-    "title": "which - 在`PATH`中寻找可执行文件并打印第一个匹配的结果",
+    "title": "which - 在`$PATH`中寻找可执行文件并打印第一个匹配的结果",
     "content": "which {{executable}}",
     "group": "通用工具 (Common)",
-    "description": "which: 在用户的`PATH`中寻找可执行文件的路径。 (在`PATH`中寻找可执行文件并打印第一个匹配的结果)",
+    "description": "which: 在用户的`$PATH`中寻找可执行文件的路径。 (在`$PATH`中寻找可执行文件并打印第一个匹配的结果)",
     "tags": [
       "common",
       "which",
@@ -35480,7 +35705,7 @@
     "title": "which - 如果有多个匹配结果则打印所有结果",
     "content": "which {{[-a|--all]}} {{executable}}",
     "group": "通用工具 (Common)",
-    "description": "which: 在用户的`PATH`中寻找可执行文件的路径。 (如果有多个匹配结果则打印所有结果)",
+    "description": "which: 在用户的`$PATH`中寻找可执行文件的路径。 (如果有多个匹配结果则打印所有结果)",
     "tags": [
       "common",
       "which",
@@ -36414,6 +36639,21 @@
     "tags": [
       "common",
       "git-credential",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-ps-0",
+    "type": "command",
+    "title": "docker-ps - 查看原命令的文档",
+    "content": "tldr docker container ls",
+    "group": "通用工具 (Common)",
+    "description": "docker-ps: 此命令为 `docker container ls` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-ps",
       "tldr",
       "zh"
     ],
@@ -38940,6 +39180,21 @@
     "source": "official"
   },
   {
+    "id": "tldr-zh-common-docker-commit-0",
+    "type": "command",
+    "title": "docker-commit - 查看原命令的文档",
+    "content": "tldr docker container commit",
+    "group": "通用工具 (Common)",
+    "description": "docker-commit: 此命令为 `docker container commit` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-commit",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-zh-common-jdupes-0",
     "type": "command",
     "title": "jdupes - 搜索单个目录",
@@ -39024,6 +39279,21 @@
     "tags": [
       "common",
       "jdupes",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-save-0",
+    "type": "command",
+    "title": "docker-save - 查看原命令的文档",
+    "content": "tldr docker image save",
+    "group": "通用工具 (Common)",
+    "description": "docker-save: 此命令为 `docker image save` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-save",
       "tldr",
       "zh"
     ],
@@ -39948,9 +40218,9 @@
     "id": "tldr-zh-common-docker-container-remove-0",
     "type": "command",
     "title": "docker-container-remove - 查看原命令的文档",
-    "content": "tldr docker rm",
+    "content": "tldr docker container rm",
     "group": "通用工具 (Common)",
-    "description": "docker-container-remove: 此命令为 `docker rm` 的别名。 (查看原命令的文档)",
+    "description": "docker-container-remove: 此命令为 `docker container rm` 的别名。 (查看原命令的文档)",
     "tags": [
       "common",
       "docker-container-remove",
@@ -41850,6 +42120,21 @@
     "source": "official"
   },
   {
+    "id": "tldr-zh-common-docker-diff-0",
+    "type": "command",
+    "title": "docker-diff - 查看原命令的文档",
+    "content": "tldr docker container diff",
+    "group": "通用工具 (Common)",
+    "description": "docker-diff: 此命令为 `docker container diff` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-diff",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-zh-common-git-count-objects-0",
     "type": "command",
     "title": "git-count-objects - 统计所有对象并显示总磁盘使用量",
@@ -42242,70 +42527,10 @@
   {
     "id": "tldr-zh-common-docker-logs-0",
     "type": "command",
-    "title": "docker-logs - 显示一个容器的日志",
-    "content": "docker logs {{容器_名称}}",
+    "title": "docker-logs - 查看原命令的文档",
+    "content": "tldr docker container logs",
     "group": "通用工具 (Common)",
-    "description": "docker-logs: 显示容器的日志。 (显示一个容器的日志)",
-    "tags": [
-      "common",
-      "docker-logs",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-logs-1",
-    "type": "command",
-    "title": "docker-logs - 显示历史日志，然后跟踪容器日志",
-    "content": "docker logs {{[-f|--follow]}} {{容器_名称}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-logs: 显示容器的日志。 (显示历史日志，然后跟踪容器日志)",
-    "tags": [
-      "common",
-      "docker-logs",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-logs-2",
-    "type": "command",
-    "title": "docker-logs - 显示最后 5 行日志",
-    "content": "docker logs {{容器_名称}} {{[-n|--tail]}} {{5}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-logs: 显示容器的日志。 (显示最后 5 行日志)",
-    "tags": [
-      "common",
-      "docker-logs",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-logs-3",
-    "type": "command",
-    "title": "docker-logs - 显示带有时间戳的日志",
-    "content": "docker logs {{[-t|--timestamps]}} {{容器_名称}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-logs: 显示容器的日志。 (显示带有时间戳的日志)",
-    "tags": [
-      "common",
-      "docker-logs",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-common-docker-logs-4",
-    "type": "command",
-    "title": "docker-logs - 展示容器运行过程中，自某个时间点以来的日志（也就是，23m、10s、2013-01-02T13:23:37）",
-    "content": "docker logs {{容器_名称}} --until {{时间点}}",
-    "group": "通用工具 (Common)",
-    "description": "docker-logs: 显示容器的日志。 (展示容器运行过程中，自某个时间点以来的日志（也就是，23m、10s、2013-01-02T13:23:37）)",
+    "description": "docker-logs: 此命令为 `docker container logs` 的别名。 (查看原命令的文档)",
     "tags": [
       "common",
       "docker-logs",
@@ -43595,7 +43820,7 @@
     "title": "git-check-ignore - 检查文件或目录是否被忽略",
     "content": "git check-ignore {{路径/到/文件或目录}}",
     "group": "通用工具 (Common)",
-    "description": "git-check-ignore: 分析和调试 Git 忽略规则（.gitignore 文件）。 (检查文件或目录是否被忽略)",
+    "description": "git-check-ignore: 分析和调试 Git 忽略规则（`.gitignore` 文件）。 (检查文件或目录是否被忽略)",
     "tags": [
       "common",
       "git-check-ignore",
@@ -43610,7 +43835,7 @@
     "title": "git-check-ignore - 检查多个文件或目录是否被忽略",
     "content": "git check-ignore {{路径/到/文件或目录1 路径/到/文件或目录2 ...}}",
     "group": "通用工具 (Common)",
-    "description": "git-check-ignore: 分析和调试 Git 忽略规则（.gitignore 文件）。 (检查多个文件或目录是否被忽略)",
+    "description": "git-check-ignore: 分析和调试 Git 忽略规则（`.gitignore` 文件）。 (检查多个文件或目录是否被忽略)",
     "tags": [
       "common",
       "git-check-ignore",
@@ -43625,7 +43850,7 @@
     "title": "git-check-ignore - 从标准输入读取路径列表（每行一个路径）",
     "content": "git check-ignore --stdin < {{路径/到/文件列表}}",
     "group": "通用工具 (Common)",
-    "description": "git-check-ignore: 分析和调试 Git 忽略规则（.gitignore 文件）。 (从标准输入读取路径列表（每行一个路径）)",
+    "description": "git-check-ignore: 分析和调试 Git 忽略规则（`.gitignore` 文件）。 (从标准输入读取路径列表（每行一个路径）)",
     "tags": [
       "common",
       "git-check-ignore",
@@ -43640,7 +43865,7 @@
     "title": "git-check-ignore - 不检查索引（用于调试为何某些路径被跟踪而非忽略）",
     "content": "git check-ignore --no-index {{路径/到/文件或目录1 路径/到/文件或目录2 ...}}",
     "group": "通用工具 (Common)",
-    "description": "git-check-ignore: 分析和调试 Git 忽略规则（.gitignore 文件）。 (不检查索引（用于调试为何某些路径被跟踪而非忽略）)",
+    "description": "git-check-ignore: 分析和调试 Git 忽略规则（`.gitignore` 文件）。 (不检查索引（用于调试为何某些路径被跟踪而非忽略）)",
     "tags": [
       "common",
       "git-check-ignore",
@@ -43655,7 +43880,7 @@
     "title": "git-check-ignore - 显示每个路径匹配的具体忽略规则",
     "content": "git check-ignore {{[-v|--verbose]}} {{路径/到/文件或目录1 路径/到/文件或目录2 ...}}",
     "group": "通用工具 (Common)",
-    "description": "git-check-ignore: 分析和调试 Git 忽略规则（.gitignore 文件）。 (显示每个路径匹配的具体忽略规则)",
+    "description": "git-check-ignore: 分析和调试 Git 忽略规则（`.gitignore` 文件）。 (显示每个路径匹配的具体忽略规则)",
     "tags": [
       "common",
       "git-check-ignore",
@@ -44820,6 +45045,21 @@
     "source": "official"
   },
   {
+    "id": "tldr-zh-common-docker-container-rmi-0",
+    "type": "command",
+    "title": "docker-container-rmi - 查看原命令的文档",
+    "content": "tldr docker image rm",
+    "group": "通用工具 (Common)",
+    "description": "docker-container-rmi: 此命令为 `docker image rm` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-container-rmi",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-zh-common-yacc-0",
     "type": "command",
     "title": "yacc - 创建一个包含 C 语言解析器代码的文件 `y.tab.c`，并编译语法文件以及所有值所需的常量声明。（只有在使用 `-d` 选项时，才会创建常量声明文件 `y.tab.h`）",
@@ -44870,7 +45110,7 @@
     "title": "git-browse - 在默认浏览器中打开第一个上游代码库",
     "content": "git browse",
     "group": "通用工具 (Common)",
-    "description": "git-browse: 在默认浏览器中查看上游代码库 属于 `git-extras` 工具集的一部分。 (在默认浏览器中打开第一个上游代码库)",
+    "description": "git-browse: 在默认浏览器中查看上游代码库。 属于 `git-extras` 工具集的一部分。 (在默认浏览器中打开第一个上游代码库)",
     "tags": [
       "common",
       "git-browse",
@@ -44885,7 +45125,7 @@
     "title": "git-browse - 在默认浏览器中打开指定的上游代码库",
     "content": "git browse {{上游名称}}",
     "group": "通用工具 (Common)",
-    "description": "git-browse: 在默认浏览器中查看上游代码库 属于 `git-extras` 工具集的一部分。 (在默认浏览器中打开指定的上游代码库)",
+    "description": "git-browse: 在默认浏览器中查看上游代码库。 属于 `git-extras` 工具集的一部分。 (在默认浏览器中打开指定的上游代码库)",
     "tags": [
       "common",
       "git-browse",
@@ -45069,6 +45309,21 @@
     "tags": [
       "common",
       "xml-xmln",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-docker-pull-0",
+    "type": "command",
+    "title": "docker-pull - 查看原命令的文档",
+    "content": "tldr docker image pull",
+    "group": "通用工具 (Common)",
+    "description": "docker-pull: 此命令为 `docker image pull` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "docker-pull",
       "tldr",
       "zh"
     ],
@@ -45558,7 +45813,7 @@
     "id": "tldr-zh-common-docker-0",
     "type": "command",
     "title": "docker - 列出所有 Docker 容器（包括停止的容器）",
-    "content": "docker ps {{[-a|--all]}}",
+    "content": "docker {{[ps|container ls]}} {{[-a|--all]}}",
     "group": "通用工具 (Common)",
     "description": "docker: 管理 Docker 容器和镜像。 此命令也有关于其子命令的文件，例如：`run`。 (列出所有 Docker 容器（包括停止的容器）)",
     "tags": [
@@ -45573,7 +45828,7 @@
     "id": "tldr-zh-common-docker-1",
     "type": "command",
     "title": "docker - 透过镜像启动容器，并为容器命名",
-    "content": "docker run --name {{容器名称}} {{镜像}}",
+    "content": "docker {{[run|container run]}} --name {{容器名称}} {{镜像}}",
     "group": "通用工具 (Common)",
     "description": "docker: 管理 Docker 容器和镜像。 此命令也有关于其子命令的文件，例如：`run`。 (透过镜像启动容器，并为容器命名)",
     "tags": [
@@ -45588,7 +45843,7 @@
     "id": "tldr-zh-common-docker-2",
     "type": "command",
     "title": "docker - 启动或停止现有容器",
-    "content": "docker {{start|stop}} {{容器名称}}",
+    "content": "docker container {{start|stop}} {{容器名称}}",
     "group": "通用工具 (Common)",
     "description": "docker: 管理 Docker 容器和镜像。 此命令也有关于其子命令的文件，例如：`run`。 (启动或停止现有容器)",
     "tags": [
@@ -45603,7 +45858,7 @@
     "id": "tldr-zh-common-docker-3",
     "type": "command",
     "title": "docker - 从 Docker registry 中拉取镜像",
-    "content": "docker pull {{镜像}}",
+    "content": "docker {{[pull|image pull]}} {{镜像}}",
     "group": "通用工具 (Common)",
     "description": "docker: 管理 Docker 容器和镜像。 此命令也有关于其子命令的文件，例如：`run`。 (从 Docker registry 中拉取镜像)",
     "tags": [
@@ -45618,7 +45873,7 @@
     "id": "tldr-zh-common-docker-4",
     "type": "command",
     "title": "docker - 显示已下载的镜像清单",
-    "content": "docker images",
+    "content": "docker {{[images|image ls]}}",
     "group": "通用工具 (Common)",
     "description": "docker: 管理 Docker 容器和镜像。 此命令也有关于其子命令的文件，例如：`run`。 (显示已下载的镜像清单)",
     "tags": [
@@ -45633,7 +45888,7 @@
     "id": "tldr-zh-common-docker-5",
     "type": "command",
     "title": "docker - 从正在运行的容器内打开一个交互式 ([i]nteractive) 终端 ([t]ty) shell (`sh`)",
-    "content": "docker exec {{[-it|--interactive --tty]}} {{容器名称}} {{sh}}",
+    "content": "docker {{[exec|container exec]}} {{[-it|--interactive --tty]}} {{容器名称}} {{sh}}",
     "group": "通用工具 (Common)",
     "description": "docker: 管理 Docker 容器和镜像。 此命令也有关于其子命令的文件，例如：`run`。 (从正在运行的容器内打开一个交互式 ([i]nteractive) 终端 ([t]ty) shell (`sh`))",
     "tags": [
@@ -45648,7 +45903,7 @@
     "id": "tldr-zh-common-docker-6",
     "type": "command",
     "title": "docker - 删除一个停止的容器",
-    "content": "docker rm {{容器名称}}",
+    "content": "docker {{[rm|container rm]}} {{容器名称}}",
     "group": "通用工具 (Common)",
     "description": "docker: 管理 Docker 容器和镜像。 此命令也有关于其子命令的文件，例如：`run`。 (删除一个停止的容器)",
     "tags": [
@@ -45663,7 +45918,7 @@
     "id": "tldr-zh-common-docker-7",
     "type": "command",
     "title": "docker - 获取并查看容器的日志",
-    "content": "docker logs {{[-f|--follow]}} {{容器名称}}",
+    "content": "docker {{[logs|container logs]}} {{[-f|--follow]}} {{容器名称}}",
     "group": "通用工具 (Common)",
     "description": "docker: 管理 Docker 容器和镜像。 此命令也有关于其子命令的文件，例如：`run`。 (获取并查看容器的日志)",
     "tags": [
@@ -46325,7 +46580,7 @@
     "title": "jenv - 向 jEnv 添加一个 Java 版本",
     "content": "jenv add {{Java Home 路径}}",
     "group": "通用工具 (Common)",
-    "description": "jenv: 管理”JAVA_HOME“环境变量的命令行工具。 (向 jEnv 添加一个 Java 版本)",
+    "description": "jenv: 管理`JAVA_HOME`环境变量的命令行工具。 (向 jEnv 添加一个 Java 版本)",
     "tags": [
       "common",
       "jenv",
@@ -46340,7 +46595,7 @@
     "title": "jenv - 显示当前使用的 JDK 版本",
     "content": "jenv version",
     "group": "通用工具 (Common)",
-    "description": "jenv: 管理”JAVA_HOME“环境变量的命令行工具。 (显示当前使用的 JDK 版本)",
+    "description": "jenv: 管理`JAVA_HOME`环境变量的命令行工具。 (显示当前使用的 JDK 版本)",
     "tags": [
       "common",
       "jenv",
@@ -46355,7 +46610,7 @@
     "title": "jenv - 显示所有托管的 JDK",
     "content": "jenv versions",
     "group": "通用工具 (Common)",
-    "description": "jenv: 管理”JAVA_HOME“环境变量的命令行工具。 (显示所有托管的 JDK)",
+    "description": "jenv: 管理`JAVA_HOME`环境变量的命令行工具。 (显示所有托管的 JDK)",
     "tags": [
       "common",
       "jenv",
@@ -46370,7 +46625,7 @@
     "title": "jenv - 设置全局JDK版本",
     "content": "jenv global {{Java 版本}}",
     "group": "通用工具 (Common)",
-    "description": "jenv: 管理”JAVA_HOME“环境变量的命令行工具。 (设置全局JDK版本)",
+    "description": "jenv: 管理`JAVA_HOME`环境变量的命令行工具。 (设置全局JDK版本)",
     "tags": [
       "common",
       "jenv",
@@ -46385,7 +46640,7 @@
     "title": "jenv - 设置当前 shell 会话的 JDK 版本",
     "content": "jenv shell {{Java 版本}}",
     "group": "通用工具 (Common)",
-    "description": "jenv: 管理”JAVA_HOME“环境变量的命令行工具。 (设置当前 shell 会话的 JDK 版本)",
+    "description": "jenv: 管理`JAVA_HOME`环境变量的命令行工具。 (设置当前 shell 会话的 JDK 版本)",
     "tags": [
       "common",
       "jenv",
@@ -46400,7 +46655,7 @@
     "title": "jenv - 启用 jEnv 插件",
     "content": "jenv enable-plugin {{插件名称}}",
     "group": "通用工具 (Common)",
-    "description": "jenv: 管理”JAVA_HOME“环境变量的命令行工具。 (启用 jEnv 插件)",
+    "description": "jenv: 管理`JAVA_HOME`环境变量的命令行工具。 (启用 jEnv 插件)",
     "tags": [
       "common",
       "jenv",
@@ -47154,6 +47409,21 @@
     "tags": [
       "common",
       "git-rm",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-common-vdir-0",
+    "type": "command",
+    "title": "vdir - 查看原命令的文档",
+    "content": "tldr ls",
+    "group": "通用工具 (Common)",
+    "description": "vdir: 此命令为 `ls -l --escape` 的别名。 (查看原命令的文档)",
+    "tags": [
+      "common",
+      "vdir",
       "tldr",
       "zh"
     ],
@@ -48320,7 +48590,7 @@
     "title": "git-annotate - 打印文件内容，并在每行前附加作者姓名和提交哈希值",
     "content": "git annotate {{路径/到/文件}}",
     "group": "通用工具 (Common)",
-    "description": "git-annotate: 显示文件中每一行的提交哈希值和最后修改作者。 参见 `git blame`（推荐优先使用该命令） 提供`git annotate` 主要是为了照顾熟悉其他版本控制系统的用户 (打印文件内容，并在每行前附加作者姓名和提交哈希值)",
+    "description": "git-annotate: 显示文件中每一行的提交哈希值和最后修改作者。 参见 `git blame`（推荐优先使用该命令）。 提供`git annotate` 主要是为了照顾熟悉其他版本控制系统的用户。 (打印文件内容，并在每行前附加作者姓名和提交哈希值)",
     "tags": [
       "common",
       "git-annotate",
@@ -48335,7 +48605,7 @@
     "title": "git-annotate - 打印文件内容，并在每行前附加作者邮箱和提交哈希值",
     "content": "git annotate {{[-e|--show-email]}} {{路径/到/文件}}",
     "group": "通用工具 (Common)",
-    "description": "git-annotate: 显示文件中每一行的提交哈希值和最后修改作者。 参见 `git blame`（推荐优先使用该命令） 提供`git annotate` 主要是为了照顾熟悉其他版本控制系统的用户 (打印文件内容，并在每行前附加作者邮箱和提交哈希值)",
+    "description": "git-annotate: 显示文件中每一行的提交哈希值和最后修改作者。 参见 `git blame`（推荐优先使用该命令）。 提供`git annotate` 主要是为了照顾熟悉其他版本控制系统的用户。 (打印文件内容，并在每行前附加作者邮箱和提交哈希值)",
     "tags": [
       "common",
       "git-annotate",
@@ -48350,7 +48620,7 @@
     "title": "git-annotate - 仅打印匹配正则表达式的行",
     "content": "git annotate -L :{{正则表达式}} {{路径/到/文件}}",
     "group": "通用工具 (Common)",
-    "description": "git-annotate: 显示文件中每一行的提交哈希值和最后修改作者。 参见 `git blame`（推荐优先使用该命令） 提供`git annotate` 主要是为了照顾熟悉其他版本控制系统的用户 (仅打印匹配正则表达式的行)",
+    "description": "git-annotate: 显示文件中每一行的提交哈希值和最后修改作者。 参见 `git blame`（推荐优先使用该命令）。 提供`git annotate` 主要是为了照顾熟悉其他版本控制系统的用户。 (仅打印匹配正则表达式的行)",
     "tags": [
       "common",
       "git-annotate",

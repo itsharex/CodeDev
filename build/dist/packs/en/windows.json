@@ -1007,10 +1007,10 @@
   {
     "id": "tldr-en-windows-choco-install-2",
     "type": "command",
-    "title": "choco-install - Install a specific `nuspec` or `nupkg` file",
+    "title": "choco-install - Install a specific `.nuspec` or `.nupkg` file",
     "content": "choco install {{path\\to\\file}}",
     "group": "Windows",
-    "description": "choco-install: Install one or more packages with Chocolatey. (Install a specific `nuspec` or `nupkg` file)",
+    "description": "choco-install: Install one or more packages with Chocolatey. (Install a specific `.nuspec` or `.nupkg` file)",
     "tags": [
       "windows",
       "choco-install",
@@ -1277,10 +1277,10 @@
   {
     "id": "tldr-en-windows-reg-5",
     "type": "command",
-    "title": "reg - View documentation for saving, restoring registry and unloading keys preserving the key ownerships and ACLs",
+    "title": "reg - View documentation for saving, restoring registry and unloading keys preserving the key ownerships, and ACLs",
     "content": "tldr reg {{save|restore|load|unload}}",
     "group": "Windows",
-    "description": "reg: Manage keys and their values in the Windows registry. Some subcommands such as `add` have their own usage documentation. (View documentation for saving, restoring registry and unloading keys preserving the key ownerships and ACLs)",
+    "description": "reg: Manage keys and their values in the Windows registry. Some subcommands such as `add` have their own usage documentation. (View documentation for saving, restoring registry and unloading keys preserving the key ownerships, and ACLs)",
     "tags": [
       "windows",
       "reg",
@@ -3872,10 +3872,10 @@
   {
     "id": "tldr-en-windows-ftp-4",
     "type": "command",
-    "title": "ftp - Download multiple files (glob expression)",
+    "title": "ftp - [Interactive] Download multiple files (glob expression)",
     "content": "mget {{*.png}}",
     "group": "Windows",
-    "description": "ftp: Interactively transfer files between a local and remote FTP server. (Download multiple files (glob expression))",
+    "description": "ftp: Interactively transfer files between a local and remote FTP server. ([Interactive] Download multiple files (glob expression))",
     "tags": [
       "windows",
       "ftp",
@@ -3887,10 +3887,10 @@
   {
     "id": "tldr-en-windows-ftp-5",
     "type": "command",
-    "title": "ftp - Upload multiple files (glob expression)",
+    "title": "ftp - [Interactive] Upload multiple files (glob expression)",
     "content": "mput {{*.zip}}",
     "group": "Windows",
-    "description": "ftp: Interactively transfer files between a local and remote FTP server. (Upload multiple files (glob expression))",
+    "description": "ftp: Interactively transfer files between a local and remote FTP server. ([Interactive] Upload multiple files (glob expression))",
     "tags": [
       "windows",
       "ftp",
@@ -3902,10 +3902,10 @@
   {
     "id": "tldr-en-windows-ftp-6",
     "type": "command",
-    "title": "ftp - Delete multiple files on the remote server",
+    "title": "ftp - [Interactive] Delete multiple files on the remote server",
     "content": "mdelete {{*.txt}}",
     "group": "Windows",
-    "description": "ftp: Interactively transfer files between a local and remote FTP server. (Delete multiple files on the remote server)",
+    "description": "ftp: Interactively transfer files between a local and remote FTP server. ([Interactive] Delete multiple files on the remote server)",
     "tags": [
       "windows",
       "ftp",
@@ -7280,7 +7280,7 @@
     "title": "shutdown - Shutdown the current machine",
     "content": "shutdown /s",
     "group": "Windows",
-    "description": "shutdown: A tool for shutting down, restarting or logging off a machine. (Shutdown the current machine)",
+    "description": "shutdown: A tool for shutting down, restarting, or logging off a machine. (Shutdown the current machine)",
     "tags": [
       "windows",
       "shutdown",
@@ -7295,7 +7295,7 @@
     "title": "shutdown - Shutdown the current machine force-closing all apps",
     "content": "shutdown /s /f",
     "group": "Windows",
-    "description": "shutdown: A tool for shutting down, restarting or logging off a machine. (Shutdown the current machine force-closing all apps)",
+    "description": "shutdown: A tool for shutting down, restarting, or logging off a machine. (Shutdown the current machine force-closing all apps)",
     "tags": [
       "windows",
       "shutdown",
@@ -7310,7 +7310,7 @@
     "title": "shutdown - Restart the current machine immediately",
     "content": "shutdown /r /t 0",
     "group": "Windows",
-    "description": "shutdown: A tool for shutting down, restarting or logging off a machine. (Restart the current machine immediately)",
+    "description": "shutdown: A tool for shutting down, restarting, or logging off a machine. (Restart the current machine immediately)",
     "tags": [
       "windows",
       "shutdown",
@@ -7325,7 +7325,7 @@
     "title": "shutdown - Hibernate the current machine",
     "content": "shutdown /h",
     "group": "Windows",
-    "description": "shutdown: A tool for shutting down, restarting or logging off a machine. (Hibernate the current machine)",
+    "description": "shutdown: A tool for shutting down, restarting, or logging off a machine. (Hibernate the current machine)",
     "tags": [
       "windows",
       "shutdown",
@@ -7340,7 +7340,7 @@
     "title": "shutdown - Log off the current machine",
     "content": "shutdown /l",
     "group": "Windows",
-    "description": "shutdown: A tool for shutting down, restarting or logging off a machine. (Log off the current machine)",
+    "description": "shutdown: A tool for shutting down, restarting, or logging off a machine. (Log off the current machine)",
     "tags": [
       "windows",
       "shutdown",
@@ -7355,7 +7355,7 @@
     "title": "shutdown - Specify a timeout in seconds to wait before shutting down",
     "content": "shutdown /s /t {{8}}",
     "group": "Windows",
-    "description": "shutdown: A tool for shutting down, restarting or logging off a machine. (Specify a timeout in seconds to wait before shutting down)",
+    "description": "shutdown: A tool for shutting down, restarting, or logging off a machine. (Specify a timeout in seconds to wait before shutting down)",
     "tags": [
       "windows",
       "shutdown",
@@ -7370,7 +7370,7 @@
     "title": "shutdown - Abort a shutdown sequence whose timeout is yet to expire",
     "content": "shutdown /a",
     "group": "Windows",
-    "description": "shutdown: A tool for shutting down, restarting or logging off a machine. (Abort a shutdown sequence whose timeout is yet to expire)",
+    "description": "shutdown: A tool for shutting down, restarting, or logging off a machine. (Abort a shutdown sequence whose timeout is yet to expire)",
     "tags": [
       "windows",
       "shutdown",
@@ -7385,7 +7385,7 @@
     "title": "shutdown - Shutdown a remote machine",
     "content": "shutdown /m {{\\\\hostname}}",
     "group": "Windows",
-    "description": "shutdown: A tool for shutting down, restarting or logging off a machine. (Shutdown a remote machine)",
+    "description": "shutdown: A tool for shutting down, restarting, or logging off a machine. (Shutdown a remote machine)",
     "tags": [
       "windows",
       "shutdown",
@@ -7565,7 +7565,7 @@
     "title": "where - Display the location of file pattern",
     "content": "where {{file_pattern}}",
     "group": "Windows",
-    "description": "where: Display the location of files that match the search pattern. Defaults to current work directory and paths in the PATH environment variable. (Display the location of file pattern)",
+    "description": "where: Display the location of files that match the search pattern. Defaults to current work directory and paths in the `%PATH%` environment variable. (Display the location of file pattern)",
     "tags": [
       "windows",
       "where",
@@ -7580,7 +7580,7 @@
     "title": "where - Display the location of file pattern including file size and date",
     "content": "where /T {{file_pattern}}",
     "group": "Windows",
-    "description": "where: Display the location of files that match the search pattern. Defaults to current work directory and paths in the PATH environment variable. (Display the location of file pattern including file size and date)",
+    "description": "where: Display the location of files that match the search pattern. Defaults to current work directory and paths in the `%PATH%` environment variable. (Display the location of file pattern including file size and date)",
     "tags": [
       "windows",
       "where",
@@ -7595,7 +7595,7 @@
     "title": "where - Recursively search for file pattern at specified path",
     "content": "where /R {{path\\to\\directory}} {{file_pattern}}",
     "group": "Windows",
-    "description": "where: Display the location of files that match the search pattern. Defaults to current work directory and paths in the PATH environment variable. (Recursively search for file pattern at specified path)",
+    "description": "where: Display the location of files that match the search pattern. Defaults to current work directory and paths in the `%PATH%` environment variable. (Recursively search for file pattern at specified path)",
     "tags": [
       "windows",
       "where",
@@ -7610,7 +7610,7 @@
     "title": "where - Silently return the error code for the location of the file pattern",
     "content": "where /Q {{file_pattern}}",
     "group": "Windows",
-    "description": "where: Display the location of files that match the search pattern. Defaults to current work directory and paths in the PATH environment variable. (Silently return the error code for the location of the file pattern)",
+    "description": "where: Display the location of files that match the search pattern. Defaults to current work directory and paths in the `%PATH%` environment variable. (Silently return the error code for the location of the file pattern)",
     "tags": [
       "windows",
       "where",
@@ -7667,10 +7667,10 @@
   {
     "id": "tldr-en-windows-wmic-3",
     "type": "command",
-    "title": "wmic - Access specific fields such as process name, process ID and parent process ID",
+    "title": "wmic - Access specific fields such as process name, process ID, and parent process ID",
     "content": "wmic process get {{name,processid,parentprocessid}}",
     "group": "Windows",
-    "description": "wmic: Interactive shell for detailed information about running processes. (Access specific fields such as process name, process ID and parent process ID)",
+    "description": "wmic: Interactive shell for detailed information about running processes. (Access specific fields such as process name, process ID, and parent process ID)",
     "tags": [
       "windows",
       "wmic",
@@ -9347,10 +9347,10 @@
   {
     "id": "tldr-en-windows-vswhere-1",
     "type": "command",
-    "title": "vswhere - Find the directory of the x64 MSVC compiler (cl.exe, etc)",
+    "title": "vswhere - Find the directory of the x64 MSVC compiler (`cl.exe`, etc)",
     "content": "vswhere -products * -latest -prerelease -find **\\Hostx64\\x64\\*",
     "group": "Windows",
-    "description": "vswhere: Locate Visual Studio 2017 and newer installations. (Find the directory of the x64 MSVC compiler (cl.exe, etc))",
+    "description": "vswhere: Locate Visual Studio 2017 and newer installations. (Find the directory of the x64 MSVC compiler (`cl.exe`, etc))",
     "tags": [
       "windows",
       "vswhere",
@@ -10187,10 +10187,10 @@
   {
     "id": "tldr-en-windows-choco-pack-0",
     "type": "command",
-    "title": "choco-pack - Package a NuGet specification to a `nupkg` file",
+    "title": "choco-pack - Package a NuGet specification to a `.nupkg` file",
     "content": "choco pack {{path\\to\\specification_file}}",
     "group": "Windows",
-    "description": "choco-pack: Package a NuGet specification into a `nupkg` file. (Package a NuGet specification to a `nupkg` file)",
+    "description": "choco-pack: Package a NuGet specification into a `.nupkg` file. (Package a NuGet specification to a `.nupkg` file)",
     "tags": [
       "windows",
       "choco-pack",
@@ -10205,7 +10205,7 @@
     "title": "choco-pack - Package a NuGet specification specifying the version of the resulting file",
     "content": "choco pack {{path\\to\\specification_file}} --version {{version}}",
     "group": "Windows",
-    "description": "choco-pack: Package a NuGet specification into a `nupkg` file. (Package a NuGet specification specifying the version of the resulting file)",
+    "description": "choco-pack: Package a NuGet specification into a `.nupkg` file. (Package a NuGet specification specifying the version of the resulting file)",
     "tags": [
       "windows",
       "choco-pack",
@@ -10220,7 +10220,7 @@
     "title": "choco-pack - Package a NuGet specification to a specific directory",
     "content": "choco pack {{path\\to\\specification_file}} {{[--out|--output-directory]}} {{path\\to\\output_directory}}",
     "group": "Windows",
-    "description": "choco-pack: Package a NuGet specification into a `nupkg` file. (Package a NuGet specification to a specific directory)",
+    "description": "choco-pack: Package a NuGet specification into a `.nupkg` file. (Package a NuGet specification to a specific directory)",
     "tags": [
       "windows",
       "choco-pack",
@@ -10790,7 +10790,7 @@
     "title": "diskpart - Run diskpart by itself in an administrative command prompt to enter its command-line",
     "content": "diskpart",
     "group": "Windows",
-    "description": "diskpart: Disk, volume and partition manager. (Run diskpart by itself in an administrative command prompt to enter its command-line)",
+    "description": "diskpart: Disk, volume, and partition manager. (Run diskpart by itself in an administrative command prompt to enter its command-line)",
     "tags": [
       "windows",
       "diskpart",
@@ -10805,7 +10805,7 @@
     "title": "diskpart - List all disks",
     "content": "list disk",
     "group": "Windows",
-    "description": "diskpart: Disk, volume and partition manager. (List all disks)",
+    "description": "diskpart: Disk, volume, and partition manager. (List all disks)",
     "tags": [
       "windows",
       "diskpart",
@@ -10820,7 +10820,7 @@
     "title": "diskpart - Select a volume",
     "content": "select volume {{volume}}",
     "group": "Windows",
-    "description": "diskpart: Disk, volume and partition manager. (Select a volume)",
+    "description": "diskpart: Disk, volume, and partition manager. (Select a volume)",
     "tags": [
       "windows",
       "diskpart",
@@ -10835,7 +10835,7 @@
     "title": "diskpart - Assign a drive letter to the selected volume",
     "content": "assign letter {{letter}}",
     "group": "Windows",
-    "description": "diskpart: Disk, volume and partition manager. (Assign a drive letter to the selected volume)",
+    "description": "diskpart: Disk, volume, and partition manager. (Assign a drive letter to the selected volume)",
     "tags": [
       "windows",
       "diskpart",
@@ -10850,7 +10850,7 @@
     "title": "diskpart - Create a new partition",
     "content": "create partition primary",
     "group": "Windows",
-    "description": "diskpart: Disk, volume and partition manager. (Create a new partition)",
+    "description": "diskpart: Disk, volume, and partition manager. (Create a new partition)",
     "tags": [
       "windows",
       "diskpart",
@@ -10865,7 +10865,7 @@
     "title": "diskpart - Activate the selected volume",
     "content": "active",
     "group": "Windows",
-    "description": "diskpart: Disk, volume and partition manager. (Activate the selected volume)",
+    "description": "diskpart: Disk, volume, and partition manager. (Activate the selected volume)",
     "tags": [
       "windows",
       "diskpart",
@@ -10880,7 +10880,7 @@
     "title": "diskpart - Exit diskpart",
     "content": "exit",
     "group": "Windows",
-    "description": "diskpart: Disk, volume and partition manager. (Exit diskpart)",
+    "description": "diskpart: Disk, volume, and partition manager. (Exit diskpart)",
     "tags": [
       "windows",
       "diskpart",
@@ -10997,10 +10997,10 @@
   {
     "id": "tldr-en-windows-reg-import-0",
     "type": "command",
-    "title": "reg-import - Import all keys, subkeys and values from a file",
+    "title": "reg-import - Import all keys, subkeys, and values from a file",
     "content": "reg import {{path\\to\\file.reg}}",
     "group": "Windows",
-    "description": "reg-import: Import all available keys, subkeys, and values from a `.reg` file. (Import all keys, subkeys and values from a file)",
+    "description": "reg-import: Import all available keys, subkeys, and values from a `.reg` file. (Import all keys, subkeys, and values from a file)",
     "tags": [
       "windows",
       "reg-import",
@@ -13952,10 +13952,10 @@
   {
     "id": "tldr-en-windows-mimikatz-7",
     "type": "command",
-    "title": "mimikatz - Exit mimikatz",
+    "title": "mimikatz - [Interactive] Exit mimikatz",
     "content": "exit",
     "group": "Windows",
-    "description": "mimikatz: Interact with Windows credentials, perform credential dumping, token manipulation, and more. Requires administrator privileges and typically runs on Windows. (Exit mimikatz)",
+    "description": "mimikatz: Interact with Windows credentials, perform credential dumping, token manipulation, and more. Requires administrator privileges and typically runs on Windows. ([Interactive] Exit mimikatz)",
     "tags": [
       "windows",
       "mimikatz",
@@ -14405,7 +14405,7 @@
     "title": "psping - Ping a host using ICMP",
     "content": "psping {{hostname}}",
     "group": "Windows",
-    "description": "psping: A ping tool that includes TCP ping, latency and bandwidth measurement. (Ping a host using ICMP)",
+    "description": "psping: A ping tool that includes TCP ping, latency, and bandwidth measurement. (Ping a host using ICMP)",
     "tags": [
       "windows",
       "psping",
@@ -14420,7 +14420,7 @@
     "title": "psping - Ping a host over a TCP port",
     "content": "psping {{hostname}}:{{port}}",
     "group": "Windows",
-    "description": "psping: A ping tool that includes TCP ping, latency and bandwidth measurement. (Ping a host over a TCP port)",
+    "description": "psping: A ping tool that includes TCP ping, latency, and bandwidth measurement. (Ping a host over a TCP port)",
     "tags": [
       "windows",
       "psping",
@@ -14435,7 +14435,7 @@
     "title": "psping - Specify the number of pings and perform it quietly",
     "content": "psping {{hostname}} -n {{pings}} -q",
     "group": "Windows",
-    "description": "psping: A ping tool that includes TCP ping, latency and bandwidth measurement. (Specify the number of pings and perform it quietly)",
+    "description": "psping: A ping tool that includes TCP ping, latency, and bandwidth measurement. (Specify the number of pings and perform it quietly)",
     "tags": [
       "windows",
       "psping",
@@ -14450,7 +14450,7 @@
     "title": "psping - Ping the target over TCP 50 times and produce a histogram of the results",
     "content": "psping {{hostname}}:{{port}} -q -n {{50}} -h",
     "group": "Windows",
-    "description": "psping: A ping tool that includes TCP ping, latency and bandwidth measurement. (Ping the target over TCP 50 times and produce a histogram of the results)",
+    "description": "psping: A ping tool that includes TCP ping, latency, and bandwidth measurement. (Ping the target over TCP 50 times and produce a histogram of the results)",
     "tags": [
       "windows",
       "psping",
@@ -14465,7 +14465,7 @@
     "title": "psping - Display help",
     "content": "psping /?",
     "group": "Windows",
-    "description": "psping: A ping tool that includes TCP ping, latency and bandwidth measurement. (Display help)",
+    "description": "psping: A ping tool that includes TCP ping, latency, and bandwidth measurement. (Display help)",
     "tags": [
       "windows",
       "psping",
@@ -15962,10 +15962,10 @@
   {
     "id": "tldr-en-windows-choco-push-0",
     "type": "command",
-    "title": "choco-push - Push a compiled `nupkg` to the specified feed",
+    "title": "choco-push - Push a compiled `.nupkg` to the specified feed",
     "content": "choco push {{[-s|--source]}} {{https://push.chocolatey.org/}}",
     "group": "Windows",
-    "description": "choco-push: Push a compiled NuGet package (`nupkg`) to a package feed. (Push a compiled `nupkg` to the specified feed)",
+    "description": "choco-push: Push a compiled NuGet package (`.nupkg`) to a package feed. (Push a compiled `.nupkg` to the specified feed)",
     "tags": [
       "windows",
       "choco-push",
@@ -15977,10 +15977,10 @@
   {
     "id": "tldr-en-windows-choco-push-1",
     "type": "command",
-    "title": "choco-push - Push a compiled `nupkg` to the specified feed with a timeout in seconds (default is 2700)",
+    "title": "choco-push - Push a compiled `.nupkg` to the specified feed with a timeout in seconds (default is 2700)",
     "content": "choco push {{[-s|--source]}} {{https://push.chocolatey.org/}} {{[--timeout|--execution-timeout]}} {{500}}",
     "group": "Windows",
-    "description": "choco-push: Push a compiled NuGet package (`nupkg`) to a package feed. (Push a compiled `nupkg` to the specified feed with a timeout in seconds (default is 2700))",
+    "description": "choco-push: Push a compiled NuGet package (`.nupkg`) to a package feed. (Push a compiled `.nupkg` to the specified feed with a timeout in seconds (default is 2700))",
     "tags": [
       "windows",
       "choco-push",

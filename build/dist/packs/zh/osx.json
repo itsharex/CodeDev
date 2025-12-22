@@ -300,21 +300,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-grsh-0",
-    "type": "command",
-    "title": "grsh - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux rsh",
-    "group": "macOS",
-    "description": "grsh: 这是 `-p linux rsh` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "grsh",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-gsplit-0",
     "type": "command",
     "title": "gsplit - 原命令的文档在",
@@ -1080,36 +1065,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-ghead-0",
-    "type": "command",
-    "title": "ghead - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux head",
-    "group": "macOS",
-    "description": "ghead: 这是 `-p linux head` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "ghead",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gsleep-0",
-    "type": "command",
-    "title": "gsleep - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux sleep",
-    "group": "macOS",
-    "description": "gsleep: 这是 `-p linux sleep` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gsleep",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-gsha512sum-0",
     "type": "command",
     "title": "gsha512sum - 原命令的文档在",
@@ -1284,36 +1239,6 @@
     "tags": [
       "osx",
       "xsltproc",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gdf-0",
-    "type": "command",
-    "title": "gdf - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux df",
-    "group": "macOS",
-    "description": "gdf: 这是 `-p linux df` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gdf",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gsed-0",
-    "type": "command",
-    "title": "gsed - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux sed",
-    "group": "macOS",
-    "description": "gsed: 这是 `-p linux sed` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gsed",
       "tldr",
       "zh"
     ],
@@ -1560,21 +1485,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-grcp-0",
-    "type": "command",
-    "title": "grcp - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux rcp",
-    "group": "macOS",
-    "description": "grcp: 这是 `-p linux rcp` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "grcp",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-gseq-0",
     "type": "command",
     "title": "gseq - 原命令的文档在",
@@ -1644,21 +1554,6 @@
     "tags": [
       "osx",
       "g[",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-glibtoolize-0",
-    "type": "command",
-    "title": "glibtoolize - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux libtoolize",
-    "group": "macOS",
-    "description": "glibtoolize: 这是 `-p linux libtoolize` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "glibtoolize",
       "tldr",
       "zh"
     ],
@@ -1935,21 +1830,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-glibtool-0",
-    "type": "command",
-    "title": "glibtool - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux libtool",
-    "group": "macOS",
-    "description": "glibtool: 这是 `-p linux libtool` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "glibtool",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-gvdir-0",
     "type": "command",
     "title": "gvdir - 原命令的文档在",
@@ -2154,21 +2034,6 @@
     "tags": [
       "osx",
       "sysctl",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gnl-0",
-    "type": "command",
-    "title": "gnl - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux nl",
-    "group": "macOS",
-    "description": "gnl: 这是 `-p linux nl` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gnl",
       "tldr",
       "zh"
     ],
@@ -2400,21 +2265,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-glogger-0",
-    "type": "command",
-    "title": "glogger - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux logger",
-    "group": "macOS",
-    "description": "glogger: 这是 `-p linux logger` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "glogger",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-codesign-0",
     "type": "command",
     "title": "codesign - 用证书签名",
@@ -2565,21 +2415,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-gmktemp-0",
-    "type": "command",
-    "title": "gmktemp - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux mktemp",
-    "group": "macOS",
-    "description": "gmktemp: 这是 `-p linux mktemp` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gmktemp",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-softwareupdate-0",
     "type": "command",
     "title": "softwareupdate - 列出所有可用的更新",
@@ -2694,21 +2529,6 @@
     "tags": [
       "osx",
       "airport",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gupdatedb-0",
-    "type": "command",
-    "title": "gupdatedb - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux updatedb",
-    "group": "macOS",
-    "description": "gupdatedb: 这是 `-p linux updatedb` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gupdatedb",
       "tldr",
       "zh"
     ],
@@ -2889,36 +2709,6 @@
     "tags": [
       "osx",
       "shutdown",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-grlogin-0",
-    "type": "command",
-    "title": "grlogin - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux rlogin",
-    "group": "macOS",
-    "description": "grlogin: 这是 `-p linux rlogin` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "grlogin",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gfold-0",
-    "type": "command",
-    "title": "gfold - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux fold",
-    "group": "macOS",
-    "description": "gfold: 这是 `-p linux fold` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gfold",
       "tldr",
       "zh"
     ],
@@ -3204,21 +2994,6 @@
     "tags": [
       "osx",
       "say",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gptx-0",
-    "type": "command",
-    "title": "gptx - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux ptx",
-    "group": "macOS",
-    "description": "gptx: 这是 `-p linux ptx` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gptx",
       "tldr",
       "zh"
     ],
@@ -3810,21 +3585,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-gruncon-0",
-    "type": "command",
-    "title": "gruncon - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux runcon",
-    "group": "macOS",
-    "description": "gruncon: 这是 `-p linux runcon` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gruncon",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-opensnoop-0",
     "type": "command",
     "title": "opensnoop - 输出当前系统内被打开的所有文件",
@@ -3999,21 +3759,6 @@
     "tags": [
       "osx",
       "greadlink",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gcat-0",
-    "type": "command",
-    "title": "gcat - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux cat",
-    "group": "macOS",
-    "description": "gcat: 这是 `-p linux cat` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gcat",
       "tldr",
       "zh"
     ],
@@ -4260,21 +4005,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-gkill-0",
-    "type": "command",
-    "title": "gkill - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux kill",
-    "group": "macOS",
-    "description": "gkill: 这是 `-p linux kill` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gkill",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-wacaw-0",
     "type": "command",
     "title": "wacaw - 从网络摄像机拍照",
@@ -4350,21 +4080,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-gchcon-0",
-    "type": "command",
-    "title": "gchcon - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux chcon",
-    "group": "macOS",
-    "description": "gchcon: 这是 `-p linux chcon` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gchcon",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-gnohup-0",
     "type": "command",
     "title": "gnohup - 原命令的文档在",
@@ -4419,21 +4134,6 @@
     "tags": [
       "osx",
       "gfalse",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gdd-0",
-    "type": "command",
-    "title": "gdd - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux dd",
-    "group": "macOS",
-    "description": "gdd: 这是 `-p linux dd` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gdd",
       "tldr",
       "zh"
     ],
@@ -5160,21 +4860,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-gcsplit-0",
-    "type": "command",
-    "title": "gcsplit - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux csplit",
-    "group": "macOS",
-    "description": "gcsplit: 这是 `-p linux csplit` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gcsplit",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-gexpand-0",
     "type": "command",
     "title": "gexpand - 原命令的文档在",
@@ -5184,21 +4869,6 @@
     "tags": [
       "osx",
       "gexpand",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-grexec-0",
-    "type": "command",
-    "title": "grexec - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux rexec",
-    "group": "macOS",
-    "description": "grexec: 这是 `-p linux rexec` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "grexec",
       "tldr",
       "zh"
     ],
@@ -5289,21 +4959,6 @@
     "tags": [
       "osx",
       "xattr",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gtalk-0",
-    "type": "command",
-    "title": "gtalk - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux talk",
-    "group": "macOS",
-    "description": "gtalk: 这是 `-p linux talk` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gtalk",
       "tldr",
       "zh"
     ],
@@ -5454,21 +5109,6 @@
     "tags": [
       "osx",
       "ping",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gtftp-0",
-    "type": "command",
-    "title": "gtftp - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux tftp",
-    "group": "macOS",
-    "description": "gtftp: 这是 `-p linux tftp` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gtftp",
       "tldr",
       "zh"
     ],
@@ -5792,10 +5432,10 @@
   {
     "id": "tldr-zh-osx-as-0",
     "type": "command",
-    "title": "as - 汇编文件，将输出写入 a.out",
+    "title": "as - 汇编文件，将输出写入 `a.out`",
     "content": "as {{路径/到/文件.s}}",
     "group": "macOS",
-    "description": "as: 便携式 GNU 汇编程序。 主要用于汇编 `gcc` 的输出以供 `ld` 使用。 (汇编文件，将输出写入 a.out)",
+    "description": "as: 便携式 GNU 汇编程序。 主要用于汇编 `gcc` 的输出以供 `ld` 使用。 (汇编文件，将输出写入 `a.out`)",
     "tags": [
       "osx",
       "as",
@@ -5837,28 +5477,13 @@
   {
     "id": "tldr-zh-osx-as-3",
     "type": "command",
-    "title": "as - 在目录列表中包含一个给定路径，以搜索 .include 指令中指定的文件",
+    "title": "as - 在目录列表中包含一个给定路径，以搜索 `.include` 指令中指定的文件",
     "content": "as -I {{目标文件夹}} {{路径/到/文件.s}}",
     "group": "macOS",
-    "description": "as: 便携式 GNU 汇编程序。 主要用于汇编 `gcc` 的输出以供 `ld` 使用。 (在目录列表中包含一个给定路径，以搜索 .include 指令中指定的文件)",
+    "description": "as: 便携式 GNU 汇编程序。 主要用于汇编 `gcc` 的输出以供 `ld` 使用。 (在目录列表中包含一个给定路径，以搜索 `.include` 指令中指定的文件)",
     "tags": [
       "osx",
       "as",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gdir-0",
-    "type": "command",
-    "title": "gdir - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux dir",
-    "group": "macOS",
-    "description": "gdir: 这是 `-p linux dir` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gdir",
       "tldr",
       "zh"
     ],
@@ -6105,21 +5730,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-zh-osx-gdnsdomainname-0",
-    "type": "command",
-    "title": "gdnsdomainname - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux dnsdomainname",
-    "group": "macOS",
-    "description": "gdnsdomainname: 这是 `-p linux dnsdomainname` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gdnsdomainname",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-zh-osx-gwc-0",
     "type": "command",
     "title": "gwc - 原命令的文档在",
@@ -6219,21 +5829,6 @@
     "tags": [
       "osx",
       "gid",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-gmknod-0",
-    "type": "command",
-    "title": "gmknod - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux mknod",
-    "group": "macOS",
-    "description": "gmknod: 这是 `-p linux mknod` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "gmknod",
       "tldr",
       "zh"
     ],
@@ -6429,21 +6024,6 @@
     "tags": [
       "osx",
       "gping",
-      "tldr",
-      "zh"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-zh-osx-glocate-0",
-    "type": "command",
-    "title": "glocate - 原命令的文档在",
-    "content": "tldr {{[-p|--platform]}} linux locate",
-    "group": "macOS",
-    "description": "glocate: 这是 `-p linux locate` 命令的一个别名。 (原命令的文档在)",
-    "tags": [
-      "osx",
-      "glocate",
       "tldr",
       "zh"
     ],

@@ -4232,10 +4232,10 @@
   {
     "id": "tldr-en-osx-system_profiler-0",
     "type": "command",
-    "title": "system_profiler - Display a report with specific details level (mini [no personal information], basic or full)",
+    "title": "system_profiler - Display a report with specific details level (mini [no personal information], basic, or full)",
     "content": "system_profiler -detailLevel {{level}}",
     "group": "macOS",
-    "description": "system_profiler: Report system hardware and software configuration. (Display a report with specific details level (mini [no personal information], basic or full))",
+    "description": "system_profiler: Report system hardware and software configuration. (Display a report with specific details level (mini [no personal information], basic, or full))",
     "tags": [
       "osx",
       "system_profiler",
@@ -6137,10 +6137,10 @@
   {
     "id": "tldr-en-osx-stat-0",
     "type": "command",
-    "title": "stat - Show file properties such as size, permissions, creation and access dates among others",
+    "title": "stat - Show file properties such as size, permissions, creation date, and access date among others",
     "content": "stat {{path/to/file}}",
     "group": "macOS",
-    "description": "stat: Display file status. (Show file properties such as size, permissions, creation and access dates among others)",
+    "description": "stat: Display file status. (Show file properties such as size, permissions, creation date, and access date among others)",
     "tags": [
       "osx",
       "stat",
@@ -6467,10 +6467,10 @@
   {
     "id": "tldr-en-osx-uname-2",
     "type": "command",
-    "title": "uname - Print kernel name, kernel release and kernel version",
+    "title": "uname - Print kernel name, kernel release, and kernel version",
     "content": "uname -srv",
     "group": "macOS",
-    "description": "uname: Print details about the current machine and the operating system running on it. Note: For additional information about the operating system, try the `sw_vers` command. (Print kernel name, kernel release and kernel version)",
+    "description": "uname: Print details about the current machine and the operating system running on it. Note: For additional information about the operating system, try the `sw_vers` command. (Print kernel name, kernel release, and kernel version)",
     "tags": [
       "osx",
       "uname",
@@ -6692,10 +6692,10 @@
   {
     "id": "tldr-en-osx-dd-1",
     "type": "command",
-    "title": "dd - Clone a drive to another drive with 4 MB block, ignore error and show the progress",
+    "title": "dd - Clone a drive to another drive with 4 MB block, ignore errors, and show the progress",
     "content": "dd bs=4m conv=noerror if={{/dev/source_drive}} of={{/dev/dest_drive}} status=progress",
     "group": "macOS",
-    "description": "dd: Convert and copy a file. (Clone a drive to another drive with 4 MB block, ignore error and show the progress)",
+    "description": "dd: Convert and copy a file. (Clone a drive to another drive with 4 MB block, ignore errors, and show the progress)",
     "tags": [
       "osx",
       "dd",
@@ -7385,7 +7385,7 @@
     "title": "dtrace - Set target data model for a specific architecture",
     "content": "dtrace -arch {{arch_name}}",
     "group": "macOS",
-    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace, and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Set target data model for a specific architecture)",
+    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Set target data model for a specific architecture)",
     "tags": [
       "osx",
       "dtrace",
@@ -7400,7 +7400,7 @@
     "title": "dtrace - Claim [a]nonymous tracing state and display the traced data",
     "content": "dtrace -a",
     "group": "macOS",
-    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace, and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Claim [a]nonymous tracing state and display the traced data)",
+    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Claim [a]nonymous tracing state and display the traced data)",
     "tags": [
       "osx",
       "dtrace",
@@ -7415,7 +7415,7 @@
     "title": "dtrace - Set principal trace buffer size. Supported units are `k`, `m`, `g`, or `t`",
     "content": "dtrace -b {{2g}}",
     "group": "macOS",
-    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace, and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Set principal trace buffer size. Supported units are `k`, `m`, `g`, or `t`)",
+    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Set principal trace buffer size. Supported units are `k`, `m`, `g`, or `t`)",
     "tags": [
       "osx",
       "dtrace",
@@ -7430,7 +7430,7 @@
     "title": "dtrace - Compile the specified D Program [s]ource file",
     "content": "dtrace -s {{D_script}}",
     "group": "macOS",
-    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace, and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Compile the specified D Program [s]ource file)",
+    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Compile the specified D Program [s]ource file)",
     "tags": [
       "osx",
       "dtrace",
@@ -7445,7 +7445,7 @@
     "title": "dtrace - Run the specified [c]ommand and exit upon its completion",
     "content": "dtrace -c {{command}}",
     "group": "macOS",
-    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace, and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Run the specified [c]ommand and exit upon its completion)",
+    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Run the specified [c]ommand and exit upon its completion)",
     "tags": [
       "osx",
       "dtrace",
@@ -7457,10 +7457,10 @@
   {
     "id": "tldr-en-osx-dtrace-5",
     "type": "command",
-    "title": "dtrace - Specify [f]unction name to trace or list (-l option). The corresponding argument can include any of the probe description forms like `provider:module:function`, `module:function` or `function`",
+    "title": "dtrace - Specify [f]unction name to trace or list (-l option). The corresponding argument can include any of the probe description forms like `provider:module:function`, `module:function`, or `function`",
     "content": "dtrace -f {{function}}",
     "group": "macOS",
-    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace, and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Specify [f]unction name to trace or list (-l option). The corresponding argument can include any of the probe description forms like `provider:module:function`, `module:function` or `function`)",
+    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Specify [f]unction name to trace or list (-l option). The corresponding argument can include any of the probe description forms like `provider:module:function`, `module:function`, or `function`)",
     "tags": [
       "osx",
       "dtrace",
@@ -7475,7 +7475,7 @@
     "title": "dtrace - Grad the specified [p]rocess ID, cache its symbol table, and exit upon completion",
     "content": "dtrace -p {{pid}}",
     "group": "macOS",
-    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace, and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Grad the specified [p]rocess ID, cache its symbol table, and exit upon completion)",
+    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Grad the specified [p]rocess ID, cache its symbol table, and exit upon completion)",
     "tags": [
       "osx",
       "dtrace",
@@ -7490,7 +7490,7 @@
     "title": "dtrace - Combine different options for tracing function in a process",
     "content": "dtrace -a -b {{buffer_size}} -f {{function}} -p {{pid}}",
     "group": "macOS",
-    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace, and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Combine different options for tracing function in a process)",
+    "description": "dtrace: A simple interface to invoke the D language compiler, retrieve buffered trace and print traced data from the DTrace kernel facility. Generic front-end to DTrace facility, requiring root privileges. (Combine different options for tracing function in a process)",
     "tags": [
       "osx",
       "dtrace",
@@ -8627,10 +8627,10 @@
   {
     "id": "tldr-en-osx-xctool-2",
     "type": "command",
-    "title": "xctool - Clean, build and execute all the tests",
+    "title": "xctool - Clean, build, and execute all the tests",
     "content": "xctool -workspace {{YourWorkspace.xcworkspace}} -scheme {{YourScheme}} clean build test",
     "group": "macOS",
-    "description": "xctool: Build Xcode projects. (Clean, build and execute all the tests)",
+    "description": "xctool: Build Xcode projects. (Clean, build, and execute all the tests)",
     "tags": [
       "osx",
       "xctool",
@@ -9092,10 +9092,10 @@
   {
     "id": "tldr-en-osx-diskutil-0",
     "type": "command",
-    "title": "diskutil - List all currently available disks, partitions and mounted volumes",
+    "title": "diskutil - List all currently available disks, partitions, and mounted volumes",
     "content": "diskutil list",
     "group": "macOS",
-    "description": "diskutil: Utility to manage local disks and volumes. Some subcommands such as `partitiondisk` have their own usage documentation. (List all currently available disks, partitions and mounted volumes)",
+    "description": "diskutil: Utility to manage local disks and volumes. Some subcommands such as `partitiondisk` have their own usage documentation. (List all currently available disks, partitions, and mounted volumes)",
     "tags": [
       "osx",
       "diskutil",
@@ -11540,7 +11540,7 @@
     "title": "security - List all available keychains",
     "content": "security list-keychains",
     "group": "macOS",
-    "description": "security: Administer keychains, keys, certificates and the Security framework. (List all available keychains)",
+    "description": "security: Administer keychains, keys, certificates, and the Security framework. (List all available keychains)",
     "tags": [
       "osx",
       "security",
@@ -11555,7 +11555,7 @@
     "title": "security - Delete a specific keychain",
     "content": "security delete-keychain {{path/to/file.keychain}}",
     "group": "macOS",
-    "description": "security: Administer keychains, keys, certificates and the Security framework. (Delete a specific keychain)",
+    "description": "security: Administer keychains, keys, certificates, and the Security framework. (Delete a specific keychain)",
     "tags": [
       "osx",
       "security",
@@ -11570,7 +11570,7 @@
     "title": "security - Create a keychain",
     "content": "security create-keychain -p {{password}} {{path/to/file.keychain}}",
     "group": "macOS",
-    "description": "security: Administer keychains, keys, certificates and the Security framework. (Create a keychain)",
+    "description": "security: Administer keychains, keys, certificates, and the Security framework. (Create a keychain)",
     "tags": [
       "osx",
       "security",
@@ -11585,7 +11585,7 @@
     "title": "security - Set a certificate to use with a website or [s]ervice by its [c]ommon name (fails if several certificates with the same common name exist)",
     "content": "security set-identity-preference -s {{URL|hostname|service}} -c \"{{common_name}}\" {{path/to/file.keychain}}",
     "group": "macOS",
-    "description": "security: Administer keychains, keys, certificates and the Security framework. (Set a certificate to use with a website or [s]ervice by its [c]ommon name (fails if several certificates with the same common name exist))",
+    "description": "security: Administer keychains, keys, certificates, and the Security framework. (Set a certificate to use with a website or [s]ervice by its [c]ommon name (fails if several certificates with the same common name exist))",
     "tags": [
       "osx",
       "security",
@@ -11600,7 +11600,7 @@
     "title": "security - Add a certificate from file to a [k]eychain (if -k isn't specified, the default keychain is used)",
     "content": "security add-certificates -k {{file.keychain}} {{path/to/cert_file.pem}}",
     "group": "macOS",
-    "description": "security: Administer keychains, keys, certificates and the Security framework. (Add a certificate from file to a [k]eychain (if -k isn't specified, the default keychain is used))",
+    "description": "security: Administer keychains, keys, certificates, and the Security framework. (Add a certificate from file to a [k]eychain (if -k isn't specified, the default keychain is used))",
     "tags": [
       "osx",
       "security",
@@ -11615,7 +11615,7 @@
     "title": "security - Add a CA certificate to the per-user Trust Settings",
     "content": "security add-trusted-cert -k {{path/to/user-keychain.keychain-db}} {{path/to/ca-cert_file.pem}}",
     "group": "macOS",
-    "description": "security: Administer keychains, keys, certificates and the Security framework. (Add a CA certificate to the per-user Trust Settings)",
+    "description": "security: Administer keychains, keys, certificates, and the Security framework. (Add a CA certificate to the per-user Trust Settings)",
     "tags": [
       "osx",
       "security",
@@ -11630,7 +11630,7 @@
     "title": "security - Remove a CA certificate from the per-user Trust Settings",
     "content": "security remove-trusted-cert {{path/to/ca-cert_file.pem}}",
     "group": "macOS",
-    "description": "security: Administer keychains, keys, certificates and the Security framework. (Remove a CA certificate from the per-user Trust Settings)",
+    "description": "security: Administer keychains, keys, certificates, and the Security framework. (Remove a CA certificate from the per-user Trust Settings)",
     "tags": [
       "osx",
       "security",
@@ -11900,7 +11900,7 @@
     "title": "aiac - Generate Terraform for Azure storage account",
     "content": "aiac get terraform {{for an azure storage account}}",
     "group": "macOS",
-    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries and more. (Generate Terraform for Azure storage account)",
+    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries, and more. (Generate Terraform for Azure storage account)",
     "tags": [
       "osx",
       "aiac",
@@ -11915,7 +11915,7 @@
     "title": "aiac - Generate a Dockerfile for nginx",
     "content": "aiac get dockerfile {{for a secured nginx}}",
     "group": "macOS",
-    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries and more. (Generate a Dockerfile for nginx)",
+    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries, and more. (Generate a Dockerfile for nginx)",
     "tags": [
       "osx",
       "aiac",
@@ -11930,7 +11930,7 @@
     "title": "aiac - Generate GitHub action that applies Terraform",
     "content": "aiac get github action {{that plans and applies terraform}}",
     "group": "macOS",
-    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries and more. (Generate GitHub action that applies Terraform)",
+    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries, and more. (Generate GitHub action that applies Terraform)",
     "tags": [
       "osx",
       "aiac",
@@ -11945,7 +11945,7 @@
     "title": "aiac - Generate a port scanner in Python",
     "content": "aiac get python {{code that scans all open ports in my network}}",
     "group": "macOS",
-    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries and more. (Generate a port scanner in Python)",
+    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries, and more. (Generate a port scanner in Python)",
     "tags": [
       "osx",
       "aiac",
@@ -11960,7 +11960,7 @@
     "title": "aiac - Generate a MongoDB query",
     "content": "aiac get mongo {{query that aggregates all documents by created date}}",
     "group": "macOS",
-    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries and more. (Generate a MongoDB query)",
+    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries, and more. (Generate a MongoDB query)",
     "tags": [
       "osx",
       "aiac",

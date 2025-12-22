@@ -302,10 +302,10 @@
   {
     "id": "tldr-en-netbsd-sockstat-0",
     "type": "command",
-    "title": "sockstat - Show information for IPv4, IPv6 and Unix sockets for both listening and connected sockets",
+    "title": "sockstat - Show information for IPv4, IPv6, and Unix sockets for both listening and connected sockets",
     "content": "sockstat",
     "group": "Netbsd",
-    "description": "sockstat: List open Internet or UNIX domain sockets. Note: This program is a rewrite for NetBSD 3.0 from FreeBSD's `sockstat`. (Show information for IPv4, IPv6 and Unix sockets for both listening and connected sockets)",
+    "description": "sockstat: List open Internet or UNIX domain sockets. Note: This program is a rewrite for NetBSD 3.0 from FreeBSD's `sockstat`. (Show information for IPv4, IPv6, and Unix sockets for both listening and connected sockets)",
     "tags": [
       "netbsd",
       "sockstat",
