@@ -114,6 +114,21 @@ pub fn package_and_generic_rules() -> Vec<Rule> {
             keywords: &["-----BEGIN EC PRIVATE KEY-----"],
         },
 
+        // 增强规则：通用敏感字段检测 (High Confidence Generic Fields)
+        // 针对：password, access_key, secret_key, apiV3Key 等常见字段
+        // 匹配：16~128位的高熵字符串
+        Rule {
+            id: "common-credential-field",
+            description: "Detected a common credential field with a high entropy value",
+            regex: Regex::new(r#"(?i)(?:password|passwd|pass|pwd|secret|secret[_-]?key|access[_-]?key|api[_-]?key|api[_-]?v3[_-]?key|token|auth[_-]?token|key|credential)["']?\s*(?::|=|:=|=>)\s*["']?(?P<secret>[a-zA-Z0-9_\-]{16,128})["']?"#).unwrap(),
+            entropy: Some(3.0), 
+            
+            keywords: &[
+                "password", "passwd", "pass", "pwd", 
+                "secret", "key", "token", "auth", "credential"
+            ],
+        },
+
         // Generic API Key (high entropy 40+ chars)
         Rule {
             id: "generic-api-key",
