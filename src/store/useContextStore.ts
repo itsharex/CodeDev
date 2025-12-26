@@ -9,10 +9,7 @@ import { IgnoreConfig, DEFAULT_PROJECT_IGNORE, FileNode } from '@/types/context'
  * 将指定节点及其所有子孙节点的 isSelected 状态强制设为目标值
  */
 const setAllChildren = (node: FileNode, isSelected: boolean): FileNode => {
-  // 创建节点副本
   const newNode = { ...node, isSelected };
-  
-  // 如果有子节点，递归处理
   if (newNode.children) {
     newNode.children = newNode.children.map(child => setAllChildren(child, isSelected));
   }
@@ -24,50 +21,40 @@ const setAllChildren = (node: FileNode, isSelected: boolean): FileNode => {
  */
 const updateNodeState = (nodes: FileNode[], targetId: string, isSelected: boolean): FileNode[] => {
   return nodes.map(node => {
-    // 1. 找到目标节点：应用级联更新
     if (node.id === targetId) {
       return setAllChildren(node, isSelected);
     }
-    
-    // 2. 未找到目标，但当前节点有子节点：递归向下查找
     if (node.children) {
       return {
         ...node,
         children: updateNodeState(node.children, targetId, isSelected)
       };
     }
-    
-    // 3. 无关节点：保持原样
     return node;
   });
 };
 
-const applyLockState = (nodes: FileNode[], fullConfig: IgnoreConfig): FileNode[] => {
+const applyLockState = (nodes: FileNode[], fullConfig: IgnoreConfig, parentLocked = false): FileNode[] => {
   return nodes.map(node => {
-    // 1. 检查当前节点是否匹配黑名单
-    let shouldLock = false;
+    let shouldLock = parentLocked;
     
-    // 检查文件夹名
-    if (node.kind === 'dir' && fullConfig.dirs.includes(node.name)) shouldLock = true;
-    // 检查文件名
-    if (node.kind === 'file' && fullConfig.files.includes(node.name)) shouldLock = true;
-    // 检查后缀
-    if (node.kind === 'file') {
-      const ext = node.name.split('.').pop()?.toLowerCase();
-      if (ext && fullConfig.extensions.includes(ext)) shouldLock = true;
+    if (!shouldLock) {
+        if (node.kind === 'dir' && fullConfig.dirs.includes(node.name)) shouldLock = true;
+        if (node.kind === 'file' && fullConfig.files.includes(node.name)) shouldLock = true;
+        if (node.kind === 'file') {
+          const ext = node.name.split('.').pop()?.toLowerCase();
+          if (ext && fullConfig.extensions.includes(ext)) shouldLock = true;
+        }
     }
 
-    // 2. 如果匹配，强制不选中 + 锁定
-    // 3. 如果不匹配，解锁 (isLocked = false)，但保持原有的 isSelected 状态
     const newNode: FileNode = {
       ...node,
       isSelected: shouldLock ? false : node.isSelected,
       isLocked: shouldLock
     };
 
-    // 4. 递归处理子节点
     if (newNode.children) {
-      newNode.children = applyLockState(newNode.children, fullConfig);
+      newNode.children = applyLockState(newNode.children, fullConfig, shouldLock);
     }
 
     return newNode;
@@ -75,6 +62,20 @@ const applyLockState = (nodes: FileNode[], fullConfig: IgnoreConfig): FileNode[]
 };
 
 // --- Store 定义 ---
+const invertTreeSelection = (nodes: FileNode[]): FileNode[] => {
+  return nodes.map(node => {
+    // 如果节点被锁定（.gitignore 或过滤器），跳过修改
+    if (node.isLocked) return node;
+
+    return {
+      ...node,
+      // 翻转当前节点的选中状态
+      isSelected: !node.isSelected,
+      // 递归处理子节点
+      children: node.children ? invertTreeSelection(node.children) : undefined
+    };
+  });
+};
 
 interface ContextState {
   // --- 持久化设置 ---
@@ -86,6 +87,7 @@ interface ContextState {
   projectRoot: string | null;
   fileTree: FileNode[]; 
   isScanning: boolean;
+  detectSecrets: boolean;
 
   // --- Actions ---
   setProjectRoot: (path: string) => void;
@@ -98,7 +100,9 @@ interface ContextState {
   refreshTreeStatus: (globalConfig: IgnoreConfig) => void;
   // 树操作
   toggleSelect: (nodeId: string, checked: boolean) => void;
+  invertSelection: () => void;
   setRemoveComments: (enable: boolean) => void;
+  setDetectSecrets: (enable: boolean) => void;
 }
 
 export const useContextStore = create<ContextState>()(
@@ -106,6 +110,7 @@ export const useContextStore = create<ContextState>()(
     (set) => ({
       projectIgnore: DEFAULT_PROJECT_IGNORE,
       removeComments: false,
+      detectSecrets: true,
       projectRoot: null,
       fileTree: [],
       isScanning: false,
@@ -150,14 +155,20 @@ export const useContextStore = create<ContextState>()(
         fileTree: updateNodeState(state.fileTree, nodeId, checked)
       })),
 
+      invertSelection: () => set((state) => ({
+        fileTree: invertTreeSelection(state.fileTree)
+      })),
+
       setRemoveComments: (enable) => set({ removeComments: enable }),
+      setDetectSecrets: (enable) => set({ detectSecrets: enable }),
     }),
     {
       name: 'context-config',
       storage: createJSONStorage(() => fileStorage),
       partialize: (state) => ({
         projectIgnore: state.projectIgnore,
-        removeComments: state.removeComments
+        removeComments: state.removeComments,
+        detectSecrets: state.detectSecrets
       }),
     }
   )

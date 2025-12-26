@@ -14,7 +14,8 @@ use tauri::{
 
 // 引入模块
 mod git;
-mod export; // 新增模块引入
+mod export;
+mod gitleaks;
 
 // =================================================================
 // 系统监控相关数据结构
@@ -79,8 +80,17 @@ fn get_system_info(
 }
 
 // =================================================================
-// 导出命令 (新增)
+// 导出命令
 // =================================================================
+
+#[tauri::command]
+async fn scan_for_secrets(content: String) -> Vec<gitleaks::SecretMatch> {
+    let matches = tauri::async_runtime::spawn_blocking(move || {
+        gitleaks::scan_text(&content)
+    }).await.unwrap_or_default();
+    
+    matches
+}
 
 #[tauri::command]
 async fn export_git_diff(
@@ -145,7 +155,8 @@ fn main() {
             git::get_git_diff,
             git::get_git_diff_text,
             // 导出命令
-            export_git_diff
+            export_git_diff,
+            scan_for_secrets
         ])
         .setup(|app| {
             let mut system = System::new();
