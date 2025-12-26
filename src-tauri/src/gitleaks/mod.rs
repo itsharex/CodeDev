@@ -3,9 +3,8 @@ use regex::Regex;
 use once_cell::sync::Lazy;
 use entropy::shannon_entropy;
 use std::str;
-use rayon::prelude::*; // 引入 Rayon 并行处理
+use rayon::prelude::*;
 
-// 注册子模块
 pub mod allowlist;
 pub mod rule;
 pub mod rules_ai;
@@ -18,7 +17,6 @@ pub mod rules_remaining;
 use allowlist::is_safe_value;
 use rule::get_all_rules;
 
-// 定义 Rule 结构体 (供子模块使用)
 #[derive(Debug, Clone)]
 pub struct Rule {
     pub id: &'static str,
@@ -28,57 +26,54 @@ pub struct Rule {
     pub keywords: &'static [&'static str],
 }
 
-// 定义返回给前端的数据结构
 #[derive(Serialize, Clone, Debug)]
 pub struct SecretMatch {
     pub kind: String,        
     pub value: String,       
     pub index: usize,        
-    pub risk_level: String,  
+    pub risk_level: String,
+    // --- 上下文信息 ---
+    pub line_number: usize,        // 敏感信息所在的行号
+    pub snippet: String,           // 代码片段
+    pub snippet_start_line: usize, // 新增：代码片段的第一行是第几行
 }
 
-// 确保只初始化一次规则库
 static RULES: Lazy<&'static [Rule]> = Lazy::new(|| get_all_rules());
 
 pub fn scan_text(text: &str) -> Vec<SecretMatch> {
     let rules = *RULES;
     
-    // 配置分块参数
-    const FRAGMENT_SIZE: usize = 16 * 1024; // 16KB
-    const OVERLAP: usize = 512; // 增加重叠区域，防止长Key被切断
+    const FRAGMENT_SIZE: usize = 16 * 1024;
+    const OVERLAP: usize = 512;
     let step = FRAGMENT_SIZE.saturating_sub(OVERLAP);
     let bytes = text.as_bytes();
     let total_len = bytes.len();
 
-    // 1. 如果文本很小，直接单线程处理，避免线程调度开销
     if total_len <= FRAGMENT_SIZE {
         let mut matches = Vec::new();
         scan_fragment(text, 0, rules, &mut matches);
-        return finalize_matches(matches);
+        let mut final_matches = finalize_matches(matches);
+        for m in &mut final_matches {
+            enrich_context(text, m);
+        }
+        return final_matches;
     }
 
-    // 2. 预计算所有块的起始位置
     let chunk_starts: Vec<usize> = (0..total_len).step_by(step).collect();
 
-    // 3. 使用 Rayon 并行扫描
-    // par_iter() 会自动根据 CPU 核心数将任务分发到不同线程
-    // 修复警告：移除这里的 mut，因为 collect 会生成一个新的 Vec
     let matches: Vec<SecretMatch> = chunk_starts.par_iter()
         .flat_map(|&start| {
             let end = std::cmp::min(start + FRAGMENT_SIZE, total_len);
             let chunk = &bytes[start..end];
             let mut local_matches = Vec::new();
 
-            // 安全处理 UTF-8 边界
             match str::from_utf8(chunk) {
                 Ok(fragment_str) => {
                     scan_fragment(fragment_str, start, rules, &mut local_matches);
                 }
                 Err(e) => {
                     let valid_up_to = e.valid_up_to();
-                    // 处理开头即乱码的罕见情况
                     if valid_up_to == 0 && start + 4 < total_len {
-                        // 尝试跳过少量字节后重新解析（简单的容错）
                         if let Ok(sub_str) = str::from_utf8(&chunk[1..]) {
                              scan_fragment(sub_str, start + 1, rules, &mut local_matches);
                         }
@@ -92,36 +87,73 @@ pub fn scan_text(text: &str) -> Vec<SecretMatch> {
             }
             local_matches
         })
-        .collect(); // 自动合并所有线程的结果
+        .collect();
 
-    finalize_matches(matches)
+    let mut unique_matches = finalize_matches(matches);
+
+    for m in &mut unique_matches {
+        enrich_context(text, m);
+    }
+
+    unique_matches
 }
 
-// 核心扫描逻辑
+// 填充上下文信息
+fn enrich_context(full_text: &str, m: &mut SecretMatch) {
+    // 1. 计算敏感信息所在的行号
+    let pre_match_bytes = &full_text.as_bytes()[..m.index];
+    let match_line_num = pre_match_bytes.iter().filter(|&&b| b == b'\n').count() + 1;
+    m.line_number = match_line_num;
+
+    // 2. 截取上下文
+    let match_line_start = full_text[..m.index].rfind('\n').map(|i| i + 1).unwrap_or(0);
+    
+    // 向前找2行
+    let mut snippet_start = match_line_start;
+    let mut lines_back = 0; // 记录实际回溯了多少行
+    for _ in 0..2 {
+        if snippet_start == 0 { break; }
+        let search_limit = snippet_start.saturating_sub(1);
+        snippet_start = full_text[..search_limit].rfind('\n').map(|i| i + 1).unwrap_or(0);
+        lines_back += 1;
+    }
+    
+    // 计算片段起始行号
+    m.snippet_start_line = match_line_num - lines_back;
+
+    // 向后找2行
+    let match_end = m.index + m.value.len();
+    let mut snippet_end = match_end;
+    for _ in 0..3 { 
+        if let Some(next_nl) = full_text[snippet_end..].find('\n') {
+            snippet_end += next_nl + 1;
+        } else {
+            snippet_end = full_text.len();
+            break;
+        }
+    }
+
+    m.snippet = full_text[snippet_start..snippet_end].trim_end().to_string();
+}
+
 fn scan_fragment(fragment_str: &str, base_offset: usize, rules: &[Rule], matches: &mut Vec<SecretMatch>) {
     for rule in rules {
-        // 性能优化：关键词预过滤 (Quick Check)
-        // 使用 contains() 比 regex 快得多，如果不存在关键词直接跳过
         if !rule.keywords.is_empty() && !rule.keywords.iter().any(|kw| fragment_str.contains(kw)) {
             continue;
         }
 
         for cap in rule.regex.captures_iter(fragment_str) {
-            // 优先获取名为 "secret" 的捕获组，否则获取整个匹配
             let m = cap.name("secret").or_else(|| cap.get(0));
             let Some(secret_match) = m else { continue };
 
             let secret = secret_match.as_str();
             
-            // 检测优化：白名单与启发式过滤
             if is_safe_value(secret) {
                 continue;
             }
 
-            // 检测优化：熵值检测
             if let Some(min_entropy) = rule.entropy {
                 let ent = shannon_entropy(secret);
-                // 修复错误：将 f32 转换为 f64 进行比较
                 if (ent as f64) < min_entropy {
                     continue;
                 }
@@ -135,21 +167,19 @@ fn scan_fragment(fragment_str: &str, base_offset: usize, rules: &[Rule], matches
                 value: secret.to_string(),
                 index: global_index,
                 risk_level: "High".to_string(),
+                line_number: 0,
+                snippet: String::new(),
+                snippet_start_line: 0, // 初始化
             });
         }
     }
 }
 
-// 后处理：去重与排序
 fn finalize_matches(mut matches: Vec<SecretMatch>) -> Vec<SecretMatch> {
     if matches.is_empty() { return matches; }
 
-    // 1. 排序策略：
-    // - 优先按起始位置 (Index) 从小到大排序
-    // - 如果起始位置相同，按长度 (Length) 从大到小排序 (保留最完整的匹配)
     matches.sort_by(|a, b| {
-        a.index.cmp(&b.index)
-            .then_with(|| b.value.len().cmp(&a.value.len())) 
+        a.index.cmp(&b.index).then_with(|| b.value.len().cmp(&a.value.len())) 
     });
 
     let mut unique_matches = Vec::new();
@@ -160,15 +190,10 @@ fn finalize_matches(mut matches: Vec<SecretMatch>) -> Vec<SecretMatch> {
         let len = m.value.len();
         let end = start + len;
 
-        // 2. 重叠检测：
-        // 如果当前匹配项的起始位置 小于 上一个保留项的结束位置
-        // 说明这两个匹配项指向了同一段文本（或者是包含关系）
-        // 由于我们已经按长度降序排序了，第一个遇到的通常是最佳匹配（最长），后续重叠的短匹配直接丢弃
         if start < last_end {
             continue;
         }
 
-        // 更新结束位置边界
         last_end = end;
         unique_matches.push(m);
     }

@@ -9,6 +9,9 @@ export interface SecretMatch {
   value: String;
   index: number;
   risk_level: 'High' | 'Medium';
+  line_number: number;
+  snippet: string;
+  snippet_start_line: number; // 对应后端新增字段
 }
 
 interface ScanResultDialogProps {
@@ -21,10 +24,8 @@ interface ScanResultDialogProps {
 export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanResultDialogProps) {
   const { language } = useAppStore();
   
-  // 存储被选中的 item index (用于决定是否脱敏)
   const [selectedIndices, setSelectedIndices] = useState<Set<number>>(new Set());
 
-  // 初始化：默认全选
   useEffect(() => {
     if (isOpen && results.length > 0) {
       const allIndices = new Set(results.map(r => r.index));
@@ -36,11 +37,8 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
 
   const toggleSelection = (index: number) => {
     const newSet = new Set(selectedIndices);
-    if (newSet.has(index)) {
-      newSet.delete(index);
-    } else {
-      newSet.add(index);
-    }
+    if (newSet.has(index)) newSet.delete(index);
+    else newSet.add(index);
     setSelectedIndices(newSet);
   };
 
@@ -56,12 +54,50 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
     onConfirm(selectedIndices);
   };
 
+  // 渲染代码片段
+  const renderSnippet = (snippet: string, value: string, snippetStartLine: number) => {
+    const lines = snippet.split('\n');
+    const valStr = value.toString();
+
+    return (
+      <div className="bg-secondary/30 rounded-md border border-border/50 overflow-hidden text-[11px] font-mono leading-relaxed mt-2 select-text cursor-text" onClick={e => e.stopPropagation()}>
+        {lines.map((line, i) => {
+          const currentLineNum = snippetStartLine + i; // 修复：使用后端传来的准确起始行号
+          const parts = line.split(valStr);
+          
+          return (
+            <div key={i} className="flex min-w-0">
+               {/* 行号栏 */}
+               <div className="w-10 shrink-0 text-right pr-3 text-muted-foreground/40 select-none border-r border-border/30 bg-secondary/10 text-[10px] font-mono py-0.5">
+                  {currentLineNum}
+               </div>
+               {/* 代码内容 */}
+               <div className="pl-3 py-0.5 whitespace-pre break-all flex-1">
+                  {parts.map((part, idx) => (
+                    <span key={idx}>
+                      {part}
+                      {/* 高亮敏感词 */}
+                      {idx < parts.length - 1 && (
+                        <span className="bg-red-500/20 text-red-600 rounded px-0.5 border border-red-500/20 font-bold">
+                          {valStr}
+                        </span>
+                      )}
+                    </span>
+                  ))}
+               </div>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <div className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm flex items-center justify-center animate-in fade-in duration-200 p-4">
-      <div className="w-full max-w-[700px] bg-background border border-border rounded-xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
+      <div className="w-full max-w-[700px] bg-background border border-border rounded-xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-200 max-h-[85vh]">
         
         {/* Header */}
-        <div className="p-6 pb-4 bg-orange-500/5 border-b border-orange-500/10">
+        <div className="p-6 pb-4 bg-orange-500/5 border-b border-orange-500/10 shrink-0">
             <div className="flex items-start gap-4">
                 <div className="w-12 h-12 rounded-full bg-orange-500/10 text-orange-500 flex items-center justify-center shrink-0">
                     <ShieldAlert size={24} />
@@ -84,7 +120,7 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
         </div>
 
         {/* List */}
-        <div className="flex-1 overflow-y-auto max-h-[50vh] p-4 custom-scrollbar bg-secondary/5 space-y-3">
+        <div className="flex-1 overflow-y-auto p-4 custom-scrollbar bg-secondary/5 space-y-3 min-h-0">
             {results.map((item) => {
                 const isSelected = selectedIndices.has(item.index);
 
@@ -103,52 +139,49 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
                                 {isSelected ? <CheckSquare size={18} /> : <Square size={18} />}
                             </button>
                             
-                            <span className="text-xs font-bold text-foreground flex items-center gap-1.5 flex-1">
-                                <AlertTriangle size={12} className="text-orange-500" />
-                                {item.kind}
-                            </span>
+                            <div className="flex flex-col flex-1 min-w-0">
+                                <div className="flex items-center gap-2">
+                                    <span className="text-xs font-bold text-foreground flex items-center gap-1.5">
+                                        <AlertTriangle size={12} className="text-orange-500" />
+                                        {item.kind}
+                                    </span>
+                                    <span className="text-[10px] text-muted-foreground bg-secondary px-1.5 py-0.5 rounded font-mono">
+                                        Line {item.line_number}
+                                    </span>
+                                </div>
+                            </div>
                             
                             <span className={cn(
-                                "text-[10px] px-1.5 py-0.5 rounded font-mono uppercase",
+                                "text-[10px] px-1.5 py-0.5 rounded font-mono uppercase shrink-0",
                                 item.risk_level === 'High' ? "bg-red-500/10 text-red-500" : "bg-yellow-500/10 text-yellow-500"
                             )}>
                                 {isSelected ? getText('context', 'willRedact', language) : getText('context', 'keepRaw', language)}
                             </span>
                         </div>
                         
-                        {/* Content Row: Explicit Left (Raw) vs Right (Redacted) */}
-                        <div className="pl-7 grid grid-cols-[1fr,auto,1fr] gap-2 items-center">
-                            
-                            {/* Original / Raw View (Always Visible) */}
-                            <div className="flex flex-col gap-1 min-w-0">
-                                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider pl-1">Original</span>
-                                <div className="p-2 rounded bg-secondary/50 border border-border/50 text-xs font-mono break-all min-h-[36px] flex items-center select-text cursor-text" onClick={e => e.stopPropagation()}>
-                                    {item.value}
-                                </div>
-                            </div>
-
-                            <ArrowRight size={14} className="text-muted-foreground/30 mt-4" />
-
-                            {/* Redacted Preview */}
-                            <div className="flex flex-col gap-1 min-w-0">
-                                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider pl-1">Preview</span>
-                                <div className={cn(
-                                    "p-2 rounded border text-xs font-mono break-all min-h-[36px] flex items-center transition-colors",
-                                    isSelected 
-                                        ? "bg-green-500/5 border-green-500/20 text-muted-foreground" 
-                                        : "bg-red-500/5 border-red-500/20 text-foreground decoration-destructive line-through decoration-2"
-                                )}>
-                                    {isSelected ? getMaskedValue(item.value) : getText('context', 'originalKept', language)}
-                                </div>
-                            </div>
+                        {/* Snippet View */}
+                        <div className="pl-7">
+                            {/* 传入新的 snippet_start_line 字段 */}
+                            {renderSnippet(item.snippet, item.value.toString(), item.snippet_start_line)}
                         </div>
+                        
+                        {/* 如果被选中脱敏，显示预览效果 */}
+                        {isSelected && (
+                            <div className="pl-7 flex items-center gap-2 mt-1">
+                                <ArrowRight size={12} className="text-muted-foreground/30" />
+                                <span className="text-[10px] text-muted-foreground uppercase font-bold tracking-wider">Becomes:</span>
+                                <code className="text-[10px] bg-green-500/10 text-green-600 px-1.5 py-0.5 rounded border border-green-500/20 font-mono">
+                                    {getMaskedValue(item.value)}
+                                </code>
+                            </div>
+                        )}
                     </div>
                 );
             })}
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-background border-t border-border flex justify-between items-center gap-3">
+        <div className="p-4 bg-background border-t border-border flex justify-between items-center gap-3 shrink-0">
             <div className="text-xs text-muted-foreground flex gap-1">
                 <span dangerouslySetInnerHTML={{
                     __html: getText('context', 'itemsSelected', language, { count: `<strong>${selectedIndices.size}</strong>` })
@@ -161,7 +194,7 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
             
             <div className="flex gap-2">
                 <button 
-                    onClick={() => onConfirm(new Set())} // 空集合 = 全部忽略
+                    onClick={() => onConfirm(new Set())}
                     className="px-4 py-2 text-sm font-medium rounded-lg border border-destructive/30 text-destructive hover:bg-destructive/10 transition-colors"
                 >
                     {getText('context', 'ignoreAll', language)}
