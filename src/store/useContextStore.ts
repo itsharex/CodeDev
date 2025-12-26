@@ -34,23 +34,27 @@ const updateNodeState = (nodes: FileNode[], targetId: string, isSelected: boolea
   });
 };
 
-const applyLockState = (nodes: FileNode[], fullConfig: IgnoreConfig): FileNode[] => {
+const applyLockState = (nodes: FileNode[], fullConfig: IgnoreConfig, parentLocked = false): FileNode[] => {
   return nodes.map(node => {
-    let shouldLock = false;
+    let shouldLock = parentLocked;
     
-    if (node.kind === 'dir' && fullConfig.dirs.includes(node.name)) shouldLock = true;
-    if (node.kind === 'file' && fullConfig.files.includes(node.name)) shouldLock = true;
-    if (node.kind === 'file') {
-      const ext = node.name.split('.').pop()?.toLowerCase();
-      if (ext && fullConfig.extensions.includes(ext)) shouldLock = true;
+    if (!shouldLock) {
+        if (node.kind === 'dir' && fullConfig.dirs.includes(node.name)) shouldLock = true;
+        if (node.kind === 'file' && fullConfig.files.includes(node.name)) shouldLock = true;
+        if (node.kind === 'file') {
+          const ext = node.name.split('.').pop()?.toLowerCase();
+          if (ext && fullConfig.extensions.includes(ext)) shouldLock = true;
+        }
     }
+
     const newNode: FileNode = {
       ...node,
       isSelected: shouldLock ? false : node.isSelected,
       isLocked: shouldLock
     };
+
     if (newNode.children) {
-      newNode.children = applyLockState(newNode.children, fullConfig);
+      newNode.children = applyLockState(newNode.children, fullConfig, shouldLock);
     }
 
     return newNode;
@@ -58,6 +62,20 @@ const applyLockState = (nodes: FileNode[], fullConfig: IgnoreConfig): FileNode[]
 };
 
 // --- Store 定义 ---
+const invertTreeSelection = (nodes: FileNode[]): FileNode[] => {
+  return nodes.map(node => {
+    // 如果节点被锁定（.gitignore 或过滤器），跳过修改
+    if (node.isLocked) return node;
+
+    return {
+      ...node,
+      // 翻转当前节点的选中状态
+      isSelected: !node.isSelected,
+      // 递归处理子节点
+      children: node.children ? invertTreeSelection(node.children) : undefined
+    };
+  });
+};
 
 interface ContextState {
   // --- 持久化设置 ---
@@ -82,6 +100,7 @@ interface ContextState {
   refreshTreeStatus: (globalConfig: IgnoreConfig) => void;
   // 树操作
   toggleSelect: (nodeId: string, checked: boolean) => void;
+  invertSelection: () => void;
   setRemoveComments: (enable: boolean) => void;
   setDetectSecrets: (enable: boolean) => void;
 }
@@ -134,6 +153,10 @@ export const useContextStore = create<ContextState>()(
 
       toggleSelect: (nodeId, checked) => set((state) => ({
         fileTree: updateNodeState(state.fileTree, nodeId, checked)
+      })),
+
+      invertSelection: () => set((state) => ({
+        fileTree: invertTreeSelection(state.fileTree)
       })),
 
       setRemoveComments: (enable) => set({ removeComments: enable }),

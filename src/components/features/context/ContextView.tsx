@@ -6,7 +6,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { 
   FolderOpen, RefreshCw, Loader2, FileJson, 
   PanelLeft, Search, ArrowRight, SlidersHorizontal, ChevronUp,
-  LayoutDashboard, FileText 
+  LayoutDashboard, FileText, ArrowRightLeft
 } from 'lucide-react';
 import { useContextStore } from '@/store/useContextStore';
 import { useAppStore, DEFAULT_MODELS } from '@/store/useAppStore'; 
@@ -28,7 +28,7 @@ export function ContextView() {
     projectIgnore, updateProjectIgnore, 
     refreshTreeStatus, 
     setProjectRoot, setFileTree, setIsScanning, toggleSelect, 
-    removeComments, detectSecrets
+    removeComments, detectSecrets, invertSelection 
   } = useContextStore();
 
   const { 
@@ -301,7 +301,20 @@ export function ContextView() {
         >
           <div className="p-3 border-b border-border/50 text-xs font-bold text-muted-foreground uppercase tracking-wider flex justify-between shrink-0 items-center">
              <span className="flex items-center gap-1"><FileJson size={12}/>{getText('context', 'explorer', language)}</span>
-             <span className="bg-secondary/50 px-1.5 py-0.5 rounded text-[10px]">{getText('context', 'selectedCount', language, { count: stats.fileCount.toString() })}</span>
+             <div className="flex items-center gap-2">
+                {/* 反选按钮 */}
+                <button 
+                  onClick={invertSelection}
+                  className="p-1 hover:bg-secondary/80 rounded transition-colors text-muted-foreground hover:text-foreground"
+                  title={getText('context', 'invertSelection', language)}
+                >
+                   <ArrowRightLeft size={12} />
+                </button>
+                {/* 计数显示 */}
+                <span className="bg-secondary/50 px-1.5 py-0.5 rounded text-[10px] tabular-nums">
+                  {getText('context', 'selectedCount', language, { count: stats.fileCount.toString() })}
+                </span>
+             </div>
           </div>
           
           <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
