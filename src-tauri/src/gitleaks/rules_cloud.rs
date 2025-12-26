@@ -82,7 +82,7 @@ pub fn cloud_rules() -> Vec<Rule> {
         Rule {
             id: "gcp-service-account",
             description: "Google Service Account JSON Key",
-            regex: Regex::new(r"\"type\": \"service_account\"").unwrap(),
+            regex: Regex::new(r#""type": "service_account""#).unwrap(),
             entropy: None,
             keywords: &["service_account"],
         },

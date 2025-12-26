@@ -84,9 +84,9 @@ fn get_system_info(
 // =================================================================
 
 #[tauri::command]
-async fn scan_for_secrets(content: String) -> Vec<gitleaks::lib::SecretMatch> {
+async fn scan_for_secrets(content: String) -> Vec<gitleaks::SecretMatch> {
     let matches = tauri::async_runtime::spawn_blocking(move || {
-        gitleaks::lib::scan_text(&content)
+        gitleaks::scan_text(&content)
     }).await.unwrap_or_default();
     
     matches

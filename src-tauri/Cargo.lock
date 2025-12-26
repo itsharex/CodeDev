@@ -522,8 +522,11 @@ name = "code-forge-ai"
 version = "1.1.6"
 dependencies = [
  "chrono",
+ "entropy",
  "git2",
+ "once_cell",
  "openssl",
+ "rayon",
  "regex",
  "serde",
  "serde_json",
@@ -998,6 +1001,12 @@ name = "endi"
 version = "1.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "66b7e2430c6dff6a955451e2cfc438f09cea1965a9d6f87f7e3b90decc014099"
+
+[[package]]
+name = "entropy"
+version = "0.4.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d68716e45ef572f351be6fad93a7bbf35242b4289a2ff75434032e5d73d74cc2"
 
 [[package]]
 name = "enumflags2"
