@@ -3,7 +3,7 @@ import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { LogicalSize } from '@tauri-apps/api/dpi';
 import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { listen } from '@tauri-apps/api/event';
-import { invoke } from '@tauri-apps/api/core'; // 新增 invoke
+import { invoke } from '@tauri-apps/api/core';
 import { message } from '@tauri-apps/plugin-dialog';
 import { 
   Search as SearchIcon, Sparkles, Terminal, CornerDownLeft, Check, 
@@ -31,7 +31,6 @@ const MAX_WINDOW_HEIGHT = 460;
 
 type SpotlightMode = 'search' | 'chat';
 
-// 简单的防抖 Hook
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
@@ -106,12 +105,11 @@ function MessageCopyMenu({ content }: { content: string }) {
 
 export default function SpotlightApp() {
   const [query, setQuery] = useState('');
-  // 使用防抖，减少数据库查询压力
   const debouncedQuery = useDebounce(query, 150);
   
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [copiedId, setCopiedId] = useState<string | null>(null);
-  const [results, setResults] = useState<Prompt[]>([]); // 存储搜索结果
+  const [results, setResults] = useState<Prompt[]>([]); 
   
   const [mode, setMode] = useState<SpotlightMode>('search');
   const [chatInput, setChatInput] = useState('');
@@ -122,7 +120,6 @@ export default function SpotlightApp() {
   const listRef = useRef<HTMLDivElement>(null);
   const chatEndRef = useRef<HTMLDivElement>(null); 
   
-  const { initStore } = usePromptStore(); // 不再使用 getAllPrompts
   const { theme, setTheme, aiConfig, setAIConfig, spotlightAppearance, language } = useAppStore(); 
   const { projectRoot } = useContextStore();
   
@@ -157,8 +154,6 @@ export default function SpotlightApp() {
     setAIConfig({ providerId: providers[nextIndex] });
   };
 
-  useEffect(() => { initStore(); }, []);
-
   useEffect(() => {
     const root = document.documentElement;
     root.classList.remove('light', 'dark');
@@ -174,7 +169,6 @@ export default function SpotlightApp() {
   useEffect(() => {
     const unlistenPromise = appWindow.onFocusChanged(async ({ payload: isFocused }) => {
       if (isFocused) {
-        // 聚焦时重新加载状态，但不一定需要全量拉取，initStore会处理
         await usePromptStore.persist.rehydrate();
         await useAppStore.persist.rehydrate();
         await useContextStore.persist.rehydrate();
@@ -198,11 +192,21 @@ export default function SpotlightApp() {
             let data: Prompt[] = [];
             const q = debouncedQuery.trim();
             if (!q) {
-                // 如果为空，获取默认列表（例如第一页，或者最近使用的）
-                data = await invoke('get_prompts', { page: 1, pageSize: 20, group: 'all' });
+                // 修复：增加 category: null 参数
+                data = await invoke('get_prompts', { 
+                    page: 1, 
+                    pageSize: 20, 
+                    group: 'all', 
+                    category: null 
+                });
             } else {
-                // 执行全文搜索
-                data = await invoke('search_prompts', { query: q, page: 1, pageSize: 20 });
+                // 修复：增加 category: null 参数
+                data = await invoke('search_prompts', { 
+                    query: q, 
+                    page: 1, 
+                    pageSize: 20, 
+                    category: null 
+                });
             }
             setResults(data);
             setSelectedIndex(0);
@@ -213,17 +217,15 @@ export default function SpotlightApp() {
     };
 
     performSearch();
-  }, [debouncedQuery, mode]); // 依赖 debouncedQuery 而不是 raw query
+  }, [debouncedQuery, mode]);
 
   // 窗口大小调整
   useLayoutEffect(() => {
     let finalHeight = 120;
     const targetWidth = spotlightAppearance.width;
     if (mode === 'search') {
-        // 使用 results 长度计算
-        const listHeight = Math.min(results.length * 60, 400); // 估算高度
+        const listHeight = Math.min(results.length * 60, 400); 
         const actualListHeight = listRef.current?.scrollHeight || listHeight;
-        
         const totalIdealHeight = FIXED_HEIGHT + actualListHeight;
         finalHeight = Math.min(Math.max(totalIdealHeight, 120), MAX_WINDOW_HEIGHT);
     } else {

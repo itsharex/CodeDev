@@ -19,48 +19,36 @@ const getBaseUrl = (manifestUrl: string) => {
 const PAGE_SIZE = 20;
 const LEGACY_STORE_FILE = 'prompts-data.json';
 
+// [修复 4] 请求 ID 计数器，用于解决竞态条件
+let currentRequestId = 0;
+
 interface PromptState {
-  // --- 数据显示层 ---
   prompts: Prompt[];
   groups: string[];
-  
-  // --- 分页与状态 ---
   page: number;
   hasMore: boolean;
   isLoading: boolean;
-  
-  // --- 过滤条件 ---
   activeGroup: string;
   activeCategory: 'command' | 'prompt'; 
   searchQuery: string;
-
-  // --- 商店相关 ---
   isStoreLoading: boolean;
   manifest: PackManifest | null;
   activeManifestUrl: string;
   installedPackIds: string[];
-
-  // --- 迁移控制 ---
   migrationVersion: number;
 
-  // --- Actions ---
   initStore: () => Promise<void>;
   migrateLegacyData: () => Promise<void>;
-  
   loadPrompts: (reset?: boolean) => Promise<void>;
-  
   setSearchQuery: (query: string) => void;
   setActiveGroup: (group: string) => void;
   setActiveCategory: (category: 'command' | 'prompt') => void;
-
   addPrompt: (data: Omit<Prompt, 'id' | 'createdAt' | 'updatedAt' | 'isFavorite' | 'source'>) => Promise<void>;
   updatePrompt: (id: string, data: Partial<Prompt>) => Promise<void>;
   deletePrompt: (id: string) => Promise<void>;
   toggleFavorite: (id: string) => Promise<void>;
-
   refreshGroups: () => Promise<void>;
   deleteGroup: (name: string) => Promise<void>; 
-
   fetchManifest: () => Promise<void>;
   installPack: (pack: PackManifestItem) => Promise<void>;
   uninstallPack: (packId: string) => Promise<void>;
@@ -74,11 +62,9 @@ export const usePromptStore = create<PromptState>()(
       page: 1,
       hasMore: true,
       isLoading: false,
-      
       activeGroup: 'all',
       activeCategory: 'prompt', 
       searchQuery: '',
-      
       isStoreLoading: false,
       manifest: null,
       activeManifestUrl: MANIFEST_URLS[0],
@@ -118,8 +104,6 @@ export const usePromptStore = create<PromptState>()(
                         createdAt: p.createdAt || Date.now(),
                         updatedAt: p.updatedAt || Date.now(),
                         source: 'local',
-                        
-                        // 修复: 将 null 改为 undefined 以通过类型检查
                         packId: undefined, 
                         originalId: undefined,
                         type: p.type || undefined,
@@ -150,8 +134,11 @@ export const usePromptStore = create<PromptState>()(
 
       loadPrompts: async (reset = false) => {
         const state = get();
-        if (state.isLoading) return;
+        // 如果正在加载且不是重置操作（即滚动加载），则忽略
+        if (state.isLoading && !reset) return;
 
+        // [修复 4] 生成本次请求 ID
+        const thisRequestId = ++currentRequestId;
         const currentPage = reset ? 1 : state.page;
         set({ isLoading: true });
 
@@ -174,6 +161,12 @@ export const usePromptStore = create<PromptState>()(
                 });
             }
 
+            // [修复 4] 检查 ID 是否过期
+            if (thisRequestId !== currentRequestId) {
+                console.log(`[Store] Request ${thisRequestId} discarded (current: ${currentRequestId})`);
+                return;
+            }
+
             set((prev) => ({
                 prompts: reset ? newPrompts : [...prev.prompts, ...newPrompts],
                 page: currentPage + 1,
@@ -182,7 +175,9 @@ export const usePromptStore = create<PromptState>()(
             }));
         } catch (e) {
             console.error("Failed to load prompts:", e);
-            set({ isLoading: false });
+            if (thisRequestId === currentRequestId) {
+                set({ isLoading: false });
+            }
         }
       },
 
