@@ -12,7 +12,6 @@ use tauri::{
     Manager, State, WindowEvent,
 };
 
-// 引入模块
 mod git;
 mod export;
 mod gitleaks;
@@ -151,14 +150,11 @@ fn main() {
             greet, 
             get_file_size, 
             get_system_info,
-            // Git 模块命令
             git::get_git_commits,
             git::get_git_diff,
             git::get_git_diff_text,
-            // 导出命令
             export_git_diff,
             scan_for_secrets,
-            // Database Commands
             db::get_prompts,
             db::search_prompts,
             db::import_prompt_pack,
