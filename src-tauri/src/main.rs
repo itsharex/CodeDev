@@ -162,6 +162,7 @@ fn main() {
             db::get_prompts,
             db::search_prompts,
             db::import_prompt_pack,
+            db::batch_import_local_prompts,
             db::get_prompt_groups,
             db::save_prompt,
             db::delete_prompt,

@@ -5,6 +5,7 @@ import { fileStorage } from '@/lib/storage';
 import { Prompt, DEFAULT_GROUP, PackManifest, PackManifestItem } from '@/types/prompt';
 import { fetch } from '@tauri-apps/plugin-http';
 import { invoke } from '@tauri-apps/api/core';
+import { exists, readTextFile, BaseDirectory } from '@tauri-apps/plugin-fs';
 
 const MANIFEST_URLS = [
     'https://raw.githubusercontent.com/WinriseF/Code-Forge-AI/main/build/dist/manifest.json', 
@@ -16,11 +17,12 @@ const getBaseUrl = (manifestUrl: string) => {
 };
 
 const PAGE_SIZE = 20;
+const LEGACY_STORE_FILE = 'prompts-data.json';
 
 interface PromptState {
   // --- 数据显示层 ---
-  prompts: Prompt[];      // 当前列表显示的指令（混合了本地和官方）
-  groups: string[];       // 分组列表
+  prompts: Prompt[];
+  groups: string[];
   
   // --- 分页与状态 ---
   page: number;
@@ -29,6 +31,7 @@ interface PromptState {
   
   // --- 过滤条件 ---
   activeGroup: string;
+  activeCategory: 'command' | 'prompt'; // 新增：类型过滤
   searchQuery: string;
 
   // --- 商店相关 ---
@@ -37,26 +40,27 @@ interface PromptState {
   activeManifestUrl: string;
   installedPackIds: string[];
 
+  // --- 迁移控制 ---
+  migrationVersion: number;
+
   // --- Actions ---
-  initStore: () => Promise<void>; // 初始化：加载分组
+  initStore: () => Promise<void>;
+  migrateLegacyData: () => Promise<void>;
   
-  // 核心加载方法：reset=true 表示重新搜索/切换分组，false 表示加载下一页
   loadPrompts: (reset?: boolean) => Promise<void>;
   
   setSearchQuery: (query: string) => void;
   setActiveGroup: (group: string) => void;
+  setActiveCategory: (category: 'command' | 'prompt') => void; // 新增
 
-  // 增删改（调用 Rust）
   addPrompt: (data: Omit<Prompt, 'id' | 'createdAt' | 'updatedAt' | 'isFavorite' | 'source'>) => Promise<void>;
   updatePrompt: (id: string, data: Partial<Prompt>) => Promise<void>;
   deletePrompt: (id: string) => Promise<void>;
   toggleFavorite: (id: string) => Promise<void>;
 
-  // 分组管理
   refreshGroups: () => Promise<void>;
-  deleteGroup: (name: string) => Promise<void>; // 数据库模式下，删除分组通常意味着删除该组下所有 Prompts，或者更新它们的组名为 Default
+  deleteGroup: (name: string) => Promise<void>; 
 
-  // 商店
   fetchManifest: () => Promise<void>;
   installPack: (pack: PackManifestItem) => Promise<void>;
   uninstallPack: (packId: string) => Promise<void>;
@@ -72,22 +76,69 @@ export const usePromptStore = create<PromptState>()(
       isLoading: false,
       
       activeGroup: 'all',
+      activeCategory: 'prompt', // 默认显示 Prompts
       searchQuery: '',
       
       isStoreLoading: false,
       manifest: null,
       activeManifestUrl: MANIFEST_URLS[0],
       installedPackIds: [],
+      migrationVersion: 0,
 
-      // 初始化：只加载分组列表，数据由 UI 组件挂载时调用 loadPrompts 获取
       initStore: async () => {
+        await get().migrateLegacyData();
         await get().refreshGroups();
+      },
+
+      migrateLegacyData: async () => {
+        const { migrationVersion } = get();
+        if (migrationVersion >= 1) return;
+
+        console.log('[Migration] Checking for legacy data...');
+        const baseDir = BaseDirectory.AppLocalData;
+
+        try {
+            if (await exists(LEGACY_STORE_FILE, { baseDir })) {
+                const content = await readTextFile(LEGACY_STORE_FILE, { baseDir });
+                const parsed = JSON.parse(content);
+                const legacyState = parsed?.state || {};
+                
+                const legacyPrompts = legacyState.localPrompts;
+                if (Array.isArray(legacyPrompts) && legacyPrompts.length > 0) {
+                    console.log(`[Migration] Found ${legacyPrompts.length} legacy prompts. Importing...`);
+                    
+                    const promptsToImport: Prompt[] = legacyPrompts.map((p: any) => ({
+                        id: p.id || uuidv4(),
+                        title: p.title || 'Untitled',
+                        content: p.content || '',
+                        group: p.group || DEFAULT_GROUP,
+                        description: p.description || null,
+                        tags: Array.isArray(p.tags) ? p.tags : [],
+                        isFavorite: !!p.isFavorite,
+                        createdAt: p.createdAt || Date.now(),
+                        updatedAt: p.updatedAt || Date.now(),
+                        source: 'local',
+                        packId: null,
+                        originalId: null,
+                        type: p.type || null,
+                        isExecutable: !!p.isExecutable,
+                        shellType: p.shellType || null
+                    }));
+
+                    await invoke('batch_import_local_prompts', { prompts: promptsToImport });
+                }
+            }
+        } catch (e) {
+            console.error('[Migration] Failed:', e);
+        } finally {
+            set({ migrationVersion: 1 });
+            console.log('[Migration] Completed.');
+        }
       },
 
       refreshGroups: async () => {
         try {
             const groups = await invoke<string[]>('get_prompt_groups');
-            // 确保 Default 始终在列表前列（如果业务需要）
             const uniqueGroups = Array.from(new Set([DEFAULT_GROUP, ...groups]));
             set({ groups: uniqueGroups });
         } catch (e) {
@@ -105,25 +156,27 @@ export const usePromptStore = create<PromptState>()(
         try {
             let newPrompts: Prompt[] = [];
             
-            // 根据是否有搜索词，决定调用哪个 Rust 接口
+            // 传递 category 参数给后端
             if (state.searchQuery.trim()) {
                 newPrompts = await invoke('search_prompts', {
                     query: state.searchQuery,
                     page: currentPage,
-                    pageSize: PAGE_SIZE
+                    pageSize: PAGE_SIZE,
+                    category: state.activeCategory // 过滤类型
                 });
             } else {
                 newPrompts = await invoke('get_prompts', {
                     page: currentPage,
                     pageSize: PAGE_SIZE,
-                    group: state.activeGroup
+                    group: state.activeGroup,
+                    category: state.activeCategory // 过滤类型
                 });
             }
 
             set((prev) => ({
                 prompts: reset ? newPrompts : [...prev.prompts, ...newPrompts],
                 page: currentPage + 1,
-                hasMore: newPrompts.length === PAGE_SIZE, // 如果返回数量小于页大小，说明没数据了
+                hasMore: newPrompts.length === PAGE_SIZE,
                 isLoading: false
             }));
         } catch (e) {
@@ -134,13 +187,17 @@ export const usePromptStore = create<PromptState>()(
 
       setSearchQuery: (query) => {
         set({ searchQuery: query });
-        // 搜索词变化，必须重置列表
         get().loadPrompts(true);
       },
 
       setActiveGroup: (group) => {
         set({ activeGroup: group });
-        // 分组变化，必须重置列表
+        get().loadPrompts(true);
+      },
+
+      // 切换类型 (Prompt/Command)
+      setActiveCategory: (category) => {
+        set({ activeCategory: category, activeGroup: 'all' }); // 切换大类时重置分组
         get().loadPrompts(true);
       },
 
@@ -153,11 +210,8 @@ export const usePromptStore = create<PromptState>()(
             updatedAt: Date.now(),
             source: 'local'
         };
-        // 调用 Rust 保存
         await invoke('save_prompt', { prompt: newPrompt });
         
-        // 乐观更新 UI 或重新加载
-        // 这里选择重新加载以确保排序正确
         get().loadPrompts(true);
         get().refreshGroups();
       },
@@ -170,12 +224,10 @@ export const usePromptStore = create<PromptState>()(
         const updated: Prompt = { ...existing, ...data, updatedAt: Date.now() };
         await invoke('save_prompt', { prompt: updated });
         
-        // 乐观更新本地 List，避免刷新闪烁
         set({
             prompts: prompts.map(p => p.id === id ? updated : p)
         });
         
-        // 如果修改了分组，可能需要刷新分组列表
         if (data.group) get().refreshGroups();
       },
 
@@ -193,19 +245,10 @@ export const usePromptStore = create<PromptState>()(
         }));
       },
 
-      // 在数据库模式下，删除分组通常不是一个显式操作，
-      // 因为分组是基于 prompts 表中 group 字段聚合的。
-      // 这里我们可以实现为：将该组所有 prompt 移动到 'Default'
       deleteGroup: async (name) => {
-        // 由于 Rust 端目前没有批量更新的 API，
-        // 这里暂时在前端遍历更新（如果量大建议增加 Rust 端 batch_update_group 接口）
-        // 为了简化，这里先只从前端状态移除，并重置视图。
-        // 实际业务中，可能需要实现 Rust 端的 delete_group_prompts 或 rename_group
-        // 暂时简单处理：切换回 all 分组
         if (get().activeGroup === name) {
             get().setActiveGroup('all');
         }
-        // 真正的删除需要 Rust 支持，或者用户手动删除该组下所有指令后，组自然消失
       },
 
       fetchManifest: async () => {
@@ -237,38 +280,30 @@ export const usePromptStore = create<PromptState>()(
         try {
             const baseUrl = getBaseUrl(get().activeManifestUrl);
             const url = `${baseUrl}${pack.url}`;
-            console.log(`Downloading pack from ${url}`);
-
             const response = await fetch(url);
             if (!response.ok) throw new Error(`Download failed: ${response.status}`);
 
             const rawData = await response.json();
             if (!Array.isArray(rawData)) throw new Error("Invalid pack format");
 
-            // 关键修复 1：ID 唯一化
-            // 很多官方指令包使用简单的 ID（如 "1", "2"），如果不加前缀，不同包之间会冲突覆盖
             const enrichedPrompts: any[] = rawData.map((p: any) => ({
-                id: p.id ? `${pack.id}-${p.id}` : uuidv4(), // 防止不同包之间 ID 冲突
+                id: p.id ? `${pack.id}-${p.id}` : uuidv4(),
                 title: p.title || "Untitled",
                 content: p.content || "",
                 group: p.group || DEFAULT_GROUP,
                 description: p.description || null,
                 tags: p.tags || [],
-
-                // 关键修复 2：确保所有必填字段都有值（字段名用 snake_case，因为 Rust 用 rename_all = "camelCase"）
                 isFavorite: false,
                 createdAt: Date.now(),
                 updatedAt: Date.now(),
                 source: 'official',
-                packId: pack.id,      // 保持 camelCase，Rust 的 serde 会自动转成 pack_id
+                packId: pack.id,
                 originalId: p.id || null,
-
                 type: p.type || null,
                 isExecutable: !!p.isExecutable,
                 shellType: p.shellType || null
             }));
 
-            // 调用 Rust，存入 SQLite
             await invoke('import_prompt_pack', {
                 packId: pack.id,
                 prompts: enrichedPrompts
@@ -292,11 +327,9 @@ export const usePromptStore = create<PromptState>()(
       uninstallPack: async (packId) => {
         set({ isStoreLoading: true });
         try {
-            // Rust 的 import_prompt_pack 支持覆盖，但删除需要专用接口
-            // 这里我们假设传入空数组就是删除：
             await invoke('import_prompt_pack', {
                 packId: packId,
-                prompts: [] // 空数组，等于清空该 packId 的数据
+                prompts: []
             });
 
             set(state => ({
@@ -316,9 +349,10 @@ export const usePromptStore = create<PromptState>()(
       name: 'prompts-data',
       storage: createJSONStorage(() => fileStorage),
       partialize: (state) => ({
-        // 只持久化配置类数据，prompts 列表不持久化（每次从 DB 拉取）
         installedPackIds: state.installedPackIds,
-        activeGroup: state.activeGroup 
+        activeGroup: state.activeGroup,
+        activeCategory: state.activeCategory, // 持久化当前选中的 Tab
+        migrationVersion: state.migrationVersion
       }),
     }
   )

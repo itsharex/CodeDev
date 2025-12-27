@@ -16,7 +16,6 @@ import { VariableFillerDialog } from './dialogs/VariableFillerDialog';
 import { executeCommand } from '@/lib/command_executor';
 import { useContextStore } from '@/store/useContextStore';
 
-// 防抖 Hook
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
@@ -28,10 +27,10 @@ function useDebounce<T>(value: T, delay: number): T {
 
 export function PromptView() {
   const { 
-    // 数据源现在直接就是 prompts（当前已加载的数据）
     prompts, 
     groups, 
     activeGroup, setActiveGroup, 
+    activeCategory, setActiveCategory, // 使用 Store 中的状态
     searchQuery: storeSearchQuery, setSearchQuery, 
     initStore, loadPrompts, isLoading, hasMore,
     deleteGroup, deletePrompt,
@@ -40,11 +39,9 @@ export function PromptView() {
   const { isPromptSidebarOpen, setPromptSidebarOpen, language } = useAppStore();
   const { projectRoot } = useContextStore(); 
 
-  // 本地搜索框状态（用于防抖）
   const [localSearchInput, setLocalSearchInput] = useState('');
   const debouncedSearchTerm = useDebounce(localSearchInput, 500);
 
-  const [activeCategory, setActiveCategory] = useState<'command' | 'prompt'>('prompt');
   const [toastState, setToastState] = useState<{ show: boolean; msg: string; type: ToastType }>({
       show: false, msg: '', type: 'success'
   });
@@ -59,39 +56,30 @@ export function PromptView() {
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // 初始化加载
   useEffect(() => {
-    initStore();
-    loadPrompts(true); // reset=true 表示第一页
+    const init = async () => {
+        await initStore();
+        if (prompts.length === 0) {
+            loadPrompts(true);
+        }
+    };
+    init();
   }, []);
 
-  // 监听搜索词变化，触发 Store 搜索
   useEffect(() => {
     if (debouncedSearchTerm !== storeSearchQuery) {
         setSearchQuery(debouncedSearchTerm);
     }
   }, [debouncedSearchTerm]);
 
-  // 处理无限滚动
   const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    // 距离底部 200px 时触发加载
     if (scrollHeight - scrollTop - clientHeight < 200) {
         if (!isLoading && hasMore) {
-            loadPrompts(); // 加载下一页
+            loadPrompts(); 
         }
     }
   }, [isLoading, hasMore, loadPrompts]);
-
-  // 前端简单分类过滤（因为 Rust 端暂时只做了通用搜索，这里在 UI 层简单区分 command/prompt）
-  // 注意：这只是为了兼容之前的 UI 逻辑。理想情况下 Rust 端应支持 type 过滤。
-  // 现在的实现方式是：Rust 返回分页数据，前端再 filter。
-  // *缺陷*：如果某一页全是 command，而我们要看 prompt，这一页就会空。
-  // *修正建议*：未来应在 Rust search_prompts 增加 type 参数。目前先保持原样，展示所有。
-  const displayPrompts = prompts.filter(p => {
-      const type = p.type || (p.content.length < 50 ? 'command' : 'prompt');
-      return type === activeCategory;
-  });
 
   const triggerToast = (msg?: string, type: ToastType = 'success') => { 
       setToastState({ show: true, msg: msg || getText('prompts', 'copySuccess', language), type }); 
@@ -131,25 +119,19 @@ export function PromptView() {
     }
   }, [language, projectRoot]);
 
-  const switchCategory = (cat: 'command' | 'prompt') => {
-      setActiveCategory(cat);
-      // 切换分类时，通常建议重置视图，但这里为了流畅，我们暂时只做前端过滤
-      // 实际上最好通知 Store 重新拉取
-  };
-
   return (
     <div className="h-full flex flex-row overflow-hidden bg-background">
       
       <aside className={cn("flex flex-col bg-secondary/5 select-none transition-all duration-300 ease-in-out overflow-hidden", isPromptSidebarOpen ? "w-56 border-r border-border opacity-100" : "w-0 border-none opacity-0")}>
         <div className="p-3 pb-0 flex gap-1 shrink-0">
             <button 
-                onClick={() => switchCategory('prompt')}
+                onClick={() => setActiveCategory('prompt')}
                 className={cn("flex-1 py-2 text-xs font-bold rounded-md flex items-center justify-center gap-2 transition-colors", activeCategory === 'prompt' ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary")}
             >
                 <Sparkles size={14} /> Prompts
             </button>
             <button 
-                onClick={() => switchCategory('command')}
+                onClick={() => setActiveCategory('command')}
                 className={cn("flex-1 py-2 text-xs font-bold rounded-md flex items-center justify-center gap-2 transition-colors", activeCategory === 'command' ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary")}
             >
                 <Terminal size={14} /> Commands
@@ -161,7 +143,6 @@ export function PromptView() {
             <CategoryItem 
               icon={<Layers size={16} />} 
               label={getText('sidebar', 'all', language)} 
-              // 移除计数 count
               isActive={activeGroup === 'all'} 
               onClick={() => setActiveGroup('all')} 
             />
@@ -183,8 +164,7 @@ export function PromptView() {
             </h2>
             <div className="space-y-1">
                 {groups.map(group => {
-                   // 简单区分 Git 组图标
-                   if (group === DEFAULT_GROUP) return null; // Default 组通常不单独显示在下方，或者看需求
+                   if (group === DEFAULT_GROUP) return null; 
                    return (
                        <CategoryItem 
                             key={group}
@@ -228,9 +208,9 @@ export function PromptView() {
             className="flex-1 overflow-y-auto p-4 md:p-6"
         >
           <div className="max-w-[1600px] mx-auto min-h-full">
-                {/* 网格布局：自适应列宽 */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-                    {displayPrompts.map(prompt => (
+                    {/* 直接渲染 store.prompts，无需过滤 */}
+                    {prompts.map(prompt => (
                         <PromptCard 
                           key={prompt.id} 
                           prompt={prompt} 
@@ -241,23 +221,20 @@ export function PromptView() {
                     ))}
                 </div>
 
-                {/* Loading Indicator */}
                 {isLoading && (
                     <div className="flex justify-center py-8">
                         <Loader2 className="animate-spin text-primary" />
                     </div>
                 )}
 
-                {/* Empty State */}
-                {!isLoading && displayPrompts.length === 0 && (
+                {!isLoading && prompts.length === 0 && (
                     <div className="h-[60vh] flex flex-col items-center justify-center text-muted-foreground opacity-60">
                         <div className="w-16 h-16 bg-secondary/50 rounded-2xl flex items-center justify-center mb-4"><Search size={32} /></div>
                         <p>{getText('prompts', 'noResults', language)}</p>
                     </div>
                 )}
                 
-                {/* End of list */}
-                {!hasMore && displayPrompts.length > 0 && (
+                {!hasMore && prompts.length > 0 && (
                     <div className="text-center py-8 text-xs text-muted-foreground/50">
                         - End of Results -
                     </div>
@@ -322,14 +299,12 @@ export function PromptView() {
   );
 }
 
-function CategoryItem({ icon, label, count, isActive, onClick, onDelete }: any) {
+function CategoryItem({ icon, label, isActive, onClick, onDelete }: any) {
     return (
       <div onClick={onClick} className={cn("group flex items-center justify-between w-full px-3 py-2 rounded-md text-sm font-medium cursor-pointer transition-all select-none", isActive ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary hover:text-foreground")}>
         <div className="flex items-center gap-3 overflow-hidden"><div className="shrink-0">{icon}</div><span className="truncate">{label}</span></div>
         <div className="flex items-center">
           {onDelete && <button onClick={(e) => { e.stopPropagation(); onDelete(); }} className="mr-2 opacity-0 group-hover:opacity-100 hover:text-destructive transition-opacity p-1 rounded hover:bg-background"><Trash2 size={12} /></button>}
-          {/* Count 被移除，因为现在是分页异步加载，无法预知总数 */}
-          {count >= 0 && <span className="text-xs opacity-60 min-w-[1.5em] text-center">{count > 999 ? '999+' : count}</span>}
         </div>
       </div>
     );
