@@ -15,7 +15,6 @@ export function DiffViewer({ original, modified, fileName = '', placeholder }: D
   const { theme } = useAppStore();
   const [renderSideBySide, setRenderSideBySide] = useState(true);
   const monacoRef = useRef<any>(null);
-  const editorRef = useRef<any>(null);
 
   const getLanguage = (path: string) => {
     const ext = path.split('.').pop()?.toLowerCase();
@@ -38,9 +37,8 @@ export function DiffViewer({ original, modified, fileName = '', placeholder }: D
 
   const language = getLanguage(fileName);
 
-  const handleEditorDidMount: DiffOnMount = (editor, monaco) => {
+  const handleEditorDidMount: DiffOnMount = (_editor, monaco) => {
     monacoRef.current = monaco;
-    editorRef.current = editor;
 
     monaco.editor.defineTheme('codeforge-dark', {
       base: 'vs-dark',
@@ -78,21 +76,6 @@ export function DiffViewer({ original, modified, fileName = '', placeholder }: D
 
     monaco.editor.setTheme(theme === 'dark' ? 'codeforge-dark' : 'codeforge-light');
   };
-
-  useEffect(() => {
-    return () => {
-        if (editorRef.current) {
-            const originalModel = editorRef.current.getOriginalEditor().getModel();
-            const modifiedModel = editorRef.current.getModifiedEditor().getModel();
-            
-            if (originalModel) originalModel.dispose();
-            if (modifiedModel) modifiedModel.dispose();
-            
-            editorRef.current.dispose();
-            editorRef.current = null;
-        }
-    };
-  }, []);
 
   useEffect(() => {
     if (monacoRef.current) {
@@ -166,7 +149,7 @@ export function DiffViewer({ original, modified, fileName = '', placeholder }: D
                 fontFamily: 'JetBrains Mono, Menlo, Monaco, "Courier New", monospace',
                 lineHeight: 1.6,
                 padding: { top: 16, bottom: 16 },
-                automaticLayout: false, 
+                automaticLayout: true, 
                 diffWordWrap: 'off',
                 wordWrap: 'on', 
                 ignoreTrimWhitespace: false,
