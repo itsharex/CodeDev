@@ -159,12 +159,11 @@ fn main() {
             scan_for_secrets
         ])
         .setup(|app| {
-            let mut system = System::new();
-            system.refresh_all();
+            let system = System::new();
             app.manage(Arc::new(Mutex::new(system)));
             
             let quit_i = MenuItem::with_id(app, "quit", "退出 / Quit", true, None::<&str>)?;
-            let show_i = MenuItem::with_id(app, "show", "显示主窗口 / Show Main Window", true, None::<&str>)?;
+            let show_i = MenuItem::with_id(app, "show", "主窗口", true, None::<&str>)?;
             
             let menu = Menu::with_items(app, &[&show_i, &quit_i])?;
 
