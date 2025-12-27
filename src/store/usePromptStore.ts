@@ -241,25 +241,46 @@ export const usePromptStore = create<PromptState>()(
 
             const response = await fetch(url);
             if (!response.ok) throw new Error(`Download failed: ${response.status}`);
-            
-            const data = await response.json() as Prompt[];
-            if (!Array.isArray(data)) throw new Error("Invalid pack format");
 
-            // 核心改变：下载后直接存入 SQLite，不写本地文件
-            await invoke('import_prompt_pack', { 
-                packId: pack.id, 
-                prompts: data 
+            const rawData = await response.json();
+            if (!Array.isArray(rawData)) throw new Error("Invalid pack format");
+
+            // 关键修复 1：ID 唯一化
+            // 很多官方指令包使用简单的 ID（如 "1", "2"），如果不加前缀，不同包之间会冲突覆盖
+            const enrichedPrompts: any[] = rawData.map((p: any) => ({
+                id: p.id ? `${pack.id}-${p.id}` : uuidv4(), // 防止不同包之间 ID 冲突
+                title: p.title || "Untitled",
+                content: p.content || "",
+                group: p.group || DEFAULT_GROUP,
+                description: p.description || null,
+                tags: p.tags || [],
+
+                // 关键修复 2：确保所有必填字段都有值（字段名用 snake_case，因为 Rust 用 rename_all = "camelCase"）
+                isFavorite: false,
+                createdAt: Date.now(),
+                updatedAt: Date.now(),
+                source: 'official',
+                packId: pack.id,      // 保持 camelCase，Rust 的 serde 会自动转成 pack_id
+                originalId: p.id || null,
+
+                type: p.type || null,
+                isExecutable: !!p.isExecutable,
+                shellType: p.shellType || null
+            }));
+
+            // 调用 Rust，存入 SQLite
+            await invoke('import_prompt_pack', {
+                packId: pack.id,
+                prompts: enrichedPrompts
             });
 
-            // 更新已安装列表
             set(state => ({
                 installedPackIds: Array.from(new Set([...state.installedPackIds, pack.id]))
             }));
-            
-            // 刷新数据
+
             get().loadPrompts(true);
             get().refreshGroups();
-            
+
         } catch (e) {
             console.error("Install failed:", e);
             throw e;
@@ -272,13 +293,10 @@ export const usePromptStore = create<PromptState>()(
         set({ isStoreLoading: true });
         try {
             // Rust 的 import_prompt_pack 支持覆盖，但删除需要专用接口
-            // 实际上，我们可以在 Rust 端加一个 delete_pack_prompts
-            // 这里为了简单，我们假设 import_prompt_pack 传入空数组就是删除？
-            // 不，我们在 db.rs 实现了 `import_prompt_pack` 会先 delete 再 insert
-            // 所以传入空数组确实可以达到删除效果：
-            await invoke('import_prompt_pack', { 
-                packId: packId, 
-                prompts: [] // 空数组，等于清空该 pack_id 的数据
+            // 这里我们假设传入空数组就是删除：
+            await invoke('import_prompt_pack', {
+                packId: packId,
+                prompts: [] // 空数组，等于清空该 packId 的数据
             });
 
             set(state => ({
