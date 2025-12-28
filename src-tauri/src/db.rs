@@ -28,6 +28,9 @@ pub struct Prompt {
     pub original_id: Option<String>,
     #[serde(rename = "type")]
     pub type_: Option<String>,
+    // ✨ 修复：添加缺失的字段
+    pub is_executable: Option<bool>,
+    pub shell_type: Option<String>,
 }
 
 // 初始化数据库
@@ -47,6 +50,7 @@ pub fn init_db(app_handle: &AppHandle) -> Result<Connection> {
     ")?;
 
     // 1. 创建 prompts 表（存储提示词和指令）
+    // ✨ 修复：Schema 中添加 is_executable 和 shell_type
     conn.execute(
         "CREATE TABLE IF NOT EXISTS prompts (
             id TEXT PRIMARY KEY,
@@ -61,10 +65,17 @@ pub fn init_db(app_handle: &AppHandle) -> Result<Connection> {
             source TEXT DEFAULT 'local',
             pack_id TEXT,
             original_id TEXT,
-            type TEXT
+            type TEXT,
+            is_executable INTEGER DEFAULT 0,
+            shell_type TEXT
         )",
         [],
     )?;
+
+    // ✨ 自动迁移：尝试添加列（如果已存在旧版本数据库）
+    // 这里忽略错误，因为如果列已存在会报错，这是预期的
+    let _ = conn.execute("ALTER TABLE prompts ADD COLUMN is_executable INTEGER DEFAULT 0", []);
+    let _ = conn.execute("ALTER TABLE prompts ADD COLUMN shell_type TEXT", []);
 
     // 2. 创建 prompts FTS5 全文搜索
     conn.execute(
@@ -185,6 +196,9 @@ pub fn get_prompts(
             pack_id: row.get("pack_id")?,
             original_id: row.get("original_id")?,
             type_: row.get("type")?,
+            // ✨ 修复：读取新字段
+            is_executable: row.get("is_executable").unwrap_or(Some(false)),
+            shell_type: row.get("shell_type").unwrap_or(None),
         })
     }).map_err(|e| e.to_string())?;
 
@@ -256,6 +270,9 @@ pub fn search_prompts(
             pack_id: row.get("pack_id")?,
             original_id: row.get("original_id")?,
             type_: row.get("type")?,
+            // ✨ 修复：读取新字段
+            is_executable: row.get("is_executable").unwrap_or(Some(false)),
+            shell_type: row.get("shell_type").unwrap_or(None),
         })
     }).map_err(|e| e.to_string())?;
 
@@ -276,11 +293,13 @@ pub fn save_prompt(
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
     let tags_json = serde_json::to_string(&prompt.tags).unwrap_or("[]".to_string());
 
+    // ✨ 修复：SQL 语句中添加 is_executable 和 shell_type
     conn.execute(
         "INSERT OR REPLACE INTO prompts (
             id, title, content, group_name, description, tags,
-            is_favorite, created_at, updated_at, source, pack_id, original_id, type
-        ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13)",
+            is_favorite, created_at, updated_at, source, pack_id, original_id, type,
+            is_executable, shell_type
+        ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12, ?13, ?14, ?15)",
         params![
             prompt.id, 
             prompt.title, 
@@ -294,7 +313,10 @@ pub fn save_prompt(
             prompt.source,
             prompt.pack_id, 
             prompt.original_id, 
-            prompt.type_
+            prompt.type_,
+            // ✨ 参数绑定
+            prompt.is_executable,
+            prompt.shell_type
         ],
     ).map_err(|e| e.to_string())?;
 
@@ -345,19 +367,22 @@ pub fn import_prompt_pack(
 
     // 2. 插入新数据
     {
-        // 使用 INSERT OR REPLACE 进一步防止同一批数据内有重复 ID 导致的错误
+        // ✨ 修复：SQL 语句中添加 is_executable 和 shell_type
         let mut stmt = tx.prepare(
             "INSERT OR REPLACE INTO prompts (
                 id, title, content, group_name, description, tags,
-                is_favorite, created_at, updated_at, source, pack_id, original_id, type
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                is_favorite, created_at, updated_at, source, pack_id, original_id, type,
+                is_executable, shell_type
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         ).map_err(|e| e.to_string())?;
 
         for p in prompts {
             let tags_json = serde_json::to_string(&p.tags).unwrap_or("[]".to_string());
             stmt.execute(params![
                 p.id, p.title, p.content, p.group_name, p.description, tags_json,
-                p.is_favorite, p.created_at, p.updated_at, p.source, pack_id.clone(), p.original_id, p.type_
+                p.is_favorite, p.created_at, p.updated_at, p.source, pack_id.clone(), p.original_id, p.type_,
+                // ✨ 参数绑定
+                p.is_executable, p.shell_type
             ]).map_err(|e| e.to_string())?;
         }
     }
@@ -378,18 +403,22 @@ pub fn batch_import_local_prompts(
     let mut count = 0;
 
     {
+        // ✨ 修复：SQL 语句中添加 is_executable 和 shell_type
         let mut stmt = tx.prepare(
             "INSERT OR IGNORE INTO prompts (
                 id, title, content, group_name, description, tags,
-                is_favorite, created_at, updated_at, source, pack_id, original_id, type
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
+                is_favorite, created_at, updated_at, source, pack_id, original_id, type,
+                is_executable, shell_type
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"
         ).map_err(|e| e.to_string())?;
 
         for p in prompts {
             let tags_json = serde_json::to_string(&p.tags).unwrap_or("[]".to_string());
             stmt.execute(params![
                 p.id, p.title, p.content, p.group_name, p.description, tags_json,
-                p.is_favorite, p.created_at, p.updated_at, p.source, p.pack_id, p.original_id, p.type_
+                p.is_favorite, p.created_at, p.updated_at, p.source, p.pack_id, p.original_id, p.type_,
+                // ✨ 参数绑定
+                p.is_executable, p.shell_type
             ]).map_err(|e| e.to_string())?;
             count += 1;
         }
