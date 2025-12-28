@@ -8,8 +8,8 @@ import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { parseVariables } from '@/lib/template';
 import { getText } from '@/lib/i18n';
 import { Toast, ToastType } from '@/components/ui/Toast';
-import { List } from 'react-window';
-import { AutoSizer } from 'react-virtualized-auto-sizer';
+
+import { List, RowComponentProps } from 'react-window';
 
 import { PromptCard } from './PromptCard';
 import { PromptEditorDialog } from './dialogs/PromptEditorDialog';
@@ -166,7 +166,7 @@ export function PromptView() {
   }, [prompts, columnCount]);
 
   // Render row for virtual list
-  const renderRow = useCallback(({ index, style }: { index: number; style: React.CSSProperties }) => {
+  const renderRow = useCallback(({ index, style }: RowComponentProps) => {
     const rowPrompts = getRowPrompts(index);
     return (
       <div style={{ ...style, padding: CARD_GAP / 2 }}>
@@ -271,21 +271,13 @@ export function PromptView() {
 
         <div className="flex-1 overflow-hidden p-4 md:p-6">
           {prompts.length > 0 ? (
-            <AutoSizer
-              Child={({ height, width }: { height?: number; width?: number }) => {
-                if (!height || !width) return null;
-                return (
-                  <List
-                    height={height}
-                    width={width}
-                    itemCount={rowCount}
-                    itemSize={CARD_HEIGHT}
-                  >
-                    {/* @ts-expect-error - react-window children type mismatch */}
-                    {renderRow}
-                  </List>
-                );
-              }}
+            /* v2.x 不再需要第三方 AutoSizer，List 会自动填满父容器 */
+            <List
+              rowCount={rowCount}
+              rowHeight={CARD_HEIGHT}
+              rowComponent={renderRow}
+              rowProps={{}}
+              className="scrollbar-hide"
             />
           ) : (
             <div className="h-full flex flex-col items-center justify-center text-muted-foreground opacity-60">
