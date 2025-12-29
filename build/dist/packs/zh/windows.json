@@ -3123,7 +3123,7 @@
     "id": "tldr-zh-windows-choco-info-1",
     "type": "command",
     "title": "choco-info - 显示一个本地已安装包的信息",
-    "content": "choco info {{包名}} --local-only",
+    "content": "choco info {{包名}} {{[-l|--local-only]}}",
     "group": "Windows",
     "description": "choco-info: 显示有关 Chocolatey 包的详细信息。 (显示一个本地已安装包的信息)",
     "tags": [
@@ -3138,7 +3138,7 @@
     "id": "tldr-zh-windows-choco-info-2",
     "type": "command",
     "title": "choco-info - 从一个自定义的源来获取包的信息",
-    "content": "choco info {{包名}} --source {{源 URL|别名}}",
+    "content": "choco info {{包名}} {{[-s|--source]}} {{源 URL|别名}}",
     "group": "Windows",
     "description": "choco-info: 显示有关 Chocolatey 包的详细信息。 (从一个自定义的源来获取包的信息)",
     "tags": [
@@ -3153,7 +3153,7 @@
     "id": "tldr-zh-windows-choco-info-3",
     "type": "command",
     "title": "choco-info - 提供一个用户名和密码来进行验证",
-    "content": "choco info {{包名}} --user {{用户名}} --password {{密码}}",
+    "content": "choco info {{包名}} {{[-u|--user]}} {{用户名}} {{[-p|--password]}} {{密码}}",
     "group": "Windows",
     "description": "choco-info: 显示有关 Chocolatey 包的详细信息。 (提供一个用户名和密码来进行验证)",
     "tags": [

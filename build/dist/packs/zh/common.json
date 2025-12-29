@@ -24287,10 +24287,10 @@
   {
     "id": "tldr-zh-common-read-4",
     "type": "command",
-    "title": "read - 读取键盘输入的数据赋值给变量，不对\\进行转义",
+    "title": "read - 读取键盘输入的数据赋值给变量，不对`\\`进行转义",
     "content": "read -r {{变量}}",
     "group": "通用工具 (Common)",
-    "description": "read: 从标准输入（或文件）读取一行并将单词分配给变量。 (读取键盘输入的数据赋值给变量，不对\\进行转义)",
+    "description": "read: 从标准输入（或文件）读取一行并将单词分配给变量。 (读取键盘输入的数据赋值给变量，不对`\\`进行转义)",
     "tags": [
       "common",
       "read",
@@ -30153,7 +30153,7 @@
     "id": "tldr-zh-common-git-am-1",
     "type": "command",
     "title": "git-am - 应用远程补丁文件并提交更改",
-    "content": "curl {{[-L|--location]}} {{https://example.com/file.patch}} | git apply",
+    "content": "curl {{[-L|--location]}} {{https://example.com/file.patch}} | git am",
     "group": "通用工具 (Common)",
     "description": "git-am: 应用补丁文件并创建提交。在通过电子邮件接收提交时非常有用。 另请参阅 `git format-patch`，该命令可以生成补丁文件。 (应用远程补丁文件并提交更改)",
     "tags": [

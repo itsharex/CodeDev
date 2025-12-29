@@ -14115,6 +14115,96 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-lid.idutils-0",
+    "type": "command",
+    "title": "lid.idutils - List all tokens and their file locations in the ID database",
+    "content": "lid",
+    "group": "Linux Ops",
+    "description": "lid.idutils: Query an ID database for tokens matching a pattern. Note: An ID database must first be built using `mkid`. (List all tokens and their file locations in the ID database)",
+    "tags": [
+      "linux",
+      "lid.idutils",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-lid.idutils-1",
+    "type": "command",
+    "title": "lid.idutils - Find files containing a specific token",
+    "content": "lid {{token}}",
+    "group": "Linux Ops",
+    "description": "lid.idutils: Query an ID database for tokens matching a pattern. Note: An ID database must first be built using `mkid`. (Find files containing a specific token)",
+    "tags": [
+      "linux",
+      "lid.idutils",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-lid.idutils-2",
+    "type": "command",
+    "title": "lid.idutils - Find tokens matching a pattern, ignoring case",
+    "content": "lid {{[-i|--ignore-case]}} {{token}}",
+    "group": "Linux Ops",
+    "description": "lid.idutils: Query an ID database for tokens matching a pattern. Note: An ID database must first be built using `mkid`. (Find tokens matching a pattern, ignoring case)",
+    "tags": [
+      "linux",
+      "lid.idutils",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-lid.idutils-3",
+    "type": "command",
+    "title": "lid.idutils - Find tokens matching an extended regular expression",
+    "content": "lid {{[-r|--regexp]}} \"{{pattern}}\"",
+    "group": "Linux Ops",
+    "description": "lid.idutils: Query an ID database for tokens matching a pattern. Note: An ID database must first be built using `mkid`. (Find tokens matching an extended regular expression)",
+    "tags": [
+      "linux",
+      "lid.idutils",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-lid.idutils-4",
+    "type": "command",
+    "title": "lid.idutils - Output matching lines in grep-style format",
+    "content": "lid {{[-R|--result]}} grep {{token}}",
+    "group": "Linux Ops",
+    "description": "lid.idutils: Query an ID database for tokens matching a pattern. Note: An ID database must first be built using `mkid`. (Output matching lines in grep-style format)",
+    "tags": [
+      "linux",
+      "lid.idutils",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-lid.idutils-5",
+    "type": "command",
+    "title": "lid.idutils - Find tokens that appear only once (useful for finding unused definitions)",
+    "content": "lid {{[-F|--frequency]}} 1",
+    "group": "Linux Ops",
+    "description": "lid.idutils: Query an ID database for tokens matching a pattern. Note: An ID database must first be built using `mkid`. (Find tokens that appear only once (useful for finding unused definitions))",
+    "tags": [
+      "linux",
+      "lid.idutils",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-lvreduce-0",
     "type": "command",
     "title": "lvreduce - Reduce a volume's size to 120 GB",
@@ -25757,10 +25847,10 @@
   {
     "id": "tldr-en-linux-systemd-ask-password-6",
     "type": "command",
-    "title": "systemd-ask-password - Pass the asked password to another program",
-    "content": "systemd-ask-password | {{command}}",
+    "title": "systemd-ask-password - Pipe a password to a command, stripping the trailing newline",
+    "content": "systemd-ask-password -n | {{command}}",
     "group": "Linux Ops",
-    "description": "systemd-ask-password: Query the user for a system password. (Pass the asked password to another program)",
+    "description": "systemd-ask-password: Query the user for a system password. (Pipe a password to a command, stripping the trailing newline)",
     "tags": [
       "linux",
       "systemd-ask-password",
@@ -32762,10 +32852,10 @@
   {
     "id": "tldr-en-linux-quickget-0",
     "type": "command",
-    "title": "quickget - Display the list of all supported guest operating systems, versions, and variants",
-    "content": "quickget list",
+    "title": "quickget - Display the list of all supported guest operating systems, versions, and variants in various formats",
+    "content": "quickget {{--list|--list-csv|--list-json}}",
     "group": "Linux Ops",
-    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is always optional. (Display the list of all supported guest operating systems, versions, and variants)",
+    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is sometimes optional. (Display the list of all supported guest operating systems, versions, and variants in various formats)",
     "tags": [
       "linux",
       "quickget",
@@ -32780,7 +32870,7 @@
     "title": "quickget - Download and create the virtual machine configuration for building a Quickemu virtual machine for an OS",
     "content": "quickget {{os}} {{release}} {{edition}}",
     "group": "Linux Ops",
-    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is always optional. (Download and create the virtual machine configuration for building a Quickemu virtual machine for an OS)",
+    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is sometimes optional. (Download and create the virtual machine configuration for building a Quickemu virtual machine for an OS)",
     "tags": [
       "linux",
       "quickget",
@@ -32795,7 +32885,7 @@
     "title": "quickget - Download configuration for a Windows 11 VM with VirtIO drivers for Windows",
     "content": "quickget windows 11",
     "group": "Linux Ops",
-    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is always optional. (Download configuration for a Windows 11 VM with VirtIO drivers for Windows)",
+    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is sometimes optional. (Download configuration for a Windows 11 VM with VirtIO drivers for Windows)",
     "tags": [
       "linux",
       "quickget",
@@ -32810,7 +32900,7 @@
     "title": "quickget - Download a macOS recovery image and creates a virtual machine configuration",
     "content": "quickget macos {{mojave|catalina|big-sur|monterey|ventura|sonoma}}",
     "group": "Linux Ops",
-    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is always optional. (Download a macOS recovery image and creates a virtual machine configuration)",
+    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is sometimes optional. (Download a macOS recovery image and creates a virtual machine configuration)",
     "tags": [
       "linux",
       "quickget",
@@ -32823,9 +32913,9 @@
     "id": "tldr-en-linux-quickget-4",
     "type": "command",
     "title": "quickget - Show an ISO URL for an operating system",
-    "content": "quickget --url fedora {{release}} {{edition}}",
+    "content": "quickget --url {{os}} {{release}} {{edition}}",
     "group": "Linux Ops",
-    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is always optional. (Show an ISO URL for an operating system)",
+    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is sometimes optional. (Show an ISO URL for an operating system)",
     "tags": [
       "linux",
       "quickget",
@@ -32838,9 +32928,9 @@
     "id": "tldr-en-linux-quickget-5",
     "type": "command",
     "title": "quickget - Test if an ISO file is available for an operating system",
-    "content": "quickget --check nixos {{release}} {{edition}}",
+    "content": "quickget --check {{os}} {{release}} {{edition}}",
     "group": "Linux Ops",
-    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is always optional. (Test if an ISO file is available for an operating system)",
+    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is sometimes optional. (Test if an ISO file is available for an operating system)",
     "tags": [
       "linux",
       "quickget",
@@ -32855,7 +32945,7 @@
     "title": "quickget - Download an image without building any VM configuration",
     "content": "quickget --download {{os}} {{release}} {{edition}}",
     "group": "Linux Ops",
-    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is always optional. (Download an image without building any VM configuration)",
+    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is sometimes optional. (Download an image without building any VM configuration)",
     "tags": [
       "linux",
       "quickget",
@@ -32867,10 +32957,10 @@
   {
     "id": "tldr-en-linux-quickget-7",
     "type": "command",
-    "title": "quickget - Create a VM configuration for an OS image",
+    "title": "quickget - Create a VM configuration for an OS image (this will move the ISO from the source directory)",
     "content": "quickget --create-config {{os}} {{path/to/iso}}",
     "group": "Linux Ops",
-    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is always optional. (Create a VM configuration for an OS image)",
+    "description": "quickget: Download and prepare materials for building a Quickemu virtual machine. Note: The parameter \"edition\" is sometimes optional. (Create a VM configuration for an OS image (this will move the ISO from the source directory))",
     "tags": [
       "linux",
       "quickget",
@@ -37533,7 +37623,7 @@
     "id": "tldr-en-linux-qm-unlink-0",
     "type": "command",
     "title": "qm-unlink - View documentation for the original command",
-    "content": "tldr qm disk unlink",
+    "content": "tldr qm disk",
     "group": "Linux Ops",
     "description": "qm-unlink: This command is an alias of `qm disk unlink`. (View documentation for the original command)",
     "tags": [
@@ -54903,7 +54993,7 @@
     "id": "tldr-en-linux-qm-importdisk-0",
     "type": "command",
     "title": "qm-importdisk - View documentation for the original command",
-    "content": "tldr qm disk import",
+    "content": "tldr qm disk",
     "group": "Linux Ops",
     "description": "qm-importdisk: This command is an alias of `qm disk import`. (View documentation for the original command)",
     "tags": [
@@ -81543,7 +81633,7 @@
     "id": "tldr-en-linux-qm-move-disk-0",
     "type": "command",
     "title": "qm-move-disk - View documentation for the original command",
-    "content": "tldr qm disk move",
+    "content": "tldr qm disk",
     "group": "Linux Ops",
     "description": "qm-move-disk: This command is an alias of `qm disk move`. (View documentation for the original command)",
     "tags": [
@@ -93588,7 +93678,7 @@
     "id": "tldr-en-linux-qm-resize-0",
     "type": "command",
     "title": "qm-resize - View documentation for the original command",
-    "content": "tldr qm disk resize",
+    "content": "tldr qm disk",
     "group": "Linux Ops",
     "description": "qm-resize: This command is an alias of `qm disk resize`. (View documentation for the original command)",
     "tags": [
@@ -98490,6 +98580,96 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-mkid-0",
+    "type": "command",
+    "title": "mkid - Build an ID database for the current directory",
+    "content": "mkid",
+    "group": "Linux Ops",
+    "description": "mkid: Build an ID database for use with `lid` and other idutils tools. (Build an ID database for the current directory)",
+    "tags": [
+      "linux",
+      "mkid",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-mkid-1",
+    "type": "command",
+    "title": "mkid - Build an ID database for specific directories",
+    "content": "mkid {{path/to/directory1 path/to/directory2 ...}}",
+    "group": "Linux Ops",
+    "description": "mkid: Build an ID database for use with `lid` and other idutils tools. (Build an ID database for specific directories)",
+    "tags": [
+      "linux",
+      "mkid",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-mkid-2",
+    "type": "command",
+    "title": "mkid - Build an ID database and save it to a specific file",
+    "content": "mkid {{[-o|--output]}} {{path/to/database.id}}",
+    "group": "Linux Ops",
+    "description": "mkid: Build an ID database for use with `lid` and other idutils tools. (Build an ID database and save it to a specific file)",
+    "tags": [
+      "linux",
+      "mkid",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-mkid-3",
+    "type": "command",
+    "title": "mkid - Include only specific languages",
+    "content": "mkid {{[-i|--include]}} \"{{language1 language2 ...}}\"",
+    "group": "Linux Ops",
+    "description": "mkid: Build an ID database for use with `lid` and other idutils tools. (Include only specific languages)",
+    "tags": [
+      "linux",
+      "mkid",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-mkid-4",
+    "type": "command",
+    "title": "mkid - Exclude specific directories from indexing",
+    "content": "mkid {{[-p|--prune]}} {{path/to/excluded_directory}}",
+    "group": "Linux Ops",
+    "description": "mkid: Build an ID database for use with `lid` and other idutils tools. (Exclude specific directories from indexing)",
+    "tags": [
+      "linux",
+      "mkid",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-mkid-5",
+    "type": "command",
+    "title": "mkid - Display statistics after building the database",
+    "content": "mkid {{[-s|--statistics]}}",
+    "group": "Linux Ops",
+    "description": "mkid: Build an ID database for use with `lid` and other idutils tools. (Display statistics after building the database)",
+    "tags": [
+      "linux",
+      "mkid",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-debtap-0",
     "type": "command",
     "title": "debtap - Update debtap database (before the first run)",
@@ -98988,7 +99168,7 @@
     "id": "tldr-en-linux-qm-move_disk-0",
     "type": "command",
     "title": "qm-move_disk - View documentation for the original command",
-    "content": "tldr qm disk move",
+    "content": "tldr qm disk",
     "group": "Linux Ops",
     "description": "qm-move_disk: This command is an alias of `qm disk move`. (View documentation for the original command)",
     "tags": [
@@ -108483,7 +108663,7 @@
     "id": "tldr-en-linux-qm-rescan-0",
     "type": "command",
     "title": "qm-rescan - View documentation for the original command",
-    "content": "tldr qm disk rescan",
+    "content": "tldr qm disk",
     "group": "Linux Ops",
     "description": "qm-rescan: This command is an alias of `qm disk rescan`. (View documentation for the original command)",
     "tags": [
@@ -110058,7 +110238,7 @@
     "id": "tldr-en-linux-qm-agent-0",
     "type": "command",
     "title": "qm-agent - View documentation for the original command",
-    "content": "tldr qm guest cmd",
+    "content": "tldr qm guest",
     "group": "Linux Ops",
     "description": "qm-agent: This command is an alias of `qm guest cmd`. (View documentation for the original command)",
     "tags": [

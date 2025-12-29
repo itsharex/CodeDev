@@ -3693,7 +3693,7 @@
     "id": "tldr-zh-linux-aptitude-0",
     "type": "command",
     "title": "aptitude - 同步可用软件包及其版本列表，在运行后续 aptitude 命令前，应该首先运行该命令",
-    "content": "aptitude update",
+    "content": "sudo aptitude update",
     "group": "Linux 运维",
     "description": "aptitude: Debian 和 Ubuntu 上的软件包管理工具。 (同步可用软件包及其版本列表，在运行后续 aptitude 命令前，应该首先运行该命令)",
     "tags": [
@@ -3708,7 +3708,7 @@
     "id": "tldr-zh-linux-aptitude-1",
     "type": "command",
     "title": "aptitude - 安装一个新的软件包及其依赖",
-    "content": "aptitude install {{软件包}}",
+    "content": "sudo aptitude install {{软件包}}",
     "group": "Linux 运维",
     "description": "aptitude: Debian 和 Ubuntu 上的软件包管理工具。 (安装一个新的软件包及其依赖)",
     "tags": [
@@ -3753,7 +3753,7 @@
     "id": "tldr-zh-linux-aptitude-4",
     "type": "command",
     "title": "aptitude - 移除一个软件包并移除所有依赖它的软件包",
-    "content": "aptitude remove {{软件包}}",
+    "content": "sudo aptitude remove {{软件包}}",
     "group": "Linux 运维",
     "description": "aptitude: Debian 和 Ubuntu 上的软件包管理工具。 (移除一个软件包并移除所有依赖它的软件包)",
     "tags": [
@@ -3768,7 +3768,7 @@
     "id": "tldr-zh-linux-aptitude-5",
     "type": "command",
     "title": "aptitude - 更新已安装软件包到最新版本",
-    "content": "aptitude upgrade",
+    "content": "sudo aptitude upgrade",
     "group": "Linux 运维",
     "description": "aptitude: Debian 和 Ubuntu 上的软件包管理工具。 (更新已安装软件包到最新版本)",
     "tags": [
@@ -3783,7 +3783,7 @@
     "id": "tldr-zh-linux-aptitude-6",
     "type": "command",
     "title": "aptitude - 更新已安装的软件包（类似于 `aptitude upgrade` 命令），移除过时的软件包并安装额外的软件包以满足新的软件包依赖项",
-    "content": "aptitude full-upgrade",
+    "content": "sudo aptitude full-upgrade",
     "group": "Linux 运维",
     "description": "aptitude: Debian 和 Ubuntu 上的软件包管理工具。 (更新已安装的软件包（类似于 `aptitude upgrade` 命令），移除过时的软件包并安装额外的软件包以满足新的软件包依赖项)",
     "tags": [
@@ -3798,7 +3798,7 @@
     "id": "tldr-zh-linux-aptitude-7",
     "type": "command",
     "title": "aptitude - 锁定一个已安装的软件包以便阻止它自动升级",
-    "content": "aptitude hold '?installed({{软件包}})'",
+    "content": "sudo aptitude hold '?installed({{软件包}})'",
     "group": "Linux 运维",
     "description": "aptitude: Debian 和 Ubuntu 上的软件包管理工具。 (锁定一个已安装的软件包以便阻止它自动升级)",
     "tags": [
@@ -4518,7 +4518,7 @@
     "id": "tldr-zh-linux-qm-unlink-0",
     "type": "command",
     "title": "qm-unlink - 查看原命令的文档",
-    "content": "tldr qm disk unlink",
+    "content": "tldr qm disk",
     "group": "Linux 运维",
     "description": "qm-unlink: 此命令为 `qm disk unlink` 的别名。 (查看原命令的文档)",
     "tags": [
@@ -5973,7 +5973,7 @@
     "id": "tldr-zh-linux-qm-importdisk-0",
     "type": "command",
     "title": "qm-importdisk - 查看原命令的文档",
-    "content": "tldr qm disk import",
+    "content": "tldr qm disk",
     "group": "Linux 运维",
     "description": "qm-importdisk: 此命令为 `qm disk import` 的别名。 (查看原命令的文档)",
     "tags": [
@@ -8178,7 +8178,7 @@
     "id": "tldr-zh-linux-qm-move-disk-0",
     "type": "command",
     "title": "qm-move-disk - 查看原命令的文档",
-    "content": "tldr qm disk move",
+    "content": "tldr qm disk",
     "group": "Linux 运维",
     "description": "qm-move-disk: 此命令为 `qm disk move` 的别名。 (查看原命令的文档)",
     "tags": [
@@ -9333,7 +9333,7 @@
     "id": "tldr-zh-linux-qm-resize-0",
     "type": "command",
     "title": "qm-resize - 查看原命令的文档",
-    "content": "tldr qm disk resize",
+    "content": "tldr qm disk",
     "group": "Linux 运维",
     "description": "qm-resize: 此命令为 `qm disk resize` 的别名。 (查看原命令的文档)",
     "tags": [
@@ -9828,7 +9828,7 @@
     "id": "tldr-zh-linux-qm-move_disk-0",
     "type": "command",
     "title": "qm-move_disk - 查看原命令的文档",
-    "content": "tldr qm disk move",
+    "content": "tldr qm disk",
     "group": "Linux 运维",
     "description": "qm-move_disk: 此命令为 `qm disk move` 的别名。 (查看原命令的文档)",
     "tags": [
@@ -10623,7 +10623,7 @@
     "id": "tldr-zh-linux-qm-rescan-0",
     "type": "command",
     "title": "qm-rescan - 查看原命令的文档",
-    "content": "tldr qm disk rescan",
+    "content": "tldr qm disk",
     "group": "Linux 运维",
     "description": "qm-rescan: 此命令为 `qm disk rescan` 的别名。 (查看原命令的文档)",
     "tags": [
@@ -10938,7 +10938,7 @@
     "id": "tldr-zh-linux-qm-agent-0",
     "type": "command",
     "title": "qm-agent - 查看原命令的文档",
-    "content": "tldr qm guest cmd",
+    "content": "tldr qm guest",
     "group": "Linux 运维",
     "description": "qm-agent: 此命令为 `qm guest cmd` 的别名。 (查看原命令的文档)",
     "tags": [
