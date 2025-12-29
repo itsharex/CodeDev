@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect } from 'react';
+import { useState, useRef, useLayoutEffect, useMemo } from 'react'; // 引入 useMemo
 import { createPortal } from 'react-dom';
 import { Terminal, Calendar, Tag, Box, Globe, Variable } from 'lucide-react';
 import { Prompt } from '@/types/prompt';
@@ -22,6 +22,12 @@ export function PromptDetailTooltip({ prompt, anchorRect, isOpen, onMouseEnter, 
   const tooltipRef = useRef<HTMLDivElement>(null);
 
   const variables = parseVariables(prompt.content);
+  
+  // 核心修复：对标签进行去重，防止重复 key 报错
+  const uniqueTags = useMemo(() => {
+      if (!prompt.tags) return [];
+      return Array.from(new Set(prompt.tags));
+  }, [prompt.tags]);
   
   useLayoutEffect(() => {
     if (isOpen && anchorRect && tooltipRef.current) {
@@ -54,17 +60,14 @@ export function PromptDetailTooltip({ prompt, anchorRect, isOpen, onMouseEnter, 
   return createPortal(
     <div 
       ref={tooltipRef}
-      // 移入时保持显示，移出时准备关闭
       onMouseEnter={onMouseEnter}
       onMouseLeave={onMouseLeave}
       className={cn(
         "fixed z-[100] w-[380px] transition-opacity duration-200", 
-        // 确保 isPositioned 为 true 时 pointer-events-auto，否则无法滚动
         isPositioned ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       )}
       style={{ top: position.top, left: position.left }}
     >
-      {/* 流光边框容器 */}
       <div className="relative group rounded-xl p-[1.5px] overflow-hidden">
         
         <div className="absolute inset-[-50%] animate-[spin_3s_linear_infinite] blur-sm" 
@@ -143,9 +146,10 @@ export function PromptDetailTooltip({ prompt, anchorRect, isOpen, onMouseEnter, 
             <div className="p-3 bg-secondary/20 border-t border-border/50 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
             <div className="flex items-center gap-2">
                 <Tag size={12} />
-                {prompt.tags && prompt.tags.length > 0 ? (
-                    <div className="flex gap-1">
-                        {prompt.tags.map(t => <span key={t} className="hover:text-foreground transition-colors">#{t}</span>)}
+                {uniqueTags.length > 0 ? (
+                    <div className="flex gap-1 flex-wrap">
+                        {/* 修复：使用 uniqueTags 渲染，确保 key 唯一 */}
+                        {uniqueTags.map(t => <span key={t} className="hover:text-foreground transition-colors">#{t}</span>)}
                     </div>
                 ) : (
                     <span className="opacity-50">No tags</span>

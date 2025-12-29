@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useCallback, CSSProperties, memo } from 'react';
 import { usePromptStore } from '@/store/usePromptStore';
 import { useAppStore } from '@/store/useAppStore';
 import { Search, Plus, Folder, Star, Hash, Trash2, Layers, PanelLeft, AlertTriangle, Terminal, Sparkles, Loader2 } from 'lucide-react';
@@ -16,6 +16,16 @@ import { VariableFillerDialog } from './dialogs/VariableFillerDialog';
 import { executeCommand } from '@/lib/command_executor';
 import { useContextStore } from '@/store/useContextStore';
 
+// === 稳定版(Old Version) 导入方式 ===
+// 1. AutoSizer v1 是默认导出
+import AutoSizer from 'react-virtualized-auto-sizer';
+// 2. react-window v1 导出的是 FixedSizeGrid
+import { FixedSizeGrid } from 'react-window';
+
+// === 核心修复：创建一个 Any 类型的组件引用 ===
+// 这样可以彻底绕过 TypeScript 对 react-window v1 旧类型定义与 React 18 不兼容的检查
+const GridAny = FixedSizeGrid as any;
+
 function useDebounce<T>(value: T, delay: number): T {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
@@ -25,12 +35,62 @@ function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
+// === 类型定义 ===
+interface PromptGridItemData {
+  items: Prompt[];
+  columnCount: number;
+  onEdit: (p: Prompt) => void;
+  onDelete: (p: Prompt) => void;
+  onTrigger: (p: Prompt) => void;
+}
+
+interface CellProps {
+  columnIndex: number;
+  rowIndex: number;
+  style: CSSProperties;
+  data: PromptGridItemData;
+}
+
+// === 单元格渲染器 ===
+const Cell = memo(({ columnIndex, rowIndex, style, data }: CellProps) => {
+  const { items, columnCount, onEdit, onDelete, onTrigger } = data;
+  const index = rowIndex * columnCount + columnIndex;
+  
+  if (index >= items.length) {
+    return null;
+  }
+
+  const prompt = items[index];
+  const GAP = 16;
+
+  // 调整样式以模拟 Gap
+  const itemStyle: CSSProperties = {
+    ...style,
+    left: Number(style.left) + GAP,
+    top: Number(style.top) + GAP,
+    width: Number(style.width) - GAP, 
+    height: Number(style.height) - GAP
+  };
+
+  return (
+    <div style={itemStyle}>
+      <PromptCard 
+        key={prompt.id}
+        prompt={prompt}
+        onEdit={onEdit}
+        onDelete={onDelete}
+        onTrigger={onTrigger}
+      />
+    </div>
+  );
+});
+
 export function PromptView() {
   const { 
     prompts, 
     groups, 
     activeGroup, setActiveGroup, 
-    activeCategory, setActiveCategory, // 使用 Store 中的状态
+    activeCategory, setActiveCategory,
     searchQuery: storeSearchQuery, setSearchQuery, 
     initStore, loadPrompts, isLoading, hasMore,
     deleteGroup, deletePrompt,
@@ -54,8 +114,6 @@ export function PromptView() {
   const [isDeleteConfirmOpen, setIsDeleteConfirmOpen] = useState(false);
   const [promptToDelete, setPromptToDelete] = useState<Prompt | null>(null);
 
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
     const init = async () => {
         await initStore();
@@ -72,23 +130,14 @@ export function PromptView() {
     }
   }, [debouncedSearchTerm]);
 
-  const handleScroll = useCallback((e: React.UIEvent<HTMLDivElement>) => {
-    const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    if (scrollHeight - scrollTop - clientHeight < 200) {
-        if (!isLoading && hasMore) {
-            loadPrompts(); 
-        }
-    }
-  }, [isLoading, hasMore, loadPrompts]);
-
-  const triggerToast = (msg?: string, type: ToastType = 'success') => { 
-      setToastState({ show: true, msg: msg || getText('prompts', 'copySuccess', language), type }); 
-  };
-
   const handleCreate = useCallback(() => { setEditingPrompt(null); setIsEditorOpen(true); }, []);
   const handleEdit = useCallback((prompt: Prompt) => { setEditingPrompt(prompt); setIsEditorOpen(true); }, []);
   const handleDeleteClick = useCallback((prompt: Prompt) => { setPromptToDelete(prompt); setIsDeleteConfirmOpen(true); }, []);
   
+  const triggerToast = (msg?: string, type: ToastType = 'success') => { 
+      setToastState({ show: true, msg: msg || getText('prompts', 'copySuccess', language), type }); 
+  };
+
   const confirmDelete = async () => {
     if (promptToDelete) {
       await deletePrompt(promptToDelete.id);
@@ -119,39 +168,29 @@ export function PromptView() {
     }
   }, [language, projectRoot]);
 
+  // === 虚拟列表参数 ===
+  const GAP = 16;
+  const ITEM_HEIGHT = 180 + GAP; 
+  const MIN_COLUMN_WIDTH = 300; 
+
   return (
     <div className="h-full flex flex-row overflow-hidden bg-background">
       
+      {/* 侧边栏 */}
       <aside className={cn("flex flex-col bg-secondary/5 select-none transition-all duration-300 ease-in-out overflow-hidden", isPromptSidebarOpen ? "w-56 border-r border-border opacity-100" : "w-0 border-none opacity-0")}>
         <div className="p-3 pb-0 flex gap-1 shrink-0">
-            <button 
-                onClick={() => setActiveCategory('prompt')}
-                className={cn("flex-1 py-2 text-xs font-bold rounded-md flex items-center justify-center gap-2 transition-colors", activeCategory === 'prompt' ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary")}
-            >
+            <button onClick={() => setActiveCategory('prompt')} className={cn("flex-1 py-2 text-xs font-bold rounded-md flex items-center justify-center gap-2 transition-colors", activeCategory === 'prompt' ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary")}>
                 <Sparkles size={14} /> Prompts
             </button>
-            <button 
-                onClick={() => setActiveCategory('command')}
-                className={cn("flex-1 py-2 text-xs font-bold rounded-md flex items-center justify-center gap-2 transition-colors", activeCategory === 'command' ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary")}
-            >
+            <button onClick={() => setActiveCategory('command')} className={cn("flex-1 py-2 text-xs font-bold rounded-md flex items-center justify-center gap-2 transition-colors", activeCategory === 'command' ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-secondary")}>
                 <Terminal size={14} /> Commands
             </button>
         </div>
 
         <div className="p-4 pb-2 min-w-[13rem]">
            <div className="space-y-1">
-            <CategoryItem 
-              icon={<Layers size={16} />} 
-              label={getText('sidebar', 'all', language)} 
-              isActive={activeGroup === 'all'} 
-              onClick={() => setActiveGroup('all')} 
-            />
-            <CategoryItem 
-              icon={<Star size={16} />} 
-              label={getText('sidebar', 'favorites', language)} 
-              isActive={activeGroup === 'favorite'} 
-              onClick={() => setActiveGroup('favorite')} 
-            />
+            <CategoryItem icon={<Layers size={16} />} label={getText('sidebar', 'all', language)} isActive={activeGroup === 'all'} onClick={() => setActiveGroup('all')} />
+            <CategoryItem icon={<Star size={16} />} label={getText('sidebar', 'favorites', language)} isActive={activeGroup === 'favorite'} onClick={() => setActiveGroup('favorite')} />
           </div>
         </div>
         
@@ -166,14 +205,7 @@ export function PromptView() {
                 {groups.map(group => {
                    if (group === DEFAULT_GROUP) return null; 
                    return (
-                       <CategoryItem 
-                            key={group}
-                            icon={group === 'Git' ? <Hash size={16} /> : <Folder size={16} />} 
-                            label={group} 
-                            isActive={activeGroup === group} 
-                            onClick={() => setActiveGroup(group)}
-                            onDelete={() => deleteGroup(group)}
-                        />
+                       <CategoryItem key={group} icon={group === 'Git' ? <Hash size={16} /> : <Folder size={16} />} label={group} isActive={activeGroup === group} onClick={() => setActiveGroup(group)} onDelete={() => deleteGroup(group)} />
                    )
                 })}
             </div>
@@ -202,46 +234,59 @@ export function PromptView() {
           </button>
         </header>
 
-        <div 
-            ref={scrollContainerRef}
-            onScroll={handleScroll}
-            className="flex-1 overflow-y-auto p-4 md:p-6"
-        >
-          <div className="max-w-[1600px] mx-auto min-h-full">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4">
-                    {/* 直接渲染 store.prompts，无需过滤 */}
-                    {prompts.map(prompt => (
-                        <PromptCard 
-                          key={prompt.id} 
-                          prompt={prompt} 
-                          onEdit={handleEdit} 
-                          onDelete={handleDeleteClick} 
-                          onTrigger={handleTrigger} 
-                        />
-                    ))}
-                </div>
+        {/* 核心容器 */}
+        <div className="flex-1 overflow-hidden p-0 relative" style={{ width: '100%', height: '100%' }}> 
+          {prompts.length === 0 && !isLoading ? (
+             <div className="flex flex-col items-center justify-center h-full text-muted-foreground opacity-60">
+                <div className="w-16 h-16 bg-secondary/50 rounded-2xl flex items-center justify-center mb-4"><Search size={32} /></div>
+                <p>{getText('prompts', 'noResults', language)}</p>
+             </div>
+          ) : (
+             <AutoSizer>
+              {({ height, width }: { height: number; width: number }) => {
+                const safeWidth = width - 20; 
+                const columnCount = Math.max(1, Math.floor(safeWidth / MIN_COLUMN_WIDTH));
+                const columnWidth = safeWidth / columnCount;
+                const rowCount = Math.ceil(prompts.length / columnCount);
 
-                {isLoading && (
-                    <div className="flex justify-center py-8">
-                        <Loader2 className="animate-spin text-primary" />
-                    </div>
-                )}
+                return (
+                  <GridAny
+                    className="custom-scrollbar px-2"
+                    columnCount={columnCount}
+                    columnWidth={columnWidth}
+                    height={height}
+                    rowCount={rowCount}
+                    rowHeight={ITEM_HEIGHT}
+                    width={width}
+                    itemData={{ 
+                        items: prompts, 
+                        columnCount,
+                        onEdit: handleEdit,
+                        onDelete: handleDeleteClick,
+                        onTrigger: handleTrigger
+                    }}
+                    onItemsRendered={({ visibleRowStopIndex }: any) => {
+                        if (visibleRowStopIndex >= rowCount - 2 && !isLoading && hasMore) {
+                            loadPrompts(); 
+                        }
+                    }}
+                  >
+                    {Cell}
+                  </GridAny>
+                );
+              }}
+             </AutoSizer>
+          )}
 
-                {!isLoading && prompts.length === 0 && (
-                    <div className="h-[60vh] flex flex-col items-center justify-center text-muted-foreground opacity-60">
-                        <div className="w-16 h-16 bg-secondary/50 rounded-2xl flex items-center justify-center mb-4"><Search size={32} /></div>
-                        <p>{getText('prompts', 'noResults', language)}</p>
-                    </div>
-                )}
-                
-                {!hasMore && prompts.length > 0 && (
-                    <div className="text-center py-8 text-xs text-muted-foreground/50">
-                        - End of Results -
-                    </div>
-                )}
-          </div>
+          {isLoading && prompts.length > 0 && (
+             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-background/80 backdrop-blur px-4 py-2 rounded-full border border-border shadow-lg flex items-center gap-2 text-sm text-muted-foreground animate-in slide-in-from-bottom-2 z-10">
+                 <Loader2 className="animate-spin text-primary" size={16} />
+                 Loading more...
+             </div>
+          )}
         </div>
 
+        {/* Dialogs */}
         <PromptEditorDialog isOpen={isEditorOpen} onClose={() => setIsEditorOpen(false)} initialData={editingPrompt} />
         
         <VariableFillerDialog 
