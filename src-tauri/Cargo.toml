@@ -49,7 +49,7 @@ custom-protocol = [ "tauri/custom-protocol" ]
 panic = "abort"
 codegen-units = 1
 lto = true
-opt-level = "z" 
+opt-level = "s" 
 strip = true
 
 [target.'cfg(not(windows))'.dependencies]
