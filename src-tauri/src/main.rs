@@ -5,7 +5,7 @@
 
 use std::fs;
 use std::sync::{Arc, Mutex};
-use sysinfo::System;
+use sysinfo::{System, RefreshKind, CpuRefreshKind, MemoryRefreshKind};
 use tauri::{
     menu::{Menu, MenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
@@ -53,18 +53,15 @@ fn get_system_info(
     system: State<'_, Arc<Mutex<System>>>,
 ) -> SystemInfo {
     let mut sys = system.lock().unwrap();
-    sys.refresh_cpu_all();
-    sys.refresh_memory();
     
-    let cpu_usage = {
-        let cpus = sys.cpus();
-        if !cpus.is_empty() {
-            let total_cpu: f64 = cpus.iter().map(|cpu| cpu.cpu_usage() as f64).sum();
-            total_cpu / cpus.len() as f64
-        } else {
-            0.0
-        }
-    };
+    // Sysinfo 0.37 修复: new() -> nothing()
+    sys.refresh_specifics(
+        RefreshKind::nothing()
+            .with_cpu(CpuRefreshKind::nothing().with_cpu_usage())
+            .with_memory(MemoryRefreshKind::nothing())
+    );
+    
+    let cpu_usage = sys.global_cpu_usage() as f64;
     
     let memory_total = sys.total_memory();
     let memory_used = sys.used_memory();
@@ -172,7 +169,7 @@ fn main() {
             monitor::diagnose_network
         ])
         .setup(|app| {
-            let system = System::new();
+            let system = System::new_all();
             app.manage(Arc::new(Mutex::new(system)));
 
             match db::init_db(app.handle()) {

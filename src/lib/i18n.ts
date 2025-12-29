@@ -339,6 +339,8 @@ const translations = {
       procMem: "Mem",
       procUser: "User",
       kill: "End Task",
+      killDenied: "Action Denied: System Process",
+      systemProcess: "System Process",
       
       // Ports
       searchPorts: "Search ports (e.g. 3000, node)...",
@@ -350,9 +352,12 @@ const translations = {
       killMsg: "Are you sure you want to kill process \"{name}\" (PID: {pid})?",
       killSuccess: "Process killed successfully.",
       refresh: "Refresh",
+      systemPort: "System Port",
+      protected: "System Process Protected",
       
       // Env
       envTool: "Tool / Runtime",
+      envToolFilter: "Filter tools...",
       envVer: "Version",
       envStatus: "Status",
       envInstalled: "Installed",
@@ -709,6 +714,8 @@ const translations = {
       procMem: "内存",
       procUser: "用户",
       kill: "结束进程",
+      killDenied: "操作拒绝：系统进程",
+      systemProcess: "系统进程",
       
       // Ports
       searchPorts: "搜索端口 (如 3000, node)...",
@@ -720,9 +727,12 @@ const translations = {
       killMsg: "您确定要结束进程 “{name}” (PID: {pid}) 吗？",
       killSuccess: "进程已结束。",
       refresh: "刷新",
+      systemPort: "系统端口",
+      protected: "受保护的系统进程",
       
       // Env
       envTool: "工具 / 运行时",
+      envToolFilter: "过滤工具...",
       envVer: "版本号",
       envStatus: "状态",
       envInstalled: "已安装",

@@ -2,7 +2,6 @@ export interface SystemMetrics {
   cpu_usage: number;
   memory_used: number;
   memory_total: number;
-  // 如果后续 Rust 端实现了磁盘/网络监控，可在此扩展
 }
 
 export interface ProcessInfo {
@@ -10,6 +9,8 @@ export interface ProcessInfo {
   name: string;
   cpu_usage: number;
   memory: number;
+  user: string;
+  is_system: boolean; // 新增字段
 }
 
 export interface PortInfo {
@@ -17,6 +18,8 @@ export interface PortInfo {
   protocol: string;
   pid: number;
   process_name: string;
+  local_addr?: string;
+  is_system: boolean; // 新增字段
 }
 
 export interface EnvInfo {

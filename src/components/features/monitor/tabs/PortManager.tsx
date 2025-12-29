@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { Search, Trash2, RefreshCw, Network } from 'lucide-react';
+import { Search, Trash2, RefreshCw, Network, Shield, ShieldAlert } from 'lucide-react'; // Removed Globe
 import { useAppStore } from '@/store/useAppStore';
 import { useConfirmStore } from '@/store/useConfirmStore';
 import { getText } from '@/lib/i18n';
@@ -40,11 +40,17 @@ export function PortManager() {
     return ports.filter(p => 
       p.port.toString().includes(q) || 
       p.process_name.toLowerCase().includes(q) ||
-      p.pid.toString().includes(q)
+      p.pid.toString().includes(q) ||
+      (p.local_addr && p.local_addr.includes(q))
     );
   }, [ports, search]);
 
   const handleKill = async (portInfo: PortInfo) => {
+    if (portInfo.is_system) {
+        setToast({ show: true, msg: "Cannot kill system process.", type: 'warning' });
+        return;
+    }
+
     const confirmed = await confirm.ask({
         title: getText('monitor', 'confirmKill', language),
         message: getText('monitor', 'killMsg', language, { name: portInfo.process_name, pid: portInfo.pid.toString() }),
@@ -58,8 +64,7 @@ export function PortManager() {
     try {
         await invoke('kill_process', { pid: portInfo.pid });
         setToast({ show: true, msg: getText('monitor', 'killSuccess', language), type: 'success' });
-        // 延迟一点刷新，给系统清理时间
-        setTimeout(fetchPorts, 500); 
+        setTimeout(fetchPorts, 800); 
     } catch (err: any) {
         setToast({ show: true, msg: `Error: ${err}`, type: 'error' });
     }
@@ -93,10 +98,11 @@ export function PortManager() {
         <div className="flex-1 border border-border rounded-xl bg-background overflow-hidden flex flex-col shadow-sm">
             <div className="grid grid-cols-12 gap-2 px-4 py-2 bg-secondary/30 border-b border-border text-xs font-bold text-muted-foreground uppercase tracking-wider">
                 <div className="col-span-2">{getText('monitor', 'port', language)}</div>
-                <div className="col-span-2">{getText('monitor', 'proto', language)}</div>
+                <div className="col-span-1">{getText('monitor', 'proto', language)}</div>
+                <div className="col-span-3">{getText('monitor', 'localAddr', language)}</div>
                 <div className="col-span-2">{getText('monitor', 'procPid', language)}</div>
-                <div className="col-span-4">{getText('monitor', 'procName', language)}</div>
-                <div className="col-span-2 text-right">Action</div>
+                <div className="col-span-3">{getText('monitor', 'procName', language)}</div>
+                <div className="col-span-1 text-right">Action</div>
             </div>
             
             <div className="flex-1 overflow-y-auto custom-scrollbar p-1 space-y-1">
@@ -107,19 +113,37 @@ export function PortManager() {
                     </div>
                 ) : (
                     filteredPorts.map((p) => (
-                        <div key={`${p.port}-${p.protocol}`} className="grid grid-cols-12 gap-2 px-3 py-2.5 items-center hover:bg-secondary/40 rounded-lg transition-colors text-sm group">
-                            <div className="col-span-2 font-mono text-primary font-bold">{p.port}</div>
-                            <div className="col-span-2 text-muted-foreground text-xs bg-secondary/50 px-1.5 py-0.5 rounded w-fit">{p.protocol}</div>
+                        <div key={`${p.port}-${p.protocol}-${p.pid}`} className={cn("grid grid-cols-12 gap-2 px-3 py-2.5 items-center hover:bg-secondary/40 rounded-lg transition-colors text-sm group", p.is_system && "opacity-80 bg-secondary/10")}>
+                            <div className="col-span-2 font-mono text-primary font-bold flex items-center gap-1.5">
+                                {p.port}
+                                {p.is_system && (
+                                    <div title="System Port">
+                                        <Shield size={12} className="text-green-500" />
+                                    </div>
+                                )}
+                            </div>
+                            <div className="col-span-1 text-muted-foreground text-xs font-mono">{p.protocol}</div>
+                            <div className="col-span-3 text-muted-foreground text-xs font-mono truncate" title={p.local_addr}>
+                                {p.local_addr || '0.0.0.0'}
+                            </div>
                             <div className="col-span-2 font-mono text-muted-foreground">{p.pid}</div>
-                            <div className="col-span-4 font-medium truncate" title={p.process_name}>{p.process_name}</div>
-                            <div className="col-span-2 text-right opacity-0 group-hover:opacity-100 transition-opacity">
-                                <button 
-                                    onClick={() => handleKill(p)}
-                                    className="p-1.5 bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground rounded-md transition-colors"
-                                    title={getText('monitor', 'kill', language)}
-                                >
-                                    <Trash2 size={14} />
-                                </button>
+                            <div className="col-span-3 font-medium truncate flex items-center gap-1.5" title={p.process_name}>
+                                {p.process_name}
+                            </div>
+                            <div className="col-span-1 text-right">
+                                {p.is_system ? (
+                                    <div className="flex justify-end text-muted-foreground/30 cursor-not-allowed" title="System Process Protected">
+                                        <ShieldAlert size={14} />
+                                    </div>
+                                ) : (
+                                    <button 
+                                        onClick={() => handleKill(p)}
+                                        className="p-1.5 bg-destructive/10 text-destructive hover:bg-destructive hover:text-destructive-foreground rounded-md transition-colors opacity-0 group-hover:opacity-100"
+                                        title={getText('monitor', 'kill', language)}
+                                    >
+                                        <Trash2 size={14} />
+                                    </button>
+                                )}
                             </div>
                         </div>
                     ))

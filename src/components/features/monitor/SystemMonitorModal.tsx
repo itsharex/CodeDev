@@ -4,7 +4,7 @@ import { useAppStore } from '@/store/useAppStore';
 import { getText } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 
-// 懒加载子组件 (将在下一批次创建)
+// 懒加载子组件
 const MonitorDashboard = lazy(() => import('./tabs/MonitorDashboard').then(module => ({ default: module.MonitorDashboard })));
 const PortManager = lazy(() => import('./tabs/PortManager').then(module => ({ default: module.PortManager })));
 const EnvFingerprint = lazy(() => import('./tabs/EnvFingerprint').then(module => ({ default: module.EnvFingerprint })));
@@ -20,7 +20,8 @@ export function SystemMonitorModal() {
 
   return (
     <div className="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm flex items-center justify-center animate-in fade-in duration-200 p-4">
-      <div className="w-full max-w-[850px] h-[600px] bg-background border border-border rounded-xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
+      {/* 调整宽高以适应新增列 */}
+      <div className="w-full max-w-[950px] h-[650px] bg-background border border-border rounded-xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
         
         {/* Header */}
         <div className="h-14 px-6 border-b border-border flex items-center justify-between bg-secondary/10 shrink-0">
