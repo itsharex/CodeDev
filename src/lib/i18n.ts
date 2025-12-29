@@ -323,7 +323,7 @@ const translations = {
       navDashboard: "Dashboard",
       navPorts: "Port Manager",
       navEnv: "Environment",
-      navNetwork: "Network Doctor",
+      navNetwork: "Network Analysis",
       
       // Dashboard
       cpu: "CPU Usage",
@@ -698,7 +698,7 @@ const translations = {
       navDashboard: "概览",
       navPorts: "端口管理",
       navEnv: "开发环境",
-      navNetwork: "网络医生",
+      navNetwork: "网络诊断",
       
       // Dashboard
       cpu: "CPU 使用率",
