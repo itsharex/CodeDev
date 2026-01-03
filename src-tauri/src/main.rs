@@ -54,7 +54,6 @@ fn get_system_info(
 ) -> SystemInfo {
     let mut sys = system.lock().unwrap();
     
-    // Sysinfo 0.37 修复: new() -> nothing()
     sys.refresh_specifics(
         RefreshKind::nothing()
             .with_cpu(CpuRefreshKind::nothing().with_cpu_usage())
@@ -101,10 +100,8 @@ async fn export_git_diff(
     selected_paths: Vec<String>,
 ) -> Result<(), String> {
     
-    // 1. 复用 git 模块获取完整文件数据
     let all_files = git::get_git_diff(project_path, old_hash, new_hash)?;
     
-    // 2. 根据前端传来的路径进行过滤
     let filtered_files: Vec<git::GitDiffFile> = all_files
         .into_iter()
         .filter(|f| selected_paths.contains(&f.path))
@@ -114,10 +111,8 @@ async fn export_git_diff(
         return Err("No files selected for export.".to_string());
     }
 
-    // 3. 使用 export 模块生成格式化字符串
     let content = export::generate_export_content(filtered_files, format, layout);
 
-    // 4. 写入文件
     fs::write(&save_path, content).map_err(|e| format!("Failed to write file: {}", e))?;
 
     Ok(())

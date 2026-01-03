@@ -385,7 +385,8 @@ pub async fn diagnose_network() -> Vec<NetDiagResult> {
     let targets = vec![
         ("github", "GitHub", "https://github.com"),
         ("google", "Google", "https://www.google.com"),
-        ("openai", "OpenAI API", "https://api.openai.com"),
+        ("openai", "OpenAI", "https://openai.com"),
+        ("pypi", "pypi源", "https://pypi.org"),
         ("npm", "NPM Registry", "https://registry.npmjs.org"),
         ("baidu", "Baidu", "https://www.baidu.com"),
         ("cloudflare", "Cloudflare", "https://www.cloudflare.com"),
