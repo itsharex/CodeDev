@@ -467,10 +467,10 @@
   {
     "id": "tldr-zh-osx-split-1",
     "type": "command",
-    "title": "split - 用正则表达式拆分文件。匹配行将是下一个输出文件的第一行",
+    "title": "split - 用`regex`式拆分文件。匹配行将是下一个输出文件的第一行",
     "content": "split -p {{cat|^[dh]og}} {{路径/到/文件}}",
     "group": "macOS",
-    "description": "split: 把一个文件拆分成几块。 (用正则表达式拆分文件。匹配行将是下一个输出文件的第一行)",
+    "description": "split: 把一个文件拆分成几块。 (用`regex`式拆分文件。匹配行将是下一个输出文件的第一行)",
     "tags": [
       "osx",
       "split",
@@ -3005,7 +3005,7 @@
     "title": "look - 它开始寻找一个给定的前缀",
     "content": "look {{前缀}} {{文件}}",
     "group": "macOS",
-    "description": "look: 查找已排序的文件行（注意，必须是已排序的文件）。 (它开始寻找一个给定的前缀)",
+    "description": "look: 查找已排序的文件行（注意，必须是已排序的文件）。 另请参阅：`grep`, `sort`。 (它开始寻找一个给定的前缀)",
     "tags": [
       "osx",
       "look",
@@ -3020,7 +3020,7 @@
     "title": "look - 查找行，忽略大小写",
     "content": "look {{[-f|--ignore-case]}} {{前缀}} {{文件}}",
     "group": "macOS",
-    "description": "look: 查找已排序的文件行（注意，必须是已排序的文件）。 (查找行，忽略大小写)",
+    "description": "look: 查找已排序的文件行（注意，必须是已排序的文件）。 另请参阅：`grep`, `sort`。 (查找行，忽略大小写)",
     "tags": [
       "osx",
       "look",
@@ -3140,7 +3140,7 @@
     "title": "sed - 替换文件中第一个出现的字符串，并打印结果",
     "content": "sed 's/{{查找内容}}/{{替换内容}}/' {{文件名}}",
     "group": "macOS",
-    "description": "sed: 以可用脚本的来批量编辑文本。 (替换文件中第一个出现的字符串，并打印结果)",
+    "description": "sed: 以可用脚本的来批量编辑文本。 另请参阅：`awk`, `ed`。 (替换文件中第一个出现的字符串，并打印结果)",
     "tags": [
       "osx",
       "sed",
@@ -3152,10 +3152,10 @@
   {
     "id": "tldr-zh-osx-sed-1",
     "type": "command",
-    "title": "sed - 替换文件中所有符合正则表达式的部分",
+    "title": "sed - 替换文件中所有符合`regex`式的部分",
     "content": "sed -E 's/{{正则表达式}}/{{替换内容}}/g' {{文件名}}",
     "group": "macOS",
-    "description": "sed: 以可用脚本的来批量编辑文本。 (替换文件中所有符合正则表达式的部分)",
+    "description": "sed: 以可用脚本的来批量编辑文本。 另请参阅：`awk`, `ed`。 (替换文件中所有符合`regex`式的部分)",
     "tags": [
       "osx",
       "sed",
@@ -3170,7 +3170,7 @@
     "title": "sed - 替换文件中所有出现的字符串，覆盖文件（直接覆盖文件）",
     "content": "sed --in-place='' 's/{{查找内容}}/{{替换内容}}/g' {{文件名}}",
     "group": "macOS",
-    "description": "sed: 以可用脚本的来批量编辑文本。 (替换文件中所有出现的字符串，覆盖文件（直接覆盖文件）)",
+    "description": "sed: 以可用脚本的来批量编辑文本。 另请参阅：`awk`, `ed`。 (替换文件中所有出现的字符串，覆盖文件（直接覆盖文件）)",
     "tags": [
       "osx",
       "sed",
@@ -3185,7 +3185,7 @@
     "title": "sed - 仅替换与行模式（一种搜索条件）匹配的行内容",
     "content": "sed '/{{行模式}}/s/{{查找内容}}/{{替换内容}}/' {{文件名}}",
     "group": "macOS",
-    "description": "sed: 以可用脚本的来批量编辑文本。 (仅替换与行模式（一种搜索条件）匹配的行内容)",
+    "description": "sed: 以可用脚本的来批量编辑文本。 另请参阅：`awk`, `ed`。 (仅替换与行模式（一种搜索条件）匹配的行内容)",
     "tags": [
       "osx",
       "sed",
@@ -3200,7 +3200,7 @@
     "title": "sed - 只打印第 n 行到下一行之间的文本",
     "content": "sed -n '{{行号}},/^$/p' {{文件名}}",
     "group": "macOS",
-    "description": "sed: 以可用脚本的来批量编辑文本。 (只打印第 n 行到下一行之间的文本)",
+    "description": "sed: 以可用脚本的来批量编辑文本。 另请参阅：`awk`, `ed`。 (只打印第 n 行到下一行之间的文本)",
     "tags": [
       "osx",
       "sed",
@@ -3215,7 +3215,7 @@
     "title": "sed - 将多个查找替换表达式应用于文件",
     "content": "sed -e 's/{{查找内容}}/{{替换内容}}/' -e 's/{{查找内容}}/{{替换内容}}/' {{文件名}}",
     "group": "macOS",
-    "description": "sed: 以可用脚本的来批量编辑文本。 (将多个查找替换表达式应用于文件)",
+    "description": "sed: 以可用脚本的来批量编辑文本。 另请参阅：`awk`, `ed`。 (将多个查找替换表达式应用于文件)",
     "tags": [
       "osx",
       "sed",
@@ -3230,7 +3230,7 @@
     "title": "sed - 将分隔符 / 替换为查找或替换模式中没有用到的的任何其他字符，例如 #（用于查找或替换内容中使用了 / 的情况）",
     "content": "sed 's#{{查找内容}}#{{替换内容}}#' {{文件名}}",
     "group": "macOS",
-    "description": "sed: 以可用脚本的来批量编辑文本。 (将分隔符 / 替换为查找或替换模式中没有用到的的任何其他字符，例如 #（用于查找或替换内容中使用了 / 的情况）)",
+    "description": "sed: 以可用脚本的来批量编辑文本。 另请参阅：`awk`, `ed`。 (将分隔符 / 替换为查找或替换模式中没有用到的的任何其他字符，例如 #（用于查找或替换内容中使用了 / 的情况）)",
     "tags": [
       "osx",
       "sed",
@@ -5930,7 +5930,7 @@
     "title": "head - 输出文件的前几行",
     "content": "head -n {{行数}} {{文件名}}",
     "group": "macOS",
-    "description": "head: 输出文件的开头部分。 (输出文件的前几行)",
+    "description": "head: 输出文件的开头部分。 另请参阅：`tail`。 (输出文件的前几行)",
     "tags": [
       "osx",
       "head",
@@ -5945,7 +5945,7 @@
     "title": "head - 输出文件的前几个字节",
     "content": "head -c {{字节数}} {{文件名}}",
     "group": "macOS",
-    "description": "head: 输出文件的开头部分。 (输出文件的前几个字节)",
+    "description": "head: 输出文件的开头部分。 另请参阅：`tail`。 (输出文件的前几个字节)",
     "tags": [
       "osx",
       "head",
@@ -6080,7 +6080,7 @@
     "title": "duti - 将 Safari 设置为 HTML 文档的默认打开程序",
     "content": "duti -s {{com.apple.Safari}} {{public.html}} all",
     "group": "macOS",
-    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 (将 Safari 设置为 HTML 文档的默认打开程序)",
+    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 另请参阅：`osascript`。 (将 Safari 设置为 HTML 文档的默认打开程序)",
     "tags": [
       "osx",
       "duti",
@@ -6095,7 +6095,7 @@
     "title": "duti - 将 vlc 设置为扩展名为.m4v 的文件的默认查看器",
     "content": "duti -s {{org.videolan.vlc}} {{m4v}} viewer",
     "group": "macOS",
-    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 (将 vlc 设置为扩展名为.m4v 的文件的默认查看器)",
+    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 另请参阅：`osascript`。 (将 vlc 设置为扩展名为.m4v 的文件的默认查看器)",
     "tags": [
       "osx",
       "duti",
@@ -6110,7 +6110,7 @@
     "title": "duti - 将 Finder 设置为 ftp:// URL 访问的应用",
     "content": "duti -s {{com.apple.Finder}} \"{{ftp}}\"",
     "group": "macOS",
-    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 (将 Finder 设置为 ftp:// URL 访问的应用)",
+    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 另请参阅：`osascript`。 (将 Finder 设置为 ftp:// URL 访问的应用)",
     "tags": [
       "osx",
       "duti",
@@ -6125,7 +6125,7 @@
     "title": "duti - 显示有关给定扩展名的默认应用程序的信息",
     "content": "duti -x {{ext}}",
     "group": "macOS",
-    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 (显示有关给定扩展名的默认应用程序的信息)",
+    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 另请参阅：`osascript`。 (显示有关给定扩展名的默认应用程序的信息)",
     "tags": [
       "osx",
       "duti",
@@ -6140,7 +6140,7 @@
     "title": "duti - 显示给定的 UTI 对应默认的处理程序",
     "content": "duti -d {{uti}}",
     "group": "macOS",
-    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 (显示给定的 UTI 对应默认的处理程序)",
+    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 另请参阅：`osascript`。 (显示给定的 UTI 对应默认的处理程序)",
     "tags": [
       "osx",
       "duti",
@@ -6155,7 +6155,7 @@
     "title": "duti - 显示给定 UTI 对应所有的处理程序",
     "content": "duti -l {{uti}}",
     "group": "macOS",
-    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 (显示给定 UTI 对应所有的处理程序)",
+    "description": "duti: 在 macOS 上为文档类型和网页设置默认打开的应用程序。 另请参阅：`osascript`。 (显示给定 UTI 对应所有的处理程序)",
     "tags": [
       "osx",
       "duti",

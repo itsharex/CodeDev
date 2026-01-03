@@ -2060,7 +2060,7 @@
     "title": "iptables - 查看过滤表的规则链、规则以及数据包/字节计数器",
     "content": "sudo iptables {{[-vnL --line-numbers|--verbose --numeric --list --line-numbers]}}",
     "group": "Linux 运维",
-    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`、`iptables-restore`。 (查看过滤表的规则链、规则以及数据包/字节计数器)",
+    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`, `iptables-restore`。 (查看过滤表的规则链、规则以及数据包/字节计数器)",
     "tags": [
       "linux",
       "iptables",
@@ -2075,7 +2075,7 @@
     "title": "iptables - 设定规则链策略规则",
     "content": "sudo iptables {{[-P|--policy]}} {{规则链}} {{规则}}",
     "group": "Linux 运维",
-    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`、`iptables-restore`。 (设定规则链策略规则)",
+    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`, `iptables-restore`。 (设定规则链策略规则)",
     "tags": [
       "linux",
       "iptables",
@@ -2090,7 +2090,7 @@
     "title": "iptables - 追加规则到 IP 的规则链策略",
     "content": "sudo iptables {{[-A|--append]}} {{规则链}} {{[-s|--source]}} {{ip}} {{[-j|--jump]}} {{规则}}",
     "group": "Linux 运维",
-    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`、`iptables-restore`。 (追加规则到 IP 的规则链策略)",
+    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`, `iptables-restore`。 (追加规则到 IP 的规则链策略)",
     "tags": [
       "linux",
       "iptables",
@@ -2105,7 +2105,7 @@
     "title": "iptables - 追加规则到 IP 的规则链策略（考虑协议与端口）",
     "content": "sudo iptables {{[-A|--append]}} {{规则链}} {{[-s|--source]}} {{ip}} {{[-p|--protocol]}} {{协议}} --dport {{端口}} {{[-j|--jump]}} {{规则}}",
     "group": "Linux 运维",
-    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`、`iptables-restore`。 (追加规则到 IP 的规则链策略（考虑协议与端口）)",
+    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`, `iptables-restore`。 (追加规则到 IP 的规则链策略（考虑协议与端口）)",
     "tags": [
       "linux",
       "iptables",
@@ -2120,7 +2120,7 @@
     "title": "iptables - 添加 NAT 规则，将来自 `192.168.0.0/24` 子网的所有流量转换为主机的公共 IP",
     "content": "sudo iptables {{[-t|--table]}} {{nat}} {{[-A|--append]}} {{POSTROUTING}} {{[-s|--source]}} {{192.168.0.0/24}} {{[-j|--jump]}} {{MASQUERADE}}",
     "group": "Linux 运维",
-    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`、`iptables-restore`。 (添加 NAT 规则，将来自 `192.168.0.0/24` 子网的所有流量转换为主机的公共 IP)",
+    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`, `iptables-restore`。 (添加 NAT 规则，将来自 `192.168.0.0/24` 子网的所有流量转换为主机的公共 IP)",
     "tags": [
       "linux",
       "iptables",
@@ -2135,7 +2135,7 @@
     "title": "iptables - 删除规则链中的规则",
     "content": "sudo iptables {{[-D|--delete]}} {{规则链}} {{规则所在行号}}",
     "group": "Linux 运维",
-    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`、`iptables-restore`。 (删除规则链中的规则)",
+    "description": "iptables: 可用于配置 Linux 内核防火墙提供的过滤表、规则链和规则的程序。 使用 `ip6tables` 来设置 IPv6 流量规则。 另请参阅：`iptables-save`, `iptables-restore`。 (删除规则链中的规则)",
     "tags": [
       "linux",
       "iptables",
@@ -2825,7 +2825,7 @@
     "title": "unix2mac - 更改文件的行尾",
     "content": "unix2mac {{文件名}}",
     "group": "Linux 运维",
-    "description": "unix2mac: 将 Unix 样式的行尾更改为 macOS 样式。 用 CR 替换 LF。 (更改文件的行尾)",
+    "description": "unix2mac: 将 Unix 样式的行尾更改为 macOS 样式。 用 CR 替换 LF。 另请参阅：`unix2dos`, `dos2unix`, `mac2unix`。 (更改文件的行尾)",
     "tags": [
       "linux",
       "unix2mac",
@@ -2840,7 +2840,7 @@
     "title": "unix2mac - 使用 macOS 样式的行尾创建副本",
     "content": "unix2mac {{[-n|--newfile]}} {{文件名}} {{新文件名}}",
     "group": "Linux 运维",
-    "description": "unix2mac: 将 Unix 样式的行尾更改为 macOS 样式。 用 CR 替换 LF。 (使用 macOS 样式的行尾创建副本)",
+    "description": "unix2mac: 将 Unix 样式的行尾更改为 macOS 样式。 用 CR 替换 LF。 另请参阅：`unix2dos`, `dos2unix`, `mac2unix`。 (使用 macOS 样式的行尾创建副本)",
     "tags": [
       "linux",
       "unix2mac",
@@ -2945,7 +2945,7 @@
     "title": "paru - 交互式搜索并安装软件包",
     "content": "paru {{包名或关键字}}",
     "group": "Linux 运维",
-    "description": "paru: 一个 AUR 助手和 pacman 包装。 (交互式搜索并安装软件包)",
+    "description": "paru: 一个 AUR 助手和 pacman 包装。 另请参阅：`pacman`, `yay`。 (交互式搜索并安装软件包)",
     "tags": [
       "linux",
       "paru",
@@ -2960,7 +2960,7 @@
     "title": "paru - 同步和更新所有包",
     "content": "paru",
     "group": "Linux 运维",
-    "description": "paru: 一个 AUR 助手和 pacman 包装。 (同步和更新所有包)",
+    "description": "paru: 一个 AUR 助手和 pacman 包装。 另请参阅：`pacman`, `yay`。 (同步和更新所有包)",
     "tags": [
       "linux",
       "paru",
@@ -2975,7 +2975,7 @@
     "title": "paru - 更新 AUR 包",
     "content": "paru -Sua",
     "group": "Linux 运维",
-    "description": "paru: 一个 AUR 助手和 pacman 包装。 (更新 AUR 包)",
+    "description": "paru: 一个 AUR 助手和 pacman 包装。 另请参阅：`pacman`, `yay`。 (更新 AUR 包)",
     "tags": [
       "linux",
       "paru",
@@ -2990,7 +2990,7 @@
     "title": "paru - 获取包的信息",
     "content": "paru -Si {{包}}",
     "group": "Linux 运维",
-    "description": "paru: 一个 AUR 助手和 pacman 包装。 (获取包的信息)",
+    "description": "paru: 一个 AUR 助手和 pacman 包装。 另请参阅：`pacman`, `yay`。 (获取包的信息)",
     "tags": [
       "linux",
       "paru",
@@ -3005,7 +3005,7 @@
     "title": "paru - 从 AUR 或 ABS 下载 `PKGBUILD` 和其他的包的源文件",
     "content": "paru --getpkgbuild {{包}}",
     "group": "Linux 运维",
-    "description": "paru: 一个 AUR 助手和 pacman 包装。 (从 AUR 或 ABS 下载 `PKGBUILD` 和其他的包的源文件)",
+    "description": "paru: 一个 AUR 助手和 pacman 包装。 另请参阅：`pacman`, `yay`。 (从 AUR 或 ABS 下载 `PKGBUILD` 和其他的包的源文件)",
     "tags": [
       "linux",
       "paru",
@@ -3020,7 +3020,7 @@
     "title": "paru - 显示包的 `PKGBUILD` 文件",
     "content": "paru --getpkgbuild --print {{包}}",
     "group": "Linux 运维",
-    "description": "paru: 一个 AUR 助手和 pacman 包装。 (显示包的 `PKGBUILD` 文件)",
+    "description": "paru: 一个 AUR 助手和 pacman 包装。 另请参阅：`pacman`, `yay`。 (显示包的 `PKGBUILD` 文件)",
     "tags": [
       "linux",
       "paru",
@@ -3140,7 +3140,7 @@
     "title": "dmesg - 显示来自内核环形缓冲区的所有消息",
     "content": "sudo dmesg",
     "group": "Linux 运维",
-    "description": "dmesg: 显示或控制内核环形缓冲区。 (显示来自内核环形缓冲区的所有消息)",
+    "description": "dmesg: 显示或控制内核环形缓冲区。 另请参阅：`journalctl`。 (显示来自内核环形缓冲区的所有消息)",
     "tags": [
       "linux",
       "dmesg",
@@ -3155,7 +3155,7 @@
     "title": "dmesg - 只显示严重错误级别的消息",
     "content": "sudo dmesg {{[-l|--level]}} err",
     "group": "Linux 运维",
-    "description": "dmesg: 显示或控制内核环形缓冲区。 (只显示严重错误级别的消息)",
+    "description": "dmesg: 显示或控制内核环形缓冲区。 另请参阅：`journalctl`。 (只显示严重错误级别的消息)",
     "tags": [
       "linux",
       "dmesg",
@@ -3170,7 +3170,7 @@
     "title": "dmesg - 等待新消息。仅在具有可读性的系统上支持此功能，类似于 `tail -f`（从内核 3.5.0 版本开始）",
     "content": "sudo dmesg {{[-w|--follow]}}",
     "group": "Linux 运维",
-    "description": "dmesg: 显示或控制内核环形缓冲区。 (等待新消息。仅在具有可读性的系统上支持此功能，类似于 `tail -f`（从内核 3.5.0 版本开始）)",
+    "description": "dmesg: 显示或控制内核环形缓冲区。 另请参阅：`journalctl`。 (等待新消息。仅在具有可读性的系统上支持此功能，类似于 `tail -f`（从内核 3.5.0 版本开始）)",
     "tags": [
       "linux",
       "dmesg",
@@ -3185,7 +3185,7 @@
     "title": "dmesg - 显示此系统上有多少物理内存可用",
     "content": "sudo dmesg | grep {{[-i|--ignore-case]}} memory",
     "group": "Linux 运维",
-    "description": "dmesg: 显示或控制内核环形缓冲区。 (显示此系统上有多少物理内存可用)",
+    "description": "dmesg: 显示或控制内核环形缓冲区。 另请参阅：`journalctl`。 (显示此系统上有多少物理内存可用)",
     "tags": [
       "linux",
       "dmesg",
@@ -3200,7 +3200,7 @@
     "title": "dmesg - 以分页方式显示内核缓冲区的所有消息",
     "content": "sudo dmesg | less",
     "group": "Linux 运维",
-    "description": "dmesg: 显示或控制内核环形缓冲区。 (以分页方式显示内核缓冲区的所有消息)",
+    "description": "dmesg: 显示或控制内核环形缓冲区。 另请参阅：`journalctl`。 (以分页方式显示内核缓冲区的所有消息)",
     "tags": [
       "linux",
       "dmesg",
@@ -3215,7 +3215,7 @@
     "title": "dmesg - 打印人类可读的时间戳（从内核 3.5.0 版本开始）",
     "content": "sudo dmesg {{[-T|--ctime]}}",
     "group": "Linux 运维",
-    "description": "dmesg: 显示或控制内核环形缓冲区。 (打印人类可读的时间戳（从内核 3.5.0 版本开始）)",
+    "description": "dmesg: 显示或控制内核环形缓冲区。 另请参阅：`journalctl`。 (打印人类可读的时间戳（从内核 3.5.0 版本开始）)",
     "tags": [
       "linux",
       "dmesg",
@@ -3230,7 +3230,7 @@
     "title": "dmesg - 启用人类可读的输出",
     "content": "sudo dmesg {{[-H|--human]}}",
     "group": "Linux 运维",
-    "description": "dmesg: 显示或控制内核环形缓冲区。 (启用人类可读的输出)",
+    "description": "dmesg: 显示或控制内核环形缓冲区。 另请参阅：`journalctl`。 (启用人类可读的输出)",
     "tags": [
       "linux",
       "dmesg",
@@ -3245,7 +3245,7 @@
     "title": "dmesg - 着色输出",
     "content": "sudo dmesg {{[-L|--color]}}",
     "group": "Linux 运维",
-    "description": "dmesg: 显示或控制内核环形缓冲区。 (着色输出)",
+    "description": "dmesg: 显示或控制内核环形缓冲区。 另请参阅：`journalctl`。 (着色输出)",
     "tags": [
       "linux",
       "dmesg",
@@ -3890,7 +3890,7 @@
     "title": "unix2dos - 更改文件的行尾",
     "content": "unix2dos {{文件名}}",
     "group": "Linux 运维",
-    "description": "unix2dos: 将 Unix 样式的行尾更改为 DOS 样式。 用 CRLF 替换 LF。 (更改文件的行尾)",
+    "description": "unix2dos: 将 Unix 样式的行尾更改为 DOS 样式。 用 CRLF 替换 LF。 另请参阅：`unix2mac`, `dos2unix`, `mac2unix`。 (更改文件的行尾)",
     "tags": [
       "linux",
       "unix2dos",
@@ -3905,7 +3905,7 @@
     "title": "unix2dos - 使用 DOS 样式的行尾创建副本",
     "content": "unix2dos {{[-n|--newfile]}} {{文件名}} {{新文件名}}",
     "group": "Linux 运维",
-    "description": "unix2dos: 将 Unix 样式的行尾更改为 DOS 样式。 用 CRLF 替换 LF。 (使用 DOS 样式的行尾创建副本)",
+    "description": "unix2dos: 将 Unix 样式的行尾更改为 DOS 样式。 用 CRLF 替换 LF。 另请参阅：`unix2mac`, `dos2unix`, `mac2unix`。 (使用 DOS 样式的行尾创建副本)",
     "tags": [
       "linux",
       "unix2dos",
@@ -3950,7 +3950,7 @@
     "title": "iwctl - 启动交互模式，在此模式您可以直接输入命令并带有自动补全",
     "content": "iwctl",
     "group": "Linux 运维",
-    "description": "iwctl: 控制 `iwd` 网络请求程序。 (启动交互模式，在此模式您可以直接输入命令并带有自动补全)",
+    "description": "iwctl: 控制 `iwd` 网络请求程序。 另请参阅：`nmcli`, `iw`。 (启动交互模式，在此模式您可以直接输入命令并带有自动补全)",
     "tags": [
       "linux",
       "iwctl",
@@ -3965,7 +3965,7 @@
     "title": "iwctl - 显示您的 Wi-Fi 站点",
     "content": "iwctl station list",
     "group": "Linux 运维",
-    "description": "iwctl: 控制 `iwd` 网络请求程序。 (显示您的 Wi-Fi 站点)",
+    "description": "iwctl: 控制 `iwd` 网络请求程序。 另请参阅：`nmcli`, `iw`。 (显示您的 Wi-Fi 站点)",
     "tags": [
       "linux",
       "iwctl",
@@ -3980,7 +3980,7 @@
     "title": "iwctl - 开始寻找带有站点的网络",
     "content": "iwctl station {{站点}} scan",
     "group": "Linux 运维",
-    "description": "iwctl: 控制 `iwd` 网络请求程序。 (开始寻找带有站点的网络)",
+    "description": "iwctl: 控制 `iwd` 网络请求程序。 另请参阅：`nmcli`, `iw`。 (开始寻找带有站点的网络)",
     "tags": [
       "linux",
       "iwctl",
@@ -3995,7 +3995,7 @@
     "title": "iwctl - 显示站点发现的网络",
     "content": "iwctl station {{站点}} get-networks",
     "group": "Linux 运维",
-    "description": "iwctl: 控制 `iwd` 网络请求程序。 (显示站点发现的网络)",
+    "description": "iwctl: 控制 `iwd` 网络请求程序。 另请参阅：`nmcli`, `iw`。 (显示站点发现的网络)",
     "tags": [
       "linux",
       "iwctl",
@@ -4010,7 +4010,7 @@
     "title": "iwctl - 连接到带有站点的网络，如果需要凭证，则会询问",
     "content": "iwctl station {{站点}} connect {{网络名称}}",
     "group": "Linux 运维",
-    "description": "iwctl: 控制 `iwd` 网络请求程序。 (连接到带有站点的网络，如果需要凭证，则会询问)",
+    "description": "iwctl: 控制 `iwd` 网络请求程序。 另请参阅：`nmcli`, `iw`。 (连接到带有站点的网络，如果需要凭证，则会询问)",
     "tags": [
       "linux",
       "iwctl",
@@ -4025,7 +4025,7 @@
     "title": "iwctl - 显示帮助",
     "content": "iwctl {{[-h|--help]}}",
     "group": "Linux 运维",
-    "description": "iwctl: 控制 `iwd` 网络请求程序。 (显示帮助)",
+    "description": "iwctl: 控制 `iwd` 网络请求程序。 另请参阅：`nmcli`, `iw`。 (显示帮助)",
     "tags": [
       "linux",
       "iwctl",
@@ -4310,7 +4310,7 @@
     "title": "bluetoothctl - 进入 bluetoothctl 外壳程序",
     "content": "bluetoothctl",
     "group": "Linux 运维",
-    "description": "bluetoothctl: 从命令行管理蓝牙设备。 (进入 bluetoothctl 外壳程序)",
+    "description": "bluetoothctl: 从命令行管理蓝牙设备。 另请参阅：`bluetui`。 (进入 bluetoothctl 外壳程序)",
     "tags": [
       "linux",
       "bluetoothctl",
@@ -4325,7 +4325,7 @@
     "title": "bluetoothctl - 列出设备",
     "content": "bluetoothctl -- devices",
     "group": "Linux 运维",
-    "description": "bluetoothctl: 从命令行管理蓝牙设备。 (列出设备)",
+    "description": "bluetoothctl: 从命令行管理蓝牙设备。 另请参阅：`bluetui`。 (列出设备)",
     "tags": [
       "linux",
       "bluetoothctl",
@@ -4340,7 +4340,7 @@
     "title": "bluetoothctl - 与一个设备配对",
     "content": "bluetoothctl -- pair {{mac 地址}}",
     "group": "Linux 运维",
-    "description": "bluetoothctl: 从命令行管理蓝牙设备。 (与一个设备配对)",
+    "description": "bluetoothctl: 从命令行管理蓝牙设备。 另请参阅：`bluetui`。 (与一个设备配对)",
     "tags": [
       "linux",
       "bluetoothctl",
@@ -4355,7 +4355,7 @@
     "title": "bluetoothctl - 移除一个设备",
     "content": "bluetoothctl -- remove {{mac 地址}}",
     "group": "Linux 运维",
-    "description": "bluetoothctl: 从命令行管理蓝牙设备。 (移除一个设备)",
+    "description": "bluetoothctl: 从命令行管理蓝牙设备。 另请参阅：`bluetui`。 (移除一个设备)",
     "tags": [
       "linux",
       "bluetoothctl",
@@ -4370,7 +4370,7 @@
     "title": "bluetoothctl - 连接一个已配对的设备",
     "content": "bluetoothctl -- connect {{mac 地址}}",
     "group": "Linux 运维",
-    "description": "bluetoothctl: 从命令行管理蓝牙设备。 (连接一个已配对的设备)",
+    "description": "bluetoothctl: 从命令行管理蓝牙设备。 另请参阅：`bluetui`。 (连接一个已配对的设备)",
     "tags": [
       "linux",
       "bluetoothctl",
@@ -4385,7 +4385,7 @@
     "title": "bluetoothctl - 断开一个已配对的设备",
     "content": "bluetoothctl -- disconnect {{mac 地址}}",
     "group": "Linux 运维",
-    "description": "bluetoothctl: 从命令行管理蓝牙设备。 (断开一个已配对的设备)",
+    "description": "bluetoothctl: 从命令行管理蓝牙设备。 另请参阅：`bluetui`。 (断开一个已配对的设备)",
     "tags": [
       "linux",
       "bluetoothctl",
@@ -6155,7 +6155,7 @@
     "title": "sed - 将所有输入行中出现的 `apple`（基本正则语法）替换为 `mango`（基本正则语法），并将结果打印到 `stdout`",
     "content": "{{命令}} | sed 's/apple/mango/g'",
     "group": "Linux 运维",
-    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`，`ed`。 (将所有输入行中出现的 `apple`（基本正则语法）替换为 `mango`（基本正则语法），并将结果打印到 `stdout`)",
+    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`, `ed`。 (将所有输入行中出现的 `apple`（基本正则语法）替换为 `mango`（基本正则语法），并将结果打印到 `stdout`)",
     "tags": [
       "linux",
       "sed",
@@ -6170,7 +6170,7 @@
     "title": "sed - 将所有输入行中出现的 `apple`（扩展正则语法）替换为 `APPLE` （扩展正则语法），并将结果打印到 `stdout`",
     "content": "{{命令}} | sed {{[-E|--regexp-extended]}} 's/(apple)/\\U\\1/g'",
     "group": "Linux 运维",
-    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`，`ed`。 (将所有输入行中出现的 `apple`（扩展正则语法）替换为 `APPLE` （扩展正则语法），并将结果打印到 `stdout`)",
+    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`, `ed`。 (将所有输入行中出现的 `apple`（扩展正则语法）替换为 `APPLE` （扩展正则语法），并将结果打印到 `stdout`)",
     "tags": [
       "linux",
       "sed",
@@ -6185,7 +6185,7 @@
     "title": "sed - 用 `mango`（基本正则语法）替换特定文件中出现的所有 `apple`（基本正则语法），并覆盖原文件",
     "content": "sed {{[-i|--in-place]}} 's/apple/mango/g' {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`，`ed`。 (用 `mango`（基本正则语法）替换特定文件中出现的所有 `apple`（基本正则语法），并覆盖原文件)",
+    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`, `ed`。 (用 `mango`（基本正则语法）替换特定文件中出现的所有 `apple`（基本正则语法），并覆盖原文件)",
     "tags": [
       "linux",
       "sed",
@@ -6200,7 +6200,7 @@
     "title": "sed - 执行特定的脚本，并将结果打印到 `stdout`",
     "content": "{{命令}} | sed {{-f|--file}} {{路径/到/脚本.sed}}",
     "group": "Linux 运维",
-    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`，`ed`。 (执行特定的脚本，并将结果打印到 `stdout`)",
+    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`, `ed`。 (执行特定的脚本，并将结果打印到 `stdout`)",
     "tags": [
       "linux",
       "sed",
@@ -6215,7 +6215,7 @@
     "title": "sed - 打印第一行到 `stdout`",
     "content": "{{命令}} | sed {{[-n|--quiet]}} '1p'",
     "group": "Linux 运维",
-    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`，`ed`。 (打印第一行到 `stdout`)",
+    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`, `ed`。 (打印第一行到 `stdout`)",
     "tags": [
       "linux",
       "sed",
@@ -6230,7 +6230,7 @@
     "title": "sed - 删除文件第一行",
     "content": "sed {{[-i|--in-place]}} 1d {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`，`ed`。 (删除文件第一行)",
+    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`, `ed`。 (删除文件第一行)",
     "tags": [
       "linux",
       "sed",
@@ -6245,7 +6245,7 @@
     "title": "sed - 插入新行到文件的第一行",
     "content": "sed {{[-i|--in-place]}} '1i\\your new line text\\' {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`，`ed`。 (插入新行到文件的第一行)",
+    "description": "sed: 以脚本方式编辑文本。 另请参阅：`awk`, `ed`。 (插入新行到文件的第一行)",
     "tags": [
       "linux",
       "sed",
@@ -6572,10 +6572,10 @@
   {
     "id": "tldr-zh-linux-auracle-0",
     "type": "command",
-    "title": "auracle - 显示符合一个正则表达式的 AUR 包",
+    "title": "auracle - 显示符合一个`regex`式的 AUR 包",
     "content": "auracle search '{{regular_expression}}'",
     "group": "Linux 运维",
-    "description": "auracle: 用来和 Arch Linux 用户仓库交互的命令行工具，这个仓库通常被称作 AUR。 (显示符合一个正则表达式的 AUR 包)",
+    "description": "auracle: 用来和 Arch Linux 用户仓库交互的命令行工具，这个仓库通常被称作 AUR。 (显示符合一个`regex`式的 AUR 包)",
     "tags": [
       "linux",
       "auracle",
@@ -7190,7 +7190,7 @@
     "title": "dos2unix - 更改文件的行尾",
     "content": "dos2unix {{文件名}}",
     "group": "Linux 运维",
-    "description": "dos2unix: 将 DOS 样式的行尾更改为 Unix 样式。 用 LF 替换 CRLF。 (更改文件的行尾)",
+    "description": "dos2unix: 将 DOS 样式的行尾更改为 Unix 样式。 用 LF 替换 CRLF。 另请参阅：`unix2dos`, `unix2mac`, `mac2unix`。 (更改文件的行尾)",
     "tags": [
       "linux",
       "dos2unix",
@@ -7205,7 +7205,7 @@
     "title": "dos2unix - 使用 Unix 样式的行尾创建副本",
     "content": "dos2unix {{[-n|--newfile]}} {{文件名}} {{文件名}}",
     "group": "Linux 运维",
-    "description": "dos2unix: 将 DOS 样式的行尾更改为 Unix 样式。 用 LF 替换 CRLF。 (使用 Unix 样式的行尾创建副本)",
+    "description": "dos2unix: 将 DOS 样式的行尾更改为 Unix 样式。 用 LF 替换 CRLF。 另请参阅：`unix2dos`, `unix2mac`, `mac2unix`。 (使用 Unix 样式的行尾创建副本)",
     "tags": [
       "linux",
       "dos2unix",
@@ -9093,7 +9093,7 @@
     "id": "tldr-zh-linux-asciiart-2",
     "type": "command",
     "title": "asciiart - 选择输出宽度（默认为 100）",
-    "content": "asciiart --width {{50}} {{路径/到/图片.jpg}}",
+    "content": "asciiart {{[-w|--width]}} {{50}} {{路径/到/图片.jpg}}",
     "group": "Linux 运维",
     "description": "asciiart: 将图像转换为 ASCII。 (选择输出宽度（默认为 100）)",
     "tags": [
@@ -9108,7 +9108,7 @@
     "id": "tldr-zh-linux-asciiart-3",
     "type": "command",
     "title": "asciiart - 对 ASCII 输出进行着色",
-    "content": "asciiart --color {{路径/到/图片.jpg}}",
+    "content": "asciiart {{[-c|--color]}} {{路径/到/图片.jpg}}",
     "group": "Linux 运维",
     "description": "asciiart: 将图像转换为 ASCII。 (对 ASCII 输出进行着色)",
     "tags": [
@@ -9123,7 +9123,7 @@
     "id": "tldr-zh-linux-asciiart-4",
     "type": "command",
     "title": "asciiart - 选择输出格式（默认格式为文本）",
-    "content": "asciiart --format {{text|html}} {{路径/到/图片.jpg}}",
+    "content": "asciiart {{[-f|--format]}} {{text|html}} {{路径/到/图片.jpg}}",
     "group": "Linux 运维",
     "description": "asciiart: 将图像转换为 ASCII。 (选择输出格式（默认格式为文本）)",
     "tags": [
@@ -9138,7 +9138,7 @@
     "id": "tldr-zh-linux-asciiart-5",
     "type": "command",
     "title": "asciiart - 反转字符映射",
-    "content": "asciiart --invert-chars {{路径/到/图片.jpg}}",
+    "content": "asciiart {{[-i|--invert-chars]}} {{路径/到/图片.jpg}}",
     "group": "Linux 运维",
     "description": "asciiart: 将图像转换为 ASCII。 (反转字符映射)",
     "tags": [
@@ -9677,10 +9677,10 @@
   {
     "id": "tldr-zh-linux-apt-file-3",
     "type": "command",
-    "title": "apt-file - 查找符合给定 `pattern` 中正则表达式的软件包",
+    "title": "apt-file - 查找符合给定 `pattern` 中`regex`式的软件包",
     "content": "apt-file {{search|find}} {{[-x|--regexp]}} {{正则表达式}}",
     "group": "Linux 运维",
-    "description": "apt-file: 在 APT 软件包中查找文件，其中也包括未安装的软件。 (查找符合给定 `pattern` 中正则表达式的软件包)",
+    "description": "apt-file: 在 APT 软件包中查找文件，其中也包括未安装的软件。 (查找符合给定 `pattern` 中`regex`式的软件包)",
     "tags": [
       "linux",
       "apt-file",
@@ -10085,7 +10085,7 @@
     "title": "mac2unix - 更改文件的行尾",
     "content": "mac2unix {{文件名}}",
     "group": "Linux 运维",
-    "description": "mac2unix: 将 macOS 样式的行尾更改为 Unix 样式。 用 LF 替换 CR。 (更改文件的行尾)",
+    "description": "mac2unix: 将 macOS 样式的行尾更改为 Unix 样式。 用 LF 替换 CR。 另请参阅：`unix2dos`, `unix2mac`, `dos2unix`。 (更改文件的行尾)",
     "tags": [
       "linux",
       "mac2unix",
@@ -10100,7 +10100,7 @@
     "title": "mac2unix - 使用 Unix 样式的行尾创建副本",
     "content": "mac2unix {{[-n|--newfile]}} {{文件名}} {{新文件名}}",
     "group": "Linux 运维",
-    "description": "mac2unix: 将 macOS 样式的行尾更改为 Unix 样式。 用 LF 替换 CR。 (使用 Unix 样式的行尾创建副本)",
+    "description": "mac2unix: 将 macOS 样式的行尾更改为 Unix 样式。 用 LF 替换 CR。 另请参阅：`unix2dos`, `unix2mac`, `dos2unix`。 (使用 Unix 样式的行尾创建副本)",
     "tags": [
       "linux",
       "mac2unix",
@@ -10670,7 +10670,7 @@
     "title": "head - 输出文件的前几行",
     "content": "head {{[-n|--lines]}} {{数目}} {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "head: 输出文件的开头部分的内容。 (输出文件的前几行)",
+    "description": "head: 输出文件的开头部分的内容。 另请参阅：`tail`。 (输出文件的前几行)",
     "tags": [
       "linux",
       "head",
@@ -10685,7 +10685,7 @@
     "title": "head - 输出文件的前几个字节",
     "content": "head {{[-c|--bytes]}} {{数目}} {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "head: 输出文件的开头部分的内容。 (输出文件的前几个字节)",
+    "description": "head: 输出文件的开头部分的内容。 另请参阅：`tail`。 (输出文件的前几个字节)",
     "tags": [
       "linux",
       "head",
@@ -10700,7 +10700,7 @@
     "title": "head - 输出文件除最后几行之外的所有内容",
     "content": "head {{[-n|--lines]}} -{{数目}} {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "head: 输出文件的开头部分的内容。 (输出文件除最后几行之外的所有内容)",
+    "description": "head: 输出文件的开头部分的内容。 另请参阅：`tail`。 (输出文件除最后几行之外的所有内容)",
     "tags": [
       "linux",
       "head",
@@ -10715,7 +10715,7 @@
     "title": "head - 输出文件除最后几个字节之外的所有内容",
     "content": "head {{[-c|--bytes]}} -{{数目}} {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "head: 输出文件的开头部分的内容。 (输出文件除最后几个字节之外的所有内容)",
+    "description": "head: 输出文件的开头部分的内容。 另请参阅：`tail`。 (输出文件除最后几个字节之外的所有内容)",
     "tags": [
       "linux",
       "head",
@@ -11150,7 +11150,7 @@
     "title": "hexdump - 打印文件的十六进制表示形式，重复的行用 '*' 替代",
     "content": "hexdump {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "hexdump: 一个 ASCII、十进制、十六进制、八进制转换查看工具。 (打印文件的十六进制表示形式，重复的行用 '*' 替代)",
+    "description": "hexdump: 一个 ASCII、十进制、十六进制、八进制转换查看工具。 另请参阅：`hexyl`, `od`, `xxd`。 (打印文件的十六进制表示形式，重复的行用 '*' 替代)",
     "tags": [
       "linux",
       "hexdump",
@@ -11165,7 +11165,7 @@
     "title": "hexdump - 以十六进制显示输入偏移量，并在最后两列中显示其 ASCII 表示形式",
     "content": "hexdump -C {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "hexdump: 一个 ASCII、十进制、十六进制、八进制转换查看工具。 (以十六进制显示输入偏移量，并在最后两列中显示其 ASCII 表示形式)",
+    "description": "hexdump: 一个 ASCII、十进制、十六进制、八进制转换查看工具。 另请参阅：`hexyl`, `od`, `xxd`。 (以十六进制显示输入偏移量，并在最后两列中显示其 ASCII 表示形式)",
     "tags": [
       "linux",
       "hexdump",
@@ -11180,7 +11180,7 @@
     "title": "hexdump - 显示文件的十六进制表示，但只解释输入的指定字节数",
     "content": "hexdump -C -n{{字节数}} {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "hexdump: 一个 ASCII、十进制、十六进制、八进制转换查看工具。 (显示文件的十六进制表示，但只解释输入的指定字节数)",
+    "description": "hexdump: 一个 ASCII、十进制、十六进制、八进制转换查看工具。 另请参阅：`hexyl`, `od`, `xxd`。 (显示文件的十六进制表示，但只解释输入的指定字节数)",
     "tags": [
       "linux",
       "hexdump",
@@ -11195,7 +11195,7 @@
     "title": "hexdump - 不使用 '*' 替换重复的行",
     "content": "hexdump --no-squeezing {{路径/到/文件}}",
     "group": "Linux 运维",
-    "description": "hexdump: 一个 ASCII、十进制、十六进制、八进制转换查看工具。 (不使用 '*' 替换重复的行)",
+    "description": "hexdump: 一个 ASCII、十进制、十六进制、八进制转换查看工具。 另请参阅：`hexyl`, `od`, `xxd`。 (不使用 '*' 替换重复的行)",
     "tags": [
       "linux",
       "hexdump",

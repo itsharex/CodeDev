@@ -5,7 +5,7 @@
     "title": "reg-load - 将备份文件加载到指定的键中",
     "content": "reg load {{键名}} {{文件的路径}}",
     "group": "Windows",
-    "description": "reg-load: 将保存的子键加载到不同的子键中。 This is intended for troubleshooting and temporary keys。 (将备份文件加载到指定的键中)",
+    "description": "reg-load: 将保存的子键加载到不同的子键中。 此命令主要用于故障排查和临时键。 (将备份文件加载到指定的键中)",
     "tags": [
       "windows",
       "reg-load",
@@ -414,6 +414,111 @@
     "tags": [
       "windows",
       "sal",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-windows-cd-0",
+    "type": "command",
+    "title": "cd - 原命令的文档在",
+    "content": "tldr set-location",
+    "group": "Windows",
+    "description": "cd: 显示当前工作目录或移动到其他工作目录。 在 PowerShell 中，此命令是“Set-Location”的别名。本文档基于的是命令提示符（cmd）版本的。 (原命令的文档在)",
+    "tags": [
+      "windows",
+      "cd",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-windows-cd-1",
+    "type": "command",
+    "title": "cd - 显示当前目录的路径",
+    "content": "cd",
+    "group": "Windows",
+    "description": "cd: 显示当前工作目录或移动到其他工作目录。 在 PowerShell 中，此命令是“Set-Location”的别名。本文档基于的是命令提示符（cmd）版本的。 (显示当前目录的路径)",
+    "tags": [
+      "windows",
+      "cd",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-windows-cd-2",
+    "type": "command",
+    "title": "cd - 访问当前硬盘的某一个特定目录",
+    "content": "cd {{path\\to\\directory}}",
+    "group": "Windows",
+    "description": "cd: 显示当前工作目录或移动到其他工作目录。 在 PowerShell 中，此命令是“Set-Location”的别名。本文档基于的是命令提示符（cmd）版本的。 (访问当前硬盘的某一个特定目录)",
+    "tags": [
+      "windows",
+      "cd",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-windows-cd-3",
+    "type": "command",
+    "title": "cd - 转到位于另一驱动器上的特定目录",
+    "content": "cd /d {{C}}:{{path\\to\\directory}}",
+    "group": "Windows",
+    "description": "cd: 显示当前工作目录或移动到其他工作目录。 在 PowerShell 中，此命令是“Set-Location”的别名。本文档基于的是命令提示符（cmd）版本的。 (转到位于另一驱动器上的特定目录)",
+    "tags": [
+      "windows",
+      "cd",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-windows-cd-4",
+    "type": "command",
+    "title": "cd - 访问当前目录的上级目录",
+    "content": "cd ..",
+    "group": "Windows",
+    "description": "cd: 显示当前工作目录或移动到其他工作目录。 在 PowerShell 中，此命令是“Set-Location”的别名。本文档基于的是命令提示符（cmd）版本的。 (访问当前目录的上级目录)",
+    "tags": [
+      "windows",
+      "cd",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-windows-cd-5",
+    "type": "command",
+    "title": "cd - 访问当前用户的主目录",
+    "content": "cd %userprofile%",
+    "group": "Windows",
+    "description": "cd: 显示当前工作目录或移动到其他工作目录。 在 PowerShell 中，此命令是“Set-Location”的别名。本文档基于的是命令提示符（cmd）版本的。 (访问当前用户的主目录)",
+    "tags": [
+      "windows",
+      "cd",
+      "tldr",
+      "zh"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-zh-windows-cd-6",
+    "type": "command",
+    "title": "cd - 访问当前驱动器的根目录",
+    "content": "cd \\",
+    "group": "Windows",
+    "description": "cd: 显示当前工作目录或移动到其他工作目录。 在 PowerShell 中，此命令是“Set-Location”的别名。本文档基于的是命令提示符（cmd）版本的。 (访问当前驱动器的根目录)",
+    "tags": [
+      "windows",
+      "cd",
       "tldr",
       "zh"
     ],
@@ -1367,10 +1472,10 @@
   {
     "id": "tldr-zh-windows-choco-list-0",
     "type": "command",
-    "title": "choco-list - 列出所有可用的包",
+    "title": "choco-list - 列出所有可用的软件包",
     "content": "choco list",
     "group": "Windows",
-    "description": "choco-list: 使用 Chocolatey 显示包列表。 (列出所有可用的包)",
+    "description": "choco-list: 使用 Chocolatey 显示包列表。 (列出所有可用的软件包)",
     "tags": [
       "windows",
       "choco-list",
@@ -1382,10 +1487,10 @@
   {
     "id": "tldr-zh-windows-choco-list-1",
     "type": "command",
-    "title": "choco-list - 列出所有本地已安装的包",
+    "title": "choco-list - 列出所有本地已安装的软件包",
     "content": "choco list --local-only",
     "group": "Windows",
-    "description": "choco-list: 使用 Chocolatey 显示包列表。 (列出所有本地已安装的包)",
+    "description": "choco-list: 使用 Chocolatey 显示包列表。 (列出所有本地已安装的软件包)",
     "tags": [
       "windows",
       "choco-list",
@@ -1397,10 +1502,10 @@
   {
     "id": "tldr-zh-windows-choco-list-2",
     "type": "command",
-    "title": "choco-list - 显示包含本地程序的列表",
-    "content": "choco list --include-programs",
+    "title": "choco-list - 列出包含本地程序的软件包",
+    "content": "choco list {{[-i|--include-programs]}}",
     "group": "Windows",
-    "description": "choco-list: 使用 Chocolatey 显示包列表。 (显示包含本地程序的列表)",
+    "description": "choco-list: 使用 Chocolatey 显示包列表。 (列出包含本地程序的软件包)",
     "tags": [
       "windows",
       "choco-list",
@@ -1412,10 +1517,10 @@
   {
     "id": "tldr-zh-windows-choco-list-3",
     "type": "command",
-    "title": "choco-list - 只显示已批准的包",
+    "title": "choco-list - 仅列出已批准的软件包",
     "content": "choco list --approved-only",
     "group": "Windows",
-    "description": "choco-list: 使用 Chocolatey 显示包列表。 (只显示已批准的包)",
+    "description": "choco-list: 使用 Chocolatey 显示包列表。 (仅列出已批准的软件包)",
     "tags": [
       "windows",
       "choco-list",
@@ -1427,10 +1532,10 @@
   {
     "id": "tldr-zh-windows-choco-list-4",
     "type": "command",
-    "title": "choco-list - Specify a custom source to display packages from 指定一个源来显示包列表",
-    "content": "choco list --source {{源 URL|别名}}",
+    "title": "choco-list - 从指定的源列出软件包",
+    "content": "choco list {{[-s|--source]}} {{源 URL|别名}}",
     "group": "Windows",
-    "description": "choco-list: 使用 Chocolatey 显示包列表。 (Specify a custom source to display packages from 指定一个源来显示包列表)",
+    "description": "choco-list: 使用 Chocolatey 显示包列表。 (从指定的源列出软件包)",
     "tags": [
       "windows",
       "choco-list",
@@ -1442,10 +1547,10 @@
   {
     "id": "tldr-zh-windows-choco-list-5",
     "type": "command",
-    "title": "choco-list - 提供一个用户名和密码来进行验证",
+    "title": "choco-list - 提供用户名和密码进行身份验证",
     "content": "choco list --user {{用户名}} --password {{密码}}",
     "group": "Windows",
-    "description": "choco-list: 使用 Chocolatey 显示包列表。 (提供一个用户名和密码来进行验证)",
+    "description": "choco-list: 使用 Chocolatey 显示包列表。 (提供用户名和密码进行身份验证)",
     "tags": [
       "windows",
       "choco-list",
@@ -1640,7 +1745,7 @@
     "title": "popd - 切换到储存在栈顶的目录",
     "content": "popd",
     "group": "Windows",
-    "description": "popd: 将当前目录切换到`pushd`命令存储的目录。 (切换到储存在栈顶的目录)",
+    "description": "popd: 将当前目录切换到`pushd`命令存储的目录。 另请参阅：`pushd`。 (切换到储存在栈顶的目录)",
     "tags": [
       "windows",
       "popd",
@@ -3183,7 +3288,7 @@
     "id": "tldr-zh-windows-choco-pin-1",
     "type": "command",
     "title": "choco-pin - 将一个包固定至当前版本",
-    "content": "choco pin add --name {{包名}}",
+    "content": "choco pin add {{[-n|--name]}} {{包名}}",
     "group": "Windows",
     "description": "choco-pin: 使用 Chocolatey 将一个包固定到指定的版本。 被固定版本的包会在更新时自动忽略。 (将一个包固定至当前版本)",
     "tags": [
@@ -3198,7 +3303,7 @@
     "id": "tldr-zh-windows-choco-pin-2",
     "type": "command",
     "title": "choco-pin - 将一个包固定直指定的版本",
-    "content": "choco pin add --name {{包名}} --version {{版本号}}",
+    "content": "choco pin add {{[-n|--name]}} {{包名}} --version {{版本号}}",
     "group": "Windows",
     "description": "choco-pin: 使用 Chocolatey 将一个包固定到指定的版本。 被固定版本的包会在更新时自动忽略。 (将一个包固定直指定的版本)",
     "tags": [
@@ -3213,7 +3318,7 @@
     "id": "tldr-zh-windows-choco-pin-3",
     "type": "command",
     "title": "choco-pin - 移除指定包的固定状态",
-    "content": "choco pin remove --name {{包名}}",
+    "content": "choco pin remove {{[-n|--name]}} {{包名}}",
     "group": "Windows",
     "description": "choco-pin: 使用 Chocolatey 将一个包固定到指定的版本。 被固定版本的包会在更新时自动忽略。 (移除指定包的固定状态)",
     "tags": [
@@ -3378,7 +3483,7 @@
     "id": "tldr-zh-windows-choco-new-3",
     "type": "command",
     "title": "choco-new - 在指定目录下创建新的包",
-    "content": "choco new {{包名}} --output-directory {{指定的目录路径}}",
+    "content": "choco new {{包名}} {{[--out|--output-directory]}} {{指定的目录路径}}",
     "group": "Windows",
     "description": "choco-new: 使用 Chocolatey 生成新的包规范文件。 (在指定目录下创建新的包)",
     "tags": [
@@ -3423,7 +3528,7 @@
     "id": "tldr-zh-windows-choco-source-1",
     "type": "command",
     "title": "choco-source - 添加一个新的包源",
-    "content": "choco source add --name {{名称}} --source {{url}}",
+    "content": "choco source add {{[-n|--name]}} {{名称}} {{[-s|--source]}} {{url}}",
     "group": "Windows",
     "description": "choco-source: 使用 Chocolatey 管理包的源。 (添加一个新的包源)",
     "tags": [
@@ -3438,7 +3543,7 @@
     "id": "tldr-zh-windows-choco-source-2",
     "type": "command",
     "title": "choco-source - 添加包含凭据的新包源",
-    "content": "choco source add --name {{名称}} --source {{url}} --user {{用户名}} --password {{密码}}",
+    "content": "choco source add {{[-n|--name]}} {{名称}} {{[-s|--source]}} {{url}} {{[-u|--user]}} {{用户名}} {{[-p|--password]}} {{密码}}",
     "group": "Windows",
     "description": "choco-source: 使用 Chocolatey 管理包的源。 (添加包含凭据的新包源)",
     "tags": [
@@ -3453,7 +3558,7 @@
     "id": "tldr-zh-windows-choco-source-3",
     "type": "command",
     "title": "choco-source - 使用客户端证书添加新的包源",
-    "content": "choco source add --name {{名称}} --source {{url}} --cert {{证书的路径}}",
+    "content": "choco source add {{[-n|--name]}} {{名称}} {{[-s|--source]}} {{url}} --cert {{证书的路径}}",
     "group": "Windows",
     "description": "choco-source: 使用 Chocolatey 管理包的源。 (使用客户端证书添加新的包源)",
     "tags": [
@@ -3468,7 +3573,7 @@
     "id": "tldr-zh-windows-choco-source-4",
     "type": "command",
     "title": "choco-source - 启用一个包源",
-    "content": "choco source enable --name {{名称}}",
+    "content": "choco source enable {{[-n|--name]}} {{名称}}",
     "group": "Windows",
     "description": "choco-source: 使用 Chocolatey 管理包的源。 (启用一个包源)",
     "tags": [
@@ -3483,7 +3588,7 @@
     "id": "tldr-zh-windows-choco-source-5",
     "type": "command",
     "title": "choco-source - 禁用一个包源",
-    "content": "choco source disable --name {{名称}}",
+    "content": "choco source disable {{[-n|--name]}} {{名称}}",
     "group": "Windows",
     "description": "choco-source: 使用 Chocolatey 管理包的源。 (禁用一个包源)",
     "tags": [
@@ -3498,7 +3603,7 @@
     "id": "tldr-zh-windows-choco-source-6",
     "type": "command",
     "title": "choco-source - 移除一个包源",
-    "content": "choco source remove --name {{名称}}",
+    "content": "choco source remove {{[-n|--name]}} {{名称}}",
     "group": "Windows",
     "description": "choco-source: 使用 Chocolatey 管理包的源。 (移除一个包源)",
     "tags": [
@@ -3635,7 +3740,7 @@
     "title": "pushd - 切换目录并将它放至栈",
     "content": "pushd {{目录}}",
     "group": "Windows",
-    "description": "pushd: 将目录储存在栈顶以便稍后访问。 参考`popd`命令来切换到原目录。 (切换目录并将它放至栈)",
+    "description": "pushd: 将目录储存在栈顶以便稍后访问。 另请参阅：`popd`。 (切换目录并将它放至栈)",
     "tags": [
       "windows",
       "pushd",
@@ -4098,7 +4203,7 @@
     "id": "tldr-zh-windows-choco-pack-2",
     "type": "command",
     "title": "choco-pack - 将 `.nuspec` 打包到已编译的 `.nupkg`, 并输出到指定的目录",
-    "content": "choco pack {{nuspec 的路径}} --output-directory {{输出目录的路径}}",
+    "content": "choco pack {{nuspec 的路径}} {{[--out|--output-directory]}} {{输出目录的路径}}",
     "group": "Windows",
     "description": "choco-pack: 将 `.nuspec` 打包到已编译的 `.nupkg`。 (将 `.nuspec` 打包到已编译的 `.nupkg`, 并输出到指定的目录)",
     "tags": [
@@ -4652,10 +4757,10 @@
   {
     "id": "tldr-zh-windows-findstr-3",
     "type": "command",
-    "title": "findstr - 使用正则表达式搜索",
+    "title": "findstr - 使用`regex`式搜索",
     "content": "findstr /r \"{{正则表达式}}\" *",
     "group": "Windows",
-    "description": "findstr: 在一个或多个文件中查找指定的文本。 (使用正则表达式搜索)",
+    "description": "findstr: 在一个或多个文件中查找指定的文本。 (使用`regex`式搜索)",
     "tags": [
       "windows",
       "findstr",
@@ -5763,7 +5868,7 @@
     "id": "tldr-zh-windows-choco-search-2",
     "type": "command",
     "title": "choco-search - 只显示包含完全匹配的结果",
-    "content": "choco search {{查询语句}} --exact",
+    "content": "choco search {{查询语句}} {{[-e|--exact]}}",
     "group": "Windows",
     "description": "choco-search: 使用 Chocolatey 搜索一个本地或远程的包。 (只显示包含完全匹配的结果)",
     "tags": [
@@ -5778,7 +5883,7 @@
     "id": "tldr-zh-windows-choco-search-3",
     "type": "command",
     "title": "choco-search - 自动确认所有提示",
-    "content": "choco search {{查询语句}} --yes",
+    "content": "choco search {{查询语句}} {{[-y|--yes]}}",
     "group": "Windows",
     "description": "choco-search: 使用 Chocolatey 搜索一个本地或远程的包。 (自动确认所有提示)",
     "tags": [
@@ -5793,7 +5898,7 @@
     "id": "tldr-zh-windows-choco-search-4",
     "type": "command",
     "title": "choco-search - 从自定义的源处搜索包",
-    "content": "choco search {{查询语句}} --source {{源 URL|别名}}",
+    "content": "choco search {{查询语句}} {{[-s|--source]}} {{源 URL|别名}}",
     "group": "Windows",
     "description": "choco-search: 使用 Chocolatey 搜索一个本地或远程的包。 (从自定义的源处搜索包)",
     "tags": [
@@ -5808,7 +5913,7 @@
     "id": "tldr-zh-windows-choco-search-5",
     "type": "command",
     "title": "choco-search - 提供一个用户名和密码来进行验证",
-    "content": "choco search {{查询语句}} --user {{用户名}} --password {{密码}}",
+    "content": "choco search {{查询语句}} {{[-u|--user]}} {{用户名}} {{[-p|--password]}} {{密码}}",
     "group": "Windows",
     "description": "choco-search: 使用 Chocolatey 搜索一个本地或远程的包。 (提供一个用户名和密码来进行验证)",
     "tags": [
@@ -6032,10 +6137,10 @@
   {
     "id": "tldr-zh-windows-ver-0",
     "type": "command",
-    "title": "ver - Display the current version number",
+    "title": "ver - 显示当前版本号",
     "content": "ver",
     "group": "Windows",
-    "description": "ver: 显示当前 Windows 或 MS-DOS 的版本号。 (Display the current version number)",
+    "description": "ver: 显示当前 Windows 或 MS-DOS 的版本号。 (显示当前版本号)",
     "tags": [
       "windows",
       "ver",

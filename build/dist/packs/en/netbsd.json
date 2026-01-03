@@ -227,10 +227,10 @@
   {
     "id": "tldr-en-netbsd-sed-3",
     "type": "command",
-    "title": "sed - Turn on GNU re[g]ex extension",
+    "title": "sed - Turn on [g]NU `regex` extension",
     "content": "{{command}} | sed -fg {{path/to/script.sed}}",
     "group": "Netbsd",
-    "description": "sed: Edit text in a scriptable manner. (Turn on GNU re[g]ex extension)",
+    "description": "sed: Edit text in a scriptable manner. (Turn on [g]NU `regex` extension)",
     "tags": [
       "netbsd",
       "sed",

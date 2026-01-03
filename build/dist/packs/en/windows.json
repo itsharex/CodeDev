@@ -1520,7 +1520,7 @@
     "title": "if - Execute the specified commands if the condition is true",
     "content": "if {{condition}} ({{echo Condition is true}})",
     "group": "Windows",
-    "description": "if: Performs conditional processing in batch scripts. (Execute the specified commands if the condition is true)",
+    "description": "if: Perform conditional processing in batch scripts. (Execute the specified commands if the condition is true)",
     "tags": [
       "windows",
       "if",
@@ -1535,7 +1535,7 @@
     "title": "if - Execute the specified commands if the condition is false",
     "content": "if not {{condition}} ({{echo Condition is true}})",
     "group": "Windows",
-    "description": "if: Performs conditional processing in batch scripts. (Execute the specified commands if the condition is false)",
+    "description": "if: Perform conditional processing in batch scripts. (Execute the specified commands if the condition is false)",
     "tags": [
       "windows",
       "if",
@@ -1550,7 +1550,7 @@
     "title": "if - Execute the first specified commands if the condition is true otherwise execute the second specified commands",
     "content": "if {{condition}} ({{echo Condition is true}}) else ({{echo Condition is false}})",
     "group": "Windows",
-    "description": "if: Performs conditional processing in batch scripts. (Execute the first specified commands if the condition is true otherwise execute the second specified commands)",
+    "description": "if: Perform conditional processing in batch scripts. (Execute the first specified commands if the condition is true otherwise execute the second specified commands)",
     "tags": [
       "windows",
       "if",
@@ -1565,7 +1565,7 @@
     "title": "if - Check whether `%errorlevel%` is greater than or equal to the specified exit code",
     "content": "if errorlevel {{2}} ({{echo Condition is true}})",
     "group": "Windows",
-    "description": "if: Performs conditional processing in batch scripts. (Check whether `%errorlevel%` is greater than or equal to the specified exit code)",
+    "description": "if: Perform conditional processing in batch scripts. (Check whether `%errorlevel%` is greater than or equal to the specified exit code)",
     "tags": [
       "windows",
       "if",
@@ -1580,7 +1580,7 @@
     "title": "if - Check whether two strings are equal",
     "content": "if %{{variable}}% == {{string}} ({{echo Condition is true}})",
     "group": "Windows",
-    "description": "if: Performs conditional processing in batch scripts. (Check whether two strings are equal)",
+    "description": "if: Perform conditional processing in batch scripts. (Check whether two strings are equal)",
     "tags": [
       "windows",
       "if",
@@ -1595,7 +1595,7 @@
     "title": "if - Check whether two strings are equal without respecting letter case",
     "content": "if /i %{{variable}}% == {{string}} ({{echo Condition is true}})",
     "group": "Windows",
-    "description": "if: Performs conditional processing in batch scripts. (Check whether two strings are equal without respecting letter case)",
+    "description": "if: Perform conditional processing in batch scripts. (Check whether two strings are equal without respecting letter case)",
     "tags": [
       "windows",
       "if",
@@ -1610,7 +1610,7 @@
     "title": "if - Check whether a file exist",
     "content": "if exist {{path\\to\\file}} ({{echo Condition is true}})",
     "group": "Windows",
-    "description": "if: Performs conditional processing in batch scripts. (Check whether a file exist)",
+    "description": "if: Perform conditional processing in batch scripts. (Check whether a file exist)",
     "tags": [
       "windows",
       "if",
@@ -3770,7 +3770,7 @@
     "title": "stop-service - Stop a service on the local computer",
     "content": "Stop-Service -Name {{service_name}}",
     "group": "Windows",
-    "description": "stop-service: Stops running services. Note: This command can only be used through PowerShell. (Stop a service on the local computer)",
+    "description": "stop-service: Stop running services. Note: This command can only be used through PowerShell. (Stop a service on the local computer)",
     "tags": [
       "windows",
       "stop-service",
@@ -3785,7 +3785,7 @@
     "title": "stop-service - Stop a service by using the display name",
     "content": "Stop-Service -DisplayName \"{{name}}\"",
     "group": "Windows",
-    "description": "stop-service: Stops running services. Note: This command can only be used through PowerShell. (Stop a service by using the display name)",
+    "description": "stop-service: Stop running services. Note: This command can only be used through PowerShell. (Stop a service by using the display name)",
     "tags": [
       "windows",
       "stop-service",
@@ -3800,7 +3800,7 @@
     "title": "stop-service - Stop a service that has dependent services",
     "content": "Stop-Service -Name {{service_name}} -Force -Confirm",
     "group": "Windows",
-    "description": "stop-service: Stops running services. Note: This command can only be used through PowerShell. (Stop a service that has dependent services)",
+    "description": "stop-service: Stop running services. Note: This command can only be used through PowerShell. (Stop a service that has dependent services)",
     "tags": [
       "windows",
       "stop-service",
@@ -4325,7 +4325,7 @@
     "title": "set-service - Change a display name",
     "content": "Set-Service -Name {{hostname}} -DisplayName \"{{name}}\"",
     "group": "Windows",
-    "description": "set-service: Starts, stops, and suspends a service, and changes its properties. Note: This command can only be used through PowerShell. (Change a display name)",
+    "description": "set-service: Start, stop, and suspend a service, and changes its properties. Note: This command can only be used through PowerShell. (Change a display name)",
     "tags": [
       "windows",
       "set-service",
@@ -4340,7 +4340,7 @@
     "title": "set-service - Change the startup type of services",
     "content": "Set-Service -Name {{service_name}} -StartupType {{Automatic}}",
     "group": "Windows",
-    "description": "set-service: Starts, stops, and suspends a service, and changes its properties. Note: This command can only be used through PowerShell. (Change the startup type of services)",
+    "description": "set-service: Start, stop, and suspend a service, and changes its properties. Note: This command can only be used through PowerShell. (Change the startup type of services)",
     "tags": [
       "windows",
       "set-service",
@@ -4355,7 +4355,7 @@
     "title": "set-service - Change the description of a service",
     "content": "Set-Service -Name {{service_name}} -Description \"{{description}}\"",
     "group": "Windows",
-    "description": "set-service: Starts, stops, and suspends a service, and changes its properties. Note: This command can only be used through PowerShell. (Change the description of a service)",
+    "description": "set-service: Start, stop, and suspend a service, and changes its properties. Note: This command can only be used through PowerShell. (Change the description of a service)",
     "tags": [
       "windows",
       "set-service",
@@ -4445,7 +4445,7 @@
     "title": "show-markdown - Render markdown to console from a file",
     "content": "Show-Markdown -Path {{path\\to\\file}}",
     "group": "Windows",
-    "description": "show-markdown: Shows a Markdown file or string in the console in a friendly way using VT100 escape sequences or in a browser using HTML. Note: This command can only be used through PowerShell. (Render markdown to console from a file)",
+    "description": "show-markdown: Show a Markdown file or string in the console in a friendly way using VT100 escape sequences or in a browser using HTML. Note: This command can only be used through PowerShell. (Render markdown to console from a file)",
     "tags": [
       "windows",
       "show-markdown",
@@ -4460,7 +4460,7 @@
     "title": "show-markdown - Render markdown to console from string",
     "content": "\"{{# Markdown content}}\" | Show-Markdown",
     "group": "Windows",
-    "description": "show-markdown: Shows a Markdown file or string in the console in a friendly way using VT100 escape sequences or in a browser using HTML. Note: This command can only be used through PowerShell. (Render markdown to console from string)",
+    "description": "show-markdown: Show a Markdown file or string in the console in a friendly way using VT100 escape sequences or in a browser using HTML. Note: This command can only be used through PowerShell. (Render markdown to console from string)",
     "tags": [
       "windows",
       "show-markdown",
@@ -4475,7 +4475,7 @@
     "title": "show-markdown - Open Markdown file in a browser",
     "content": "Show-Markdown -Path {{path\\to\\file}} -UseBrowser",
     "group": "Windows",
-    "description": "show-markdown: Shows a Markdown file or string in the console in a friendly way using VT100 escape sequences or in a browser using HTML. Note: This command can only be used through PowerShell. (Open Markdown file in a browser)",
+    "description": "show-markdown: Show a Markdown file or string in the console in a friendly way using VT100 escape sequences or in a browser using HTML. Note: This command can only be used through PowerShell. (Open Markdown file in a browser)",
     "tags": [
       "windows",
       "show-markdown",
@@ -4985,7 +4985,7 @@
     "title": "popd - Switch to directory at the top of the stack",
     "content": "popd",
     "group": "Windows",
-    "description": "popd: Changes the current directory to the directory stored by the `pushd` command. (Switch to directory at the top of the stack)",
+    "description": "popd: Change the current directory to the directory stored by the `pushd` command. (Switch to directory at the top of the stack)",
     "tags": [
       "windows",
       "popd",
@@ -5270,7 +5270,7 @@
     "title": "set-date - Add three days to the system date",
     "content": "Set-Date -Date (Get-Date).AddDays({{3}})",
     "group": "Windows",
-    "description": "set-date: Changes the system time on the computer to a time that you specify. Note: This command can only be used through PowerShell. (Add three days to the system date)",
+    "description": "set-date: Change the system time on the computer to a time that you specify. Note: This command can only be used through PowerShell. (Add three days to the system date)",
     "tags": [
       "windows",
       "set-date",
@@ -5285,7 +5285,7 @@
     "title": "set-date - Set the system clock back 10 minutes",
     "content": "Set-Date -Adjust -0:10:0 -DisplayHint Time",
     "group": "Windows",
-    "description": "set-date: Changes the system time on the computer to a time that you specify. Note: This command can only be used through PowerShell. (Set the system clock back 10 minutes)",
+    "description": "set-date: Change the system time on the computer to a time that you specify. Note: This command can only be used through PowerShell. (Set the system clock back 10 minutes)",
     "tags": [
       "windows",
       "set-date",
@@ -5300,7 +5300,7 @@
     "title": "set-date - Add 90 minutes to the system clock",
     "content": "$90mins = New-TimeSpan -Minutes {{90}}; Set-Date -Adjust $90mins",
     "group": "Windows",
-    "description": "set-date: Changes the system time on the computer to a time that you specify. Note: This command can only be used through PowerShell. (Add 90 minutes to the system clock)",
+    "description": "set-date: Change the system time on the computer to a time that you specify. Note: This command can only be used through PowerShell. (Add 90 minutes to the system clock)",
     "tags": [
       "windows",
       "set-date",
@@ -7775,7 +7775,7 @@
     "title": "start-service - Start a service by using its name",
     "content": "Start-Service -Name {{service_name}}",
     "group": "Windows",
-    "description": "start-service: Starts stopped services. Note: This command can only be used through PowerShell. (Start a service by using its name)",
+    "description": "start-service: Start stopped services. Note: This command can only be used through PowerShell. (Start a service by using its name)",
     "tags": [
       "windows",
       "start-service",
@@ -7790,7 +7790,7 @@
     "title": "start-service - Display information without starting a service",
     "content": "Start-Service -DisplayName *{{name}}* -WhatIf",
     "group": "Windows",
-    "description": "start-service: Starts stopped services. Note: This command can only be used through PowerShell. (Display information without starting a service)",
+    "description": "start-service: Start stopped services. Note: This command can only be used through PowerShell. (Display information without starting a service)",
     "tags": [
       "windows",
       "start-service",
@@ -7805,7 +7805,7 @@
     "title": "start-service - Start a disabled service",
     "content": "Set-Service {{service_name}} -StartupType {{manual}}; Start-Service {{service_name}}",
     "group": "Windows",
-    "description": "start-service: Starts stopped services. Note: This command can only be used through PowerShell. (Start a disabled service)",
+    "description": "start-service: Start stopped services. Note: This command can only be used through PowerShell. (Start a disabled service)",
     "tags": [
       "windows",
       "start-service",
@@ -8225,7 +8225,7 @@
     "title": "invoke-webrequest - Download the contents of a URL to a file",
     "content": "Invoke-WebRequest {{http://example.com}} -OutFile {{path\\to\\file}}",
     "group": "Windows",
-    "description": "invoke-webrequest: Performs a HTTP/HTTPS request to the Web. Note: This command can only be used through PowerShell. (Download the contents of a URL to a file)",
+    "description": "invoke-webrequest: Perform a HTTP/HTTPS request to the Web. Note: This command can only be used through PowerShell. (Download the contents of a URL to a file)",
     "tags": [
       "windows",
       "invoke-webrequest",
@@ -8240,7 +8240,7 @@
     "title": "invoke-webrequest - Send form-encoded data (POST request of type `application/x-www-form-urlencoded`)",
     "content": "Invoke-WebRequest -Method Post -Body @{ name='bob' } {{http://example.com/form}}",
     "group": "Windows",
-    "description": "invoke-webrequest: Performs a HTTP/HTTPS request to the Web. Note: This command can only be used through PowerShell. (Send form-encoded data (POST request of type `application/x-www-form-urlencoded`))",
+    "description": "invoke-webrequest: Perform a HTTP/HTTPS request to the Web. Note: This command can only be used through PowerShell. (Send form-encoded data (POST request of type `application/x-www-form-urlencoded`))",
     "tags": [
       "windows",
       "invoke-webrequest",
@@ -8255,7 +8255,7 @@
     "title": "invoke-webrequest - Send a request with an extra header, using a custom HTTP method",
     "content": "Invoke-WebRequest -Headers {{@{ X-My-Header = '123' }}} -Method {{PUT}} {{http://example.com}}",
     "group": "Windows",
-    "description": "invoke-webrequest: Performs a HTTP/HTTPS request to the Web. Note: This command can only be used through PowerShell. (Send a request with an extra header, using a custom HTTP method)",
+    "description": "invoke-webrequest: Perform a HTTP/HTTPS request to the Web. Note: This command can only be used through PowerShell. (Send a request with an extra header, using a custom HTTP method)",
     "tags": [
       "windows",
       "invoke-webrequest",
@@ -8270,7 +8270,7 @@
     "title": "invoke-webrequest - Send data in JSON format, specifying the appropriate content-type header",
     "content": "Invoke-WebRequest -Body '{{{\"name\":\"bob\"}}}' -ContentType 'application/json' {{http://example.com/users/1234}}",
     "group": "Windows",
-    "description": "invoke-webrequest: Performs a HTTP/HTTPS request to the Web. Note: This command can only be used through PowerShell. (Send data in JSON format, specifying the appropriate content-type header)",
+    "description": "invoke-webrequest: Perform a HTTP/HTTPS request to the Web. Note: This command can only be used through PowerShell. (Send data in JSON format, specifying the appropriate content-type header)",
     "tags": [
       "windows",
       "invoke-webrequest",
@@ -8285,7 +8285,7 @@
     "title": "invoke-webrequest - Pass a username and password for server authentication",
     "content": "Invoke-WebRequest -Headers @{ Authorization = \"Basic \"+ [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(\"myusername:mypassword\")) } {{http://example.com}}",
     "group": "Windows",
-    "description": "invoke-webrequest: Performs a HTTP/HTTPS request to the Web. Note: This command can only be used through PowerShell. (Pass a username and password for server authentication)",
+    "description": "invoke-webrequest: Perform a HTTP/HTTPS request to the Web. Note: This command can only be used through PowerShell. (Pass a username and password for server authentication)",
     "tags": [
       "windows",
       "invoke-webrequest",
@@ -8300,7 +8300,7 @@
     "title": "sfc - Display information about the usage of the command",
     "content": "sfc",
     "group": "Windows",
-    "description": "sfc: Scans the integrity of Windows system files. (Display information about the usage of the command)",
+    "description": "sfc: Scan the integrity of Windows system files. (Display information about the usage of the command)",
     "tags": [
       "windows",
       "sfc",
@@ -8315,7 +8315,7 @@
     "title": "sfc - Scan all system files and, if possible, repair any problems",
     "content": "sfc /scannow",
     "group": "Windows",
-    "description": "sfc: Scans the integrity of Windows system files. (Scan all system files and, if possible, repair any problems)",
+    "description": "sfc: Scan the integrity of Windows system files. (Scan all system files and, if possible, repair any problems)",
     "tags": [
       "windows",
       "sfc",
@@ -8330,7 +8330,7 @@
     "title": "sfc - Scan all system files without attempting to repair any",
     "content": "sfc /verifyonly",
     "group": "Windows",
-    "description": "sfc: Scans the integrity of Windows system files. (Scan all system files without attempting to repair any)",
+    "description": "sfc: Scan the integrity of Windows system files. (Scan all system files without attempting to repair any)",
     "tags": [
       "windows",
       "sfc",
@@ -8345,7 +8345,7 @@
     "title": "sfc - Scan a specific file and, if possible, repair any problems",
     "content": "sfc /scanfile={{path\\to\\file}}",
     "group": "Windows",
-    "description": "sfc: Scans the integrity of Windows system files. (Scan a specific file and, if possible, repair any problems)",
+    "description": "sfc: Scan the integrity of Windows system files. (Scan a specific file and, if possible, repair any problems)",
     "tags": [
       "windows",
       "sfc",
@@ -8360,7 +8360,7 @@
     "title": "sfc - Scan a specific file without attempting to repair it",
     "content": "sfc /verifyfile={{path\\to\\file}}",
     "group": "Windows",
-    "description": "sfc: Scans the integrity of Windows system files. (Scan a specific file without attempting to repair it)",
+    "description": "sfc: Scan the integrity of Windows system files. (Scan a specific file without attempting to repair it)",
     "tags": [
       "windows",
       "sfc",
@@ -8375,7 +8375,7 @@
     "title": "sfc - When repairing offline, specify the boot directory",
     "content": "sfc /offbootdir={{path\\to\\directory}}",
     "group": "Windows",
-    "description": "sfc: Scans the integrity of Windows system files. (When repairing offline, specify the boot directory)",
+    "description": "sfc: Scan the integrity of Windows system files. (When repairing offline, specify the boot directory)",
     "tags": [
       "windows",
       "sfc",
@@ -8390,7 +8390,7 @@
     "title": "sfc - When repairing offline, specify the Windows directory",
     "content": "sfc /offwindir={{path\\to\\directory}}",
     "group": "Windows",
-    "description": "sfc: Scans the integrity of Windows system files. (When repairing offline, specify the Windows directory)",
+    "description": "sfc: Scan the integrity of Windows system files. (When repairing offline, specify the Windows directory)",
     "tags": [
       "windows",
       "sfc",
@@ -8720,7 +8720,7 @@
     "title": "set-acl - Copy a security descriptor from one file to another",
     "content": "$OriginAcl = Get-Acl -Path {{path\\to\\file}}; Set-Acl -Path {{path\\to\\file}} -AclObject $OriginAcl",
     "group": "Windows",
-    "description": "set-acl: Changes the security descriptor of a specified item, such as a file or a registry key. Note: This command can only be used through PowerShell. (Copy a security descriptor from one file to another)",
+    "description": "set-acl: Change the security descriptor of a specified item, such as a file or a registry key. Note: This command can only be used through PowerShell. (Copy a security descriptor from one file to another)",
     "tags": [
       "windows",
       "set-acl",
@@ -8735,7 +8735,7 @@
     "title": "set-acl - Use the pipeline operator to pass a descriptor",
     "content": "Get-Acl -Path {{path\\to\\file}} | Set-Acl -Path {{path\\to\\file}}",
     "group": "Windows",
-    "description": "set-acl: Changes the security descriptor of a specified item, such as a file or a registry key. Note: This command can only be used through PowerShell. (Use the pipeline operator to pass a descriptor)",
+    "description": "set-acl: Change the security descriptor of a specified item, such as a file or a registry key. Note: This command can only be used through PowerShell. (Use the pipeline operator to pass a descriptor)",
     "tags": [
       "windows",
       "set-acl",
@@ -9095,7 +9095,7 @@
     "title": "out-string - Print host information as string",
     "content": "Get-Alias | Out-String",
     "group": "Windows",
-    "description": "out-string: Outputs input objects as a string. Note: This command can only be used through PowerShell. (Print host information as string)",
+    "description": "out-string: Output input objects as a string. Note: This command can only be used through PowerShell. (Print host information as string)",
     "tags": [
       "windows",
       "out-string",
@@ -9110,7 +9110,7 @@
     "title": "out-string - Convert each object to a string rather than concatenating all the objects into a single string",
     "content": "Get-Alias | Out-String -Stream",
     "group": "Windows",
-    "description": "out-string: Outputs input objects as a string. Note: This command can only be used through PowerShell. (Convert each object to a string rather than concatenating all the objects into a single string)",
+    "description": "out-string: Output input objects as a string. Note: This command can only be used through PowerShell. (Convert each object to a string rather than concatenating all the objects into a single string)",
     "tags": [
       "windows",
       "out-string",
@@ -9125,7 +9125,7 @@
     "title": "out-string - Use the `Width` parameter to prevent truncation",
     "content": "@{TestKey = ('x' * 200)} | Out-String -Width {{250}}",
     "group": "Windows",
-    "description": "out-string: Outputs input objects as a string. Note: This command can only be used through PowerShell. (Use the `Width` parameter to prevent truncation)",
+    "description": "out-string: Output input objects as a string. Note: This command can only be used through PowerShell. (Use the `Width` parameter to prevent truncation)",
     "tags": [
       "windows",
       "out-string",
@@ -9575,7 +9575,7 @@
     "title": "measure-object - Count the files and folders in a directory",
     "content": "Get-ChildItem | Measure-Object",
     "group": "Windows",
-    "description": "measure-object: Calculates the numeric properties of objects, and the characters, words, and lines in string objects, such as files of text. Note: This command can only be used through PowerShell. (Count the files and folders in a directory)",
+    "description": "measure-object: Calculate the numeric properties of objects, and the characters, words, and lines in string objects, such as files of text. Note: This command can only be used through PowerShell. (Count the files and folders in a directory)",
     "tags": [
       "windows",
       "measure-object",
@@ -9590,7 +9590,7 @@
     "title": "measure-object - Pipe input to Measure-Command (objects that are piped to `Measure-Command` are available to the script block that is passed to the Expression parameter)",
     "content": "\"One\", \"Two\", \"Three\", \"Four\" | Set-Content -Path \"{{path\\to\\file}}\"; Get-Content \"{{path\\to\\file}}\"; | Measure-Object -Character -Line -Word",
     "group": "Windows",
-    "description": "measure-object: Calculates the numeric properties of objects, and the characters, words, and lines in string objects, such as files of text. Note: This command can only be used through PowerShell. (Pipe input to Measure-Command (objects that are piped to `Measure-Command` are available to the script block that is passed to the Expression parameter))",
+    "description": "measure-object: Calculate the numeric properties of objects, and the characters, words, and lines in string objects, such as files of text. Note: This command can only be used through PowerShell. (Pipe input to Measure-Command (objects that are piped to `Measure-Command` are available to the script block that is passed to the Expression parameter))",
     "tags": [
       "windows",
       "measure-object",
@@ -10610,7 +10610,7 @@
     "title": "set-volume - Change the file system label of a volume identified by drive letter",
     "content": "Set-Volume -DriveLetter \"D\" -NewFileSystemLabel \"DataVolume\"",
     "group": "Windows",
-    "description": "set-volume: Sets or changes the file system label of an existing volume. Note: This command can only be used through PowerShell. (Change the file system label of a volume identified by drive letter)",
+    "description": "set-volume: Set or change the file system label of an existing volume. Note: This command can only be used through PowerShell. (Change the file system label of a volume identified by drive letter)",
     "tags": [
       "windows",
       "set-volume",
@@ -10625,7 +10625,7 @@
     "title": "set-volume - Change the file system label of a volume identified by the system label",
     "content": "Set-Volume -FileSystemLabel \"OldLabel\" -NewFileSystemLabel \"NewLabel\"",
     "group": "Windows",
-    "description": "set-volume: Sets or changes the file system label of an existing volume. Note: This command can only be used through PowerShell. (Change the file system label of a volume identified by the system label)",
+    "description": "set-volume: Set or change the file system label of an existing volume. Note: This command can only be used through PowerShell. (Change the file system label of a volume identified by the system label)",
     "tags": [
       "windows",
       "set-volume",
@@ -10640,7 +10640,7 @@
     "title": "set-volume - Modify the properties of a volume using a volume object",
     "content": "Set-Volume -InputObject $(Get-Volume -DriveLetter \"E\") -NewFileSystemLabel \"Backup\"",
     "group": "Windows",
-    "description": "set-volume: Sets or changes the file system label of an existing volume. Note: This command can only be used through PowerShell. (Modify the properties of a volume using a volume object)",
+    "description": "set-volume: Set or change the file system label of an existing volume. Note: This command can only be used through PowerShell. (Modify the properties of a volume using a volume object)",
     "tags": [
       "windows",
       "set-volume",
@@ -10655,7 +10655,7 @@
     "title": "set-volume - Specify the Data Deduplication mode for the volume",
     "content": "Set-Volume -DriveLetter \"D\" -DedupMode Backup",
     "group": "Windows",
-    "description": "set-volume: Sets or changes the file system label of an existing volume. Note: This command can only be used through PowerShell. (Specify the Data Deduplication mode for the volume)",
+    "description": "set-volume: Set or change the file system label of an existing volume. Note: This command can only be used through PowerShell. (Specify the Data Deduplication mode for the volume)",
     "tags": [
       "windows",
       "set-volume",

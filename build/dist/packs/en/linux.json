@@ -210,6 +210,36 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-virt-sparsify-0",
+    "type": "command",
+    "title": "virt-sparsify - Create a sparsified compressed image without snapshots from an unsparsified one",
+    "content": "virt-sparsify --compress {{path/to/image.qcow2}} {{path/to/image_new.qcow2}}",
+    "group": "Linux Ops",
+    "description": "virt-sparsify: Make virtual machine drive images thin-provisioned. Note: Use only for offline machines to avoid data corruption. (Create a sparsified compressed image without snapshots from an unsparsified one)",
+    "tags": [
+      "linux",
+      "virt-sparsify",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-sparsify-1",
+    "type": "command",
+    "title": "virt-sparsify - Sparsify an image in-place",
+    "content": "virt-sparsify --in-place {{path/to/image.img}}",
+    "group": "Linux Ops",
+    "description": "virt-sparsify: Make virtual machine drive images thin-provisioned. Note: Use only for offline machines to avoid data corruption. (Sparsify an image in-place)",
+    "tags": [
+      "linux",
+      "virt-sparsify",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-imv-0",
     "type": "command",
     "title": "imv - View multiple images",
@@ -1290,6 +1320,96 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-virt-sysprep-0",
+    "type": "command",
+    "title": "virt-sysprep - List all supported operations (enabled operations are indicated with asterisks)",
+    "content": "virt-sysprep --list-operations",
+    "group": "Linux Ops",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. (List all supported operations (enabled operations are indicated with asterisks))",
+    "tags": [
+      "linux",
+      "virt-sysprep",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-sysprep-1",
+    "type": "command",
+    "title": "virt-sysprep - Remove sensitive system data from a virtual machine image",
+    "content": "sudo virt-sysprep {{[-a|--add]}} {{path/to/image.qcow2}}",
+    "group": "Linux Ops",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. (Remove sensitive system data from a virtual machine image)",
+    "tags": [
+      "linux",
+      "virt-sysprep",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-sysprep-2",
+    "type": "command",
+    "title": "virt-sysprep - Specify a virtual machine by its name and run all enabled operations but don't actually apply the changes",
+    "content": "sudo virt-sysprep {{[-d|--domain]}} {{vm_name}} {{[-n|--dry-run]}}",
+    "group": "Linux Ops",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. (Specify a virtual machine by its name and run all enabled operations but don't actually apply the changes)",
+    "tags": [
+      "linux",
+      "virt-sysprep",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-sysprep-3",
+    "type": "command",
+    "title": "virt-sysprep - Run only the specified operations",
+    "content": "sudo virt-sysprep {{[-d|--domain]}} {{vm_name}} --operations {{operation1,operation2,...}}",
+    "group": "Linux Ops",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. (Run only the specified operations)",
+    "tags": [
+      "linux",
+      "virt-sysprep",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-sysprep-4",
+    "type": "command",
+    "title": "virt-sysprep - Generate a new `/etc/machine-id` file and enable customizations to be able to change the host name to avoid network conflicts",
+    "content": "sudo virt-sysprep {{[-d|--domain]}} {{vm_name}} --enable {{customizations}} --hostname {{host_name}} --operation {{machine-id}}",
+    "group": "Linux Ops",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. (Generate a new `/etc/machine-id` file and enable customizations to be able to change the host name to avoid network conflicts)",
+    "tags": [
+      "linux",
+      "virt-sysprep",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-sysprep-5",
+    "type": "command",
+    "title": "virt-sysprep - Display help",
+    "content": "virt-sysprep {{[-he|--help]}}",
+    "group": "Linux Ops",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. (Display help)",
+    "tags": [
+      "linux",
+      "virt-sysprep",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-chpasswd-0",
     "type": "command",
     "title": "chpasswd - Change the password for a specific user",
@@ -1503,7 +1623,7 @@
     "id": "tldr-en-linux-waydroid-2",
     "type": "command",
     "title": "waydroid - Install a new Android app from a file",
-    "content": "waydroid app install {{path/to/file.apk}}",
+    "content": "waydroid app install {{path/to/file}}.apk",
     "group": "Linux Ops",
     "description": "waydroid: A container-based approach to boot a full Android system on a regular Linux system like Ubuntu. (Install a new Android app from a file)",
     "tags": [
@@ -2124,6 +2244,126 @@
     "tags": [
       "linux",
       "rename.util",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-build-0",
+    "type": "command",
+    "title": "apptainer-build - Build a container from a definition file",
+    "content": "apptainer build {{path/to/image.sif}} {{path/to/definition.def}}",
+    "group": "Linux Ops",
+    "description": "apptainer-build: Build Apptainer container images. (Build a container from a definition file)",
+    "tags": [
+      "linux",
+      "apptainer-build",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-build-1",
+    "type": "command",
+    "title": "apptainer-build - Build a container from Docker Hub",
+    "content": "apptainer build {{path/to/image.sif}} docker://{{image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-build: Build Apptainer container images. (Build a container from Docker Hub)",
+    "tags": [
+      "linux",
+      "apptainer-build",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-build-2",
+    "type": "command",
+    "title": "apptainer-build - Build a container from the Container Library",
+    "content": "apptainer build {{path/to/image.sif}} library://{{user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-build: Build Apptainer container images. (Build a container from the Container Library)",
+    "tags": [
+      "linux",
+      "apptainer-build",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-build-3",
+    "type": "command",
+    "title": "apptainer-build - Build a writable [s]andbox directory instead of an image file",
+    "content": "apptainer build {{[-s|--sandbox]}} {{path/to/directory}} docker://{{image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-build: Build Apptainer container images. (Build a writable [s]andbox directory instead of an image file)",
+    "tags": [
+      "linux",
+      "apptainer-build",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-build-4",
+    "type": "command",
+    "title": "apptainer-build - Build a container without using the cache",
+    "content": "apptainer build --disable-cache {{path/to/image.sif}} docker://{{image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-build: Build Apptainer container images. (Build a container without using the cache)",
+    "tags": [
+      "linux",
+      "apptainer-build",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-build-5",
+    "type": "command",
+    "title": "apptainer-build - [F]orce overwrite an existing image file",
+    "content": "apptainer build {{[-F|--force]}} {{path/to/image.sif}} {{path/to/definition.def}}",
+    "group": "Linux Ops",
+    "description": "apptainer-build: Build Apptainer container images. ([F]orce overwrite an existing image file)",
+    "tags": [
+      "linux",
+      "apptainer-build",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-build-6",
+    "type": "command",
+    "title": "apptainer-build - Build using [f]akeroot for unprivileged builds",
+    "content": "apptainer build {{[-f|--fakeroot]}} {{path/to/image.sif}} {{path/to/definition.def}}",
+    "group": "Linux Ops",
+    "description": "apptainer-build: Build Apptainer container images. (Build using [f]akeroot for unprivileged builds)",
+    "tags": [
+      "linux",
+      "apptainer-build",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-build-7",
+    "type": "command",
+    "title": "apptainer-build - Display help",
+    "content": "apptainer build {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "apptainer-build: Build Apptainer container images. (Display help)",
+    "tags": [
+      "linux",
+      "apptainer-build",
       "tldr",
       "en"
     ],
@@ -6414,6 +6654,81 @@
     "tags": [
       "linux",
       "ark-survival-evolved",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-install-0",
+    "type": "command",
+    "title": "virt-install - Create a virtual machine with 1 GB RAM and 12 GB storage and start a Debian installation",
+    "content": "virt-install {{[-n|--name]}} {{vm_name}} --memory {{1024}} --disk path={{path/to/image.qcow2}},size={{12}} {{[-c|--cdrom]}} {{path/to/debian.iso}}",
+    "group": "Linux Ops",
+    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. (Create a virtual machine with 1 GB RAM and 12 GB storage and start a Debian installation)",
+    "tags": [
+      "linux",
+      "virt-install",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-install-1",
+    "type": "command",
+    "title": "virt-install - Create a x86-64, KVM-accelerated, UEFI-based virtual machine with the Q35 chipset, 4 GiB RAM, 16 GiB RAW storage, and start a Fedora installation",
+    "content": "virt-install {{[-n|--name]}} {{vm_name}} --arch {{x86_64}} --virt-type {{kvm}} --machine {{q35}} --boot {{uefi}} --memory {{4096}} --disk path={{path/to/image.raw}},size={{16}} {{[-c|--cdrom]}} {{path/to/fedora.iso}}",
+    "group": "Linux Ops",
+    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. (Create a x86-64, KVM-accelerated, UEFI-based virtual machine with the Q35 chipset, 4 GiB RAM, 16 GiB RAW storage, and start a Fedora installation)",
+    "tags": [
+      "linux",
+      "virt-install",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-install-2",
+    "type": "command",
+    "title": "virt-install - Create a diskless live virtual machine without an emulated sound device or a USB controller. Don't start an installation and don't autoconnect to console but attach a cdrom to it (might be useful for when using a live CD like tails)",
+    "content": "virt-install {{[-n|--name]}} {{vm_name}} --memory {{512}} --disk {{none}} --controller {{type=usb,model=none}} --sound {{none}} --autoconsole {{none}} --install {{no_install=yes}} {{[-c|--cdrom]}} {{path/to/tails.iso}}",
+    "group": "Linux Ops",
+    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. (Create a diskless live virtual machine without an emulated sound device or a USB controller. Don't start an installation and don't autoconnect to console but attach a cdrom to it (might be useful for when using a live CD like tails))",
+    "tags": [
+      "linux",
+      "virt-install",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-install-3",
+    "type": "command",
+    "title": "virt-install - Create a virtual machine with 16 GiB RAM, 250 GiB storage, 8 cores with hyperthreading, a specific CPU topology, and a CPU model that shares most features with the host CPU",
+    "content": "virt-install {{[-n|--name]}} {{vm_name}} --cpu {{host-model}},topology.sockets={{1}},topology.cores={{4}},topology.threads={{2}} --memory {{16384}} --disk path={{path/to/image.qcow2}},size={{250}} {{[-c|--cdrom]}} {{path/to/debian.iso}}",
+    "group": "Linux Ops",
+    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. (Create a virtual machine with 16 GiB RAM, 250 GiB storage, 8 cores with hyperthreading, a specific CPU topology, and a CPU model that shares most features with the host CPU)",
+    "tags": [
+      "linux",
+      "virt-install",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-install-4",
+    "type": "command",
+    "title": "virt-install - Create a virtual machine and kickstart an automated deployment based on Fedora 35 using only remote resources (no ISO required)",
+    "content": "virt-install {{[-n|--name]}} {{vm_name}} --memory {{2048}} --disk path={{path/to/image.qcow2}},size={{20}} {{[-l|--location]}} {{https://download.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/}} {{[-x|--extra-args]}} \"{{inst.ks=https://path/to/valid_kickstart.org}}\"",
+    "group": "Linux Ops",
+    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. (Create a virtual machine and kickstart an automated deployment based on Fedora 35 using only remote resources (no ISO required))",
+    "tags": [
+      "linux",
+      "virt-install",
       "tldr",
       "en"
     ],
@@ -14162,10 +14477,10 @@
   {
     "id": "tldr-en-linux-lid.idutils-3",
     "type": "command",
-    "title": "lid.idutils - Find tokens matching an extended regular expression",
+    "title": "lid.idutils - Find tokens matching an extended `regex`",
     "content": "lid {{[-r|--regexp]}} \"{{pattern}}\"",
     "group": "Linux Ops",
-    "description": "lid.idutils: Query an ID database for tokens matching a pattern. Note: An ID database must first be built using `mkid`. (Find tokens matching an extended regular expression)",
+    "description": "lid.idutils: Query an ID database for tokens matching a pattern. Note: An ID database must first be built using `mkid`. (Find tokens matching an extended `regex`)",
     "tags": [
       "linux",
       "lid.idutils",
@@ -14390,7 +14705,7 @@
     "title": "speedread - Read a text file at a specific speed",
     "content": "cat {{path/to/file.txt}} | speedread -wpm {{250}}",
     "group": "Linux Ops",
-    "description": "speedread: A simple terminal-based open source Spritz-alike. Shows input text as a per-word RSVP (rapid serial visual presentation) aligned on optimal reading points, which allows reading text at a much more rapid pace than usual as the eye can stay fixed on a single place. (Read a text file at a specific speed)",
+    "description": "speedread: A Spritz-alike speed reader. Show text using per-word Rapid Serial Visual Presentation (RSVP). (Read a text file at a specific speed)",
     "tags": [
       "linux",
       "speedread",
@@ -14405,7 +14720,7 @@
     "title": "speedread - Resume from a specific line",
     "content": "cat {{path/to/file.txt}} | speedread -resume {{5}}",
     "group": "Linux Ops",
-    "description": "speedread: A simple terminal-based open source Spritz-alike. Shows input text as a per-word RSVP (rapid serial visual presentation) aligned on optimal reading points, which allows reading text at a much more rapid pace than usual as the eye can stay fixed on a single place. (Resume from a specific line)",
+    "description": "speedread: A Spritz-alike speed reader. Show text using per-word Rapid Serial Visual Presentation (RSVP). (Resume from a specific line)",
     "tags": [
       "linux",
       "speedread",
@@ -14420,7 +14735,7 @@
     "title": "speedread - Show multiple words at a time",
     "content": "cat {{path/to/file.txt}} | speedread -multiword",
     "group": "Linux Ops",
-    "description": "speedread: A simple terminal-based open source Spritz-alike. Shows input text as a per-word RSVP (rapid serial visual presentation) aligned on optimal reading points, which allows reading text at a much more rapid pace than usual as the eye can stay fixed on a single place. (Show multiple words at a time)",
+    "description": "speedread: A Spritz-alike speed reader. Show text using per-word Rapid Serial Visual Presentation (RSVP). (Show multiple words at a time)",
     "tags": [
       "linux",
       "speedread",
@@ -14435,7 +14750,7 @@
     "title": "speedread - Slow down by 10% during the reading session",
     "content": "<[>",
     "group": "Linux Ops",
-    "description": "speedread: A simple terminal-based open source Spritz-alike. Shows input text as a per-word RSVP (rapid serial visual presentation) aligned on optimal reading points, which allows reading text at a much more rapid pace than usual as the eye can stay fixed on a single place. (Slow down by 10% during the reading session)",
+    "description": "speedread: A Spritz-alike speed reader. Show text using per-word Rapid Serial Visual Presentation (RSVP). (Slow down by 10% during the reading session)",
     "tags": [
       "linux",
       "speedread",
@@ -14450,7 +14765,7 @@
     "title": "speedread - Speed up by 10% during the reading session",
     "content": "<]>",
     "group": "Linux Ops",
-    "description": "speedread: A simple terminal-based open source Spritz-alike. Shows input text as a per-word RSVP (rapid serial visual presentation) aligned on optimal reading points, which allows reading text at a much more rapid pace than usual as the eye can stay fixed on a single place. (Speed up by 10% during the reading session)",
+    "description": "speedread: A Spritz-alike speed reader. Show text using per-word Rapid Serial Visual Presentation (RSVP). (Speed up by 10% during the reading session)",
     "tags": [
       "linux",
       "speedread",
@@ -14465,7 +14780,7 @@
     "title": "speedread - Pause, and show the last few lines as context",
     "content": "<Space>",
     "group": "Linux Ops",
-    "description": "speedread: A simple terminal-based open source Spritz-alike. Shows input text as a per-word RSVP (rapid serial visual presentation) aligned on optimal reading points, which allows reading text at a much more rapid pace than usual as the eye can stay fixed on a single place. (Pause, and show the last few lines as context)",
+    "description": "speedread: A Spritz-alike speed reader. Show text using per-word Rapid Serial Visual Presentation (RSVP). (Pause, and show the last few lines as context)",
     "tags": [
       "linux",
       "speedread",
@@ -42735,6 +43050,21 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-systemd-detect-virt-5",
+    "type": "command",
+    "title": "systemd-detect-virt - Detect whether in a `chroot` environment",
+    "content": "systemd-detect-virt {{[-r|--chroot]}}",
+    "group": "Linux Ops",
+    "description": "systemd-detect-virt: Detect execution in a virtualized environment. (Detect whether in a `chroot` environment)",
+    "tags": [
+      "linux",
+      "systemd-detect-virt",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-trash-0",
     "type": "command",
     "title": "trash - Send a file to the trash",
@@ -45075,6 +45405,126 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-apptainer-0",
+    "type": "command",
+    "title": "apptainer - Download a container from Docker Hub",
+    "content": "apptainer pull {{path/to/image.sif}} docker://{{image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer: Manage containers for HPC and scientific computing. Some subcommands such as `build`, `pull`, and `push` have their own usage documentation. (Download a container from Docker Hub)",
+    "tags": [
+      "linux",
+      "apptainer",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-1",
+    "type": "command",
+    "title": "apptainer - Download a container from the Container Library",
+    "content": "apptainer pull {{path/to/image.sif}} library://{{user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer: Manage containers for HPC and scientific computing. Some subcommands such as `build`, `pull`, and `push` have their own usage documentation. (Download a container from the Container Library)",
+    "tags": [
+      "linux",
+      "apptainer",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-2",
+    "type": "command",
+    "title": "apptainer - Build a container from a definition file",
+    "content": "apptainer build {{path/to/image.sif}} {{path/to/definition.def}}",
+    "group": "Linux Ops",
+    "description": "apptainer: Manage containers for HPC and scientific computing. Some subcommands such as `build`, `pull`, and `push` have their own usage documentation. (Build a container from a definition file)",
+    "tags": [
+      "linux",
+      "apptainer",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-3",
+    "type": "command",
+    "title": "apptainer - Start an interactive shell inside a container",
+    "content": "apptainer shell {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer: Manage containers for HPC and scientific computing. Some subcommands such as `build`, `pull`, and `push` have their own usage documentation. (Start an interactive shell inside a container)",
+    "tags": [
+      "linux",
+      "apptainer",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-4",
+    "type": "command",
+    "title": "apptainer - Execute a command inside a container",
+    "content": "apptainer exec {{path/to/image.sif}} {{command}}",
+    "group": "Linux Ops",
+    "description": "apptainer: Manage containers for HPC and scientific computing. Some subcommands such as `build`, `pull`, and `push` have their own usage documentation. (Execute a command inside a container)",
+    "tags": [
+      "linux",
+      "apptainer",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-5",
+    "type": "command",
+    "title": "apptainer - Run the default runscript of a container",
+    "content": "apptainer run {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer: Manage containers for HPC and scientific computing. Some subcommands such as `build`, `pull`, and `push` have their own usage documentation. (Run the default runscript of a container)",
+    "tags": [
+      "linux",
+      "apptainer",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-6",
+    "type": "command",
+    "title": "apptainer - Inspect a container's metadata",
+    "content": "apptainer inspect {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer: Manage containers for HPC and scientific computing. Some subcommands such as `build`, `pull`, and `push` have their own usage documentation. (Inspect a container's metadata)",
+    "tags": [
+      "linux",
+      "apptainer",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-7",
+    "type": "command",
+    "title": "apptainer - Display help",
+    "content": "apptainer {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "apptainer: Manage containers for HPC and scientific computing. Some subcommands such as `build`, `pull`, and `push` have their own usage documentation. (Display help)",
+    "tags": [
+      "linux",
+      "apptainer",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-extundelete-0",
     "type": "command",
     "title": "extundelete - Restore all deleted files inside partition `N` on device `X`",
@@ -45579,6 +46029,36 @@
     "tags": [
       "linux",
       "xdg-user-dirs-update",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-clone-0",
+    "type": "command",
+    "title": "virt-clone - Clone a virtual machine and automatically generate a new name, storage path, and MAC address",
+    "content": "virt-clone {{[-o|--original]}} {{vm_name}} --auto-clone",
+    "group": "Linux Ops",
+    "description": "virt-clone: Clone a libvirt virtual machine. (Clone a virtual machine and automatically generate a new name, storage path, and MAC address)",
+    "tags": [
+      "linux",
+      "virt-clone",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-clone-1",
+    "type": "command",
+    "title": "virt-clone - Clone a virtual machine and specify the new name, storage path, and MAC address",
+    "content": "virt-clone {{[-o|--original]}} {{vm_name}} {{[-n|--name]}} {{new_vm_name}} {{[-f|--file]}} {{path/to/new_storage}} {{[-m|--mac]}} {{ff:ff:ff:ff:ff:ff|RANDOM}}",
+    "group": "Linux Ops",
+    "description": "virt-clone: Clone a libvirt virtual machine. (Clone a virtual machine and specify the new name, storage path, and MAC address)",
+    "tags": [
+      "linux",
+      "virt-clone",
       "tldr",
       "en"
     ],
@@ -53030,7 +53510,7 @@
     "title": "nixos-container - List running containers",
     "content": "sudo nixos-container list",
     "group": "Linux Ops",
-    "description": "nixos-container: Starts NixOS containers using Linux containers. (List running containers)",
+    "description": "nixos-container: Start NixOS containers using Linux containers. (List running containers)",
     "tags": [
       "linux",
       "nixos-container",
@@ -53045,7 +53525,7 @@
     "title": "nixos-container - Create a NixOS container with a specific configuration file",
     "content": "sudo nixos-container create {{container_name}} --config-file {{path/to/nix_config_file}}",
     "group": "Linux Ops",
-    "description": "nixos-container: Starts NixOS containers using Linux containers. (Create a NixOS container with a specific configuration file)",
+    "description": "nixos-container: Start NixOS containers using Linux containers. (Create a NixOS container with a specific configuration file)",
     "tags": [
       "linux",
       "nixos-container",
@@ -53060,7 +53540,7 @@
     "title": "nixos-container - Start, stop, terminate, or destroy a specific container",
     "content": "sudo nixos-container {{start|stop|terminate|destroy|status}} {{container_name}}",
     "group": "Linux Ops",
-    "description": "nixos-container: Starts NixOS containers using Linux containers. (Start, stop, terminate, or destroy a specific container)",
+    "description": "nixos-container: Start NixOS containers using Linux containers. (Start, stop, terminate, or destroy a specific container)",
     "tags": [
       "linux",
       "nixos-container",
@@ -53075,7 +53555,7 @@
     "title": "nixos-container - Run a command in a running container",
     "content": "sudo nixos-container run {{container_name}} -- {{command}} {{command_arguments}}",
     "group": "Linux Ops",
-    "description": "nixos-container: Starts NixOS containers using Linux containers. (Run a command in a running container)",
+    "description": "nixos-container: Start NixOS containers using Linux containers. (Run a command in a running container)",
     "tags": [
       "linux",
       "nixos-container",
@@ -53090,7 +53570,7 @@
     "title": "nixos-container - Update a container configuration",
     "content": "sudo $EDITOR /var/lib/container/{{container_name}}/etc/nixos/configuration.nix && sudo nixos-container update {{container_name}}",
     "group": "Linux Ops",
-    "description": "nixos-container: Starts NixOS containers using Linux containers. (Update a container configuration)",
+    "description": "nixos-container: Start NixOS containers using Linux containers. (Update a container configuration)",
     "tags": [
       "linux",
       "nixos-container",
@@ -53105,7 +53585,7 @@
     "title": "nixos-container - Enter an interactive shell session on an already-running container",
     "content": "sudo nixos-container root-login {{container_name}}",
     "group": "Linux Ops",
-    "description": "nixos-container: Starts NixOS containers using Linux containers. (Enter an interactive shell session on an already-running container)",
+    "description": "nixos-container: Start NixOS containers using Linux containers. (Enter an interactive shell session on an already-running container)",
     "tags": [
       "linux",
       "nixos-container",
@@ -58520,7 +59000,7 @@
     "title": "qm-suspend - Suspend a virtual machine by ID",
     "content": "qm {{[su|suspend]}} {{vm_id}} {{integer}}",
     "group": "Linux Ops",
-    "description": "qm-suspend: Suspends a virtual machine (VM) in the Proxmox Virtual Environment (PVE). Use `--skiplock` and `--skiplockstorage` flags with caution, as they may lead to data corruption in certain situations. (Suspend a virtual machine by ID)",
+    "description": "qm-suspend: Suspend a virtual machine (VM) in the Proxmox Virtual Environment (PVE). Use `--skiplock` and `--skiplockstorage` flags with caution, as they may lead to data corruption in certain situations. (Suspend a virtual machine by ID)",
     "tags": [
       "linux",
       "qm-suspend",
@@ -58535,7 +59015,7 @@
     "title": "qm-suspend - Skip the lock check when suspending the VM",
     "content": "qm {{[su|suspend]}} {{vm_id}} {{integer}} --skiplock",
     "group": "Linux Ops",
-    "description": "qm-suspend: Suspends a virtual machine (VM) in the Proxmox Virtual Environment (PVE). Use `--skiplock` and `--skiplockstorage` flags with caution, as they may lead to data corruption in certain situations. (Skip the lock check when suspending the VM)",
+    "description": "qm-suspend: Suspend a virtual machine (VM) in the Proxmox Virtual Environment (PVE). Use `--skiplock` and `--skiplockstorage` flags with caution, as they may lead to data corruption in certain situations. (Skip the lock check when suspending the VM)",
     "tags": [
       "linux",
       "qm-suspend",
@@ -58550,7 +59030,7 @@
     "title": "qm-suspend - Skip the lock check for storage when suspending the VM",
     "content": "qm {{[su|suspend]}} {{vm_id}} {{integer}} --skiplockstorage",
     "group": "Linux Ops",
-    "description": "qm-suspend: Suspends a virtual machine (VM) in the Proxmox Virtual Environment (PVE). Use `--skiplock` and `--skiplockstorage` flags with caution, as they may lead to data corruption in certain situations. (Skip the lock check for storage when suspending the VM)",
+    "description": "qm-suspend: Suspend a virtual machine (VM) in the Proxmox Virtual Environment (PVE). Use `--skiplock` and `--skiplockstorage` flags with caution, as they may lead to data corruption in certain situations. (Skip the lock check for storage when suspending the VM)",
     "tags": [
       "linux",
       "qm-suspend",
@@ -59079,6 +59559,126 @@
     "tags": [
       "linux",
       "grub-bios-setup",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-fs_cli-0",
+    "type": "command",
+    "title": "fs_cli - Connect to the local FreeSWITCH instance with an interactive session",
+    "content": "fs_cli",
+    "group": "Linux Ops",
+    "description": "fs_cli: Connect to and control a running FreeSWITCH server using the FreeSWITCH Command Line Interface (ESL client). (Connect to the local FreeSWITCH instance with an interactive session)",
+    "tags": [
+      "linux",
+      "fs_cli",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-fs_cli-1",
+    "type": "command",
+    "title": "fs_cli - Connect to a remote FreeSWITCH server",
+    "content": "fs_cli {{[-H|--host]}} {{host}} {{[-P|--port]}} {{port}} {{[-p|--password]}} {{password}}",
+    "group": "Linux Ops",
+    "description": "fs_cli: Connect to and control a running FreeSWITCH server using the FreeSWITCH Command Line Interface (ESL client). (Connect to a remote FreeSWITCH server)",
+    "tags": [
+      "linux",
+      "fs_cli",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-fs_cli-2",
+    "type": "command",
+    "title": "fs_cli - Execute a single FreeSWITCH command and exit",
+    "content": "fs_cli {{[-x|--execute]}} \"{{command}}\"",
+    "group": "Linux Ops",
+    "description": "fs_cli: Connect to and control a running FreeSWITCH server using the FreeSWITCH Command Line Interface (ESL client). (Execute a single FreeSWITCH command and exit)",
+    "tags": [
+      "linux",
+      "fs_cli",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-fs_cli-3",
+    "type": "command",
+    "title": "fs_cli - Show FreeSWITCH system status",
+    "content": "fs_cli {{[-x|--execute]}} \"status\"",
+    "group": "Linux Ops",
+    "description": "fs_cli: Connect to and control a running FreeSWITCH server using the FreeSWITCH Command Line Interface (ESL client). (Show FreeSWITCH system status)",
+    "tags": [
+      "linux",
+      "fs_cli",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-fs_cli-4",
+    "type": "command",
+    "title": "fs_cli - Reload FreeSWITCH XML configuration",
+    "content": "fs_cli {{[-x|--execute]}} \"reloadxml\"",
+    "group": "Linux Ops",
+    "description": "fs_cli: Connect to and control a running FreeSWITCH server using the FreeSWITCH Command Line Interface (ESL client). (Reload FreeSWITCH XML configuration)",
+    "tags": [
+      "linux",
+      "fs_cli",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-fs_cli-5",
+    "type": "command",
+    "title": "fs_cli - Check if a module is loaded",
+    "content": "fs_cli {{[-x|--execute]}} \"module_exists {{module_name}}\"",
+    "group": "Linux Ops",
+    "description": "fs_cli: Connect to and control a running FreeSWITCH server using the FreeSWITCH Command Line Interface (ESL client). (Check if a module is loaded)",
+    "tags": [
+      "linux",
+      "fs_cli",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-fs_cli-6",
+    "type": "command",
+    "title": "fs_cli - Show active calls",
+    "content": "fs_cli {{[-x|--execute]}} \"show calls\"",
+    "group": "Linux Ops",
+    "description": "fs_cli: Connect to and control a running FreeSWITCH server using the FreeSWITCH Command Line Interface (ESL client). (Show active calls)",
+    "tags": [
+      "linux",
+      "fs_cli",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-fs_cli-7",
+    "type": "command",
+    "title": "fs_cli - Retry connection on failure",
+    "content": "fs_cli {{[-r|--retry]}}",
+    "group": "Linux Ops",
+    "description": "fs_cli: Connect to and control a running FreeSWITCH server using the FreeSWITCH Command Line Interface (ESL client). (Retry connection on failure)",
+    "tags": [
+      "linux",
+      "fs_cli",
       "tldr",
       "en"
     ],
@@ -67730,7 +68330,7 @@
     "title": "bootc - Show deployments in the order they will appear in the bootloader",
     "content": "bootc status",
     "group": "Linux Ops",
-    "description": "bootc: Boot and upgrade via container images. Manages transactional, in-place operating system updates using OCI/Docker container images. (Show deployments in the order they will appear in the bootloader)",
+    "description": "bootc: Boot and upgrade via container images. Manage transactional, in-place operating system updates using OCI/Docker container images. (Show deployments in the order they will appear in the bootloader)",
     "tags": [
       "linux",
       "bootc",
@@ -67745,7 +68345,7 @@
     "title": "bootc - Check if any updates are available",
     "content": "bootc upgrade --check",
     "group": "Linux Ops",
-    "description": "bootc: Boot and upgrade via container images. Manages transactional, in-place operating system updates using OCI/Docker container images. (Check if any updates are available)",
+    "description": "bootc: Boot and upgrade via container images. Manage transactional, in-place operating system updates using OCI/Docker container images. (Check if any updates are available)",
     "tags": [
       "linux",
       "bootc",
@@ -67760,7 +68360,7 @@
     "title": "bootc - Prepare a new update and reboot into it",
     "content": "bootc upgrade --apply",
     "group": "Linux Ops",
-    "description": "bootc: Boot and upgrade via container images. Manages transactional, in-place operating system updates using OCI/Docker container images. (Prepare a new update and reboot into it)",
+    "description": "bootc: Boot and upgrade via container images. Manage transactional, in-place operating system updates using OCI/Docker container images. (Prepare a new update and reboot into it)",
     "tags": [
       "linux",
       "bootc",
@@ -67775,7 +68375,7 @@
     "title": "bootc - Change OS base to new container image",
     "content": "bootc switch {{image}}",
     "group": "Linux Ops",
-    "description": "bootc: Boot and upgrade via container images. Manages transactional, in-place operating system updates using OCI/Docker container images. (Change OS base to new container image)",
+    "description": "bootc: Boot and upgrade via container images. Manage transactional, in-place operating system updates using OCI/Docker container images. (Change OS base to new container image)",
     "tags": [
       "linux",
       "bootc",
@@ -67790,7 +68390,7 @@
     "title": "bootc - Reboot into the previous ostree deployment",
     "content": "bootc rollback",
     "group": "Linux Ops",
-    "description": "bootc: Boot and upgrade via container images. Manages transactional, in-place operating system updates using OCI/Docker container images. (Reboot into the previous ostree deployment)",
+    "description": "bootc: Boot and upgrade via container images. Manage transactional, in-place operating system updates using OCI/Docker container images. (Reboot into the previous ostree deployment)",
     "tags": [
       "linux",
       "bootc",
@@ -67805,7 +68405,7 @@
     "title": "bootc - Apply transactional changes to the system configuration",
     "content": "bootc edit",
     "group": "Linux Ops",
-    "description": "bootc: Boot and upgrade via container images. Manages transactional, in-place operating system updates using OCI/Docker container images. (Apply transactional changes to the system configuration)",
+    "description": "bootc: Boot and upgrade via container images. Manage transactional, in-place operating system updates using OCI/Docker container images. (Apply transactional changes to the system configuration)",
     "tags": [
       "linux",
       "bootc",
@@ -79145,7 +79745,7 @@
     "title": "acpi - Show battery information",
     "content": "acpi",
     "group": "Linux Ops",
-    "description": "acpi: Shows battery status or thermal information. (Show battery information)",
+    "description": "acpi: Show battery status or thermal information. (Show battery information)",
     "tags": [
       "linux",
       "acpi",
@@ -79160,7 +79760,7 @@
     "title": "acpi - Show thermal information",
     "content": "acpi {{[-t|--thermal]}}",
     "group": "Linux Ops",
-    "description": "acpi: Shows battery status or thermal information. (Show thermal information)",
+    "description": "acpi: Show battery status or thermal information. (Show thermal information)",
     "tags": [
       "linux",
       "acpi",
@@ -79175,7 +79775,7 @@
     "title": "acpi - Show cooling device information",
     "content": "acpi {{[-c|--cooling]}}",
     "group": "Linux Ops",
-    "description": "acpi: Shows battery status or thermal information. (Show cooling device information)",
+    "description": "acpi: Show battery status or thermal information. (Show cooling device information)",
     "tags": [
       "linux",
       "acpi",
@@ -79190,7 +79790,7 @@
     "title": "acpi - Show thermal information in Fahrenheit",
     "content": "acpi {{[-tf|--thermal --fahrenheit]}}",
     "group": "Linux Ops",
-    "description": "acpi: Shows battery status or thermal information. (Show thermal information in Fahrenheit)",
+    "description": "acpi: Show battery status or thermal information. (Show thermal information in Fahrenheit)",
     "tags": [
       "linux",
       "acpi",
@@ -79205,7 +79805,7 @@
     "title": "acpi - Show all information",
     "content": "acpi {{[-V|--everything]}}",
     "group": "Linux Ops",
-    "description": "acpi: Shows battery status or thermal information. (Show all information)",
+    "description": "acpi: Show battery status or thermal information. (Show all information)",
     "tags": [
       "linux",
       "acpi",
@@ -79220,7 +79820,7 @@
     "title": "acpi - Extract information from `/proc` instead of `/sys`",
     "content": "acpi {{[-p|--proc]}}",
     "group": "Linux Ops",
-    "description": "acpi: Shows battery status or thermal information. (Extract information from `/proc` instead of `/sys`)",
+    "description": "acpi: Show battery status or thermal information. (Extract information from `/proc` instead of `/sys`)",
     "tags": [
       "linux",
       "acpi",
@@ -83340,6 +83940,126 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-apptainer-pull-0",
+    "type": "command",
+    "title": "apptainer-pull - Pull a container from Docker Hub",
+    "content": "apptainer pull {{path/to/image.sif}} docker://{{image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-pull: Pull container images from remote sources. (Pull a container from Docker Hub)",
+    "tags": [
+      "linux",
+      "apptainer-pull",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-pull-1",
+    "type": "command",
+    "title": "apptainer-pull - Pull a container from the Container Library",
+    "content": "apptainer pull {{path/to/image.sif}} library://{{user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-pull: Pull container images from remote sources. (Pull a container from the Container Library)",
+    "tags": [
+      "linux",
+      "apptainer-pull",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-pull-2",
+    "type": "command",
+    "title": "apptainer-pull - Pull a container from an OCI registry",
+    "content": "apptainer pull {{path/to/image.sif}} oras://{{registry/namespace/image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-pull: Pull container images from remote sources. (Pull a container from an OCI registry)",
+    "tags": [
+      "linux",
+      "apptainer-pull",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-pull-3",
+    "type": "command",
+    "title": "apptainer-pull - Pull a container for a specific architecture",
+    "content": "apptainer pull --arch {{amd64|arm64|ppc64le}} {{path/to/image.sif}} library://{{image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-pull: Pull container images from remote sources. (Pull a container for a specific architecture)",
+    "tags": [
+      "linux",
+      "apptainer-pull",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-pull-4",
+    "type": "command",
+    "title": "apptainer-pull - [F]orce overwrite an existing image file",
+    "content": "apptainer pull {{[-F|--force]}} {{path/to/image.sif}} docker://{{image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-pull: Pull container images from remote sources. ([F]orce overwrite an existing image file)",
+    "tags": [
+      "linux",
+      "apptainer-pull",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-pull-5",
+    "type": "command",
+    "title": "apptainer-pull - Pull a container as a writable sandbox directory",
+    "content": "apptainer pull --sandbox {{path/to/directory}} docker://{{image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-pull: Pull container images from remote sources. (Pull a container as a writable sandbox directory)",
+    "tags": [
+      "linux",
+      "apptainer-pull",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-pull-6",
+    "type": "command",
+    "title": "apptainer-pull - Pull a container without using the cache",
+    "content": "apptainer pull --disable-cache {{path/to/image.sif}} docker://{{image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-pull: Pull container images from remote sources. (Pull a container without using the cache)",
+    "tags": [
+      "linux",
+      "apptainer-pull",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-pull-7",
+    "type": "command",
+    "title": "apptainer-pull - Display help",
+    "content": "apptainer pull {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "apptainer-pull: Pull container images from remote sources. (Display help)",
+    "tags": [
+      "linux",
+      "apptainer-pull",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-limine-entry-tool-0",
     "type": "command",
     "title": "limine-entry-tool - Scan for other active UEFI boot entries and add them to the Limine menu",
@@ -84039,6 +84759,66 @@
     "tags": [
       "linux",
       "distrobox-list",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-qemu-run-0",
+    "type": "command",
+    "title": "virt-qemu-run - Run a QEMU virtual machine",
+    "content": "virt-qemu-run {{path/to/guest.xml}}",
+    "group": "Linux Ops",
+    "description": "virt-qemu-run: Experimental tool to run a QEMU Guest VM independent of `libvirtd`. (Run a QEMU virtual machine)",
+    "tags": [
+      "linux",
+      "virt-qemu-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-qemu-run-1",
+    "type": "command",
+    "title": "virt-qemu-run - Run a QEMU virtual machine and store the state in a specific directory",
+    "content": "virt-qemu-run {{[-r|--root]}} {{path/to/directory}} {{path/to/guest.xml}}",
+    "group": "Linux Ops",
+    "description": "virt-qemu-run: Experimental tool to run a QEMU Guest VM independent of `libvirtd`. (Run a QEMU virtual machine and store the state in a specific directory)",
+    "tags": [
+      "linux",
+      "virt-qemu-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-qemu-run-2",
+    "type": "command",
+    "title": "virt-qemu-run - Run a QEMU virtual machine and display verbose information about the startup",
+    "content": "virt-qemu-run {{[-v|--verbose]}} {{path/to/guest.xml}}",
+    "group": "Linux Ops",
+    "description": "virt-qemu-run: Experimental tool to run a QEMU Guest VM independent of `libvirtd`. (Run a QEMU virtual machine and display verbose information about the startup)",
+    "tags": [
+      "linux",
+      "virt-qemu-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-qemu-run-3",
+    "type": "command",
+    "title": "virt-qemu-run - Display help",
+    "content": "virt-qemu-run {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "virt-qemu-run: Experimental tool to run a QEMU Guest VM independent of `libvirtd`. (Display help)",
+    "tags": [
+      "linux",
+      "virt-qemu-run",
       "tldr",
       "en"
     ],
@@ -86960,7 +87740,7 @@
     "title": "kill - Terminate a program using the default SIGTERM (terminate) signal",
     "content": "kill {{process_id}}",
     "group": "Linux Ops",
-    "description": "kill: Sends a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Terminate a program using the default SIGTERM (terminate) signal)",
+    "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Terminate a program using the default SIGTERM (terminate) signal)",
     "tags": [
       "linux",
       "kill",
@@ -86975,7 +87755,7 @@
     "title": "kill - List signal values and their corresponding names (to be used without the `SIG` prefix). The available options may depend on the `kill` implementation",
     "content": "kill {{-l|-L|--table}}",
     "group": "Linux Ops",
-    "description": "kill: Sends a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (List signal values and their corresponding names (to be used without the `SIG` prefix). The available options may depend on the `kill` implementation)",
+    "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (List signal values and their corresponding names (to be used without the `SIG` prefix). The available options may depend on the `kill` implementation)",
     "tags": [
       "linux",
       "kill",
@@ -86990,7 +87770,7 @@
     "title": "kill - Terminate a background job",
     "content": "kill %{{job_id}}",
     "group": "Linux Ops",
-    "description": "kill: Sends a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Terminate a background job)",
+    "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Terminate a background job)",
     "tags": [
       "linux",
       "kill",
@@ -87005,7 +87785,7 @@
     "title": "kill - Terminate a program using the SIGHUP (hang up) signal. Many daemons will reload instead of terminating",
     "content": "kill -{{1|HUP}} {{process_id}}",
     "group": "Linux Ops",
-    "description": "kill: Sends a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Terminate a program using the SIGHUP (hang up) signal. Many daemons will reload instead of terminating)",
+    "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Terminate a program using the SIGHUP (hang up) signal. Many daemons will reload instead of terminating)",
     "tags": [
       "linux",
       "kill",
@@ -87020,7 +87800,7 @@
     "title": "kill - Terminate a program using the SIGINT (interrupt) signal. This is typically initiated by the user pressing `<Ctrl c>`",
     "content": "kill -{{2|INT}} {{process_id}}",
     "group": "Linux Ops",
-    "description": "kill: Sends a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Terminate a program using the SIGINT (interrupt) signal. This is typically initiated by the user pressing `<Ctrl c>`)",
+    "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Terminate a program using the SIGINT (interrupt) signal. This is typically initiated by the user pressing `<Ctrl c>`)",
     "tags": [
       "linux",
       "kill",
@@ -87035,7 +87815,7 @@
     "title": "kill - Signal the operating system to immediately terminate a program (which gets no chance to capture the signal)",
     "content": "kill -{{9|KILL}} {{process_id}}",
     "group": "Linux Ops",
-    "description": "kill: Sends a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Signal the operating system to immediately terminate a program (which gets no chance to capture the signal))",
+    "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Signal the operating system to immediately terminate a program (which gets no chance to capture the signal))",
     "tags": [
       "linux",
       "kill",
@@ -87050,7 +87830,7 @@
     "title": "kill - Signal the operating system to pause a program until a SIGCONT (\"continue\") signal is received",
     "content": "kill -{{17|STOP}} {{process_id}}",
     "group": "Linux Ops",
-    "description": "kill: Sends a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Signal the operating system to pause a program until a SIGCONT (\"continue\") signal is received)",
+    "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Signal the operating system to pause a program until a SIGCONT (\"continue\") signal is received)",
     "tags": [
       "linux",
       "kill",
@@ -87065,7 +87845,7 @@
     "title": "kill - Send a `SIGUSR1` signal to all processes with the given GID (group id)",
     "content": "kill -{{SIGUSR1}} -{{group_id}}",
     "group": "Linux Ops",
-    "description": "kill: Sends a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Send a `SIGUSR1` signal to all processes with the given GID (group id))",
+    "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Send a `SIGUSR1` signal to all processes with the given GID (group id))",
     "tags": [
       "linux",
       "kill",
@@ -94440,81 +95220,6 @@
     "source": "official"
   },
   {
-    "id": "tldr-en-linux-virt-viewer-0",
-    "type": "command",
-    "title": "virt-viewer - Launch `virt-viewer` with a prompt to select running virtual machines",
-    "content": "virt-viewer",
-    "group": "Linux Ops",
-    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Launch `virt-viewer` with a prompt to select running virtual machines)",
-    "tags": [
-      "linux",
-      "virt-viewer",
-      "tldr",
-      "en"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-en-linux-virt-viewer-1",
-    "type": "command",
-    "title": "virt-viewer - Launch `virt-viewer` for a specific virtual machine by ID, UUID, or name",
-    "content": "virt-viewer \"{{domain}}\"",
-    "group": "Linux Ops",
-    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Launch `virt-viewer` for a specific virtual machine by ID, UUID, or name)",
-    "tags": [
-      "linux",
-      "virt-viewer",
-      "tldr",
-      "en"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-en-linux-virt-viewer-2",
-    "type": "command",
-    "title": "virt-viewer - Wait for a virtual machine to start and automatically reconnect if it shutdown and restarts",
-    "content": "virt-viewer --reconnect --wait \"{{domain}}\"",
-    "group": "Linux Ops",
-    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Wait for a virtual machine to start and automatically reconnect if it shutdown and restarts)",
-    "tags": [
-      "linux",
-      "virt-viewer",
-      "tldr",
-      "en"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-en-linux-virt-viewer-3",
-    "type": "command",
-    "title": "virt-viewer - Connect to a specific remote virtual machine over TLS",
-    "content": "virt-viewer --connect \"xen//{{url}}\" \"{{domain}}\"",
-    "group": "Linux Ops",
-    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Connect to a specific remote virtual machine over TLS)",
-    "tags": [
-      "linux",
-      "virt-viewer",
-      "tldr",
-      "en"
-    ],
-    "source": "official"
-  },
-  {
-    "id": "tldr-en-linux-virt-viewer-4",
-    "type": "command",
-    "title": "virt-viewer - Connect to a specific remote virtual machine over SSH",
-    "content": "virt-viewer --connect \"qemu+ssh//{{username}}@{{url}}/system\" \"{{domain}}\"",
-    "group": "Linux Ops",
-    "description": "virt-viewer: Minimal graphical interface for a virtual machine (VM). Note: `domain` refers to the name, UUID, or ID for the existing VMs. (Connect to a specific remote virtual machine over SSH)",
-    "tags": [
-      "linux",
-      "virt-viewer",
-      "tldr",
-      "en"
-    ],
-    "source": "official"
-  },
-  {
     "id": "tldr-en-linux-nmcli-radio-0",
     "type": "command",
     "title": "nmcli-radio - Show status of Wi-Fi",
@@ -96444,6 +97149,81 @@
     "tags": [
       "linux",
       "mokutil",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-push-0",
+    "type": "command",
+    "title": "apptainer-push - Push a container to the Container Library",
+    "content": "apptainer push {{path/to/image.sif}} library://{{user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-push: Push container images to remote registries. (Push a container to the Container Library)",
+    "tags": [
+      "linux",
+      "apptainer-push",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-push-1",
+    "type": "command",
+    "title": "apptainer-push - Push a container to an OCI registry",
+    "content": "apptainer push {{path/to/image.sif}} oras://{{registry/namespace/image}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-push: Push container images to remote registries. (Push a container to an OCI registry)",
+    "tags": [
+      "linux",
+      "apptainer-push",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-push-2",
+    "type": "command",
+    "title": "apptainer-push - Push an [U]nsigned container (skip signature verification)",
+    "content": "apptainer push {{[-U|--allow-unsigned]}} {{path/to/image.sif}} library://{{user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-push: Push container images to remote registries. (Push an [U]nsigned container (skip signature verification))",
+    "tags": [
+      "linux",
+      "apptainer-push",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-push-3",
+    "type": "command",
+    "title": "apptainer-push - Push a container with a [D]escription (library only)",
+    "content": "apptainer push {{[-D|--description]}} \"{{description}}\" {{path/to/image.sif}} library://{{user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-push: Push container images to remote registries. (Push a container with a [D]escription (library only))",
+    "tags": [
+      "linux",
+      "apptainer-push",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-push-4",
+    "type": "command",
+    "title": "apptainer-push - Display help",
+    "content": "apptainer push {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "apptainer-push: Push container images to remote registries. (Display help)",
+    "tags": [
+      "linux",
+      "apptainer-push",
       "tldr",
       "en"
     ],

@@ -485,7 +485,7 @@
     "title": "snoop - Capture packets on a specific network interface",
     "content": "snoop -d {{e1000g0}}",
     "group": "SunOS",
-    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. (Capture packets on a specific network interface)",
+    "description": "snoop: Network packet sniffer. SunOS equivalent of `tcpdump`. (Capture packets on a specific network interface)",
     "tags": [
       "sunos",
       "snoop",
@@ -500,7 +500,7 @@
     "title": "snoop - Save captured packets in a file instead of displaying them",
     "content": "snoop -o {{path/to/file}}",
     "group": "SunOS",
-    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. (Save captured packets in a file instead of displaying them)",
+    "description": "snoop: Network packet sniffer. SunOS equivalent of `tcpdump`. (Save captured packets in a file instead of displaying them)",
     "tags": [
       "sunos",
       "snoop",
@@ -515,7 +515,7 @@
     "title": "snoop - Display verbose protocol layer summary of packets from a file",
     "content": "snoop -V -i {{path/to/file}}",
     "group": "SunOS",
-    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. (Display verbose protocol layer summary of packets from a file)",
+    "description": "snoop: Network packet sniffer. SunOS equivalent of `tcpdump`. (Display verbose protocol layer summary of packets from a file)",
     "tags": [
       "sunos",
       "snoop",
@@ -530,7 +530,7 @@
     "title": "snoop - Capture network packets that come from a hostname and go to a given port",
     "content": "snoop to port {{port}} from host {{hostname}}",
     "group": "SunOS",
-    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. (Capture network packets that come from a hostname and go to a given port)",
+    "description": "snoop: Network packet sniffer. SunOS equivalent of `tcpdump`. (Capture network packets that come from a hostname and go to a given port)",
     "tags": [
       "sunos",
       "snoop",
@@ -545,7 +545,7 @@
     "title": "snoop - Capture and show a hex-dump of network packets exchanged between two IP addresses",
     "content": "snoop -x0 -p4 {{ip1}} {{ip2}}",
     "group": "SunOS",
-    "description": "snoop: Network packet sniffer. SunOS equivalent of tcpdump. (Capture and show a hex-dump of network packets exchanged between two IP addresses)",
+    "description": "snoop: Network packet sniffer. SunOS equivalent of `tcpdump`. (Capture and show a hex-dump of network packets exchanged between two IP addresses)",
     "tags": [
       "sunos",
       "snoop",

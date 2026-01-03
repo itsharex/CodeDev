@@ -1,5 +1,5 @@
 {
-  "updated_at": 1766991973657,
+  "updated_at": 1767448364511,
   "version": "2.0.0",
   "packages": [
     {
@@ -7,9 +7,9 @@
       "language": "en",
       "platform": "llm",
       "name": "ChatGPT Prompts (English)",
-      "description": "Collection of 759 role-play prompts.",
-      "count": 759,
-      "size_kb": 1229.78,
+      "description": "Collection of 887 role-play prompts.",
+      "count": 887,
+      "size_kb": 1511.11,
       "url": "packs/prompts-en-roles.json",
       "category": "prompt"
     },
@@ -40,9 +40,9 @@
       "language": "zh",
       "platform": "windows",
       "name": "Windows (ZH)",
-      "description": "Contains 418 zh commands for windows.",
-      "count": 418,
-      "size_kb": 180,
+      "description": "Contains 425 zh commands for windows.",
+      "count": 425,
+      "size_kb": 183,
       "url": "packs/zh/windows.json",
       "category": "command"
     },
@@ -97,7 +97,7 @@
       "name": "Linux 运维 (ZH)",
       "description": "Contains 754 zh commands for linux.",
       "count": 754,
-      "size_kb": 336,
+      "size_kb": 338,
       "url": "packs/zh/linux.json",
       "category": "command"
     },
@@ -106,9 +106,9 @@
       "language": "zh",
       "platform": "common",
       "name": "通用工具 (Common) (ZH)",
-      "description": "Contains 3303 zh commands for common.",
-      "count": 3303,
-      "size_kb": 1594,
+      "description": "Contains 3431 zh commands for common.",
+      "count": 3431,
+      "size_kb": 1670,
       "url": "packs/zh/common.json",
       "category": "command"
     },
@@ -119,7 +119,7 @@
       "name": "macOS (ZH)",
       "description": "Contains 435 zh commands for osx.",
       "count": 435,
-      "size_kb": 182,
+      "size_kb": 183,
       "url": "packs/zh/osx.json",
       "category": "command"
     },
@@ -205,9 +205,9 @@
       "language": "en",
       "platform": "linux",
       "name": "Linux Ops (EN)",
-      "description": "Contains 7642 en commands for linux.",
-      "count": 7642,
-      "size_kb": 3609,
+      "description": "Contains 7694 en commands for linux.",
+      "count": 7694,
+      "size_kb": 3636,
       "url": "packs/en/linux.json",
       "category": "command"
     },
@@ -216,9 +216,9 @@
       "language": "en",
       "platform": "common",
       "name": "Common Tools (EN)",
-      "description": "Contains 19390 en commands for common.",
-      "count": 19390,
-      "size_kb": 9402,
+      "description": "Contains 19437 en commands for common.",
+      "count": 19437,
+      "size_kb": 9422,
       "url": "packs/en/common.json",
       "category": "command"
     },

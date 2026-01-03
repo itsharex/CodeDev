@@ -1280,7 +1280,7 @@
     "title": "translationd - Start the daemon",
     "content": "translationd",
     "group": "macOS",
-    "description": "translationd: Enables Translation features. It should not be invoked manually. (Start the daemon)",
+    "description": "translationd: Enable Translation features. It should not be invoked manually. (Start the daemon)",
     "tags": [
       "osx",
       "translationd",
@@ -1610,7 +1610,7 @@
     "title": "warmd - Start the daemon",
     "content": "warmd",
     "group": "macOS",
-    "description": "warmd: Controls caches used during startup and login. It should not be invoked manually. (Start the daemon)",
+    "description": "warmd: Control caches used during startup and login. It should not be invoked manually. (Start the daemon)",
     "tags": [
       "osx",
       "warmd",
@@ -4655,7 +4655,7 @@
     "title": "launchd - Run init",
     "content": "/sbin/launchd",
     "group": "macOS",
-    "description": "launchd: Manages processes, both for the system and users. You cannot invoke launchd manually, use launchctl to interact with it. (Run init)",
+    "description": "launchd: Manage processes, both for the system and users. You cannot invoke launchd manually, use launchctl to interact with it. (Run init)",
     "tags": [
       "osx",
       "launchd",
@@ -4670,7 +4670,7 @@
     "title": "launchd - View documentation for interacting with launchd using launchctl",
     "content": "tldr launchctl",
     "group": "macOS",
-    "description": "launchd: Manages processes, both for the system and users. You cannot invoke launchd manually, use launchctl to interact with it. (View documentation for interacting with launchd using launchctl)",
+    "description": "launchd: Manage processes, both for the system and users. You cannot invoke launchd manually, use launchctl to interact with it. (View documentation for interacting with launchd using launchctl)",
     "tags": [
       "osx",
       "launchd",
@@ -8705,7 +8705,7 @@
     "title": "contactsd - Start the daemon",
     "content": "contactsd",
     "group": "macOS",
-    "description": "contactsd: Manages the information in your contacts database. It provides functionality to apps using the Contacts API and performs various background maintenance tasks. It should not be invoked manually. (Start the daemon)",
+    "description": "contactsd: Manage the information in your contacts database. It provides functionality to apps using the Contacts API and performs various background maintenance tasks. It should not be invoked manually. (Start the daemon)",
     "tags": [
       "osx",
       "contactsd",
@@ -12530,7 +12530,7 @@
     "title": "secd - Start the daemon",
     "content": "secd",
     "group": "macOS",
-    "description": "secd: Controls access to and modification of keychain items. It should not be invoked manually. (Start the daemon)",
+    "description": "secd: Control access to and modification of keychain items. It should not be invoked manually. (Start the daemon)",
     "tags": [
       "osx",
       "secd",
