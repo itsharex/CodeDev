@@ -6,6 +6,7 @@ use rayon::prelude::*;
 use std::process::Command;
 
 /// 浏览器配置定义
+#[allow(dead_code)]
 struct BrowserConfig {
     name: &'static str,
     /// macOS Bundle ID (例如 "com.google.Chrome")
@@ -32,13 +33,13 @@ const BROWSERS: &[BrowserConfig] = &[
     BrowserConfig {
         name: "Safari",
         mac_id: "com.apple.Safari",
-        linux_bin: "", // Safari 不支持 Linux
+        linux_bin: "",
         win_path_suffix: "",
     },
     BrowserConfig {
         name: "Edge",
         mac_id: "com.microsoft.edgemac",
-        linux_bin: "microsoft-edge", // Linux 也就是 edge
+        linux_bin: "microsoft-edge",
         win_path_suffix: r"Microsoft\Edge\Application\msedge.exe",
     },
     BrowserConfig {
@@ -109,9 +110,6 @@ fn check_browser(cfg: &BrowserConfig) -> ToolInfo {
             for p in possible_paths {
                 if p.exists() {
                     path = p.to_str().map(|s| s.to_string());
-                    // Windows 下获取 exe 版本比较麻烦，envinfo 使用 wmic 或 powershell
-                    // 这里使用 PowerShell 这种最通用的方式
-                    // (Get-Item "C:\...").VersionInfo.ProductVersion
                     if let Some(exe_path) = &path {
                         let ps_cmd = format!("(Get-Item '{}').VersionInfo.ProductVersion", exe_path);
                         if let Ok(ver) = common::run_command("powershell", &["-Command", &ps_cmd]) {

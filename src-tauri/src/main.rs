@@ -17,6 +17,7 @@ mod export;
 mod gitleaks;
 mod db;
 mod monitor;
+mod env_probe;
 
 // =================================================================
 // 系统监控相关数据结构

@@ -4,7 +4,6 @@ use std::fs;
 use std::path::Path;
 
 /// 扫描 NPM 包信息
-/// logic: 读取根目录 package.json -> 获取 dependencies/devDependencies -> 查找 node_modules 下的版本
 pub fn probe_npm_packages(project_root: Option<String>) -> Vec<ToolInfo> {
     let Some(root) = project_root else {
         return Vec::new();
@@ -17,7 +16,6 @@ pub fn probe_npm_packages(project_root: Option<String>) -> Vec<ToolInfo> {
         return Vec::new();
     }
 
-    // 1. 读取根 package.json
     let Ok(content) = fs::read_to_string(&package_json_path) else {
         return Vec::new();
     };
@@ -25,7 +23,6 @@ pub fn probe_npm_packages(project_root: Option<String>) -> Vec<ToolInfo> {
         return Vec::new();
     };
 
-    // 2. 收集所有依赖名
     let mut deps = Vec::new();
     if let Some(d) = json["dependencies"].as_object() {
         deps.extend(d.keys().cloned());
@@ -38,13 +35,11 @@ pub fn probe_npm_packages(project_root: Option<String>) -> Vec<ToolInfo> {
         return Vec::new();
     }
 
-    // 3. 查找 node_modules 中的实际版本 (串行查找即可，因为文件 IO 很快且通常只有几十个顶层依赖)
     let mut results = Vec::new();
     
-    // 关键优化：预先检查 node_modules 是否存在，避免无谓查找
+    // 预先检查 node_modules 是否存在，避免无谓查找
     let node_modules = path.join("node_modules");
     if !node_modules.exists() {
-        // 如果没有 node_modules，只返回名字，版本标记为 "Not Installed"
         for dep in deps {
             results.push(ToolInfo {
                 name: dep,
@@ -73,7 +68,7 @@ pub fn probe_npm_packages(project_root: Option<String>) -> Vec<ToolInfo> {
         results.push(ToolInfo {
             name: dep,
             version: installed_version,
-            path: None, // 不需要返回具体 path，太冗长
+            path: None,
             description: None,
         });
     }

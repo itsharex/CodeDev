@@ -60,6 +60,12 @@ const BINARY_LIST: &[BinaryConfig] = &[
     BinaryConfig { category: "Managers", name: "Homebrew", bin: "brew", args: &["--version"], regex: None },
     BinaryConfig { category: "Managers", name: "Maven", bin: "mvn", args: &["-version"], regex: None },
     BinaryConfig { category: "Managers", name: "Gradle", bin: "gradle", args: &["-version"], regex: None },
+
+    // --- Databases (数据库) ---
+    BinaryConfig { category: "Databases", name: "MySQL", bin: "mysql", args: &["--version"], regex: Some(r"Distrib ([\d\.]+)") },
+    BinaryConfig { category: "Databases", name: "PostgreSQL", bin: "postgres", args: &["--version"], regex: None },
+    BinaryConfig { category: "Databases", name: "SQLite", bin: "sqlite3", args: &["--version"], regex: None },
+    BinaryConfig { category: "Databases", name: "MongoDB", bin: "mongo", args: &["--version"], regex: None },
 ];
 
 /// 批量并行探测指定类别的工具

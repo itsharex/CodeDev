@@ -41,12 +41,6 @@ pub struct PortInfo {
 }
 
 #[derive(Debug, Serialize, Clone)]
-pub struct EnvInfo {
-    pub name: String,
-    pub version: String,
-}
-
-#[derive(Debug, Serialize, Clone)]
 pub struct NetDiagResult {
     pub id: String,
     pub name: String,
@@ -149,8 +143,6 @@ pub fn get_top_processes(system: State<'_, Arc<Mutex<System>>>) -> Result<Vec<Pr
                 return None;
             }
 
-            // sysinfo 0.37: Uid 是私有类型，只能用 Debug 打印
-            // 我们用 {:?} 显示 UID（通常是数字），并特殊处理 root (0)
             let user = if let Some(uid) = process.user_id() {
                 format!("{:?}", uid).trim_start_matches("Uid(").trim_end_matches(')').to_string();
                 let uid_str = format!("{:?}", uid);
@@ -295,37 +287,35 @@ pub fn kill_process(pid: u32, system: State<'_, Arc<Mutex<System>>>) -> Result<S
 #[tauri::command]
 pub async fn get_env_info(
     system: State<'_, Arc<Mutex<System>>>,
-    project_path: Option<String>, // 新增参数：当前项目路径
+    project_path: Option<String>,
 ) -> Result<EnvReport, String> {
     
-    // 使用 rayon 的 join API 实现全并行探测
-    // 这种写法看起来像回调地狱，但在 Rust 中这是最高效的并行方式之一 (Fork-Join 模型)
-    let (system_info, (binaries, (browsers, (ides, (languages, (virtualization, (utilities, (managers, npm_packages)))))))) = rayon::join(
-        // Task 1: System Info (需持有锁)
+    let (
+        system_info, 
+        (binaries, (browsers, (ides, (languages, (virtualization, (utilities, (managers, (npm_packages, (databases, sdks)))))))))
+    ) = rayon::join(
         || env_probe::system::probe_system(system.clone()),
         || rayon::join(
-            // Task 2: Binaries
             || env_probe::binaries::probe_by_category("Binaries"),
             || rayon::join(
-                // Task 3: Browsers
                 || env_probe::browsers::probe_browsers(),
                 || rayon::join(
-                    // Task 4: IDEs
                     || env_probe::ides::probe_ides(),
                     || rayon::join(
-                        // Task 5: Languages
                         || env_probe::binaries::probe_by_category("Languages"),
                         || rayon::join(
-                            // Task 6: Virtualization
                             || env_probe::binaries::probe_by_category("Virtualization"),
                             || rayon::join(
-                                // Task 7: Utilities
                                 || env_probe::binaries::probe_by_category("Utilities"),
                                 || rayon::join(
-                                    // Task 8: Managers
                                     || env_probe::binaries::probe_by_category("Managers"),
-                                    // Task 9: NPM Packages (IO Bound)
-                                    || env_probe::npm::probe_npm_packages(project_path.clone())
+                                    || rayon::join(
+                                        || env_probe::npm::probe_npm_packages(project_path.clone()),
+                                        || rayon::join(
+                                            || env_probe::binaries::probe_by_category("Databases"),
+                                            || env_probe::sdks::probe_sdks() 
+                                        )
+                                    )
                                 )
                             )
                         )
@@ -345,8 +335,8 @@ pub async fn get_env_info(
         utilities,
         managers,
         npm_packages,
-        sdks: std::collections::HashMap::new(),
-        databases: Vec::new(),
+        sdks,
+        databases,
     })
 }
 
