@@ -1,13 +1,17 @@
-use std::process::Command;
+use std::process::{Command, Stdio};
+use std::time::Duration;
 use regex::Regex;
 use which::which;
+use wait_timeout::ChildExt;
+
+// 设定超时时间为 5 秒
+const TIMEOUT_SECS: u64 = 5;
 
 /// 运行命令并返回 stdout
 pub fn run_command(bin: &str, args: &[&str]) -> Result<String, String> {
     // 针对 Windows 的特殊处理
     #[cfg(target_os = "windows")]
     let (bin, final_args) = if bin == "npm" || bin == "pnpm" || bin == "yarn" || bin == "code" {
-        // Windows 上这些通常是 cmd 脚本
         let mut new_args = vec!["/C", bin];
         new_args.extend_from_slice(args);
         ("cmd", new_args)
@@ -18,29 +22,42 @@ pub fn run_command(bin: &str, args: &[&str]) -> Result<String, String> {
     #[cfg(not(target_os = "windows"))]
     let (bin, final_args) = (bin, args);
 
-    let output = Command::new(bin)
+    // 1. 启动子进程
+    let mut child = Command::new(bin)
         .args(final_args)
-        .output()
-        .map_err(|e| e.to_string())?;
+        .stdout(Stdio::piped()) // 必须捕获管道
+        .stderr(Stdio::piped())
+        .spawn()
+        .map_err(|e| format!("Failed to spawn {}: {}", bin, e))?;
 
-    if output.status.success() {
+    // 2. 等待超时
+    let status_code = match child.wait_timeout(Duration::from_secs(TIMEOUT_SECS)).map_err(|e| e.to_string())? {
+        Some(status) => status,
+        None => {
+            // 3. 超时处理：杀死进程
+            let _ = child.kill();
+            let _ = child.wait();
+            return Err(format!("Command '{}' timed out after {}s", bin, TIMEOUT_SECS));
+        }
+    };
+
+    // 4. 获取输出结果
+    let output = child.wait_with_output().map_err(|e| e.to_string())?;
+
+    if status_code.success() {
         let stdout = String::from_utf8_lossy(&output.stdout).trim().to_string();
         if stdout.is_empty() {
-            // 有些工具版本信息在 stderr (比如 python, gcc sometimes)
             Ok(String::from_utf8_lossy(&output.stderr).trim().to_string())
         } else {
             Ok(stdout)
         }
     } else {
-        // 失败时尝试读取 stderr
         Err(String::from_utf8_lossy(&output.stderr).trim().to_string())
     }
 }
 
 /// 在文本中查找版本号
-/// 复刻 envinfo 的 findVersion 逻辑
 pub fn find_version(text: &str, regex: Option<&Regex>) -> String {
-    // 默认版本正则：匹配 x.y.z 格式
     let default_re = Regex::new(r"(\d+\.[\d+|.]+)").unwrap();
     let re = regex.unwrap_or(&default_re);
 
@@ -61,13 +78,12 @@ pub fn locate_binary(bin: &str) -> Option<String> {
     }
 }
 
-/// 通用探测函数：给定命令和参数，自动获取版本和路径
 pub fn generic_probe(name: &str, bin: &str, args: &[&str], version_regex: Option<&Regex>) -> crate::env_probe::ToolInfo {
     let path = locate_binary(bin);
     let version = if path.is_some() {
         match run_command(bin, args) {
             Ok(out) => find_version(&out, version_regex),
-            Err(_) => "Not Found".to_string(),
+            Err(_) => "Not Found".to_string(), // 超时或报错都归为 Not Found
         }
     } else {
         "Not Found".to_string()
