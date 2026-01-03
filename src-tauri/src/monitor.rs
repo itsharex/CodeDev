@@ -345,8 +345,8 @@ pub async fn diagnose_network() -> Vec<NetDiagResult> {
     let targets = vec![
         ("github", "GitHub", "https://github.com"),
         ("google", "Google", "https://www.google.com"),
-        ("openai", "OpenAI", "https://openai.com"),
-        ("pypi", "pypi源", "https://pypi.org"),
+        ("openai", "OpenAI Status", "https://status.openai.com"),
+        ("pypi", "PyPI", "https://pypi.org"),
         ("npm", "NPM Registry", "https://registry.npmjs.org"),
         ("baidu", "Baidu", "https://www.baidu.com"),
         ("cloudflare", "Cloudflare", "https://www.cloudflare.com"),
@@ -355,6 +355,7 @@ pub async fn diagnose_network() -> Vec<NetDiagResult> {
     let target_order: Vec<String> = targets.iter().map(|t| t.0.to_string()).collect();
 
     let client = reqwest::Client::builder()
+        .user_agent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
         .timeout(std::time::Duration::from_secs(5))
         .redirect(reqwest::redirect::Policy::limited(3))
         .build()
@@ -370,19 +371,21 @@ pub async fn diagnose_network() -> Vec<NetDiagResult> {
 
         handles.push(tauri::async_runtime::spawn(async move {
             let start = std::time::Instant::now();
+            
             let resp = c.head(&url).send().await;
             let duration = start.elapsed().as_millis();
 
             match resp {
                 Ok(r) => {
                     let status_code = r.status().as_u16();
-                    let status = if status_code >= 400 {
-                        "Fail"
-                    } else if duration < 500 {
-                        "Success"
+                    let status = if status_code >= 200 && status_code < 400 {
+                        if duration < 500 { "Success" } else { "Slow" }
+                    } else if status_code == 403 || status_code == 401 {
+                        if duration < 500 { "Success" } else { "Slow" }
                     } else {
-                        "Slow"
+                        "Fail"
                     };
+
                     NetDiagResult {
                         id,
                         name,
@@ -398,13 +401,15 @@ pub async fn diagnose_network() -> Vec<NetDiagResult> {
                         Ok(r) => {
                             let duration_retry = start_retry.elapsed().as_millis();
                             let status_code = r.status().as_u16();
-                            let status = if status_code >= 400 {
-                                "Fail"
-                            } else if duration_retry < 800 {
-                                "Success"
+                            
+                            let status = if status_code >= 200 && status_code < 400 {
+                                if duration_retry < 800 { "Success" } else { "Slow" }
+                            } else if status_code == 403 || status_code == 401 {
+                                if duration_retry < 800 { "Success" } else { "Slow" }
                             } else {
-                                "Slow"
+                                "Fail"
                             };
+
                             NetDiagResult {
                                 id,
                                 name,
