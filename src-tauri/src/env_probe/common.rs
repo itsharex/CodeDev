@@ -68,17 +68,19 @@ pub fn run_command(bin: &str, args: &[&str]) -> Result<String, String> {
 
 /// 在文本中查找版本号
 pub fn find_version(text: &str, regex: Option<&Regex>) -> String {
-    let default_re = Regex::new(r"(\d+\.[\d+|.]+)").unwrap();
+    let default_re = Regex::new(r"(\d+\.[\w\._-]+)").unwrap();
     let re = regex.unwrap_or(&default_re);
-
     if let Some(caps) = re.captures(text) {
         if let Some(match_) = caps.get(1) {
-            return match_.as_str().to_string();
+            return match_.as_str().trim().to_string();
         } else if let Some(match_) = caps.get(0) {
-            return match_.as_str().to_string();
+            return match_.as_str().trim().to_string();
         }
     }
-    text.to_string()
+    if text.len() < 20 {
+        return text.trim().to_string();
+    }
+    "Not Found".to_string()
 }
 
 pub fn locate_binary(bin: &str) -> Option<String> {

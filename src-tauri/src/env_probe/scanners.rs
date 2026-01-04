@@ -10,6 +10,7 @@ static JAVA_POM_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)<artifactId>(spr
 static GRADLE_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)(implementation|api)\s+['"](org\.springframework\.boot|io\.quarkus|io\.micronaut)[^'"]*['"]"#).unwrap());
 static PYTHON_REQ_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^([a-zA-Z0-9\-_]+)[=<>]=?").unwrap());
 static GO_MOD_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^\s*([a-zA-Z0-9\.\-_/]+)\s+v([0-9\.]+)").unwrap());
+static GO_VERSION_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"go(\d+\.\d+(\.\d+)?)").unwrap());
 static PHP_COMPOSER_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)"(laravel/framework|symfony/[^"]+|doctrine/[^"]+|guzzlehttp/[^"]+)"\s*:\s*"([^"]+)""#).unwrap());
 static DOTNET_PKG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)<PackageReference\s+Include="([^"]+)"\s+Version="([^"]+)"#).unwrap());
 static FLUTTER_DEP_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)^\s*(flutter|cupertino_icons|provider|bloc|get|riverpod):\s*[\^]?([0-9\.]+)"#).unwrap());
@@ -59,13 +60,18 @@ impl ProjectScanner for RustScanner {
         let tauri_cargo = Path::new(root).join("src-tauri").join("Cargo.toml");
         let target = if tauri_cargo.exists() { tauri_cargo } else { Path::new(root).join("Cargo.toml") };
         let mut deps = HashMap::new();
+        
         if let Some(content) = read_file_head(&target) {
-            let re = Regex::new(r#"(?m)^([a-zA-Z0-9_-]+)\s*=\s*"([^"]+)""#).unwrap();
-            let whitelist = ["tauri", "serde", "tokio", "diesel", "sqlx", "actix-web", "axum", "rocket"];
+            let re = Regex::new(r#"(?m)^([a-zA-Z0-9_-]+)\s*=\s*(?:"([^"]+)"|\{\s*version\s*=\s*"([^"]+)")"#).unwrap();
+            
+            let whitelist = ["tauri", "serde", "tokio", "diesel", "sqlx", "actix-web", "axum", "rocket", "reqwest", "anyhow", "thiserror"];
+            
             for cap in re.captures_iter(&content) {
                 let name = &cap[1];
+                let ver = cap.get(2).or_else(|| cap.get(3)).map(|m| m.as_str()).unwrap_or("*");
+
                 if whitelist.contains(&name) || name.starts_with("tauri-plugin") {
-                    deps.insert(name.to_string(), cap[2].to_string());
+                    deps.insert(name.to_string(), ver.to_string());
                 }
             }
         }
@@ -103,6 +109,7 @@ impl ProjectScanner for JavaScanner {
 }
 
 // --- 4. Python Scanner ---
+const PYTHON_BINS: &[&str] = &["python3", "python", "py"]; 
 pub struct PythonScanner;
 impl ProjectScanner for PythonScanner {
     fn match_identity(&self, root: &str) -> bool {
@@ -110,8 +117,17 @@ impl ProjectScanner for PythonScanner {
         p.join("requirements.txt").exists() || p.join("pyproject.toml").exists() || p.join("Pipfile").exists()
     }
     fn detect_toolchain(&self) -> Option<ToolInfo> {
-        let bin = if cfg!(windows) { "python" } else { "python3" };
-        run_command(bin, &["--version"]).ok().map(|out| ToolInfo { name: "Python".into(), version: find_version(&out, None), path: None, description: None })
+        for bin in PYTHON_BINS {
+            if let Ok(out) = run_command(bin, &["--version"]) {
+                return Some(ToolInfo {
+                    name: "Python".into(),
+                    version: find_version(&out, None),
+                    path: None,
+                    description: None,
+                });
+            }
+        }
+        None
     }
     fn parse_dependencies(&self, root: &str) -> HashMap<String, String> {
         let mut deps = HashMap::new();
@@ -135,7 +151,12 @@ impl ProjectScanner for GoScanner {
         Path::new(root).join("go.mod").exists()
     }
     fn detect_toolchain(&self) -> Option<ToolInfo> {
-        run_command("go", &["version"]).ok().map(|out| ToolInfo { name: "Go".into(), version: find_version(&out, Some(&Regex::new(r"go(\d+\.\d+(\.\d+)?)").unwrap())), path: None, description: None })
+        run_command("go", &["version"]).ok().map(|out| ToolInfo {
+            name: "Go".into(),
+            version: find_version(&out, Some(&GO_VERSION_RE)), 
+            path: None,
+            description: None,
+        })
     }
     fn parse_dependencies(&self, root: &str) -> HashMap<String, String> {
         let mut deps = HashMap::new();

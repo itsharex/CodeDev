@@ -29,21 +29,16 @@ pub fn read_file_head(path: &Path) -> Option<String> {
     }
 
     if let Ok(mut file) = File::open(path) {
-        // 获取文件大小
         let len = file.metadata().map(|m| m.len()).unwrap_or(0);
         let read_len = std::cmp::min(len, MAX_READ_SIZE) as usize;
-        
-        let mut buffer = vec![0; read_len];
+        let mut buffer = vec![0u8; read_len];
         if file.read_exact(&mut buffer).is_ok() {
-            // 尝试转为 UTF-8，忽略非法字符
-            return String::from_utf8(buffer).ok();
+            return Some(String::from_utf8_lossy(&buffer).to_string());
         }
-        
-        // 如果 read_exact 失败，重置游标尝试流式读取
         let _ = file.seek(SeekFrom::Start(0));
-        let mut content = String::new();
-        if file.take(MAX_READ_SIZE).read_to_string(&mut content).is_ok() {
-            return Some(content);
+        let mut fallback_buffer = Vec::new();
+        if file.take(MAX_READ_SIZE).read_to_end(&mut fallback_buffer).is_ok() {
+             return Some(String::from_utf8_lossy(&fallback_buffer).to_string());
         }
     }
     None

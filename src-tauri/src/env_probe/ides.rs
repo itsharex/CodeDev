@@ -1,5 +1,6 @@
 use crate::env_probe::{common, ToolInfo};
 use rayon::prelude::*;
+use std::path::Path;
 
 #[allow(dead_code)]
 struct IdeConfig {
@@ -59,6 +60,35 @@ fn check_ide(cfg: &IdeConfig) -> ToolInfo {
     // 3. Windows 上的特殊路径检测 (IntelliJ, Android Studio)
     #[cfg(target_os = "windows")]
     if info.version == "Not Found" {
+        // 常见的 Windows 安装路径模板
+        let search_paths = vec![
+            format!(r"C:\Program Files\Microsoft VS Code\bin\{}.cmd", cfg.bin),
+            format!(r"C:\Program Files\JetBrains\IntelliJ IDEA*\bin\{}64.exe", cfg.bin),
+            format!(r"C:\Program Files\Android\Android Studio\bin\{}64.exe", cfg.bin),
+            format!(r"C:\Program Files\Git\usr\bin\{}.exe", cfg.bin), // Vim usually here
+        ];
+
+        for path_str in search_paths {
+            // 简单通配符处理 (针对 JetBrains 版本号目录)
+            if path_str.contains('*') {
+                if let Some(parent) = Path::new(&path_str).parent().and_then(|p| p.parent()) {
+                    if let Ok(entries) = std::fs::read_dir(parent) {
+                        for entry in entries.flatten() {
+                            let bin_path = entry.path().join("bin").join(format!("{}64.exe", cfg.bin));
+                            if bin_path.exists() {
+                                info.path = Some(bin_path.to_string_lossy().to_string());
+                                info.version = "Installed (Version unknown)".to_string(); // 既然找到了exe，至少标记为已安装
+                                break;
+                            }
+                        }
+                    }
+                }
+            } else if Path::new(&path_str).exists() {
+                info.path = Some(path_str);
+                info.version = "Installed".to_string();
+                break;
+            }
+        }
     }
 
     info
