@@ -341,7 +341,7 @@ const translations = {
     monitor: {
       title: "System Monitor",
       navDashboard: "Dashboard",
-      navPorts: "Port Manager",
+      navPorts: "Port & lock",
       navEnv: "Environment",
       navNetwork: "Network Analysis",
       // Dashboard
@@ -364,7 +364,9 @@ const translations = {
       autoRefresh: "Auto-refresh",
       totalLoad: "Total Load",
       systemProcessProtected: "System Process Protected",
-      // Ports
+      // Ports & lock
+      tabPorts: "Active Ports",
+      tabFiles: "File Locks",
       searchPorts: "Search ports (e.g. 3000, node)...",
       port: "Port",
       proto: "Proto",
@@ -376,6 +378,13 @@ const translations = {
       refresh: "Refresh",
       systemPort: "System Port",
       protected: "System Process Protected",
+      checkLocks: "Check Occupancy",
+      pathPlaceholder: "Enter file or folder path...",
+      browse: "Browse",
+      checking: "Checking...",
+      noLocks: "No locks detected. The file is free.",
+      locksFound: "{count} processes are using this file.",
+      killWarnExplorer: "Restarting Explorer will refresh your desktop.",
       // Env
       envTool: "Tool / Runtime",
       envToolFilter: "Filter tools...",
@@ -759,7 +768,7 @@ const translations = {
     monitor: {
       title: "系统监视器",
       navDashboard: "概览",
-      navPorts: "端口管理",
+      navPorts: "端口与占用",
       navEnv: "开发环境",
       navNetwork: "网络诊断",
       // Dashboard
@@ -782,7 +791,9 @@ const translations = {
       autoRefresh: "自动刷新",
       totalLoad: "总负载",
       systemProcessProtected: "系统进程受保护",
-      // Ports
+      // Ports & lock
+      tabPorts: "活跃端口",
+      tabFiles: "文件占用",
       searchPorts: "搜索端口 (如 3000, node)...",
       port: "端口",
       proto: "协议",
@@ -794,6 +805,13 @@ const translations = {
       refresh: "刷新",
       systemPort: "系统端口",
       protected: "受保护的系统进程",
+      checkLocks: "检测占用",
+      pathPlaceholder: "输入文件或文件夹路径...",
+      browse: "浏览",
+      checking: "检测中...",
+      noLocks: "未检测到占用，文件自由。",
+      locksFound: "发现 {count} 个进程正在占用。",
+      killWarnExplorer: "重启资源管理器会导致桌面刷新。",
       // Env
       envTool: "工具 / 运行时",
       envToolFilter: "过滤工具...",

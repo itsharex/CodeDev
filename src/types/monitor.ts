@@ -62,3 +62,11 @@ export interface AiContextReport {
     dependencies: Record<string, string>;
     markdown: string;
 }
+
+export interface LockedFileProcess {
+  pid: number;
+  name: string;
+  icon?: string;
+  user: string;
+  is_system: boolean;
+}

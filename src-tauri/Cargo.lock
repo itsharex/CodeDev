@@ -550,6 +550,7 @@ dependencies = [
  "uuid",
  "wait-timeout",
  "which",
+ "windows",
 ]
 
 [[package]]

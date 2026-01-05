@@ -161,6 +161,7 @@ fn main() {
             monitor::get_top_processes,
             monitor::get_active_ports,
             monitor::kill_process,
+            monitor::check_file_locks,
             monitor::get_env_info,
             monitor::diagnose_network,
             monitor::get_ai_context
