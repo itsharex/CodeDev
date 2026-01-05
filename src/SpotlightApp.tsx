@@ -25,21 +25,18 @@ import { ChatMode } from '@/components/features/spotlight/modes/chat/ChatMode';
 import { SpotlightItem } from '@/types/spotlight';
 
 const appWindow = getCurrentWebviewWindow();
-const FIXED_HEIGHT = 106;
-const MAX_WINDOW_HEIGHT = 460;
 
 function SpotlightContent() {
   const { mode, toggleMode, focusInput } = useSpotlight();
   const { language, spotlightAppearance } = useAppStore();
   const { projectRoot } = useContextStore();
 
-  // 挂载业务逻辑 Hooks
   const search = useSpotlightSearch();
   const chat = useSpotlightChat();
 
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
-  // 监听窗口聚焦，自动聚焦输入框
+  // 监听窗口聚焦
   useEffect(() => {
     const unlisten = appWindow.onFocusChanged(({ payload: isFocused }) => {
       if (isFocused) {
@@ -49,21 +46,26 @@ function SpotlightContent() {
     return () => { unlisten.then(f => f()); };
   }, [focusInput]);
 
-  // 窗口大小自适应逻辑
   useLayoutEffect(() => {
-    let finalHeight = 120;
-    const targetWidth = spotlightAppearance.width;
-
+    const { width, defaultHeight, maxChatHeight } = spotlightAppearance;
+    const safeMaxChatHeight = Math.max(maxChatHeight, defaultHeight);
+    let finalHeight = defaultHeight;
     if (mode === 'search') {
-      const resultCount = search.results.length;
-      const listHeight = Math.min(resultCount * 60, 400);
-      const totalIdealHeight = FIXED_HEIGHT + listHeight;
-      finalHeight = Math.min(Math.max(totalIdealHeight, 120), MAX_WINDOW_HEIGHT);
+      finalHeight = defaultHeight;
     } else {
-      finalHeight = chat.messages.length > 0 ? spotlightAppearance.maxChatHeight : 300;
+      if (chat.messages.length > 0) {
+        finalHeight = safeMaxChatHeight;
+      } else {
+        finalHeight = defaultHeight;
+      }
     }
-    appWindow.setSize(new LogicalSize(targetWidth, finalHeight));
-  }, [search.results.length, mode, chat.messages.length, spotlightAppearance]);
+    
+    appWindow.setSize(new LogicalSize(width, finalHeight));
+  }, [
+    mode, 
+    chat.messages.length, 
+    spotlightAppearance
+  ]);
 
   const handleItemSelect = async (item: SpotlightItem) => {
     if (!item) return;
@@ -95,10 +97,8 @@ function SpotlightContent() {
     }
   };
 
-  // 全局键盘事件监听
   useEffect(() => {
     const handleGlobalKeyDown = async (e: KeyboardEvent) => {
-      // 关键修复：如果在输入法组字过程中，直接返回，不触发 Enter 发送
       if (e.isComposing) return;
 
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'f') {
@@ -138,11 +138,8 @@ function SpotlightContent() {
           if (item) handleItemSelect(item);
         }
       } else {
-        // 聊天发送逻辑
         if (e.key === 'Enter' && !e.shiftKey) {
           e.preventDefault();
-          // 调用最新的 sendMessage，因为它现在直接从 Store 获取 Key，
-          // 所以即使这里是旧的闭包，执行时也会去 Store 拿最新的 Key
           chat.sendMessage();
         }
       }
@@ -150,15 +147,12 @@ function SpotlightContent() {
 
     document.addEventListener('keydown', handleGlobalKeyDown);
     return () => document.removeEventListener('keydown', handleGlobalKeyDown);
-    
-    // 关键修复：将 chat.sendMessage 加入依赖数组
-    // 这样当输入变化导致 sendMessage 更新时，事件监听器也会更新
   }, [
     mode, 
     search.results, 
     search.selectedIndex, 
     chat.isStreaming, 
-    chat.sendMessage, // 👈 必须加这个
+    chat.sendMessage, 
     toggleMode
   ]);
 
@@ -197,7 +191,6 @@ export default function SpotlightApp() {
 
     const unlistenPromise = appWindow.onFocusChanged(async ({ payload: isFocused }) => {
       if (isFocused) {
-        // 确保在窗口获得焦点时，强制从磁盘重新加载最新状态
         await useAppStore.persist.rehydrate();
         await useContextStore.persist.rehydrate();
         appWindow.setFocus();
