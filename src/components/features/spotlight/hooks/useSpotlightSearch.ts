@@ -130,20 +130,18 @@ export function useSpotlightSearch() {
 
     if (e.key === 'ArrowDown') {
       e.preventDefault();
-      setResults(current => {
-        const len = current.length || 1;
-        setSelectedIndex(prev => (prev + 1) % len);
-        return current;
+      setSelectedIndex(prev => {
+        const len = results.length || 1;
+        return (prev + 1) % len;
       });
     } else if (e.key === 'ArrowUp') {
       e.preventDefault();
-      setResults(current => {
-        const len = current.length || 1;
-        setSelectedIndex(prev => (prev - 1 + len) % len);
-        return current;
+      setSelectedIndex(prev => {
+        const len = results.length || 1;
+        return (prev - 1 + len) % len;
       });
     }
-  }, [mode]);
+  }, [mode, results]);
 
   return {
     results,
