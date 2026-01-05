@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import { open } from '@tauri-apps/plugin-dialog';
-import { listen } from '@tauri-apps/api/event';
 import { 
   Search, Trash2, RefreshCw, Network, Shield, ShieldAlert, 
   FileSearch, FolderOpen, FileQuestion, AlertTriangle 
@@ -75,7 +74,7 @@ export function PortManager() {
       setHasChecked(true);
     } catch (e: any) {
       console.error(e);
-      setToast({ show: true, msg: `Check failed: ${e}`, type: 'error' });
+      setToast({ show: true, msg: getText('monitor', 'fileLockCheckFailed', language), type: 'error' });
     } finally {
       setIsCheckingLocks(false);
     }
@@ -96,29 +95,6 @@ export function PortManager() {
       console.error(e);
     }
   };
-
-  // HTML5 Drop Handler (作为 Tauri Event 的备选)
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    // 在 Webview 中，出于安全原因，通常拿不到文件的完整路径
-    // 但是我们仍然阻止默认行为，以便触发 Tauri 的 file-drop 事件
-  };
-  
-  // 监听 Tauri 全局文件拖拽 (核心逻辑)
-  useEffect(() => {
-    // 无论当前是否在 'files' 模式，只要拖入文件，最好都能响应
-    // 这里我们限制只有在 'files' 模式下才自动填入，或者你可以去掉这个判断
-    if (mode === 'files') {
-      const unlisten = listen<{ paths: string[] }>('tauri://file-drop', event => {
-        if (event.payload.paths && event.payload.paths.length > 0) {
-          const path = event.payload.paths[0];
-          setLockPath(path);
-          checkFileLocks(path);
-        }
-      });
-      return () => { unlisten.then(f => f()); };
-    }
-  }, [mode]); // 依赖 mode，切换模式时重新绑定
 
   // ==========================
   // Shared Actions
@@ -160,7 +136,7 @@ export function PortManager() {
             setTimeout(() => checkFileLocks(), 800);
         }
     } catch (err: any) {
-        setToast({ show: true, msg: `Error: ${err}`, type: 'error' });
+        setToast({ show: true, msg: getText('toast', 'error', language, { msg: err }), type: 'error' });
     }
   };
 
@@ -227,9 +203,6 @@ export function PortManager() {
                                     value={lockPath}
                                     onChange={e => setLockPath(e.target.value)}
                                     onKeyDown={e => e.key === 'Enter' && checkFileLocks()}
-                                    // 绑定原生事件以阻止默认行为，允许 Tauri 事件触发
-                                    onDragOver={e => e.preventDefault()}
-                                    onDrop={handleDrop}
                                 />
                             </div>
                             <button 
@@ -275,23 +248,27 @@ export function PortManager() {
                             </div>
                         ) : (
                             filteredPorts.map((p, i) => (
-                                // 修复：Key 增加 i 索引和 local_addr 以确保唯一
                                 <div key={`${p.port}-${p.protocol}-${p.pid}-${p.local_addr}-${i}`} className={cn("grid grid-cols-12 gap-2 px-3 py-2.5 items-center hover:bg-secondary/40 rounded-lg transition-colors text-sm group", p.is_system && "opacity-80 bg-secondary/10")}>
                                     <div className="col-span-2 font-mono text-primary font-bold flex items-center gap-1.5">
                                         {p.port}
-                                        {p.is_system && <div title={getText('monitor', 'systemPort', language)}><Shield size={12} className="text-green-500" /></div>}
+                                        {p.is_system && (
+                                            <div title={getText('monitor', 'systemPort', language)}>
+                                                <Shield size={12} className="text-green-500" />
+                                            </div>
+                                        )}
                                     </div>
                                     <div className="col-span-1 text-muted-foreground text-xs font-mono">{p.protocol}</div>
                                     <div className="col-span-3 text-muted-foreground text-xs font-mono truncate" title={p.local_addr}>{p.local_addr || '0.0.0.0'}</div>
                                     <div className="col-span-2 font-mono text-muted-foreground">{p.pid}</div>
                                     <div className="col-span-3 font-medium truncate flex items-center gap-1.5" title={p.process_name}>{p.process_name}</div>
                                     <div className="col-span-1 text-right">
-                                        <ActionBtn 
-                                            isSystem={p.is_system} 
+                                        <ActionBtn
+                                            isSystem={p.is_system}
                                             isExplorer={false}
-                                            onClick={() => handleKill(p.pid, p.process_name, p.is_system)} 
+                                            onClick={() => handleKill(p.pid, p.process_name, p.is_system)}
                                             label={getText('monitor', 'kill', language)}
                                             sysLabel={getText('monitor', 'protected', language)}
+                                            language={language}
                                         />
                                     </div>
                                 </div>
@@ -306,17 +283,12 @@ export function PortManager() {
                 <>
                     {/* Empty State */}
                     {!hasChecked && !isCheckingLocks && (
-                        <div 
-                            className="flex-1 flex flex-col items-center justify-center text-muted-foreground gap-4 opacity-60"
-                            onDragOver={e => e.preventDefault()}
-                            onDrop={handleDrop}
-                        >
+                        <div className="flex-1 flex flex-col items-center justify-center text-muted-foreground gap-4 opacity-60">
                             <div className="w-16 h-16 bg-secondary/50 rounded-full flex items-center justify-center">
                                 <FileQuestion size={32} />
                             </div>
                             <div className="text-center max-w-xs">
-                                <p className="text-sm">Enter a path to see which processes are using it.</p>
-                                <p className="text-xs mt-1 opacity-70">Supports drag & drop from Explorer/Finder.</p>
+                                <p className="text-sm">{getText('monitor', 'enterPathHint', language)}</p>
                             </div>
                         </div>
                     )}
@@ -352,12 +324,13 @@ export function PortManager() {
                                                 </div>
                                                 <div className="col-span-4 text-muted-foreground text-xs">{p.user}</div>
                                                 <div className="col-span-2 text-right">
-                                                    <ActionBtn 
+                                                    <ActionBtn
                                                         isSystem={p.is_system}
-                                                        isExplorer={isExplorer} 
-                                                        onClick={() => handleKill(p.pid, p.name, p.is_system)} 
+                                                        isExplorer={isExplorer}
+                                                        onClick={() => handleKill(p.pid, p.name, p.is_system)}
                                                         label={getText('monitor', 'kill', language)}
                                                         sysLabel={getText('monitor', 'protected', language)}
+                                                        language={language}
                                                     />
                                                 </div>
                                             </div>
@@ -366,7 +339,7 @@ export function PortManager() {
                                 )}
                             </div>
                             <div className="px-4 py-2 bg-secondary/10 border-t border-border text-[10px] text-muted-foreground flex justify-between shrink-0">
-                                <span>Target: <code className="bg-secondary/50 px-1 rounded">{lockPath}</code></span>
+                                <span><code className="bg-secondary/50 px-1 rounded">{lockPath}</code></span>
                                 <span>{getText('monitor', 'locksFound', language, { count: lockedProcesses.length.toString() })}</span>
                             </div>
                         </>
@@ -381,7 +354,7 @@ export function PortManager() {
 }
 
 // 提取的 Action Button 组件，处理复杂的按钮状态
-function ActionBtn({ isSystem, isExplorer, onClick, label, sysLabel }: any) {
+function ActionBtn({ isSystem, isExplorer, onClick, label, sysLabel, language }: any) {
     if (isSystem) {
         return (
             <div className="flex justify-end text-muted-foreground/30 cursor-not-allowed" title={sysLabel}>
@@ -391,14 +364,15 @@ function ActionBtn({ isSystem, isExplorer, onClick, label, sysLabel }: any) {
     }
 
     if (isExplorer) {
+        const restartLabel = getText('monitor', 'restart', language);
         return (
-            <button 
+            <button
                 onClick={onClick}
                 className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-500/10 text-yellow-600 border border-yellow-500/20 hover:bg-yellow-500/20 rounded-md transition-colors text-xs font-medium ml-auto"
-                title="Restart"
+                title={restartLabel}
             >
                 <AlertTriangle size={12} />
-                <span className="hidden sm:inline">Restart</span>
+                <span className="hidden sm:inline">{restartLabel}</span>
             </button>
         )
     }
