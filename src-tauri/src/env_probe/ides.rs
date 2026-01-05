@@ -1,11 +1,12 @@
 use crate::env_probe::{common, ToolInfo};
 use rayon::prelude::*;
+#[cfg(target_os = "windows")]
 use std::path::Path;
 
 #[allow(dead_code)]
 struct IdeConfig {
     name: &'static str,
-    bin: &'static str, // 命令行工具 (code, idea)
+    bin: &'static str, 
     mac_id: &'static str, // macOS Bundle ID
 }
 
@@ -77,7 +78,7 @@ fn check_ide(cfg: &IdeConfig) -> ToolInfo {
                             let bin_path = entry.path().join("bin").join(format!("{}64.exe", cfg.bin));
                             if bin_path.exists() {
                                 info.path = Some(bin_path.to_string_lossy().to_string());
-                                info.version = "Installed (Version unknown)".to_string(); // 既然找到了exe，至少标记为已安装
+                                info.version = "Installed (Version unknown)".to_string(); 
                                 break;
                             }
                         }

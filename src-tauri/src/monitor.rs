@@ -274,9 +274,15 @@ pub fn kill_process(pid: u32, system: State<'_, Arc<Mutex<System>>>) -> Result<S
 
 #[tauri::command]
 pub fn check_file_locks(path: String, system: State<'_, Arc<Mutex<System>>>) -> Result<Vec<LockedFileProcess>, String> {
-    let locking_pids: Vec<u32> = if cfg!(target_os = "windows") {
-        get_locking_pids_windows(&path)?
-    } else {
+    let locking_pids: Vec<u32>;
+
+    #[cfg(target_os = "windows")]
+    {
+        locking_pids = get_locking_pids_windows(&path)?;
+    }
+
+    #[cfg(not(target_os = "windows"))]
+    {
         let mut locking_pids_vec = Vec::new();
         let output = Command::new("lsof")
             .arg("-t")
@@ -292,8 +298,8 @@ pub fn check_file_locks(path: String, system: State<'_, Arc<Mutex<System>>>) -> 
                 }
             }
         }
-        locking_pids_vec
-    };
+        locking_pids = locking_pids_vec;
+    }
 
     let mut sys = system.lock().map_err(|e| e.to_string())?;
 
@@ -334,7 +340,6 @@ fn get_locking_pids_windows(path_str: &str) -> Result<Vec<u32>, String> {
         let mut session_handle: u32 = 0;
         let mut session_key = [0u16; (CCH_RM_SESSION_KEY + 1) as usize];
 
-        // 修复：第二个参数改为 Some(0u32)
         let res = RmStartSession(&mut session_handle, Some(0u32), PWSTR(session_key.as_mut_ptr()));
         if res != ERROR_SUCCESS {
             return Err(format!("RmStartSession failed: {:?}", res));
