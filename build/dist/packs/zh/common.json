@@ -9032,10 +9032,10 @@
   {
     "id": "tldr-zh-common-nix-edit-1",
     "type": "command",
-    "title": "nix-edit - 将包的源码直接打印输出至标准输出 (stdout)",
+    "title": "nix-edit - 将包的源码直接打印输出至标准输出 (`stdout`)",
     "content": "EDITOR=cat nix edit {{nixpkgs#软件包}}",
     "group": "通用工具 (Common)",
-    "description": "nix-edit: 在 `$EDITOR` 中打开 Nix 包的 Nix 表达式文件。 (将包的源码直接打印输出至标准输出 (stdout))",
+    "description": "nix-edit: 在 `$EDITOR` 中打开 Nix 包的 Nix 表达式文件。 (将包的源码直接打印输出至标准输出 (`stdout`))",
     "tags": [
       "common",
       "nix-edit",
@@ -48662,10 +48662,10 @@
   {
     "id": "tldr-zh-common-acme.sh-3",
     "type": "command",
-    "title": "acme.sh - 使用运行中的 Nginx 的配置来签发证书",
+    "title": "acme.sh - 使用运行中的 `nginx` 的配置来签发证书",
     "content": "acme.sh --issue --nginx --domain {{example.com}}",
     "group": "通用工具 (Common)",
-    "description": "acme.sh: 实现了 ACME 客户端协议的 shell 脚本，是 `certbot` 的替代品。 另请参阅：`acme.sh dns`。 (使用运行中的 Nginx 的配置来签发证书)",
+    "description": "acme.sh: 实现了 ACME 客户端协议的 shell 脚本，是 `certbot` 的替代品。 另请参阅：`acme.sh dns`。 (使用运行中的 `nginx` 的配置来签发证书)",
     "tags": [
       "common",
       "acme.sh",

@@ -2060,7 +2060,7 @@
     "title": "semanage-permissive - List all process types (a.k.a domains) that are in permissive mode",
     "content": "sudo semanage permissive {{[-l|--list]}}",
     "group": "Linux Ops",
-    "description": "semanage-permissive: Manage persistent SELinux permissive domains. Note that this effectively makes the process unconfined. For long-term use, it is recommended to configure SELiunx properly. (List all process types (a.k.a domains) that are in permissive mode)",
+    "description": "semanage-permissive: Manage persistent SELinux permissive domains. Note that this effectively makes the process unconfined. For long-term use, it is recommended to configure SELinux properly. (List all process types (a.k.a domains) that are in permissive mode)",
     "tags": [
       "linux",
       "semanage-permissive",
@@ -2075,7 +2075,7 @@
     "title": "semanage-permissive - Set permissive mode for a domain",
     "content": "sudo semanage permissive {{[-a|--add]}} {{httpd_t}}",
     "group": "Linux Ops",
-    "description": "semanage-permissive: Manage persistent SELinux permissive domains. Note that this effectively makes the process unconfined. For long-term use, it is recommended to configure SELiunx properly. (Set permissive mode for a domain)",
+    "description": "semanage-permissive: Manage persistent SELinux permissive domains. Note that this effectively makes the process unconfined. For long-term use, it is recommended to configure SELinux properly. (Set permissive mode for a domain)",
     "tags": [
       "linux",
       "semanage-permissive",
@@ -2090,7 +2090,7 @@
     "title": "semanage-permissive - Unset permissive mode for a domain",
     "content": "sudo semanage permissive {{[-d|--delete]}} {{httpd_t}}",
     "group": "Linux Ops",
-    "description": "semanage-permissive: Manage persistent SELinux permissive domains. Note that this effectively makes the process unconfined. For long-term use, it is recommended to configure SELiunx properly. (Unset permissive mode for a domain)",
+    "description": "semanage-permissive: Manage persistent SELinux permissive domains. Note that this effectively makes the process unconfined. For long-term use, it is recommended to configure SELinux properly. (Unset permissive mode for a domain)",
     "tags": [
       "linux",
       "semanage-permissive",
@@ -29477,10 +29477,10 @@
   {
     "id": "tldr-en-linux-certbot-1",
     "type": "command",
-    "title": "certbot - Obtain a new certificate via nginx authorization, installing the new certificate automatically",
+    "title": "certbot - Obtain a new certificate via `nginx` authorization, installing the new certificate automatically",
     "content": "sudo certbot --nginx {{[-d|--domain]}} {{subdomain.example.com}}",
     "group": "Linux Ops",
-    "description": "certbot: The Let's Encrypt Agent for automatically obtaining and renewing TLS certificates. Successor to `letsencrypt`. (Obtain a new certificate via nginx authorization, installing the new certificate automatically)",
+    "description": "certbot: The Let's Encrypt Agent for automatically obtaining and renewing TLS certificates. Successor to `letsencrypt`. (Obtain a new certificate via `nginx` authorization, installing the new certificate automatically)",
     "tags": [
       "linux",
       "certbot",
@@ -45579,6 +45579,96 @@
     "tags": [
       "linux",
       "extundelete",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-delete-0",
+    "type": "command",
+    "title": "apptainer-delete - Delete an image from the Container Library",
+    "content": "apptainer delete library://{{user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-delete: Delete container images from a remote library. (Delete an image from the Container Library)",
+    "tags": [
+      "linux",
+      "apptainer-delete",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-delete-1",
+    "type": "command",
+    "title": "apptainer-delete - Delete an image for a specific architecture",
+    "content": "apptainer delete --arch {{amd64|arm64|ppc64le}} library://{{user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-delete: Delete container images from a remote library. (Delete an image for a specific architecture)",
+    "tags": [
+      "linux",
+      "apptainer-delete",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-delete-2",
+    "type": "command",
+    "title": "apptainer-delete - [F]orce delete an image without confirmation",
+    "content": "apptainer delete {{[-F|--force]}} library://{{user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-delete: Delete container images from a remote library. ([F]orce delete an image without confirmation)",
+    "tags": [
+      "linux",
+      "apptainer-delete",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-delete-3",
+    "type": "command",
+    "title": "apptainer-delete - Delete an image from a specific library server",
+    "content": "apptainer delete --library {{https://library.example.com}} library://{{user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-delete: Delete container images from a remote library. (Delete an image from a specific library server)",
+    "tags": [
+      "linux",
+      "apptainer-delete",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-delete-4",
+    "type": "command",
+    "title": "apptainer-delete - Delete an image using HTTP instead of HTTPS",
+    "content": "apptainer delete --no-https library://{{hostname/user/collection/container}}:{{tag}}",
+    "group": "Linux Ops",
+    "description": "apptainer-delete: Delete container images from a remote library. (Delete an image using HTTP instead of HTTPS)",
+    "tags": [
+      "linux",
+      "apptainer-delete",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-delete-5",
+    "type": "command",
+    "title": "apptainer-delete - Display help",
+    "content": "apptainer delete {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "apptainer-delete: Delete container images from a remote library. (Display help)",
+    "tags": [
+      "linux",
+      "apptainer-delete",
       "tldr",
       "en"
     ],
@@ -73940,7 +74030,7 @@
     "title": "systemctl-reload - Reload a service",
     "content": "systemctl reload {{nginx}}",
     "group": "Linux Ops",
-    "description": "systemctl-reload: Reload a service's configuration without restarting it. This reloads the service itself (like Apache or Nginx configs), not the systemd unit file. To reload unit files, use `systemctl daemon-reload`. (Reload a service)",
+    "description": "systemctl-reload: Reload a service's configuration without restarting it. This reloads the service itself (like Apache or `nginx` configs), not the systemd unit file. To reload unit files, use `systemctl daemon-reload`. (Reload a service)",
     "tags": [
       "linux",
       "systemctl-reload",
@@ -73955,7 +74045,7 @@
     "title": "systemctl-reload - Reload multiple services",
     "content": "systemctl reload {{unit1 unit2 ...}}",
     "group": "Linux Ops",
-    "description": "systemctl-reload: Reload a service's configuration without restarting it. This reloads the service itself (like Apache or Nginx configs), not the systemd unit file. To reload unit files, use `systemctl daemon-reload`. (Reload multiple services)",
+    "description": "systemctl-reload: Reload a service's configuration without restarting it. This reloads the service itself (like Apache or `nginx` configs), not the systemd unit file. To reload unit files, use `systemctl daemon-reload`. (Reload multiple services)",
     "tags": [
       "linux",
       "systemctl-reload",
@@ -73970,7 +74060,7 @@
     "title": "systemctl-reload - Reload a service for the current user",
     "content": "systemctl reload {{pipewire}} --user",
     "group": "Linux Ops",
-    "description": "systemctl-reload: Reload a service's configuration without restarting it. This reloads the service itself (like Apache or Nginx configs), not the systemd unit file. To reload unit files, use `systemctl daemon-reload`. (Reload a service for the current user)",
+    "description": "systemctl-reload: Reload a service's configuration without restarting it. This reloads the service itself (like Apache or `nginx` configs), not the systemd unit file. To reload unit files, use `systemctl daemon-reload`. (Reload a service for the current user)",
     "tags": [
       "linux",
       "systemctl-reload",
@@ -84602,10 +84692,10 @@
   {
     "id": "tldr-en-linux-setenforce-1",
     "type": "command",
-    "title": "setenforce - Put SELiunx in permissive mode",
+    "title": "setenforce - Put SELinux in permissive mode",
     "content": "setenforce {{0|Permissive}}",
     "group": "Linux Ops",
-    "description": "setenforce: Toggle SELinux between enforcing and permissive modes. To enable or disable SELinux, edit `/etc/selinux/config` instead. (Put SELiunx in permissive mode)",
+    "description": "setenforce: Toggle SELinux between enforcing and permissive modes. To enable or disable SELinux, edit `/etc/selinux/config` instead. (Put SELinux in permissive mode)",
     "tags": [
       "linux",
       "setenforce",

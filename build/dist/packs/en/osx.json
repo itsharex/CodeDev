@@ -11972,10 +11972,10 @@
   {
     "id": "tldr-en-osx-aiac-1",
     "type": "command",
-    "title": "aiac - Generate a Dockerfile for nginx",
+    "title": "aiac - Generate a Dockerfile for `nginx`",
     "content": "aiac get dockerfile {{for a secured nginx}}",
     "group": "macOS",
-    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries, and more. (Generate a Dockerfile for nginx)",
+    "description": "aiac: Use OpenAI to generate IaC configurations, utilities, queries, and more. (Generate a Dockerfile for `nginx`)",
     "tags": [
       "osx",
       "aiac",

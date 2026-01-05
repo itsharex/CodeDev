@@ -1,5 +1,5 @@
 {
-  "updated_at": 1767448364511,
+  "updated_at": 1767577491407,
   "version": "2.0.0",
   "packages": [
     {
@@ -7,9 +7,9 @@
       "language": "en",
       "platform": "llm",
       "name": "ChatGPT Prompts (English)",
-      "description": "Collection of 887 role-play prompts.",
-      "count": 887,
-      "size_kb": 1511.11,
+      "description": "Collection of 919 role-play prompts.",
+      "count": 919,
+      "size_kb": 1554.73,
       "url": "packs/prompts-en-roles.json",
       "category": "prompt"
     },
@@ -51,9 +51,9 @@
       "language": "zh",
       "platform": "dos",
       "name": "Dos (ZH)",
-      "description": "Contains 1 zh commands for dos.",
-      "count": 1,
-      "size_kb": 0,
+      "description": "Contains 11 zh commands for dos.",
+      "count": 11,
+      "size_kb": 4,
       "url": "packs/zh/dos.json",
       "category": "command"
     },
@@ -205,9 +205,9 @@
       "language": "en",
       "platform": "linux",
       "name": "Linux Ops (EN)",
-      "description": "Contains 7694 en commands for linux.",
-      "count": 7694,
-      "size_kb": 3636,
+      "description": "Contains 7700 en commands for linux.",
+      "count": 7700,
+      "size_kb": 3639,
       "url": "packs/en/linux.json",
       "category": "command"
     },
@@ -216,9 +216,9 @@
       "language": "en",
       "platform": "common",
       "name": "Common Tools (EN)",
-      "description": "Contains 19437 en commands for common.",
-      "count": 19437,
-      "size_kb": 9422,
+      "description": "Contains 19448 en commands for common.",
+      "count": 19448,
+      "size_kb": 9429,
       "url": "packs/en/common.json",
       "category": "command"
     },
