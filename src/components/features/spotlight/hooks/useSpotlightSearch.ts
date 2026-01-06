@@ -3,6 +3,7 @@ import { invoke } from '@tauri-apps/api/core';
 import { Prompt } from '@/types/prompt';
 import { SpotlightItem } from '@/types/spotlight';
 import { useSpotlight } from '../core/SpotlightContext';
+import { getText } from '@/lib/i18n';
 
 const URL_REGEX = /^(https?:\/\/)?(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}|localhost|(\d{1,3}\.){3}\d{1,3})(:\d+)?(\/.*)?$/;
 
@@ -36,7 +37,7 @@ interface UrlHistoryRecord {
   last_visit: number;
 }
 
-export function useSpotlightSearch() {
+export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
   const { query, mode } = useSpotlight();
   const debouncedQuery = useDebounce(query, 100); 
   
@@ -90,7 +91,7 @@ export function useSpotlightSearch() {
             return {
                 id: `history-${h.url}`,
                 title: h.title && h.title.length > 0 ? h.title : h.url,
-                description: h.title ? h.url : `Visited ${h.visit_count} times`,
+                description: h.title ? h.url : getText('spotlight', 'visitedTimes', language, { count: String(h.visit_count) }),
                 content: h.url,
                 type: 'url',
                 url: h.url

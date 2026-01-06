@@ -88,8 +88,8 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
                 {/* Action Hint (Right side) */}
                 {isActive && !isCopied && (
                   <span className="text-[10px] opacity-70 flex items-center gap-1 font-medium bg-black/10 px-1.5 rounded whitespace-nowrap">
-                    <CornerDownLeft size={10} /> 
-                    {isUrl ? "Open Link" : (isExecutable ? getText('actions', 'run', language) : getText('spotlight', 'copy', language))}
+                    <CornerDownLeft size={10} />
+                    {isUrl ? getText('spotlight', 'openLink', language) : (isExecutable ? getText('actions', 'run', language) : getText('spotlight', 'copy', language))}
                   </span>
                 )}
               </div>

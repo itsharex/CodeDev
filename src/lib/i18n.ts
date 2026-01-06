@@ -258,7 +258,9 @@ const translations = {
       toggleMode: "Toggle Mode (Tab)",
       currentProvider: "Current: {provider}. Click to switch.",
       actionRequired: "Action Required",
-      commandHasVariables: "This command has variables. Please use it from the main window to fill them in."
+      commandHasVariables: "This command has variables. Please use it from the main window to fill them in.",
+      openLink: "Open Link",
+      visitedTimes: "Visited {count} times"
     },
     actions: {
       collapse: "Collapse Sidebar",
@@ -689,7 +691,9 @@ const translations = {
       toggleMode: "切换模式 (Tab)",
       currentProvider: "当前：{provider}。点击切换。",
       actionRequired: "需要操作",
-      commandHasVariables: "此命令包含变量，请在主窗口中使用以填充变量。"
+      commandHasVariables: "此命令包含变量，请在主窗口中使用以填充变量。",
+      openLink: "打开",
+      visitedTimes: "访问 {count} 次"
     },
     actions: {
       collapse: "收起侧栏",
