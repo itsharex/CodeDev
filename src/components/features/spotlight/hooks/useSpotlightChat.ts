@@ -1,23 +1,16 @@
-import { useState, useRef, useEffect, useCallback } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { ChatMessage, streamChatCompletion } from '@/lib/llm';
 import { useAppStore } from '@/store/useAppStore';
 import { useSpotlight } from '../core/SpotlightContext';
 
 export function useSpotlightChat() {
-  const { chatInput, setChatInput, mode } = useSpotlight();
+  const { chatInput, setChatInput } = useSpotlight();
   // 只用于 UI 显示当前 provider，不用于发送逻辑
   const { aiConfig: uiAiConfig, setAIConfig } = useAppStore(); 
   
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
-
-  // 自动滚动到底部
-  useEffect(() => {
-    if (mode === 'chat' && chatEndRef.current) {
-      chatEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [messages.length, mode, isStreaming, messages[messages.length-1]?.content]);
 
   // 发送消息
   // 使用 useCallback 确保函数引用稳定，但在内部使用 getState() 获取最新配置
