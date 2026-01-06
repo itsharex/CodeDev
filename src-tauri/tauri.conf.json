@@ -41,7 +41,7 @@
   },
   "productName": "CodeForge AI",
   "mainBinaryName": "CodeForge AI",
-  "version": "1.2.1",
+  "version": "workspace:/package.json",
   "identifier": "com.codeforge.ai",
   "plugins": {},
   "app": {
