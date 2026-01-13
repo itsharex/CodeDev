@@ -586,20 +586,17 @@ pub struct PromptCounts {
 #[tauri::command]
 pub fn get_prompt_counts(state: State<DbState>) -> Result<PromptCounts, String> {
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
-    
-    // 统计 Command 类型
-    let command_count: i64 = conn.query_row(
-        "SELECT COUNT(*) FROM prompts WHERE type = 'command'",
-        [],
-        |row| row.get(0),
-    ).unwrap_or(0);
 
-    // 统计 Prompt 类型 (包括旧数据的 NULL)
-    let prompt_count: i64 = conn.query_row(
-        "SELECT COUNT(*) FROM prompts WHERE type = 'prompt' OR type IS NULL",
+    // 使用 SUM(CASE...) 在一次查询中统计两个维度
+    // SQLite 会利用 idx_prompts_type 索引进行覆盖扫描，极快
+    let (command_count, prompt_count): (i64, i64) = conn.query_row(
+        "SELECT
+            COUNT(CASE WHEN type = 'command' THEN 1 END),
+            COUNT(CASE WHEN type = 'prompt' OR type IS NULL THEN 1 END)
+         FROM prompts",
         [],
-        |row| row.get(0),
-    ).unwrap_or(0);
+        |row| Ok((row.get(0)?, row.get(1)?)),
+    ).unwrap_or((0, 0));
 
     Ok(PromptCounts {
         prompt: prompt_count,
