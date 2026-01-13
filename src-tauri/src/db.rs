@@ -242,40 +242,58 @@ pub fn search_prompts(
 ) -> Result<Vec<Prompt>, String> {
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
     let offset = (page - 1) * page_size;
-    
-    let clean_query = query.replace("\"", ""); 
-    let parts: Vec<&str> = clean_query.split_whitespace().collect();
-    
-    if parts.is_empty() {
+
+    let clean_query = query.replace("\"", "");
+    let char_count = clean_query.chars().count(); // 计算字符数（汉字算1个）
+
+    if clean_query.trim().is_empty() {
         return Ok(Vec::new());
     }
 
-    let fts_query = parts.iter()
-        .map(|part| format!("\"{}\"*", part))
-        .collect::<Vec<String>>()
-        .join(" ");
-
-    let mut sql = String::from(
-        "SELECT p.* FROM prompts p
-         JOIN prompts_fts f ON p.id = f.id
-         WHERE prompts_fts MATCH ?1"
-    );
-    
     let mut params: Vec<Box<dyn rusqlite::ToSql>> = Vec::new();
-    params.push(Box::new(fts_query)); 
+    let mut sql = String::new();
 
+    // 如果字符数少于 3 个（例如 "雅思"），Trigram 索引失效。
+    // 此时强制降级为 LIKE 查询，保证 100% 搜得到。
+    if char_count < 3 {
+        // LIKE 查询：前后加 %
+        let like_query = format!("%{}%", clean_query);
+        params.push(Box::new(like_query));
+
+        sql.push_str(
+            "SELECT * FROM prompts
+             WHERE (title LIKE ?1 OR content LIKE ?1 OR description LIKE ?1)"
+        );
+    } else {
+        // 如果字符数 >= 3 个，使用 FTS5 Trigram 索引加速
+        let parts: Vec<&str> = clean_query.split_whitespace().collect();
+        let fts_query = parts.iter()
+            .map(|part| format!("\"{}\"", part))
+            .collect::<Vec<String>>()
+            .join(" AND ");
+
+        params.push(Box::new(fts_query));
+
+        sql.push_str(
+            "SELECT p.* FROM prompts p
+             JOIN prompts_fts f ON p.id = f.id
+             WHERE prompts_fts MATCH ?1"
+        );
+    }
+
+    // --- 通用过滤条件 ---
     if let Some(cat) = category {
         if cat == "prompt" {
-            sql.push_str(" AND (p.type = 'prompt' OR p.type IS NULL)");
+            sql.push_str(" AND (type = 'prompt' OR type IS NULL)");
         } else {
-            sql.push_str(" AND p.type = ?2");
+            sql.push_str(" AND type = ?2");
             params.push(Box::new(cat));
         }
-        sql.push_str(" ORDER BY p.updated_at DESC LIMIT ?3 OFFSET ?4");
+        sql.push_str(" ORDER BY updated_at DESC LIMIT ?3 OFFSET ?4");
         params.push(Box::new(page_size));
         params.push(Box::new(offset));
     } else {
-        sql.push_str(" ORDER BY p.updated_at DESC LIMIT ?2 OFFSET ?3");
+        sql.push_str(" ORDER BY updated_at DESC LIMIT ?2 OFFSET ?3");
         params.push(Box::new(page_size));
         params.push(Box::new(offset));
     }
@@ -523,15 +541,17 @@ pub fn search_url_history(
     query: String
 ) -> Result<Vec<UrlHistoryItem>, String> {
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
-    
+
     let clean_query = query.replace("\"", "");
-    
+    let char_count = clean_query.chars().count();
+
     if clean_query.trim().is_empty() {
+        // 空查询保持原样
         let mut stmt = conn.prepare(
-            "SELECT url, title, visit_count, last_visit FROM url_history 
+            "SELECT url, title, visit_count, last_visit FROM url_history
              ORDER BY last_visit DESC LIMIT 10"
         ).map_err(|e| e.to_string())?;
-        
+
         let rows = stmt.query_map([], |row| {
             Ok(UrlHistoryItem {
                 url: row.get("url")?,
@@ -548,18 +568,38 @@ pub fn search_url_history(
         return Ok(results);
     }
 
-    let fts_query = format!("\"{}\"*", clean_query);
+    let mut sql = String::new();
+    let mut params: Vec<Box<dyn rusqlite::ToSql>> = Vec::new();
 
-    let mut stmt = conn.prepare(
-        "SELECT h.url, h.title, h.visit_count, h.last_visit 
-         FROM url_history h
-         JOIN url_history_fts f ON h.url = f.url
-         WHERE url_history_fts MATCH ?1
-         ORDER BY h.visit_count DESC, h.last_visit DESC
-         LIMIT 5"
-    ).map_err(|e| e.to_string())?;
+    if char_count < 3 {
+        let like_query = format!("%{}%", clean_query);
+        params.push(Box::new(like_query));
 
-    let rows = stmt.query_map(params![fts_query], |row| {
+        sql.push_str(
+            "SELECT url, title, visit_count, last_visit
+             FROM url_history
+             WHERE (url LIKE ?1 OR title LIKE ?1)
+             ORDER BY visit_count DESC, last_visit DESC
+             LIMIT 5"
+        );
+    } else {
+        let fts_query = format!("\"{}\"", clean_query);
+        params.push(Box::new(fts_query));
+
+        sql.push_str(
+            "SELECT h.url, h.title, h.visit_count, h.last_visit
+             FROM url_history h
+             JOIN url_history_fts f ON h.url = f.url
+             WHERE url_history_fts MATCH ?1
+             ORDER BY h.visit_count DESC, h.last_visit DESC
+             LIMIT 5"
+        );
+    }
+
+    let mut stmt = conn.prepare(&sql).map_err(|e| e.to_string())?;
+    let param_refs: Vec<&dyn rusqlite::ToSql> = params.iter().map(|p| p.as_ref()).collect();
+
+    let rows = stmt.query_map(param_refs.as_slice(), |row| {
         Ok(UrlHistoryItem {
             url: row.get("url")?,
             title: row.get("title")?,
@@ -587,7 +627,6 @@ pub struct PromptCounts {
 pub fn get_prompt_counts(state: State<DbState>) -> Result<PromptCounts, String> {
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
 
-    // 使用 SUM(CASE...) 在一次查询中统计两个维度
     // SQLite 会利用 idx_prompts_type 索引进行覆盖扫描，极快
     let (command_count, prompt_count): (i64, i64) = conn.query_row(
         "SELECT
