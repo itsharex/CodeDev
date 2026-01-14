@@ -178,7 +178,7 @@ pub fn get_top_processes(system: State<'_, Arc<Mutex<System>>>) -> Result<Vec<Pr
         })
         .collect();
 
-    processes.par_sort_unstable_by(|a, b| b.cpu_usage.partial_cmp(&a.cpu_usage).unwrap_or(std::cmp::Ordering::Equal));
+    processes.par_sort_unstable_by(|a, b| b.memory.partial_cmp(&a.memory).unwrap_or(std::cmp::Ordering::Equal));
 
     Ok(processes.into_iter().take(30).collect())
 }
