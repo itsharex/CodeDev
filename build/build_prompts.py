@@ -6,7 +6,6 @@ import time
 import re
 import requests
 
-# --- 配置源地址 ---
 SOURCES = {
     "en_roles": {
         "url": "https://raw.githubusercontent.com/f/awesome-chatgpt-prompts/main/prompts.csv",
@@ -22,18 +21,14 @@ SOURCES = {
     }
 }
 
-# 1. 根目录 dist
 DIST_DIR = os.path.join(os.path.dirname(__file__), "dist")
-# 2. 子目录 dist/packs (确保文件生成在这里)
 PACKS_DIR = os.path.join(DIST_DIR, "packs")
 
-# 确保目录存在
 if not os.path.exists(DIST_DIR):
     os.makedirs(DIST_DIR)
 if not os.path.exists(PACKS_DIR):
     os.makedirs(PACKS_DIR)
 
-# --- 分类映射 ---
 CATEGORY_MAP = {
     "coding": [
         "linux", "terminal", "console", "code", "script", "sql", "javascript", "python", "java", 
@@ -77,14 +72,8 @@ def clean_raw_content(content):
     深度清洗源文本，去除元数据、链接和格式噪音
     """
     content = re.sub(r'(?i)(?m)^\s*(?:Contributed by|贡献者|From|Author)[\s:：].*?(\n|$)', '', content)
-
-    # 移除 Markdown 链接，只保留文字 [Text](URL) -> Text
     content = re.sub(r'\[([^\]]+)\]\([^\)]+\)', r'\1', content)
-
-    # 移除行首的引用符号 '>'
     content = re.sub(r'(?m)^>\s*', '', content)
-
-    # 移除可能残留的 Markdown 图片 ![alt](url)
     content = re.sub(r'!\[[^\]]*\]\([^\)]+\)', '', content)
 
     return content.strip()
@@ -93,15 +82,10 @@ def normalize_placeholders(content):
     """
     将各种格式的占位符统一转换为 {{variable}} 格式
     """
-    # 处理 ${Variable:Default} 或 ${Variable} (VS Code 风格)
     content = re.sub(r'\$\{([a-zA-Z0-9_]+)(?::[^}]+)?\}', r'{{\1}}', content)
-
-    # 处理 [Variable] 格式
     content = re.sub(r'\[([a-zA-Z0-9_\s\u4e00-\u9fa5]+)\](?!\()', r'{{\1}}', content)
-    
-    # 处理 {Variable} 格式 (且不是已经被 {{}} 包裹的)
     content = re.sub(r'(?<!\{)\{([a-zA-Z0-9_\s\u4e00-\u9fa5]+)\}(?!\})', r'{{\1}}', content)
-    
+
     return content
 
 def inject_variables_advanced(content, lang):
@@ -113,7 +97,7 @@ def inject_variables_advanced(content, lang):
         match = re.search(pattern, content, re.IGNORECASE)
         if match:
             return re.sub(pattern, r'\1{{input}}\4', content, flags=re.IGNORECASE)
-        
+
         pattern_no_quote = r"((?:My|The)\s+first\s+[\w\s]+\s+is\s*[:：]?\s*)([^\n]+)$"
         match_nq = re.search(pattern_no_quote, content, re.IGNORECASE)
         if match_nq:
@@ -135,12 +119,12 @@ def inject_variables_advanced(content, lang):
     return content
 
 def process_source(key, config):
-    print(f"📥 Downloading {config['name']}...")
+    print(f"Downloading {config['name']}...")
     try:
         response = requests.get(config['url'], timeout=15)
         response.raise_for_status()
     except Exception as e:
-        print(f"❌ Failed to download {key}: {e}")
+        print(f"Failed to download {key}: {e}")
         return None
 
     prompts = []
@@ -163,31 +147,26 @@ def process_source(key, config):
                     "prompt": item.get('prompt', '').strip()
                 })
         except json.JSONDecodeError:
-            print(f"❌ JSON Decode Error for {key}")
+            print(f"JSON Decode Error for {key}")
             return None
 
     final_prompts = []
     for item in prompts:
         title = item['act']
         raw_content = item['prompt']
-        
-        # 深度清洗
+
         cleaned_content = clean_raw_content(raw_content)
-        
+
         if not cleaned_content:
-            print(f"⚠️ Skipped empty prompt: {title}")
+            print(f"Skipped empty prompt: {title}")
             continue
 
-        # 归类
         group = determine_group(title + " " + cleaned_content)
-        
-        # 占位符标准化
+
         normalized_content = normalize_placeholders(cleaned_content)
-        
-        # 智能变量注入
+
         final_content = inject_variables_advanced(normalized_content, config['lang'])
-        
-        # 构建对象
+
         prompt_obj = {
             "id": generate_uuid(),
             "type": "prompt",
@@ -204,15 +183,14 @@ def process_source(key, config):
         final_prompts.append(prompt_obj)
 
     filename = f"prompts-{config['lang']}-roles.json"
-    
-    # --- 写入到 PACKS_DIR 而不是 DIST_DIR ---
+
     output_path = os.path.join(PACKS_DIR, filename)
-    
+
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(final_prompts, f, ensure_ascii=False, indent=2)
-    
-    print(f"✅ Generated {filename}: {len(final_prompts)} prompts in packs/ folder.")
-    
+
+    print(f"Generated {filename}: {len(final_prompts)} prompts in packs/ folder.")
+
     return {
         "id": f"{config['lang']}-roles",
         "language": config['lang'],
@@ -226,13 +204,13 @@ def process_source(key, config):
     }
 
 def main():
-    print("🚀 Starting Prompt ETL Process (Final)...")
+    print("Starting Prompt ETL Process...")
     manifest_items = []
     for key, config in SOURCES.items():
         result = process_source(key, config)
         if result:
             manifest_items.append(result)
-            
+
     temp_manifest_path = os.path.join(DIST_DIR, "manifest_prompts_partial.json")
     with open(temp_manifest_path, 'w', encoding='utf-8') as f:
         json.dump(manifest_items, f, ensure_ascii=False, indent=2)

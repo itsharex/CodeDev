@@ -53,7 +53,6 @@ pub fn init_db(app_handle: &AppHandle) -> Result<Connection> {
         PRAGMA synchronous = NORMAL;
     ")?;
 
-    // --- Prompts Table ---
     conn.execute(
         "CREATE TABLE IF NOT EXISTS prompts (
             id TEXT PRIMARY KEY,
@@ -79,7 +78,7 @@ pub fn init_db(app_handle: &AppHandle) -> Result<Connection> {
     let _ = conn.execute("ALTER TABLE prompts ADD COLUMN is_executable INTEGER DEFAULT 0", []);
     let _ = conn.execute("ALTER TABLE prompts ADD COLUMN shell_type TEXT", []);
 
-    // --- Prompts FTS ---
+    // Prompts FTS
     conn.execute_batch("
         DROP TRIGGER IF EXISTS prompts_ai;
         DROP TRIGGER IF EXISTS prompts_ad;
@@ -126,7 +125,7 @@ pub fn init_db(app_handle: &AppHandle) -> Result<Connection> {
     conn.execute("CREATE INDEX IF NOT EXISTS idx_prompts_favorite ON prompts (is_favorite)", [])?;
     conn.execute("CREATE INDEX IF NOT EXISTS idx_prompts_pack_id ON prompts (pack_id)", [])?;
 
-    // --- URL History Table (New Feature) ---
+    // URL History Table
     conn.execute(
         "CREATE TABLE IF NOT EXISTS url_history (
             url TEXT PRIMARY KEY,
@@ -137,8 +136,7 @@ pub fn init_db(app_handle: &AppHandle) -> Result<Connection> {
         [],
     )?;
 
-    // --- URL History FTS ---
-    // Creating FTS table for URL history to enable fuzzy search on URL and Title
+    // URL History FTS
     conn.execute(
         "CREATE VIRTUAL TABLE IF NOT EXISTS url_history_fts USING fts5(
             url, title,
@@ -147,7 +145,7 @@ pub fn init_db(app_handle: &AppHandle) -> Result<Connection> {
         [],
     )?;
 
-    // Re-create triggers to ensure FTS consistency
+    // Re-create triggers
     conn.execute_batch("
         DROP TRIGGER IF EXISTS url_history_ai;
         DROP TRIGGER IF EXISTS url_history_ad;
@@ -244,7 +242,7 @@ pub fn search_prompts(
     let offset = (page - 1) * page_size;
 
     let clean_query = query.replace("\"", "");
-    let char_count = clean_query.chars().count(); // 计算字符数（汉字算1个）
+    let char_count = clean_query.chars().count();
 
     if clean_query.trim().is_empty() {
         return Ok(Vec::new());
@@ -253,10 +251,9 @@ pub fn search_prompts(
     let mut params: Vec<Box<dyn rusqlite::ToSql>> = Vec::new();
     let mut sql = String::new();
 
-    // 如果字符数少于 3 个（例如 "雅思"），Trigram 索引失效。
-    // 此时强制降级为 LIKE 查询，保证 100% 搜得到。
+    // If char count < 3, use LIKE query
     if char_count < 3 {
-        // LIKE 查询：前后加 %
+        // LIKE query
         let like_query = format!("%{}%", clean_query);
         params.push(Box::new(like_query));
 
@@ -265,7 +262,7 @@ pub fn search_prompts(
              WHERE (title LIKE ?1 OR content LIKE ?1 OR description LIKE ?1)"
         );
     } else {
-        // 如果字符数 >= 3 个，使用 FTS5 Trigram 索引加速
+        // If char count >= 3, use FTS5 Trigram index
         let parts: Vec<&str> = clean_query.split_whitespace().collect();
         let fts_query = parts.iter()
             .map(|part| format!("\"{}\"", part))
@@ -281,7 +278,7 @@ pub fn search_prompts(
         );
     }
 
-    // --- 通用过滤条件 ---
+    // Common filter conditions
     if let Some(cat) = category {
         if cat == "prompt" {
             sql.push_str(" AND (type = 'prompt' OR type IS NULL)");
@@ -466,10 +463,7 @@ pub fn get_prompt_groups(state: State<DbState>) -> Result<Vec<String>, String> {
     Ok(groups)
 }
 
-// -------------------------------------------------------------------------
 // NEW FEATURES: URL History Commands
-// -------------------------------------------------------------------------
-
 #[tauri::command]
 pub async fn record_url_visit(
     app_handle: AppHandle,
@@ -546,7 +540,6 @@ pub fn search_url_history(
     let char_count = clean_query.chars().count();
 
     if clean_query.trim().is_empty() {
-        // 空查询保持原样
         let mut stmt = conn.prepare(
             "SELECT url, title, visit_count, last_visit FROM url_history
              ORDER BY last_visit DESC LIMIT 10"
@@ -627,7 +620,7 @@ pub struct PromptCounts {
 pub fn get_prompt_counts(state: State<DbState>) -> Result<PromptCounts, String> {
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
 
-    // SQLite 会利用 idx_prompts_type 索引进行覆盖扫描，极快
+    // SQLite uses idx_prompts_type index for efficient scan
     let (command_count, prompt_count): (i64, i64) = conn.query_row(
         "SELECT
             COUNT(CASE WHEN type = 'command' THEN 1 END),

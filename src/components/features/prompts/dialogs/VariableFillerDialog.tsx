@@ -11,8 +11,8 @@ interface VariableFillerDialogProps {
   onClose: () => void;
   prompt: Prompt | null;
   variables: string[];
-  confirmText?: string; // 按钮文本, e.g., "执行命令"
-  onConfirm: (filledContent: string) => void; // 确认后的回调
+  confirmText?: string;
+  onConfirm: (filledContent: string) => void;
 }
 
 export function VariableFillerDialog({ 
@@ -51,11 +51,9 @@ export function VariableFillerDialog({
     if (!prompt) return;
     const finalContent = fillTemplate(prompt.content, values);
     onConfirm(finalContent);
-    // onClose() 将由父组件在 onConfirm 逻辑完成后调用
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    // 按下 Enter 键时触发确认操作
     if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault();
         handleConfirm();

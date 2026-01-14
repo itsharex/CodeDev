@@ -6,13 +6,13 @@ use std::path::Path;
 #[allow(dead_code)]
 struct IdeConfig {
     name: &'static str,
-    bin: &'static str, 
-    mac_id: &'static str, // macOS Bundle ID
+    bin: &'static str,
+    mac_id: &'static str,
 }
 
 const IDES: &[IdeConfig] = &[
     IdeConfig { name: "VSCode", bin: "code", mac_id: "com.microsoft.VSCode" },
-    IdeConfig { name: "Cursor", bin: "cursor", mac_id: "com.todesktop.230313mzl4w4u92" }, // Cursor 的 ID
+    IdeConfig { name: "Cursor", bin: "cursor", mac_id: "com.todesktop.230313mzl4w4u92" },
     IdeConfig { name: "Sublime Text", bin: "subl", mac_id: "com.sublimetext.4" },
     IdeConfig { name: "Xcode", bin: "xcodebuild", mac_id: "com.apple.dt.Xcode" },
     IdeConfig { name: "IntelliJ", bin: "idea", mac_id: "com.jetbrains.intellij" },
@@ -26,11 +26,8 @@ pub fn probe_ides() -> Vec<ToolInfo> {
 }
 
 fn check_ide(cfg: &IdeConfig) -> ToolInfo {
-    // 1. 优先尝试命令行检测 (Linux/Windows/macOS 通用)
-    // VSCode, Vim, Neovim 等通常在 PATH 中
     let mut info = common::generic_probe(cfg.name, cfg.bin, &["--version"], None);
 
-    // Xcode 特殊处理
     if cfg.name == "Xcode" {
         if let Ok(out) = common::run_command("xcodebuild", &["-version"]) {
             let ver = common::find_version(&out, None);
@@ -58,19 +55,16 @@ fn check_ide(cfg: &IdeConfig) -> ToolInfo {
         }
     }
 
-    // 3. Windows 上的特殊路径检测 (IntelliJ, Android Studio)
     #[cfg(target_os = "windows")]
     if info.version == "Not Found" {
-        // 常见的 Windows 安装路径模板
         let search_paths = vec![
             format!(r"C:\Program Files\Microsoft VS Code\bin\{}.cmd", cfg.bin),
             format!(r"C:\Program Files\JetBrains\IntelliJ IDEA*\bin\{}64.exe", cfg.bin),
             format!(r"C:\Program Files\Android\Android Studio\bin\{}64.exe", cfg.bin),
-            format!(r"C:\Program Files\Git\usr\bin\{}.exe", cfg.bin), // Vim usually here
+            format!(r"C:\Program Files\Git\usr\bin\{}.exe", cfg.bin),
         ];
 
         for path_str in search_paths {
-            // 简单通配符处理 (针对 JetBrains 版本号目录)
             if path_str.contains('*') {
                 if let Some(parent) = Path::new(&path_str).parent().and_then(|p| p.parent()) {
                     if let Ok(entries) = std::fs::read_dir(parent) {

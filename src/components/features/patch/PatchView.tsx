@@ -17,7 +17,6 @@ import { ExportDialog } from './dialogs/ExportDialog';
 
 const MANUAL_DIFF_ID = 'manual-scratchpad';
 
-// 定义从 Rust 传来的数据类型
 interface GitCommit {
   hash: string;
   author: string;
@@ -39,16 +38,13 @@ export function PatchView() {
   const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [mode, setMode] = useState<PatchMode>('patch');
-  
-  // AI Patch 功能的状态
+
   const [patchProjectRoot, setPatchProjectRoot] = useState<string | null>(null);
   const [yamlInput, setYamlInput] = useState('');
-  
-  // 通用文件列表和UI状态
+
   const [files, setFiles] = useState<PatchFileItem[]>([]);
   const [selectedFileId, setSelectedFileId] = useState<string | null>(null);
-  
-  // Toast 状态
+
   const [selectedExportIds, setSelectedExportIds] = useState<Set<string>>(new Set());
   const [toastState, setToastState] = useState<{ show: boolean; msg: string; type: ToastType }>({
     show: false,
@@ -57,14 +53,12 @@ export function PatchView() {
   });
 
   const [isFixing, setIsFixing] = useState(false);
-  
-  // 确认对话框状态
+
   const [confirmDialog, setConfirmDialog] = useState<{ show: boolean; file: PatchFileItem | null }>({
       show: false,
       file: null
   });
 
-  // Git 对比功能的状态
   const [gitProjectRoot, setGitProjectRoot] = useState<string | null>(null);
   const [commits, setCommits] = useState<GitCommit[]>([]);
   const [baseHash, setBaseHash] = useState<string>('');
@@ -74,38 +68,28 @@ export function PatchView() {
   const showNotification = (msg: string, type: ToastType = 'success') => {
     setToastState({ show: true, msg, type });
   };
-  
-  // 模式切换时的副作用处理
+
   useEffect(() => {
     if (mode === 'diff') {
       const isManualOrGitFile = (f: PatchFileItem) => f.isManual || !!f.gitStatus;
-      // 如果当前文件列表不是手动/Git模式的，就清空
       if (files.length > 0 && !files.every(isManualOrGitFile)) {
         setFiles(prev => prev.filter(isManualOrGitFile));
       }
-      // 确保“手动对比”项总是存在
       if (!files.some(f => f.id === MANUAL_DIFF_ID)) {
         const manualItem: PatchFileItem = { id: MANUAL_DIFF_ID, path: 'Manual Comparison', original: '', modified: '', status: 'success', isManual: true };
         setFiles(prev => [manualItem, ...prev]);
-        // 智能选择默认项
         if (!selectedFileId && !gitProjectRoot) {
           setSelectedFileId(MANUAL_DIFF_ID);
         }
       }
     } else if (mode === 'patch') {
-      // 切换回AI模式，只保留AI patch文件
       const aiFiles = files.filter(p => !p.isManual && !p.gitStatus);
       setFiles(aiFiles);
-      // 如果之前选中的是手动或Git项，则重置选中状态
       if (selectedFileId === MANUAL_DIFF_ID || files.find(f => f.id === selectedFileId)?.gitStatus) {
         setSelectedFileId(aiFiles.length > 0 ? aiFiles[0].id : null);
       }
     }
   }, [mode]);
-
-  // =================================================================
-  // 原功能逻辑
-  // =================================================================
 
   const handleLoadPatchProject = async () => {
     try {
@@ -302,7 +286,6 @@ export function PatchView() {
 
   const [_isExporting, setIsExporting] = useState(false);
 
-  // 切换单个文件选中状态
   const toggleFileExport = (id: string, checked: boolean) => {
       setSelectedExportIds(prev => {
           const next = new Set(prev);
@@ -321,7 +304,6 @@ export function PatchView() {
       setIsExportDialogOpen(true);
   };
 
-  // 实际的导出逻辑
   const performExport = async (format: ExportFormat, layout: ExportLayout) => {
     setIsExportDialogOpen(false); 
     setIsExporting(true);

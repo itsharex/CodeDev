@@ -4,10 +4,10 @@ import { getMenuLabel, getText } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 
 export function Sidebar() {
-  const { 
-    currentView, setView, 
+  const {
+    currentView, setView,
     isSidebarOpen, toggleSidebar,
-    language, setSettingsOpen // 获取打开设置的方法
+    language, setSettingsOpen
   } = useAppStore();
 
   const menuItems: { id: AppView; icon: any }[] = [
@@ -89,8 +89,8 @@ export function Sidebar() {
 
       {/* Footer - 只有设置按钮 */}
       <div className="border-t border-border shrink-0 flex flex-col overflow-hidden whitespace-nowrap py-2">
-        <button 
-          onClick={() => setSettingsOpen(true)} // 点击打开设置弹窗
+        <button
+          onClick={() => setSettingsOpen(true)}
           className={cn(
             "relative flex items-center h-10 w-full text-muted-foreground hover:text-foreground hover:bg-secondary/50 transition-colors group/btn"
           )}

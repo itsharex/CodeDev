@@ -23,10 +23,9 @@ const SHELL_OPTIONS: { value: ShellType; label: string }[] = [
 ];
 
 export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEditorDialogProps) {
-  // 修复 1: 移除 addGroup
   const { groups, addPrompt, updatePrompt } = usePromptStore();
   const { language } = useAppStore();
-  
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [group, setGroup] = useState(DEFAULT_GROUP);
@@ -35,13 +34,11 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
   const [shellType, setShellType] = useState<ShellType>('auto');
   const [newGroupMode, setNewGroupMode] = useState(false);
   const [newGroupName, setNewGroupName] = useState('');
-  
-  // UI 状态控制
+
   const [isGroupOpen, setIsGroupOpen] = useState(false);
   const [isShellOpen, setIsShellOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
-  // Python 环境检测状态
   const [pythonStatus, setPythonStatus] = useState<{
       loading: boolean;
       available: boolean;
@@ -81,7 +78,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
     }
   }, [type]);
 
-  // 检测 Python 环境
   const checkPythonEnv = useCallback(async () => {
       setPythonStatus(prev => ({ ...prev, loading: true }));
       try {
@@ -102,7 +98,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
       }
   }, []);
 
-  // 监听 Shell 类型变化，自动检测 Python
   useEffect(() => {
       if (type === 'command' && isExecutable && shellType === 'python') {
           if (!pythonStatus.checked) {
@@ -115,12 +110,11 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
 
   const handleSave = async () => {
     if (!title.trim() || !content.trim()) return;
-    
+
     setIsSaving(true);
     try {
         let finalGroup = group;
         if (newGroupMode && newGroupName.trim()) {
-          // 修复 2: 移除 addGroup 调用，直接使用字符串即可
           finalGroup = newGroupName.trim();
         }
 
@@ -267,7 +261,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
                           )}
                       </div>
 
-                      {/* Python 环境状态栏 */}
                       {shellType === 'python' && (
                           <div className={cn(
                               "flex items-center gap-2 text-xs px-3 py-2 rounded-lg border transition-all",
@@ -311,7 +304,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
             </div>
           )}
 
-          {/* Content Area */}
           <div className="space-y-2 pt-4 border-t border-border/50">
             <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5"> <FileText size={14} /> {getText('editor', 'labelContent', language)} </label>
             <div className="relative">
@@ -323,7 +315,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
           </div>
         </div>
 
-        {/* Footer Actions */}
         <div className="p-4 border-t border-border bg-secondary/5 flex justify-end gap-3 shrink-0">
           <button onClick={onClose} disabled={isSaving} className="px-4 py-2 text-sm font-medium rounded-lg hover:bg-secondary text-muted-foreground transition-colors disabled:opacity-50"> {getText('editor', 'btnCancel', language)} </button>
           <button 

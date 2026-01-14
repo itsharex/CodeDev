@@ -23,7 +23,7 @@ import { useSpotlightChat } from '@/components/features/spotlight/hooks/useSpotl
 import { SearchMode } from '@/components/features/spotlight/modes/search/SearchMode';
 import { ChatMode } from '@/components/features/spotlight/modes/chat/ChatMode';
 import { SpotlightItem } from '@/types/spotlight';
-import { ShellType } from '@/types/prompt'; // [Fix] 引入 ShellType
+import { ShellType } from '@/types/prompt';
 
 const appWindow = getCurrentWebviewWindow();
 
@@ -66,7 +66,6 @@ function SpotlightContent() {
   const handleItemSelect = async (item: SpotlightItem) => {
     if (!item) return;
 
-    // === URL 处理逻辑 ===
     if (item.type === 'url' && item.url) {
         try {
             await open(item.url);
@@ -80,7 +79,6 @@ function SpotlightContent() {
         return;
     }
 
-    // === 命令/提示词 处理逻辑 ===
     if (item.isExecutable) {
       const content = item.content || '';
       const vars = parseVariables(content);

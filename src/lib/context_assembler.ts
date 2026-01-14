@@ -2,7 +2,7 @@ import { readTextFile } from '@tauri-apps/plugin-fs';
 import { FileNode } from '@/types/context';
 import { countTokens } from './tokenizer';
 import { generateAsciiTree } from './tree_generator';
-import { stripSourceComments } from './comment_stripper'; // ✨ 引入
+import { stripSourceComments } from './comment_stripper';
 
 // 二进制/非文本后缀黑名单
 const BINARY_EXTENSIONS = new Set([
@@ -47,17 +47,13 @@ export function calculateStats(nodes: FileNode[]): ContextStats {
   };
 }
 
-// 定义生成选项接口
 interface GenerateOptions {
   removeComments: boolean;
 }
 
-/**
- * 升级后的上下文生成器
- */
 export async function generateContext(
-  nodes: FileNode[], 
-  options: GenerateOptions = { removeComments: false } // ✨ 接收选项
+  nodes: FileNode[],
+  options: GenerateOptions = { removeComments: false }
 ): Promise<{ text: string, tokenCount: number }> {
   
   const files = getSelectedFiles(nodes);
@@ -65,27 +61,23 @@ export async function generateContext(
   
   const parts: string[] = [];
 
-  // --- 1. System Preamble ---
   parts.push(`<project_context>`);
-  parts.push(`This is a source code context provided by CodeForge AI.`);
+  parts.push(`This is a source code context provided by Code Forge AI.`);
   parts.push(`Total Files: ${files.length}`);
   if (options.removeComments) {
       parts.push(`Note: Comments have been stripped to save tokens.`);
   }
   parts.push(``);
 
-  // --- 2. Project Structure ---
   parts.push(`<project_structure>`);
   parts.push(treeString);
   parts.push(`</project_structure>`);
   parts.push(``);
 
-  // --- 3. File Contents ---
   parts.push(`<source_files>`);
   
   const filePromises = files.map(async (file) => {
     try {
-      // 防御 1: 检查后缀 (Binary Guard)
       const ext = file.name.split('.').pop()?.toLowerCase();
       if (ext && BINARY_EXTENSIONS.has(ext)) {
           return `
@@ -94,7 +86,6 @@ export async function generateContext(
 </file>`;
       }
 
-      // 防御 2: 检查大小 (> 1MB)
       if (file.size && file.size > 1024 * 1024) { 
            return `
 <file path="${file.path}">
@@ -104,7 +95,6 @@ export async function generateContext(
 
       let content = await readTextFile(file.path);
 
-      // 特性: 移除注释
       if (options.removeComments) {
           content = stripSourceComments(content, file.name);
       }

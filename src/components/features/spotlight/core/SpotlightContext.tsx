@@ -6,13 +6,13 @@ interface SpotlightContextType {
   mode: SpotlightMode;
   query: string;
   chatInput: string;
-  
+
   // 动作
   setMode: (mode: SpotlightMode) => void;
   setQuery: (query: string) => void;
   setChatInput: (input: string) => void;
   toggleMode: () => void;
-  
+
   // 引用 (用于跨组件聚焦)
   inputRef: React.RefObject<HTMLInputElement>;
   focusInput: () => void;
@@ -28,7 +28,6 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const focusInput = useCallback(() => {
-    // 稍微延迟以确保 DOM 渲染完成
     setTimeout(() => {
       inputRef.current?.focus();
     }, 10);

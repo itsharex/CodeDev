@@ -3,7 +3,7 @@ import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
 import { getAllWebviewWindows } from '@tauri-apps/api/webviewWindow';
 import { listen } from '@tauri-apps/api/event';
 import { register, unregisterAll } from '@tauri-apps/plugin-global-shortcut';
-import { sendNotification } from '@tauri-apps/plugin-notification'; 
+import { sendNotification } from '@tauri-apps/plugin-notification';
 import { Loader2 } from 'lucide-react';
 import { TitleBar } from "@/components/layout/TitleBar";
 import { Sidebar } from "@/components/layout/Sidebar";
@@ -18,32 +18,27 @@ const SystemMonitorModal = lazy(() => import('@/components/features/monitor/Syst
 const appWindow = getCurrentWebviewWindow()
 
 function App() {
-  // 解构出 setTheme
   const { currentView, theme, setTheme, syncModels, lastUpdated, spotlightShortcut, restReminder, language } = useAppStore();
   const restTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastRestTimeRef = useRef<number>(Date.now());
 
   useEffect(() => {
-    // 1. 初始化 DOM 类名 (防止刚启动时颜色不对)
     const root = document.documentElement;
     root.classList.remove('light', 'dark');
     root.classList.add(theme);
 
-    // 2. 监听来自 Spotlight 的主题变化
-    // 当 Spotlight 改变主题时，主窗口也需要同步更新，且传入 true 防止死循环广播
     const unlistenPromise = listen<AppTheme>('theme-changed', (event) => {
-        setTheme(event.payload, true); 
+        setTheme(event.payload, true);
     });
 
     appWindow.show();
     appWindow.setFocus();
-    
+
     return () => {
         unlistenPromise.then(unlisten => unlisten());
     };
-  }, []); // 空依赖数组，只在组件挂载时执行一次
+  }, []);
 
-  // 窗口失焦/焦点优化：暂停动画以减少 GPU 内存占用
   useEffect(() => {
     const handleBlur = () => {
       document.body.classList.add('reduce-performance');
@@ -52,7 +47,6 @@ function App() {
       document.body.classList.remove('reduce-performance');
     };
 
-    // 监听窗口失焦和焦点事件
     const unlistenBlur = listen('tauri://blur', handleBlur);
     const unlistenFocus = listen('tauri://focus', handleFocus);
 
@@ -63,17 +57,13 @@ function App() {
   }, []);
 
   useEffect(() => {
-    // 只有在 main 窗口才执行此逻辑，避免 spotlight 窗口重复注册
     if (appWindow.label !== 'main') return;
     const setupShortcut = async () => {
       try {
-        // 1. 清除所有旧的快捷键，防止冲突
         await unregisterAll();
-        if (!spotlightShortcut) return; // 如果用户清空了快捷键，就不注册
-        // 2. 注册新的快捷键
+        if (!spotlightShortcut) return;
         await register(spotlightShortcut, async (event) => {
           if (event.state === 'Pressed') {
-            // 查找 spotlight 窗口
             const windows = await getAllWebviewWindows();
             const spotlight = windows.find(w => w.label === 'spotlight');
             if (spotlight) {
@@ -94,7 +84,7 @@ function App() {
     };
 
     setupShortcut();
-  }, [spotlightShortcut]); // 当快捷键设置改变时重新执行
+  }, [spotlightShortcut]);
 
   useEffect(() => {
     const handleContextMenu = (e: MouseEvent) => {
@@ -102,7 +92,7 @@ function App() {
         e.preventDefault();
       }
     };
-    
+
     const handleKeyDown = (e: KeyboardEvent) => {
         if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
             e.preventDefault();
@@ -121,7 +111,6 @@ function App() {
     };
   }, []);
 
-  // 启动时任务
   useEffect(() => {
     const ONE_DAY = 24 * 60 * 60 * 1000;
     if (Date.now() - lastUpdated > ONE_DAY) {
@@ -131,33 +120,27 @@ function App() {
     }
   }, []);
 
-  // 休息提醒定时器
   useEffect(() => {
-    // 清除旧的定时器
     if (restTimerRef.current) {
       clearInterval(restTimerRef.current);
       restTimerRef.current = null;
     }
 
-    // 如果未启用，直接返回
     if (!restReminder.enabled || restReminder.intervalMinutes <= 0) {
       return;
     }
 
     const intervalMs = restReminder.intervalMinutes * 60 * 1000;
 
-    // 计算下次提醒时间
     const scheduleNextReminder = () => {
       const now = Date.now();
       const timeSinceLastRest = now - lastRestTimeRef.current;
-      
-      // 如果距离上次提醒已经超过间隔时间，立即提醒
+
       if (timeSinceLastRest >= intervalMs) {
         showRestNotification();
         lastRestTimeRef.current = now;
       }
 
-      // 设置定时器，每间隔时间提醒一次
       restTimerRef.current = setInterval(() => {
         showRestNotification();
         lastRestTimeRef.current = Date.now();
@@ -167,10 +150,10 @@ function App() {
     const showRestNotification = async () => {
       try {
         const title = language === 'zh' ? '休息提醒' : 'Rest Reminder';
-        const body = language === 'zh' 
+        const body = language === 'zh'
           ? `您已经工作了 ${restReminder.intervalMinutes} 分钟，建议休息一下！`
           : `You've been working for ${restReminder.intervalMinutes} minutes. Time to take a break!`;
-        
+
         await sendNotification({
           title,
           body,
@@ -181,10 +164,8 @@ function App() {
       }
     };
 
-    // 初始化定时器
     scheduleNextReminder();
 
-    // 清理函数
     return () => {
       if (restTimerRef.current) {
         clearInterval(restTimerRef.current);
@@ -196,7 +177,6 @@ function App() {
   return (
     <>
       <style>{`
-        /* 窗口失焦时暂停所有动画，减少 GPU 内存占用 */
         body.reduce-performance * {
           animation-play-state: paused !important;
         }

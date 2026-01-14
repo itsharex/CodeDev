@@ -1,4 +1,4 @@
-import { useState, useRef, useLayoutEffect, useMemo } from 'react'; // 引入 useMemo
+import { useState, useRef, useLayoutEffect, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { Terminal, Calendar, Tag, Box, Globe, Variable } from 'lucide-react';
 import { Prompt } from '@/types/prompt';
@@ -68,8 +68,7 @@ export function PromptDetailTooltip({ prompt, anchorRect, isOpen, onMouseEnter, 
       style={{ top: position.top, left: position.left }}
     >
       <div className="relative bg-popover shadow-2xl rounded-xl overflow-hidden flex flex-col text-sm text-popover-foreground h-full ring-1 ring-primary/30">
-            
-            {/* Header */}
+
             <div className="p-4 border-b border-border/50 bg-secondary/10 flex flex-col gap-2">
             <div className="flex items-start justify-between gap-3">
                 <h3 className="font-bold text-base leading-tight">{prompt.title}</h3>

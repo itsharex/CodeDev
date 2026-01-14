@@ -8,15 +8,14 @@ export interface SpotlightItem {
   title: string;
   description?: string;
   content?: string;
-  
+
   icon?: ReactNode;
   group?: string;
-  
+
   originalData?: Prompt;
-  
-  type: 'prompt' | 'command' | 'action' | 'url'; 
-  
-  // 功能标志
+
+  type: 'prompt' | 'command' | 'action' | 'url';
+
   isExecutable?: boolean;
   shellType?: string;
   url?: string;

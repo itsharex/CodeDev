@@ -6,8 +6,7 @@ import strip from 'strip-comments';
  */
 export function stripSourceComments(content: string, fileName: string): string {
   const ext = fileName.split('.').pop()?.toLowerCase() || '';
-  
-  // 映射语言类型
+
   let langType = '';
 
   switch (ext) {

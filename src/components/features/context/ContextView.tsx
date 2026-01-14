@@ -49,7 +49,6 @@ export function ContextView() {
       type: 'success'
   });
 
-  // 扫描弹窗状态
   const [scanState, setScanState] = useState<{
     isOpen: boolean;
     results: SecretMatch[];
@@ -87,17 +86,16 @@ export function ContextView() {
       try {
           if (action === 'copy') {
               await writeClipboard(text);
-              const actualTokens = Math.ceil(text.length / 4); // 简单估算用于日志
+              const actualTokens = Math.ceil(text.length / 4);
               console.log(`Context copied! Approx tokens: ${actualTokens}`);
               triggerToast(getText('context', 'toastCopied', language), 'success');
           } else if (action === 'save') {
-              // 保存流程：先弹窗选路径，再写入
               const filePath = await save({
                   filters: [{ name: 'Text File', extensions: ['txt', 'md', 'json'] }],
                   defaultPath: 'context.txt'
               });
-              if (!filePath) return; // 用户取消保存
-              
+              if (!filePath) return;
+
               await writeTextFile(filePath, text);
               triggerToast(getText('context', 'toastSaved', language), 'success');
           }
@@ -107,18 +105,15 @@ export function ContextView() {
       }
   };
 
-  // 安全检查流程
   const processWithSecurityCheck = async (text: string, action: 'copy' | 'save') => {
-      // 1. 如果开关关闭，直接执行
       if (!detectSecrets) {
           await executeFinalAction(text, action);
           return;
       }
 
-      // 2. 调用 Rust 进行扫描
       try {
           const results = await invoke<SecretMatch[]>('scan_for_secrets', { content: text });
-          
+
           if (results && results.length > 0) {
               setScanState({
                   isOpen: true,
@@ -136,7 +131,6 @@ export function ContextView() {
       }
   };
 
-  // 处理弹窗确认
   const handleScanConfirm = async (indicesToRedact: Set<number>) => {
       const { pendingText, pendingAction, results } = scanState;
       if (!pendingAction) return;
@@ -298,15 +292,13 @@ export function ContextView() {
           <div className="p-3 border-b border-border/50 text-xs font-bold text-muted-foreground uppercase tracking-wider flex justify-between shrink-0 items-center">
              <span className="flex items-center gap-1"><FileJson size={12}/>{getText('context', 'explorer', language)}</span>
              <div className="flex items-center gap-2">
-                {/* 反选按钮 */}
-                <button 
+                <button
                   onClick={invertSelection}
                   className="p-1 hover:bg-secondary/80 rounded transition-colors text-muted-foreground hover:text-foreground"
                   title={getText('context', 'invertSelection', language)}
                 >
                    <ArrowRightLeft size={12} />
                 </button>
-                {/* 计数显示 */}
                 <span className="bg-secondary/50 px-1.5 py-0.5 rounded text-[10px] tabular-nums">
                   {getText('context', 'selectedCount', language, { count: stats.fileCount.toString() })}
                 </span>

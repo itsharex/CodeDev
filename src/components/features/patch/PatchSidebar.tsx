@@ -40,9 +40,8 @@ export function add(a: number, b: number): number {
 }
 >>>>>>> REPLACE
 
-My request is:`;
+My request as input is:`;
 
-// 定义从 PatchView 传入的 GitCommit 类型
 interface GitCommit {
   hash: string;
   author: string;
@@ -116,7 +115,6 @@ export function PatchSidebar({
 
   const { onContextMenu } = useSmartContextMenu({ onPaste: handlePaste });
 
-  // 将文件列表拆分为 Git 文件和手动文件
   const gitFiles = files.filter(f => f.gitStatus);
   const manualFile = files.find(f => f.isManual);
   const aiPatchFiles = files.filter(f => !f.isManual && !f.gitStatus);
@@ -219,7 +217,6 @@ export function PatchSidebar({
                   <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5"><FileText size={12} /> Changes ({gitFiles.length})</span>
                 </div>
                 <div className="flex-1 overflow-y-auto p-2 space-y-1 custom-scrollbar">
-                  {/* 手动对比项 */}
                   {manualFile && (
                     <button onClick={() => onSelectFile(manualFile.id)} className={cn("w-full flex items-center gap-3 px-3 py-2 rounded-lg text-xs transition-all group border", selectedFileId === manualFile.id ? "bg-background text-primary border-border shadow-sm" : "border-dashed border-border/50 hover:bg-background/60 text-muted-foreground hover:text-foreground")}>
                       <ArrowRightLeft size={14} />
@@ -229,7 +226,6 @@ export function PatchSidebar({
 
                   {gitFiles.length > 0 && manualFile && <div className="h-px bg-border/50 my-2"/>}
 
-                  {/* Git 文件列表 - 修改为带复选框的行 */}
                   {gitFiles.map(file => {
                     const isSelected = selectedFileId === file.id;
                     const isChecked = selectedExportIds?.has(file.id);
@@ -237,8 +233,7 @@ export function PatchSidebar({
 
                     return (
                         <div key={file.id} className={cn("flex items-center gap-1 rounded-lg transition-all group/row mb-1", isSelected ? "bg-background border border-border shadow-sm" : "hover:bg-background/60 border border-transparent")}>
-                            
-                            {/* 复选框区域 */}
+
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -262,7 +257,6 @@ export function PatchSidebar({
                                 )}
                             </button>
 
-                            {/* 文件名按钮 */}
                             <button 
                                 onClick={() => onSelectFile(file.id)} 
                                 className={cn(
@@ -271,7 +265,6 @@ export function PatchSidebar({
                                 )}
                             >
                                 <div className="flex items-center gap-2 min-w-0">
-                                    {/* 特殊状态图标 */}
                                     {file.isBinary ? (
                                         <div title={getText('patch', 'binaryFile', language)} className="shrink-0 text-orange-400 flex items-center">
                                             <FileImage size={12} />

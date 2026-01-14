@@ -67,7 +67,7 @@ export function SettingsModal() {
                         </div>
                         
                         <div className="w-full h-px bg-border/50 my-4" />
-                        
+
                         {/* 快捷键设置 */}
                         <ShortcutInput value={spotlightShortcut} onChange={setSpotlightShortcut} />
 
@@ -288,7 +288,7 @@ export function SettingsModal() {
                                     {getText('settings', 'tempTip', language)}
                                 </p>
                             </div>
-                            
+
                             {/* Base URL & Model */}
                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                 <div className="space-y-1.5">

@@ -106,7 +106,7 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
 
       if (
         blockKeys.includes(code) ||
-        (e.ctrlKey && code === 'KeyV') || // 粘贴
+        (e.ctrlKey && code === 'KeyV') ||
         (e.metaKey && code === 'KeyV')
       ) {
         e.preventDefault();
@@ -139,14 +139,7 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
 
   return (
     <div className="flex flex-col h-full animate-in fade-in duration-300">
-      {/* 
-        1. 默认状态（隐藏状态）：强制 top: -60px。
-           即使 Monaco 内部设为 -30px，我们这里强制把它拉得更远。
-        2. .visible 状态：强制 top: 40px。这是显示位置，留出空间给 Tooltip。
-        3. transition：添加过渡动画，解决“闪一下”的问题，让它平滑地在 -60px 和 40px 之间移动。
-      */}
       <style>{`
-        /* 基础样式：定义通用外观和"隐藏时的位置" */
         .monaco-editor .find-widget {
           top: -35px !important;
           right: 28px !important;
@@ -157,12 +150,10 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
           visibility: visible;
         }
 
-        /* 激活状态：定义"显示时的位置" */
         .monaco-editor .find-widget.visible {
           top: 25px !important;
         }
 
-        /* 隐藏时使用 visibility: hidden 兜底，防止极少数情况下的点击穿透，配合 top: -60px 双重保险 */
         .monaco-editor .find-widget.hidden {
           top: -60px !important;
           visibility: hidden;

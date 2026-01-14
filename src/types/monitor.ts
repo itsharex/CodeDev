@@ -39,7 +39,7 @@ export interface ToolInfo {
 }
 
 export interface EnvReport {
-  system: Record<string, string> | null; // OS, CPU, Memory 等键值对
+  system: Record<string, string> | null;
   binaries: ToolInfo[];
   browsers: ToolInfo[];
   ides: ToolInfo[];

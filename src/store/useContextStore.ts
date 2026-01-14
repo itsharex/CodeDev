@@ -3,11 +3,6 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { fileStorage } from '@/lib/storage';
 import { IgnoreConfig, DEFAULT_PROJECT_IGNORE, FileNode } from '@/types/context';
 
-// --- 辅助函数：递归处理勾选逻辑 ---
-
-/**
- * 将指定节点及其所有子孙节点的 isSelected 状态强制设为目标值
- */
 const setAllChildren = (node: FileNode, isSelected: boolean): FileNode => {
   const newNode = { ...node, isSelected };
   if (newNode.children) {
@@ -16,9 +11,6 @@ const setAllChildren = (node: FileNode, isSelected: boolean): FileNode => {
   return newNode;
 };
 
-/**
- * 在树中查找目标 ID，并更新其状态（向下级联）
- */
 const updateNodeState = (nodes: FileNode[], targetId: string, isSelected: boolean): FileNode[] => {
   return nodes.map(node => {
     if (node.id === targetId) {
@@ -37,7 +29,7 @@ const updateNodeState = (nodes: FileNode[], targetId: string, isSelected: boolea
 const applyLockState = (nodes: FileNode[], fullConfig: IgnoreConfig, parentLocked = false): FileNode[] => {
   return nodes.map(node => {
     let shouldLock = parentLocked;
-    
+
     if (!shouldLock) {
         if (node.kind === 'dir' && fullConfig.dirs.includes(node.name)) shouldLock = true;
         if (node.kind === 'file' && fullConfig.files.includes(node.name)) shouldLock = true;
@@ -61,44 +53,34 @@ const applyLockState = (nodes: FileNode[], fullConfig: IgnoreConfig, parentLocke
   });
 };
 
-// --- Store 定义 ---
 const invertTreeSelection = (nodes: FileNode[]): FileNode[] => {
   return nodes.map(node => {
-    // 如果节点被锁定（.gitignore 或过滤器），跳过修改
     if (node.isLocked) return node;
 
     return {
       ...node,
-      // 翻转当前节点的选中状态
       isSelected: !node.isSelected,
-      // 递归处理子节点
       children: node.children ? invertTreeSelection(node.children) : undefined
     };
   });
 };
 
 interface ContextState {
-  // --- 持久化设置 ---
-  // 这里只存项目特有的配置，不再包含默认值
   projectIgnore: IgnoreConfig;
   removeComments: boolean;
-  
-  // --- 运行时状态 (不持久化) ---
+
   projectRoot: string | null;
-  fileTree: FileNode[]; 
+  fileTree: FileNode[];
   isScanning: boolean;
   detectSecrets: boolean;
 
-  // --- Actions ---
   setProjectRoot: (path: string) => void;
   setFileTree: (tree: FileNode[]) => void;
   setIsScanning: (status: boolean) => void;
-  
-  // 修改项目配置
+
   updateProjectIgnore: (type: keyof IgnoreConfig, action: 'add' | 'remove', value: string) => void;
   resetProjectIgnore: () => void;
   refreshTreeStatus: (globalConfig: IgnoreConfig) => void;
-  // 树操作
   toggleSelect: (nodeId: string, checked: boolean) => void;
   invertSelection: () => void;
   setRemoveComments: (enable: boolean) => void;
@@ -137,16 +119,13 @@ export const useContextStore = create<ContextState>()(
       
       resetProjectIgnore: () => set({ projectIgnore: DEFAULT_PROJECT_IGNORE }),
 
-      // 刷新树状态（应用黑名单）
       refreshTreeStatus: (globalConfig) => set((state) => {
-        // 合并配置
         const effectiveConfig = {
           dirs: [...globalConfig.dirs, ...state.projectIgnore.dirs],
           files: [...globalConfig.files, ...state.projectIgnore.files],
           extensions: [...globalConfig.extensions, ...state.projectIgnore.extensions],
         };
 
-        // 应用锁定逻辑
         const newTree = applyLockState(state.fileTree, effectiveConfig);
         return { fileTree: newTree };
       }),

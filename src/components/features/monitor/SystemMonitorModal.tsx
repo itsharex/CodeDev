@@ -20,12 +20,6 @@ export function SystemMonitorModal() {
 
   return (
     <div className="fixed inset-0 z-[80] bg-black/60 backdrop-blur-sm flex items-center justify-center animate-in fade-in duration-200 p-4">
-      {/* 
-         修复说明：
-         1. h-[650px]: 设定一个理想的固定高度，防止加载时内容撑开导致的跳变。
-         2. max-h-[90vh]: 强制最大高度不超过视口的 90%，确保在小屏幕下不会溢出，保证右上角的关闭按钮永远在可视区域内。
-         3. w-full max-w-[950px]: 保持宽度自适应但有上限。
-      */}
       <div className="w-full max-w-[950px] h-[650px] max-h-[90vh] bg-background border border-border rounded-xl shadow-2xl flex flex-col overflow-hidden animate-in zoom-in-95 duration-200">
 
         {/* Header */}
@@ -107,7 +101,7 @@ function NavBtn({ active, onClick, icon, label }: any) {
 function DashboardSkeleton() {
   return (
     <div className="h-full flex flex-col p-6 gap-6 animate-in fade-in duration-500">
-      
+
       {/* 顶部指标卡片骨架 */}
       <div className="grid grid-cols-2 gap-4 shrink-0">
         {[...Array(2)].map((_, i) => (
@@ -146,11 +140,11 @@ function DashboardSkeleton() {
           {/* 模拟数据行 */}
           {[...Array(10)].map((_, i) => (
             <div key={i} className="flex items-center gap-4 px-4 py-2.5 rounded-md odd:bg-secondary/10">
-              <div className="h-3 w-12 bg-secondary rounded animate-pulse opacity-50" /> {/* PID */}
-              <div className="h-3 w-40 bg-secondary rounded animate-pulse" /> {/* Name */}
-              <div className="h-3 w-16 bg-secondary rounded animate-pulse hidden sm:block" /> {/* User */}
-              <div className="h-3 w-12 bg-secondary rounded animate-pulse ml-auto" /> {/* CPU */}
-              <div className="h-3 w-16 bg-secondary rounded animate-pulse" /> {/* Mem */}
+              <div className="h-3 w-12 bg-secondary rounded animate-pulse opacity-50" />
+              <div className="h-3 w-40 bg-secondary rounded animate-pulse" />
+              <div className="h-3 w-16 bg-secondary rounded animate-pulse hidden sm:block" />
+              <div className="h-3 w-12 bg-secondary rounded animate-pulse ml-auto" />
+              <div className="h-3 w-16 bg-secondary rounded animate-pulse" />
             </div>
           ))}
         </div>

@@ -6,12 +6,10 @@ import { fetch } from '@tauri-apps/plugin-http';
 import { emit } from '@tauri-apps/api/event'; 
 import { AIModelConfig, AIProviderConfig, AIProviderSetting, DEFAULT_AI_CONFIG, DEFAULT_PROVIDER_SETTINGS } from '@/types/model';
 
-// --- 1. 导出类型 ---
 export type AppView = 'prompts' | 'context' | 'patch';
 export type AppTheme = 'dark' | 'light';
 export type AppLang = 'en' | 'zh';
 
-// --- 2. 默认/兜底模型数据 ---
 export const DEFAULT_MODELS: AIModelConfig[] = [
   {
     "id": "Gemini-3-pro-preview",
@@ -47,27 +45,24 @@ export const DEFAULT_MODELS: AIModelConfig[] = [
   }
 ];
 
-// 配置 URL 列表 (CDN 优先 + GitHub 原站)
 const REMOTE_CONFIG_URLS = [
   'https://gitee.com/winriseF/models/raw/master/models/models.json',
-  'https://cdn.jsdelivr.net/gh/WinriseF/Code-Forge-AI@main/models/models.json', // 方案一：jsDelivr CDN
-  'https://raw.githubusercontent.com/WinriseF/Code-Forge-AI/main/models/models.json' // 方案二：GitHub 原站
+  'https://cdn.jsdelivr.net/gh/WinriseF/Code-Forge-AI@main/models/models.json',
+  'https://raw.githubusercontent.com/WinriseF/Code-Forge-AI/main/models/models.json'
 ];
 
 export interface SpotlightAppearance {
-  width: number;        // 默认 640
-  defaultHeight: number; // 默认/搜索模式固定高度，默认 400
-  maxChatHeight: number; // 聊天模式最大高度，默认 600
+  width: number;
+  defaultHeight: number;
+  maxChatHeight: number;
 }
 
 export interface RestReminderConfig {
-  enabled: boolean;     // 是否启用
-  intervalMinutes: number; // 提醒间隔（分钟），默认 45
+  enabled: boolean;
+  intervalMinutes: number;
 }
 
-// --- 3. Store 接口 ---
 interface AppState {
-  // UI State
   currentView: AppView;
   isSidebarOpen: boolean;
   isSettingsOpen: boolean;
@@ -78,21 +73,16 @@ interface AppState {
   theme: AppTheme;
   language: AppLang;
   spotlightAppearance: SpotlightAppearance;
-  //快捷键
-  spotlightShortcut: string; 
-  // Filters
+  spotlightShortcut: string;
   globalIgnore: IgnoreConfig;
-  // Rest Reminder
   restReminder: RestReminderConfig;
 
-  // Models State
   models: AIModelConfig[];
   lastUpdated: number;
 
   aiConfig: AIProviderConfig;
   savedProviderSettings: Record<string, AIProviderSetting>;
 
-  // Actions
   setView: (view: AppView) => void;
   toggleSidebar: () => void;
   setSettingsOpen: (open: boolean) => void;
@@ -106,17 +96,14 @@ interface AppState {
   setAIConfig: (config: Partial<AIProviderConfig>) => void;
   setSpotlightShortcut: (shortcut: string) => void;
   setRestReminder: (config: Partial<RestReminderConfig>) => void;
-  // Async Actions
   syncModels: () => Promise<void>;
   resetModels: () => void;
   setSpotlightAppearance: (config: Partial<SpotlightAppearance>) => void;
 }
 
-// --- 4. Store 实现 ---
 export const useAppStore = create<AppState>()(
   persist(
     (set) => ({
-      // 初始值
       currentView: 'prompts',
       isSidebarOpen: true,
       isSettingsOpen: false,
@@ -126,7 +113,7 @@ export const useAppStore = create<AppState>()(
       contextSidebarWidth: 300,
       theme: 'dark',
       language: 'zh',
-      spotlightShortcut: 'Alt+S', 
+      spotlightShortcut: 'Alt+S',
       aiConfig: DEFAULT_AI_CONFIG,
       savedProviderSettings: DEFAULT_PROVIDER_SETTINGS,
       globalIgnore: DEFAULT_GLOBAL_IGNORE,
@@ -134,12 +121,10 @@ export const useAppStore = create<AppState>()(
         enabled: false,
         intervalMinutes: 45
       },
-      
-      // 模型初始值
+
       models: DEFAULT_MODELS,
       lastUpdated: 0,
 
-      // Setters
       spotlightAppearance: { width: 640, defaultHeight: 400, maxChatHeight: 600 },
       setSpotlightAppearance: (config) => set((state) => ({
         spotlightAppearance: { ...state.spotlightAppearance, ...config }
@@ -168,9 +153,8 @@ export const useAppStore = create<AppState>()(
         const newConfig = { ...state.aiConfig, ...config };
         const currentProviderId = newConfig.providerId;
 
-        // 情况1：切换了 Provider
+        // 切换了 Provider
         if (config.providerId && config.providerId !== state.aiConfig.providerId) {
-            // 尝试从已保存的配置中加载
             const saved = state.savedProviderSettings[config.providerId] || DEFAULT_PROVIDER_SETTINGS[config.providerId] || {
                 apiKey: '',
                 baseUrl: '',
@@ -189,8 +173,7 @@ export const useAppStore = create<AppState>()(
             };
         }
 
-        // 情况2：修改了当前 Provider 的具体配置 (apiKey/modelId/etc)
-        // 自动保存回 savedProviderSettings
+        // 修改了当前 Provider 的具体配置，自动保存
         const newSavedSettings = { ...state.savedProviderSettings };
         newSavedSettings[currentProviderId] = {
             apiKey: newConfig.apiKey,
@@ -199,7 +182,7 @@ export const useAppStore = create<AppState>()(
             temperature: newConfig.temperature
         };
 
-        return { 
+        return {
           aiConfig: newConfig,
           savedProviderSettings: newSavedSettings
         };
@@ -216,19 +199,13 @@ export const useAppStore = create<AppState>()(
         return { globalIgnore: { ...state.globalIgnore, [type]: newList } };
       }),
 
-      // 并发请求多个源，谁快用谁
       syncModels: async () => {
-        console.log('[AppStore] Starting model sync...');
-        
-        // 定义单个请求的逻辑
         const fetchUrl = async (url: string) => {
-          console.log(`[Sync] Trying: ${url}`);
           const response = await fetch(url, {
             method: 'GET',
           });
 
           if (response.ok) {
-            // 使用 .json() 获取数据
             const data = await response.json() as AIModelConfig[];
             if (Array.isArray(data) && data.length > 0) {
               return data;
@@ -238,16 +215,13 @@ export const useAppStore = create<AppState>()(
         };
 
         try {
-          // Promise.any 会等待第一个成功的 Promise，如果全部失败则抛出 AggregateError
-          // 这实现了“赛跑”机制，CDN 通常会胜出
           const data = await Promise.any(REMOTE_CONFIG_URLS.map(url => fetchUrl(url)));
 
-          set({ 
-            models: data, 
-            lastUpdated: Date.now() 
+          set({
+            models: data,
+            lastUpdated: Date.now()
           });
-          console.log(`[AppStore] Models synced successfully! Count: ${data.length}`);
-          
+
         } catch (err) {
           console.warn('[AppStore] All sync sources failed. Keeping local cache.', err);
         }

@@ -6,7 +6,7 @@ export type ToastType = 'success' | 'warning' | 'error' | 'info';
 
 interface ToastProps {
   message: string;
-  type?: ToastType; // 默认为 success
+  type?: ToastType;
   show: boolean;
   onDismiss: () => void;
 }
@@ -23,7 +23,7 @@ export function Toast({ message, type = 'success', show, onDismiss }: ToastProps
     if (show) {
       const timer = setTimeout(() => {
         onDismiss();
-      }, 3000); // 延长一点显示时间到 3秒
+      }, 3000);
       return () => clearTimeout(timer);
     }
   }, [show, onDismiss]);
@@ -31,9 +31,7 @@ export function Toast({ message, type = 'success', show, onDismiss }: ToastProps
   return (
     <div
       className={cn(
-        // 定位修改：bottom-6 right-6
         "fixed bottom-6 right-6 z-[100] flex items-center gap-3 min-w-[300px] max-w-sm p-4 rounded-xl border bg-background/95 backdrop-blur-md shadow-2xl transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)",
-        // 动画优化：增加缩放和位移
         show
           ? "opacity-100 translate-y-0 scale-100"
           : "opacity-0 translate-y-8 scale-95 pointer-events-none"
@@ -43,8 +41,7 @@ export function Toast({ message, type = 'success', show, onDismiss }: ToastProps
       <div className="flex-1 text-sm font-medium text-foreground leading-relaxed">
         {message}
       </div>
-      
-      {/* 进度条装饰 */}
+
       {show && (
         <div className="absolute bottom-0 left-4 right-4 h-[2px] bg-secondary/50 rounded-full overflow-hidden">
             <div className="h-full bg-primary/50 animate-[progress_3s_linear_forwards]" />

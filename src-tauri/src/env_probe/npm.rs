@@ -3,7 +3,6 @@ use serde_json::Value;
 use std::fs;
 use std::path::Path;
 
-/// 扫描 NPM 包信息
 pub fn probe_npm_packages(project_root: Option<String>) -> Vec<ToolInfo> {
     let Some(root) = project_root else {
         return Vec::new();
@@ -37,7 +36,6 @@ pub fn probe_npm_packages(project_root: Option<String>) -> Vec<ToolInfo> {
 
     let mut results = Vec::new();
     
-    // 预先检查 node_modules 是否存在，避免无谓查找
     let node_modules = path.join("node_modules");
     if !node_modules.exists() {
         for dep in deps {
@@ -73,7 +71,6 @@ pub fn probe_npm_packages(project_root: Option<String>) -> Vec<ToolInfo> {
         });
     }
 
-    // 按名称排序
     results.sort_by(|a, b| a.name.cmp(&b.name));
     results
 }

@@ -69,19 +69,14 @@ pub struct LockedFileProcess {
     pub is_system: bool,
 }
 
-// ---------------------------------------------------------
-// 系统进程判断逻辑
-// ---------------------------------------------------------
-
 fn is_critical_system_process(_sys: &System, process: &sysinfo::Process) -> bool {
     let pid = process.pid().as_u32();
-    
-    // 1. 绝对红线 (所有平台)
+
     if pid <= 4 { return true; }
 
     #[cfg(target_os = "windows")]
     {
-        // 2. Windows API 判断
+        // Windows API check
         unsafe {
             if let Ok(handle) = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, pid) {
                 if !handle.is_invalid() {
@@ -99,7 +94,7 @@ fn is_critical_system_process(_sys: &System, process: &sysinfo::Process) -> bool
             }
         }
 
-        // 3. 补充名单
+        // Additional list
         let name = process.name().to_string_lossy().to_lowercase();
         if ["csrss.exe", "smss.exe", "wininit.exe", "services.exe", "lsass.exe", "memory compression", "spoolsv.exe"].contains(&name.as_str()) {
             return true;
@@ -118,10 +113,6 @@ fn is_critical_system_process(_sys: &System, process: &sysinfo::Process) -> bool
 
     false
 }
-
-// ---------------------------------------------------------
-// 命令实现
-// ---------------------------------------------------------
 
 #[tauri::command]
 pub fn get_system_metrics(system: State<'_, Arc<Mutex<System>>>) -> Result<SystemMetrics, String> {
@@ -268,10 +259,7 @@ pub fn kill_process(pid: u32, system: State<'_, Arc<Mutex<System>>>) -> Result<S
     }
 }
 
-// ---------------------------------------------------------
-// 文件占用检测
-// ---------------------------------------------------------
-
+// File lock detection
 #[tauri::command]
 pub fn check_file_locks(path: String, system: State<'_, Arc<Mutex<System>>>) -> Result<Vec<LockedFileProcess>, String> {
     let locking_pids: Vec<u32>;

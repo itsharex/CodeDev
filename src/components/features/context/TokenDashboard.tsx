@@ -199,7 +199,6 @@ export function TokenDashboard({
                          <span className="truncate text-foreground font-medium" title={f.path}>{f.name}</span>
                       </div>
                       
-                      {/* Normal State: Show Size */}
                       <span className="font-mono text-muted-foreground transition-opacity duration-200 group-hover/item:opacity-0">
                           {formatSize(f.size || 0)}
                       </span>

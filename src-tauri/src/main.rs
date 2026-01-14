@@ -20,10 +20,6 @@ mod db;
 mod monitor;
 mod env_probe;
 
-// =================================================================
-// 系统监控相关数据结构
-// =================================================================
-
 #[derive(serde::Serialize)]
 struct SystemInfo {
     cpu_usage: f64,
@@ -32,10 +28,6 @@ struct SystemInfo {
     memory_available: u64,
     uptime: u64,
 }
-
-// =================================================================
-// 通用系统命令
-// =================================================================
 
 #[tauri::command]
 fn greet(name: &str) -> String {
@@ -102,10 +94,6 @@ fn check_python_env() -> Result<String, String> {
     }
 }
 
-// =================================================================
-// 导出命令
-// =================================================================
-
 #[tauri::command]
 async fn scan_for_secrets(content: String) -> Vec<gitleaks::SecretMatch> {
     let matches = tauri::async_runtime::spawn_blocking(move || {
@@ -143,10 +131,6 @@ async fn export_git_diff(
 
     Ok(())
 }
-
-// =================================================================
-// Main Entry
-// =================================================================
 
 fn main() {
     tauri::Builder::default()

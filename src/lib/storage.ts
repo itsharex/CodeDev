@@ -16,11 +16,9 @@ export const fileStorage = {
   getItem: async (name: string): Promise<string | null> => {
     const fileName = `${name}.json`;
     try {
-      // 1. 检查文件是否存在
       const fileExists = await exists(fileName, BASE_DIR_OPT);
       if (!fileExists) return null;
-      
-      // 2. 读取文件
+
       return await readTextFile(fileName, BASE_DIR_OPT);
     } catch (err) {
       console.warn(`[Storage] Read ${fileName} failed:`, err);
@@ -31,13 +29,11 @@ export const fileStorage = {
   setItem: async (name: string, value: string): Promise<void> => {
     const fileName = `${name}.json`;
     try {
-      // 1. 确保根目录存在
       const rootExists = await exists('', BASE_DIR_OPT);
       if (!rootExists) {
          await mkdir('', { ...BASE_DIR_OPT, recursive: true });
       }
-      
-      // 2. 写入文件
+
       await writeTextFile(fileName, value, BASE_DIR_OPT);
     } catch (err) {
       console.error(`[Storage] Write ${fileName} failed:`, err);
@@ -48,7 +44,6 @@ export const fileStorage = {
     const fileName = `${name}.json`;
     try {
       if (await exists(fileName, BASE_DIR_OPT)) {
-        // 使用 remove 替代 removeFile
         await remove(fileName, BASE_DIR_OPT);
       }
     } catch (err) {

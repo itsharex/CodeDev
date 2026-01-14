@@ -3,36 +3,36 @@ export type ShellType = 'auto' | 'cmd' | 'powershell' | 'bash' | 'zsh' | 'python
 export interface Prompt {
   id: string;
   title: string;
-  content: string;      
-  group: string;        
-  description?: string; 
-  tags?: string[];      
+  content: string;
+  group: string;
+  description?: string;
+  tags?: string[];
   isFavorite: boolean;
   createdAt: number;
   updatedAt: number;
-  
-  source?: 'local' | 'official'; 
-  packId?: string;               
-  originalId?: string;
-  
-  type?: 'command' | 'prompt'; 
 
-  isExecutable?: boolean; // 是否为可执行指令
-  shellType?: ShellType;  // 指定执行环境
+  source?: 'local' | 'official';
+  packId?: string;
+  originalId?: string;
+
+  type?: 'command' | 'prompt';
+
+  isExecutable?: boolean;
+  shellType?: ShellType;
 }
 
 export const DEFAULT_GROUP = 'Default';
 
 export interface PackManifestItem {
-  id: string;        
-  language: string;  
-  platform: string;  
-  name: string;      
+  id: string;
+  language: string;
+  platform: string;
+  name: string;
   description: string;
   count: number;
   size_kb: number;
-  url: string;       
-  category?: 'command' | 'prompt'; 
+  url: string;
+  category?: 'command' | 'prompt';
 }
 
 export interface PackManifest {

@@ -13,10 +13,7 @@ interface ConfirmState {
   options: ConfirmOptions;
   resolve?: (value: boolean) => void;
 
-  // 核心方法：调用它会弹出窗口，并返回一个 Promise 等待结果
   ask: (options: ConfirmOptions) => Promise<boolean>;
-  
-  // 内部方法：处理点击
   handleConfirm: () => void;
   handleCancel: () => void;
 }

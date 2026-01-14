@@ -7,19 +7,15 @@ import { FileNode } from '@/types/context';
 export function generateAsciiTree(nodes: FileNode[]): string {
   let output = '';
 
-  // 递归函数
   const traverse = (nodeList: FileNode[], prefix: string) => {
-    // 1. 过滤出需要显示的节点 (被选中)
     const activeNodes = nodeList.filter(n => n.isSelected);
-    
+
     activeNodes.forEach((node, index) => {
       const isLast = index === activeNodes.length - 1;
-      
-      // 构建当前行的前缀
+
       const connector = isLast ? '└── ' : '├── ';
       output += `${prefix}${connector}${node.name}${node.kind === 'dir' ? '/' : ''}\n`;
-      
-      // 递归处理子节点
+
       if (node.children && node.children.length > 0) {
         const childPrefix = prefix + (isLast ? '    ' : '│   ');
         traverse(node.children, childPrefix);
@@ -28,7 +24,7 @@ export function generateAsciiTree(nodes: FileNode[]): string {
   };
 
   traverse(nodes, '');
-  
+
   if (!output.trim()) return '(No files selected)';
   return output;
 }

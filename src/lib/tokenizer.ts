@@ -19,6 +19,5 @@ export function countTokens(text: string): number {
 }
 
 export function estimateTokens(byteSize: number): number {
-  // 保守估算：1 Token ≈ 4 Bytes
   return Math.ceil(byteSize / 4);
 }

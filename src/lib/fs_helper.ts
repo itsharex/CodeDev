@@ -27,21 +27,18 @@ class TaskQueue {
 const scanQueue = new TaskQueue(50); // 限制最大 50 个并发 FS 操作
 
 export async function scanProject(
-  path: string, 
+  path: string,
   config: IgnoreConfig,
-  visitedPaths = new Set<string>() // 防止循环引用
+  visitedPaths = new Set<string>()
 ): Promise<FileNode[]> {
   try {
-    // 防止循环扫描
     if (visitedPaths.has(path)) return [];
     visitedPaths.add(path);
 
     const entries = await scanQueue.run(() => readDir(path));
-    
-    // 分批处理，避免 Promise.all 一次性过大
+
     const nodes: (FileNode | null)[] = [];
-    
-    // 先进行简单的名字过滤，减少后续操作
+
     const validEntries = entries.filter(entry => {
         const name = entry.name;
         if (config.dirs.includes(name)) return false;
@@ -51,7 +48,6 @@ export async function scanProject(
         return true;
     });
 
-    // 串行或受控并发处理子项
     for (const entry of validEntries) {
         const fullPath = await join(path, entry.name);
         const isDir = entry.isDirectory;
@@ -71,7 +67,6 @@ export async function scanProject(
             try {
                 size = await scanQueue.run(() => invoke('get_file_size', { path: fullPath }));
             } catch (err) {
-                // ignore error
             }
         }
 

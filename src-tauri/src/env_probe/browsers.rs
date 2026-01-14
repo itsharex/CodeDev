@@ -10,12 +10,9 @@ use std::process::Command;
 #[allow(dead_code)]
 struct BrowserConfig {
     name: &'static str,
-    /// macOS Bundle ID (例如 "com.google.Chrome")
     mac_id: &'static str,
-    
     linux_bin: &'static str,
-    /// Windows 默认安装路径片段 (用于快速检测)
-    win_path_suffix: &'static str, 
+    win_path_suffix: &'static str,
 }
 
 const BROWSERS: &[BrowserConfig] = &[
@@ -62,15 +59,11 @@ fn check_browser(cfg: &BrowserConfig) -> ToolInfo {
     
     #[cfg(target_os = "macos")]
     {
-        
-        
         if let Ok(app_path) = common::run_command("mdfind", &[&format!("kMDItemCFBundleIdentifier == '{}'", cfg.mac_id)]) {
             if !app_path.is_empty() {
                 let first_path = app_path.lines().next().unwrap_or("").trim().to_string();
                 if !first_path.is_empty() {
                     path = Some(first_path.clone());
-                    // 使用 mdls 读取版本号 (比 PlistBuddy 更快且无需解析 XML)
-                    // mdls -name kMDItemVersion -raw /Applications/Google\ Chrome.app
                     if let Ok(ver) = common::run_command("mdls", &["-name", "kMDItemVersion", "-raw", &first_path]) {
                         if !ver.is_empty() && ver != "(null)" {
                             version = ver;

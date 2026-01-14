@@ -14,8 +14,7 @@ export function PromptLibraryManager() {
   
   const { language } = useAppStore();
   const [activeTab, setActiveTab] = useState<'prompt' | 'command'>('prompt');
-  
-  // 错误信息状态
+
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   useEffect(() => {
@@ -38,7 +37,6 @@ export function PromptLibraryManager() {
       (p.category || 'command') === activeTab
   ) || [];
 
-  // 定义固定的数据源信息
   const getSourceInfo = () => {
       if (activeTab === 'command') {
           return {
@@ -46,7 +44,6 @@ export function PromptLibraryManager() {
               url: 'https://github.com/tldr-pages/tldr'
           };
       } else {
-          // Prompts
           return {
               name: 'Awesome ChatGPT Prompts',
               url: 'https://github.com/f/awesome-chatgpt-prompts'
@@ -58,7 +55,7 @@ export function PromptLibraryManager() {
 
   return (
     <div className="flex flex-col h-full relative">
-      
+
       {/* Header */}
       <div className="mb-4 flex items-center justify-between shrink-0">
          <div>
@@ -68,7 +65,7 @@ export function PromptLibraryManager() {
             </h3>
             <div className="text-xs text-muted-foreground mt-1 flex flex-wrap items-center gap-1">
                 <span>{getText('library', 'desc', language)}</span>
-                
+
                 {/* 渲染固定的来源链接 */}
                 <button 
                     onClick={() => open(sourceInfo.url)}

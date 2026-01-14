@@ -6,7 +6,6 @@ use crate::env_probe::common;
 pub fn probe_sdks() -> HashMap<String, Vec<String>> {
     let mut sdks = HashMap::new();
 
-    // 1. iOS SDK (macOS)
     #[cfg(target_os = "macos")]
     {
         if let Ok(out) = common::run_command("xcodebuild", &["-showsdks"]) {
@@ -25,12 +24,10 @@ pub fn probe_sdks() -> HashMap<String, Vec<String>> {
         }
     }
 
-    // 2. Android SDK
     let android_home = std::env::var("ANDROID_HOME").or_else(|_| std::env::var("ANDROID_SDK_ROOT"));
-    
+
     if let Ok(root) = android_home {
         let mut android_info = Vec::new();
-        // 检查 build-tools
         let build_tools = std::path::Path::new(&root).join("build-tools");
         if build_tools.exists() {
             if let Ok(entries) = std::fs::read_dir(build_tools) {
@@ -45,8 +42,7 @@ pub fn probe_sdks() -> HashMap<String, Vec<String>> {
                 }
             }
         }
-        
-        // 检查 platforms
+
         let platforms = std::path::Path::new(&root).join("platforms");
         if platforms.exists() {
              if let Ok(entries) = std::fs::read_dir(platforms) {

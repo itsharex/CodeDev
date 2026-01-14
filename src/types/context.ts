@@ -4,11 +4,10 @@ export interface IgnoreConfig {
   extensions: string[];
 }
 
-// 这是全局默认配置 (更为通用)
 export const DEFAULT_GLOBAL_IGNORE: IgnoreConfig = {
   dirs: [
-    'node_modules', '.git', '.vscode', '.idea', 'dist', 'build', 'target', 
-    'bin', 'obj', '__pycache__', 'coverage', 'venv', '.next', '.nuxt', 
+    'node_modules', '.git', '.vscode', '.idea', 'dist', 'build', 'target',
+    'bin', 'obj', '__pycache__', 'coverage', 'venv', '.next', '.nuxt',
     '.obsidian', 'out'
   ],
   files: [
@@ -24,14 +23,12 @@ export const DEFAULT_GLOBAL_IGNORE: IgnoreConfig = {
   ]
 };
 
-// 项目默认配置 (初始为空，完全由用户自定义或继承全局)
 export const DEFAULT_PROJECT_IGNORE: IgnoreConfig = {
   dirs: [],
   files: [],
   extensions: []
 };
 
-// 文件节点定义保持不变
 export interface FileNode {
   id: string;
   name: string;

@@ -4,7 +4,6 @@ use rayon::prelude::*;
 use std::collections::HashMap;
 
 pub fn scan_ai_context(root: &str) -> AiContextReport {
-    // 1. 定义扫描器注册表 (Registry)
     let registry: Vec<(ProjectType, Box<dyn ProjectScanner>)> = vec![
         (ProjectType::NodeFrontend, Box::new(scanners::NodeScanner)),
         (ProjectType::Rust, Box::new(scanners::RustScanner)),
@@ -16,13 +15,11 @@ pub fn scan_ai_context(root: &str) -> AiContextReport {
         (ProjectType::Mobile, Box::new(scanners::MobileScanner)),
     ];
 
-    // 2. 并行探测：筛选出匹配当前项目的扫描器
     let matched_scanners: Vec<&(ProjectType, Box<dyn ProjectScanner>)> = registry
         .par_iter()
         .filter(|(_, scanner)| scanner.match_identity(root))
         .collect();
 
-    // 3. 并行执行深度扫描
     let results: Vec<(ProjectType, Option<ToolInfo>, HashMap<String, String>)> = matched_scanners
         .par_iter()
         .map(|(pt, scanner)| {
@@ -32,7 +29,6 @@ pub fn scan_ai_context(root: &str) -> AiContextReport {
         })
         .collect();
 
-    // 4. 数据聚合
     let mut toolchain = Vec::new();
     let mut dependencies = HashMap::new();
     let mut detected_types = Vec::new();
@@ -45,13 +41,10 @@ pub fn scan_ai_context(root: &str) -> AiContextReport {
         dependencies.extend(deps);
     }
 
-    // 5. 智能推断最终的 ProjectType
     let project_type = determine_project_type(&detected_types, &dependencies);
 
-    // 6. 获取系统信息
     let system_info = get_system_brief();
 
-    // 7. 生成 Prompt Markdown
     let summary = format!("Detected {:?} Project on {}", project_type, system_info);
     let markdown = build_markdown(&project_type, &system_info, &toolchain, &dependencies);
 
@@ -65,28 +58,23 @@ pub fn scan_ai_context(root: &str) -> AiContextReport {
     }
 }
 
-/// 智能推断项目类型
 fn determine_project_type(types: &[ProjectType], deps: &HashMap<String, String>) -> ProjectType {
     if types.is_empty() {
         return ProjectType::Mixed;
     }
 
-    // 规则 1: Tauri 优先级最高
     if deps.keys().any(|k: &String| k.contains("tauri") || k.starts_with("@tauri-apps")) {
         return ProjectType::Tauri;
     }
 
-    // 规则 2: Mobile 优先级 (Flutter/RN)
     if types.contains(&ProjectType::Mobile) {
         return ProjectType::Mobile;
     }
 
-    // 规则 3: 如果只命中一种，直接返回
     if types.len() == 1 {
         return types[0].clone();
     }
 
-    // 规则 4: 默认混合
     ProjectType::Mixed
 }
 

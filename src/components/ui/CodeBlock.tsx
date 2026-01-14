@@ -24,18 +24,16 @@ export function CodeBlock({ language, children, className }: CodeBlockProps) {
     }
   };
 
-  // 简单的语言名称格式化
-  const displayLang = language === 'typescript' || language === 'ts' ? 'TS' 
+  const displayLang = language === 'typescript' || language === 'ts' ? 'TS'
     : language === 'javascript' || language === 'js' ? 'JS'
     : language === 'bash' || language === 'sh' ? 'Terminal'
     : language;
 
   return (
     <div className={cn(
-        "relative group rounded-lg overflow-hidden my-3 border border-border/40 bg-[#1e1e1e] shadow-sm", // 外层容器负责边框和背景底色
+        "relative group rounded-lg overflow-hidden my-3 border border-border/40 bg-[#1e1e1e] shadow-sm",
         className
     )}>
-      {/* 滚动条样式注入 */}
       <style>{`
         .code-block-scroll::-webkit-scrollbar { height: 6px; width: 6px; }
         .code-block-scroll::-webkit-scrollbar-track { background: transparent; }
@@ -44,12 +42,9 @@ export function CodeBlock({ language, children, className }: CodeBlockProps) {
         .code-block-scroll::-webkit-scrollbar-corner { background: transparent; }
       `}</style>
 
-      {/* 顶部标题栏 (The "Wrapper" Header) */}
       <div className="flex items-center justify-between px-3 py-1.5 bg-white/5 border-b border-white/5 select-none">
-        
-        {/* 左侧：语言标识 (小突起/Tab感) */}
+
         <div className="flex items-center gap-1.5 opacity-60 group-hover:opacity-100 transition-opacity">
-            {/* 终端命令，显示个小图标 */}
             {(language === 'bash' || language === 'sh' || language === 'shell') && (
                 <Terminal size={12} />
             )}
@@ -58,7 +53,6 @@ export function CodeBlock({ language, children, className }: CodeBlockProps) {
             </span>
         </div>
 
-        {/* 右侧：复制按钮 */}
         <button
             onClick={handleCopy}
             className={cn(
@@ -81,7 +75,6 @@ export function CodeBlock({ language, children, className }: CodeBlockProps) {
         </button>
       </div>
 
-      {/* 代码内容区域 */}
       <div className="relative">
         <SyntaxHighlighter
             style={vscDarkPlus}

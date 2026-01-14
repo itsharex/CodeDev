@@ -5,7 +5,7 @@ import { fetch } from '@tauri-apps/plugin-http';
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
   content: string;
-  reasoning?: string; // 思考内容
+  reasoning?: string;
 }
 
 /**
@@ -14,7 +14,6 @@ export interface ChatMessage {
 export async function streamChatCompletion(
   messages: ChatMessage[],
   config: AIProviderConfig,
-  // 同时返回 content 和 reasoning
   onChunk: (contentDelta: string, reasoningDelta: string) => void,
   onError: (err: string) => void,
   onFinish: () => void
@@ -31,7 +30,6 @@ export async function streamChatCompletion(
       temperature: config.temperature,
     };
 
-    // 使用 plugin-http 的 fetch
     const response = await fetch(`${config.baseUrl}/chat/completions`, {
       method: "POST",
       headers: {
@@ -42,7 +40,6 @@ export async function streamChatCompletion(
     });
 
     if (!response.ok) {
-        // fetch 的 response.text() 也返回 Promise
         const errorText = await response.text();
         throw new Error(`API Error ${response.status}: ${errorText}`);
     }
@@ -59,27 +56,25 @@ export async function streamChatCompletion(
 
       const chunk = decoder.decode(value, { stream: true });
       buffer += chunk;
-      
+
       const lines = buffer.split("\n");
-      // 保留最后一行可能不完整的数据到下一次循环
-      buffer = lines.pop() || ""; 
+      buffer = lines.pop() || "";
 
       for (const line of lines) {
         const trimmed = line.trim();
         if (!trimmed || !trimmed.startsWith("data: ")) continue;
-        
+
         const dataStr = trimmed.replace("data: ", "");
         if (dataStr === "[DONE]") break;
 
         try {
           const json = JSON.parse(dataStr);
           const delta = json.choices?.[0]?.delta;
-          
+
           if (delta) {
-            // DeepSeek/SiliconFlow 的思考内容通常在 reasoning_content 字段
             const contentDelta = delta.content || "";
             const reasoningDelta = delta.reasoning_content || "";
-            
+
             if (contentDelta || reasoningDelta) {
                 onChunk(contentDelta, reasoningDelta);
             }

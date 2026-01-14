@@ -76,7 +76,7 @@ function PromptCardComponent({ prompt, onEdit, onDelete, onTrigger }: PromptCard
 
   return (
     <>
-        <div 
+        <div
           ref={cardRef}
           className={cn(
             "group relative border border-border bg-card hover:border-primary/50 hover:shadow-lg hover:shadow-primary/5 rounded-xl transition-all duration-300 flex flex-col h-[180px] overflow-hidden cursor-pointer",
@@ -86,14 +86,12 @@ function PromptCardComponent({ prompt, onEdit, onDelete, onTrigger }: PromptCard
           onMouseLeave={handleMouseLeave}
           onClick={handleClick}
         >
-          {/* Header */}
           <div className="p-4 pb-2 flex justify-between items-start shrink-0">
             <div className="flex items-center gap-2 overflow-hidden">
                 <div className={cn(
                   "p-1.5 rounded-md shrink-0 transition-colors",
                   getGroupStyle(prompt.group)
                 )}>
-                   {/* --- 根据是否可执行显示不同图标 --- */}
                    {isExecutable ? <Zap size={14} /> : <Terminal size={14} />}
                 </div>
                 <h3 className="font-semibold text-foreground truncate text-sm" title={prompt.title}>
@@ -105,8 +103,8 @@ function PromptCardComponent({ prompt, onEdit, onDelete, onTrigger }: PromptCard
                     </div>
                 )}
             </div>
-            
-            <button 
+
+            <button
               onClick={(e) => { e.stopPropagation(); toggleFavorite(prompt.id); }}
               className={cn(
                 "transition-colors p-1 hover:bg-secondary rounded-md",
@@ -117,7 +115,6 @@ function PromptCardComponent({ prompt, onEdit, onDelete, onTrigger }: PromptCard
             </button>
           </div>
 
-          {/* Body */}
           <div className="px-4 flex-1 overflow-hidden relative">
             <code className="text-xs text-muted-foreground/80 font-mono break-all whitespace-pre-wrap leading-relaxed">
                 {prompt.content.slice(0, 150)}
@@ -126,7 +123,6 @@ function PromptCardComponent({ prompt, onEdit, onDelete, onTrigger }: PromptCard
             <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-t from-card to-transparent pointer-events-none" />
           </div>
 
-          {/* Footer */}
           <div className="px-4 py-3 border-t border-border/50 bg-secondary/20 flex items-center justify-between text-xs text-muted-foreground shrink-0">
             <span className="flex items-center gap-1 opacity-70">
                 <Hash size={12} /> {prompt.group}
@@ -143,8 +139,7 @@ function PromptCardComponent({ prompt, onEdit, onDelete, onTrigger }: PromptCard
                         <div className="w-px h-3 bg-border mx-1" />
                     </>
                )}
-               {/* --- 条件渲染按钮样式和内容 --- */}
-               <button 
+               <button
                  className={cn(
                    "flex items-center gap-1.5 px-2 py-1 rounded text-xs font-medium transition-colors active:scale-95",
                    isExecutable

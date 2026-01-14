@@ -3,13 +3,12 @@
  * 支持去重
  */
 export function parseVariables(template: string): string[] {
-  // 匹配 {{var}} 或 {{ var }}，非贪婪模式
   const regex = /\{\{\s*(.+?)\s*\}\}/g;
   const vars = new Set<string>();
   let match;
 
   while ((match = regex.exec(template)) !== null) {
-    vars.add(match[1]); // 捕获组1是变量名
+    vars.add(match[1]);
   }
 
   return Array.from(vars);
@@ -23,8 +22,7 @@ export function parseVariables(template: string): string[] {
  */
 export function fillTemplate(template: string, values: Record<string, string>): string {
   return template.replace(/\{\{\s*(.+?)\s*\}\}/g, (_, key) => {
-    // 这里策略：如果没填，保留原样，避免代码损坏；或者替换为对应值
     const val = values[key];
-    return val !== undefined ? val : _; 
+    return val !== undefined ? val : _;
   });
 }

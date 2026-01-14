@@ -35,12 +35,12 @@ export function TitleBar() {
 
   const formatTime = (date: Date) => {
     return new Intl.DateTimeFormat(language === 'zh' ? 'zh-CN' : 'en-US', {
-      month: 'short',     // 12月 / Dec
-      day: 'numeric',     // 03
-      weekday: 'short',   // 周三 / Wed
-      hour: 'numeric',    // 21
-      minute: '2-digit',  // 57
-      hour12: false       // 24小时制
+      month: 'short',
+      day: 'numeric',
+      weekday: 'short',
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: false
     }).format(date);
   };
 
@@ -65,7 +65,7 @@ export function TitleBar() {
               {formatTime(currentTime)}
            </span>
         </div>
-        
+
         {/* 时钟下拉面板 */}
         <ClockPopover
           currentTime={currentTime}

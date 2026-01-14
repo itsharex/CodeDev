@@ -15,18 +15,14 @@ const MIN_WIDTH = 150; // 最小宽度
 export function calculateIdealTreeWidth(nodes: FileNode[]): number {
   let maxPixelWidth = 0;
 
-  // 递归遍历树
   const traverse = (list: FileNode[], level: number) => {
     list.forEach(node => {
-      // 计算当前节点所需的视觉宽度
-      // 缩进 + 文字长度 + 基础Padding
       const currentWidth = (level * INDENT_PER_LEVEL) + (node.name.length * CHAR_WIDTH_APPROX) + BASE_PADDING;
-      
+
       if (currentWidth > maxPixelWidth) {
         maxPixelWidth = currentWidth;
       }
 
-      // 继续遍历子节点
       if (node.children && node.children.length > 0) {
         traverse(node.children, level + 1);
       }
@@ -35,6 +31,5 @@ export function calculateIdealTreeWidth(nodes: FileNode[]): number {
 
   traverse(nodes, 0);
 
-  // 限制范围
   return Math.max(MIN_WIDTH, Math.min(maxPixelWidth, MAX_AUTO_WIDTH));
 }

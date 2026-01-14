@@ -68,16 +68,13 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
           
           return (
             <div key={i} className="flex min-w-0">
-               {/* 行号栏 */}
                <div className="w-10 shrink-0 text-right pr-3 text-muted-foreground/40 select-none border-r border-border/30 bg-secondary/10 text-[10px] font-mono py-0.5">
                   {currentLineNum}
                </div>
-               {/* 代码内容 */}
                <div className="pl-3 py-0.5 whitespace-pre break-all flex-1 text-foreground/80">
                   {parts.map((part, idx) => (
                     <span key={idx}>
                       {part}
-                      {/* 高亮敏感词 */}
                       {idx < parts.length - 1 && (
                         <span className="bg-red-500/10 text-red-600 rounded px-0.5 border border-red-500/20 font-bold mx-0.5">
                           {valStr}
@@ -164,8 +161,7 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
                         <div className="pl-7">
                             {renderSnippet(item.snippet, item.value.toString(), item.snippet_start_line)}
                         </div>
-                        
-                        {/* Preview changes if selected */}
+
                         {isSelected && (
                             <div className="pl-7 flex items-center gap-2 mt-1">
                                 <ArrowRight size={12} className="text-muted-foreground/30" />

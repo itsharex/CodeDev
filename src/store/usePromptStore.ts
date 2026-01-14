@@ -7,8 +7,7 @@ import { fetch } from '@tauri-apps/plugin-http';
 import { invoke } from '@tauri-apps/api/core';
 import { exists, readTextFile, BaseDirectory } from '@tauri-apps/plugin-fs';
 
-// 定义一组镜像源的基础路径 (不包含 manifest.json)
-// 优先级：jsDelivr (CDN) -> Gitee (国内) -> GitHub (源站)
+// 镜像源优先级：jsDelivr (CDN) -> Gitee (国内) -> GitHub (源站)
 const MIRROR_BASES = [
     'https://cdn.jsdelivr.net/gh/WinriseF/CodeDev@main/build/dist/',
     'https://gitee.com/winriseF/models/raw/master/build/dist/',
@@ -89,7 +88,6 @@ export const usePromptStore = create<PromptState>()(
         const { migrationVersion } = get();
         if (migrationVersion >= 1) return;
 
-        console.log('[Migration] Checking for legacy data...');
         const baseDir = BaseDirectory.AppLocalData;
 
         try {
@@ -97,11 +95,9 @@ export const usePromptStore = create<PromptState>()(
                 const content = await readTextFile(LEGACY_STORE_FILE, { baseDir });
                 const parsed = JSON.parse(content);
                 const legacyState = parsed?.state || {};
-                
+
                 const legacyPrompts = legacyState.localPrompts;
                 if (Array.isArray(legacyPrompts) && legacyPrompts.length > 0) {
-                    console.log(`[Migration] Found ${legacyPrompts.length} legacy prompts. Importing...`);
-                    
                     const promptsToImport: Prompt[] = legacyPrompts.map((p: any) => ({
                         id: p.id || uuidv4(),
                         title: p.title || 'Untitled',
@@ -113,7 +109,7 @@ export const usePromptStore = create<PromptState>()(
                         createdAt: p.createdAt || Date.now(),
                         updatedAt: p.updatedAt || Date.now(),
                         source: 'local',
-                        packId: undefined, 
+                        packId: undefined,
                         originalId: undefined,
                         type: p.type || undefined,
                         isExecutable: !!p.isExecutable,
@@ -127,7 +123,6 @@ export const usePromptStore = create<PromptState>()(
             console.error('[Migration] Failed:', e);
         } finally {
             set({ migrationVersion: 1 });
-            console.log('[Migration] Completed.');
         }
       },
 
@@ -246,11 +241,10 @@ export const usePromptStore = create<PromptState>()(
         }
       },
 
-      // --- 商店逻辑优化：自动切换镜像 ---
-      
+      // 商店逻辑：自动切换镜像
       fetchManifest: async () => {
         set({ isStoreLoading: true });
-        
+
         let manifestData: PackManifest | null = null;
         let successUrl = '';
 
@@ -258,12 +252,11 @@ export const usePromptStore = create<PromptState>()(
         for (const baseUrl of MIRROR_BASES) {
             const url = `${baseUrl}manifest.json`;
             try {
-                console.log(`[Store] Fetching manifest from: ${url}`);
                 const res = await fetch(url, { method: 'GET' });
                 if (res.ok) {
                     manifestData = await res.json() as PackManifest;
                     successUrl = baseUrl;
-                    break; // 成功则退出循环
+                    break;
                 }
             } catch (e) {
                 console.warn(`[Store] Mirror failed: ${baseUrl}`, e);
@@ -271,10 +264,10 @@ export const usePromptStore = create<PromptState>()(
         }
 
         if (manifestData && successUrl) {
-            set({ 
-                manifest: manifestData, 
+            set({
+                manifest: manifestData,
                 activeManifestUrl: successUrl,
-                isStoreLoading: false 
+                isStoreLoading: false
             });
         } else {
             console.error("All mirrors failed to fetch manifest");
@@ -286,26 +279,19 @@ export const usePromptStore = create<PromptState>()(
         set({ isStoreLoading: true });
         try {
             let rawData: any = null;
-            
-            // 1. 尝试下载逻辑：自动轮询镜像
-            // 即使 fetchManifest 成功了，具体的 json 文件可能在某些 CDN 节点还没缓存好，所以这里也做重试
+
+            // 下载逻辑：自动轮询镜像
             for (const baseUrl of MIRROR_BASES) {
                 const url = `${baseUrl}${pack.url}`;
                 try {
-                    console.log(`[Store] Trying download: ${url}`);
                     const response = await fetch(url);
-                    
+
                     if (response.ok) {
                         const json = await response.json();
                         if (Array.isArray(json) && json.length > 0) {
                             rawData = json;
-                            console.log(`[Store] Download success from ${baseUrl}`);
                             break;
-                        } else {
-                            console.warn(`[Store] Invalid data from ${url} (empty or not array)`);
                         }
-                    } else {
-                        console.warn(`[Store] HTTP ${response.status} from ${url}`);
                     }
                 } catch (e) {
                     console.warn(`[Store] Download error from ${baseUrl}:`, e);
@@ -316,7 +302,7 @@ export const usePromptStore = create<PromptState>()(
                 throw new Error(`Download failed: All mirrors unavailable (451/404/Network). Check your connection.`);
             }
 
-            // 2. 数据清洗
+            // 数据清洗
             const enrichedPrompts: any[] = rawData.map((p: any) => ({
                 id: p.id ? `${pack.id}-${p.id}` : uuidv4(),
                 title: p.title || "Untitled",
@@ -335,13 +321,13 @@ export const usePromptStore = create<PromptState>()(
                 shellType: p.shellType || null
             }));
 
-            // 3. 调用 Rust 事务导入 (Rust 端会先 DELETE 该 packId 的所有数据，再 INSERT，保证不重复)
+            // 调用 Rust 事务导入 (先 DELETE 再 INSERT，保证不重复)
             await invoke('import_prompt_pack', {
                 packId: pack.id,
                 prompts: enrichedPrompts
             });
 
-            // 4. 更新状态
+            // 更新状态
             set(state => ({
                 installedPackIds: Array.from(new Set([...state.installedPackIds, pack.id]))
             }));
@@ -352,7 +338,7 @@ export const usePromptStore = create<PromptState>()(
 
         } catch (e: any) {
             console.error("Install failed:", e);
-            throw e; // 抛出错误给 UI 层显示 Toast
+            throw e;
         } finally {
             set({ isStoreLoading: false });
         }

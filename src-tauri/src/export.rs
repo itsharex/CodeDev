@@ -19,7 +19,7 @@ pub enum ExportLayout {
     GitPatch, // 标准 Git Diff (Minimal Context)
 }
 
-/// 主导出函数
+/// Export files in various formats
 pub fn generate_export_content(
     files: Vec<GitDiffFile>,
     format: ExportFormat,
@@ -39,7 +39,7 @@ fn generate_diff_string(original: &str, modified: &str, path: &str, layout: Expo
 
     match layout {
         ExportLayout::Unified => {
-            // 编辑器风格：显示完整文件，行首加标记
+            // Unified: show full file with markers
             for change in diff.iter_all_changes() {
                 let sign = match change.tag() {
                     ChangeTag::Delete => "-",
@@ -50,11 +50,10 @@ fn generate_diff_string(original: &str, modified: &str, path: &str, layout: Expo
             }
         }
         ExportLayout::GitPatch => {
-            // 标准 Git Patch 风格：带 Header，限制上下文
+            // Git Patch style with header, limited context
             let _ = writeln!(output, "diff --git a/{} b/{}", path, path);
             let _ = writeln!(output, "--- a/{}", path);
             let _ = writeln!(output, "+++ b/{}", path);
-            // similar 库会自动生成 @@ header 和 3行上下文
             let _ = write!(output, "{}", diff.unified_diff());
         }
         _ => {} // Split 模式不使用此函数
@@ -62,7 +61,7 @@ fn generate_diff_string(original: &str, modified: &str, path: &str, layout: Expo
     output
 }
 
-/// 1. Markdown 格式
+/// Markdown format
 fn to_markdown(files: Vec<GitDiffFile>, layout: ExportLayout) -> String {
     let mut output = String::new();
     let _ = writeln!(output, "# Git Diff Export\n");
@@ -104,7 +103,7 @@ fn to_markdown(files: Vec<GitDiffFile>, layout: ExportLayout) -> String {
     output
 }
 
-/// 2. JSON 格式
+/// JSON format
 fn to_json(files: Vec<GitDiffFile>, layout: ExportLayout) -> String {
     let export_data: Vec<serde_json::Value> = files.into_iter().map(|f| {
         let content = if layout == ExportLayout::Split {
@@ -129,7 +128,7 @@ fn to_json(files: Vec<GitDiffFile>, layout: ExportLayout) -> String {
     serde_json::to_string_pretty(&export_data).unwrap_or_else(|_| "[]".to_string())
 }
 
-/// 3. XML 格式
+/// XML format
 fn to_xml(files: Vec<GitDiffFile>, layout: ExportLayout) -> String {
     let mut output = String::new();
     output.push_str("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n");
@@ -161,7 +160,7 @@ fn to_xml(files: Vec<GitDiffFile>, layout: ExportLayout) -> String {
     output
 }
 
-/// 4. TXT 格式
+/// TXT format
 fn to_custom_text(files: Vec<GitDiffFile>, layout: ExportLayout) -> String {
     let mut output = String::new();
 

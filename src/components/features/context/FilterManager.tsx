@@ -9,7 +9,7 @@ type FilterType = keyof IgnoreConfig;
 
 interface FilterManagerProps {
   localConfig: IgnoreConfig;
-  globalConfig?: IgnoreConfig; // 全局配置
+  globalConfig?: IgnoreConfig;
   onUpdate: (type: FilterType, action: 'add' | 'remove', value: string) => void;
 }
 
@@ -22,7 +22,7 @@ export function FilterManager({ localConfig, globalConfig, onUpdate }: FilterMan
   const renderList = () => {
     const localItems = localConfig[activeTab];
     const globalItems = globalConfig ? globalConfig[activeTab] : [];
-    
+
     // 合并展示，去重
     const allItems = Array.from(new Set([...globalItems, ...localItems])).sort();
 
@@ -31,16 +31,15 @@ export function FilterManager({ localConfig, globalConfig, onUpdate }: FilterMan
         {allItems.map(item => {
           const isLocked = globalItems.includes(item);
           const isLocal = localItems.includes(item);
-          
+
           return (
             <div key={item} className="flex items-center justify-between group py-1 px-2 rounded hover:bg-secondary/50 text-xs">
               <div className="flex items-center gap-2">
-                <input 
+                <input
                   type="checkbox"
-                  checked={true} // 只要在列表中就是选中
-                  disabled={isLocked} // 如果是全局的，禁止取消
+                  checked={true}
+                  disabled={isLocked}
                   onChange={() => {
-                    // 如果在本地列表中，点击则移除；如果不在，点击则添加
                     if (isLocal) onUpdate(activeTab, 'remove', item);
                   }}
                   className={cn(
@@ -50,13 +49,13 @@ export function FilterManager({ localConfig, globalConfig, onUpdate }: FilterMan
                 />
                 <span className={cn(isLocked && "opacity-70")}>{item}</span>
               </div>
-              
+
               {isLocked ? (
               <div title={getText('common', 'managedByGlobal', language)} className="cursor-not-allowed">
                   <Lock size={10} className="text-muted-foreground opacity-50" />
               </div>
               ) : (
-              <button 
+              <button
                   onClick={() => onUpdate(activeTab, 'remove', item)}
                   className="opacity-0 group-hover:opacity-100 text-muted-foreground hover:text-destructive transition-all"
               >

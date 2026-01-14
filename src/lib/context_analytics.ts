@@ -14,7 +14,7 @@ export interface ModelCostStat {
   modelId: string;
   modelName: string;
   limit: number;
-  cost: number; // 计算出的美元成本
+  cost: number;
 }
 
 export interface AnalyticsData {
@@ -93,12 +93,11 @@ export function analyzeContext(
     .sort((a, b) => b.size - a.size)
     .slice(0, 5);
 
-  // 2. Top Files
   const topFiles = [...files]
     .sort((a, b) => (b.size || 0) - (a.size || 0))
     .slice(0, 5);
 
-  // 3. 动态成本计算
+  // 动态成本计算
   const millions = totalTokens / 1_000_000;
   const modelCosts: ModelCostStat[] = models.map(model => ({
     modelId: model.id,

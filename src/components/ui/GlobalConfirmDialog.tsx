@@ -8,7 +8,6 @@ export function GlobalConfirmDialog() {
   const { isOpen, options, handleConfirm, handleCancel } = useConfirmStore();
   const { language } = useAppStore();
   
-  // 防止不渲染
   if (!isOpen) return null;
 
   const isDanger = options.type === 'danger';
@@ -41,8 +40,7 @@ export function GlobalConfirmDialog() {
                     </p>
                 </div>
             </div>
-            
-            {/* 装饰性背景 */}
+
             {isDanger && (
                 <div className="mt-4 p-3 bg-red-500/5 border border-red-500/10 rounded-lg text-xs text-red-500/80">
                     {getText('common', 'highRiskWarning', language)}

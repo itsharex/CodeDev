@@ -16,14 +16,9 @@ import { VariableFillerDialog } from './dialogs/VariableFillerDialog';
 import { executeCommand } from '@/lib/command_executor';
 import { useContextStore } from '@/store/useContextStore';
 
-// === 稳定版(Old Version) 导入方式 ===
-// 1. AutoSizer v1 是默认导出
 import AutoSizer from 'react-virtualized-auto-sizer';
-// 2. react-window v1 导出的是 FixedSizeGrid
 import { FixedSizeGrid } from 'react-window';
 
-// === 核心修复：创建一个 Any 类型的组件引用 ===
-// 这样可以彻底绕过 TypeScript 对 react-window v1 旧类型定义与 React 18 不兼容的检查
 const GridAny = FixedSizeGrid as any;
 
 function useDebounce<T>(value: T, delay: number): T {
@@ -35,7 +30,6 @@ function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
-// === 类型定义 ===
 interface PromptGridItemData {
   items: Prompt[];
   columnCount: number;
@@ -51,7 +45,6 @@ interface CellProps {
   data: PromptGridItemData;
 }
 
-// === 单元格渲染器 ===
 const Cell = memo(({ columnIndex, rowIndex, style, data }: CellProps) => {
   const { items, columnCount, onEdit, onDelete, onTrigger } = data;
   const index = rowIndex * columnCount + columnIndex;
@@ -63,7 +56,6 @@ const Cell = memo(({ columnIndex, rowIndex, style, data }: CellProps) => {
   const prompt = items[index];
   const GAP = 16;
 
-  // 调整样式以模拟 Gap
   const itemStyle: CSSProperties = {
     ...style,
     left: Number(style.left) + GAP,
@@ -169,14 +161,13 @@ export function PromptView() {
     }
   }, [language, projectRoot]);
 
-  // === 虚拟列表参数 ===
   const GAP = 16;
   const ITEM_HEIGHT = 180 + GAP; 
   const MIN_COLUMN_WIDTH = 300; 
 
   return (
     <div className="h-full flex flex-row overflow-hidden bg-background">
-      
+
       {/* 侧边栏 */}
       <aside className={cn("flex flex-col bg-secondary/5 select-none transition-all duration-300 ease-in-out overflow-hidden", isPromptSidebarOpen ? "w-56 border-r border-border opacity-100" : "w-0 border-none opacity-0")}>
         <div className="p-3 pb-0 flex flex-col gap-1 shrink-0">

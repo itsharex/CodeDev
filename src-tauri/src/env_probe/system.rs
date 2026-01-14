@@ -3,7 +3,6 @@ use std::sync::{Arc, Mutex};
 use sysinfo::{CpuRefreshKind, MemoryRefreshKind, RefreshKind, System};
 use tauri::State;
 
-/// 获取系统基础信息 (OS, CPU, Memory)
 pub fn probe_system(system_state: State<'_, Arc<Mutex<System>>>) -> HashMap<String, String> {
     let mut info = HashMap::new();
     

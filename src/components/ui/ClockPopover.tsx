@@ -22,7 +22,7 @@ interface ClockPopoverProps {
 }
 
 export function ClockPopover({ currentTime, isOpen, onClose, triggerRef }: ClockPopoverProps) {
-  const { language, setMonitorOpen } = useAppStore(); // ✨ 获取 setMonitorOpen
+  const { language, setMonitorOpen } = useAppStore();
   const [systemInfo, setSystemInfo] = useState<SystemInfo | null>(null);
   const [copiedType, setCopiedType] = useState<string | null>(null);
   const popoverRef = useRef<HTMLDivElement>(null);
@@ -120,7 +120,7 @@ export function ClockPopover({ currentTime, isOpen, onClose, triggerRef }: Clock
   // 打开监控面板的处理函数
   const handleOpenMonitor = () => {
       setMonitorOpen(true);
-      onClose(); // 关闭当前 Popover
+      onClose();
   };
 
   if (!isOpen) return null;

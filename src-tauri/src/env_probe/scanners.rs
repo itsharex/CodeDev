@@ -5,7 +5,6 @@ use once_cell::sync::Lazy;
 use crate::env_probe::{ToolInfo, common::{run_command, find_version}};
 use crate::env_probe::traits::{ProjectScanner, read_file_head};
 
-// --- 正则表达式预编译 ---
 static JAVA_POM_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)<artifactId>(spring-boot|spring-cloud|quarkus|micronaut|lombok|hibernate|mybatis|jakarta)[^<]*</artifactId>").unwrap());
 static GRADLE_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)(implementation|api)\s+['"](org\.springframework\.boot|io\.quarkus|io\.micronaut)[^'"]*['"]"#).unwrap());
 static PYTHON_REQ_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"(?m)^([a-zA-Z0-9\-_]+)[=<>]=?").unwrap());
@@ -15,7 +14,6 @@ static PHP_COMPOSER_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)"(laravel/f
 static DOTNET_PKG_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)<PackageReference\s+Include="([^"]+)"\s+Version="([^"]+)"#).unwrap());
 static FLUTTER_DEP_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r#"(?m)^\s*(flutter|cupertino_icons|provider|bloc|get|riverpod):\s*[\^]?([0-9\.]+)"#).unwrap());
 
-// --- 1. Node Scanner ---
 pub struct NodeScanner;
 impl ProjectScanner for NodeScanner {
     fn match_identity(&self, root: &str) -> bool {
@@ -47,7 +45,6 @@ impl ProjectScanner for NodeScanner {
     }
 }
 
-// --- 2. Rust Scanner ---
 pub struct RustScanner;
 impl ProjectScanner for RustScanner {
     fn match_identity(&self, root: &str) -> bool {
@@ -79,7 +76,6 @@ impl ProjectScanner for RustScanner {
     }
 }
 
-// --- 3. Java Scanner ---
 pub struct JavaScanner;
 impl ProjectScanner for JavaScanner {
     fn match_identity(&self, root: &str) -> bool {
@@ -108,8 +104,7 @@ impl ProjectScanner for JavaScanner {
     }
 }
 
-// --- 4. Python Scanner ---
-const PYTHON_BINS: &[&str] = &["python3", "python", "py"]; 
+const PYTHON_BINS: &[&str] = &["python3", "python", "py"];
 pub struct PythonScanner;
 impl ProjectScanner for PythonScanner {
     fn match_identity(&self, root: &str) -> bool {
@@ -144,7 +139,6 @@ impl ProjectScanner for PythonScanner {
     }
 }
 
-// --- 5. Go Scanner ---
 pub struct GoScanner;
 impl ProjectScanner for GoScanner {
     fn match_identity(&self, root: &str) -> bool {
@@ -173,7 +167,6 @@ impl ProjectScanner for GoScanner {
     }
 }
 
-// --- 6. PHP Scanner ---
 pub struct PhpScanner;
 impl ProjectScanner for PhpScanner {
     fn match_identity(&self, root: &str) -> bool {
@@ -193,12 +186,10 @@ impl ProjectScanner for PhpScanner {
     }
 }
 
-// --- 7. DotNet Scanner ---
 pub struct DotNetScanner;
 impl ProjectScanner for DotNetScanner {
     fn match_identity(&self, root: &str) -> bool {
         let p = Path::new(root);
-        // 简单扫描根目录下的 csproj 或 sln
         if let Ok(entries) = std::fs::read_dir(p) {
             for entry in entries.flatten() {
                 if let Some(name) = entry.file_name().to_str() {
@@ -216,7 +207,6 @@ impl ProjectScanner for DotNetScanner {
     fn parse_dependencies(&self, root: &str) -> HashMap<String, String> {
         let mut deps = HashMap::new();
         let p = Path::new(root);
-        // 查找第一个 csproj
         if let Ok(entries) = std::fs::read_dir(p) {
             for entry in entries.flatten() {
                 let name = entry.file_name().to_string_lossy().to_string();
@@ -230,7 +220,7 @@ impl ProjectScanner for DotNetScanner {
                             }
                         }
                     }
-                    break; // 只扫描第一个项目文件
+                    break;
                 }
             }
         }
@@ -238,7 +228,6 @@ impl ProjectScanner for DotNetScanner {
     }
 }
 
-// --- 8. Mobile Scanner ---
 pub struct MobileScanner;
 impl ProjectScanner for MobileScanner {
     fn match_identity(&self, root: &str) -> bool {

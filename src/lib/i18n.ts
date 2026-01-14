@@ -780,7 +780,6 @@ const translations = {
       navPorts: "端口与占用",
       navEnv: "开发环境",
       navNetwork: "网络诊断",
-      // Dashboard
       cpu: "CPU 使用率",
       memory: "内存使用",
       diskRead: "磁盘读取",
@@ -788,7 +787,6 @@ const translations = {
       netUp: "上传速率",
       netDown: "下载速率",
       topProcesses: "Top 进程",
-      procName: "进程名",
       procPid: "PID",
       procCpu: "CPU%",
       procMem: "内存",
@@ -800,7 +798,6 @@ const translations = {
       autoRefresh: "自动刷新",
       totalLoad: "总负载",
       systemProcessProtected: "系统进程受保护",
-      // Ports & lock
       tabPorts: "活跃端口",
       tabFiles: "文件占用",
       searchPorts: "搜索端口 (如 3000, node)...",
@@ -824,7 +821,6 @@ const translations = {
       restart: "重启",
       fileLockCheckFailed: "文件占用检测失败",
       enterPathHint: "输入路径以查看占用该文件的进程",
-      // Env
       envTool: "工具 / 运行时",
       envToolFilter: "过滤工具...",
       envVer: "版本号",
@@ -853,7 +849,6 @@ const translations = {
       contextCopied: "上下文已复制！",
       aiContextTooltip: "生成并复制 AI 提示词摘要上下文",
       removeFromContext: "从上下文中移除",
-      // Network
       netTarget: "服务 / 目标",
       netStatus: "连通性",
       netLatency: "延迟",
@@ -864,7 +859,6 @@ const translations = {
       statusSlow: "缓慢",
       statusFail: "失败",
       netCheckDesc: "连通性与延迟检测",
-      // Git
       commitSelectPlaceholder: "选择提交...",
       commitSearchPlaceholder: "按消息或哈希搜索...",
     }
