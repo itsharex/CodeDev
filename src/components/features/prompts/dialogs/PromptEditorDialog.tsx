@@ -18,6 +18,7 @@ const SHELL_OPTIONS: { value: ShellType; label: string }[] = [
   { value: 'powershell', label: 'PowerShell' },
   { value: 'bash', label: 'Bash' },
   { value: 'zsh', label: 'Zsh' },
+  { value: 'python', label: 'Python (3.x)' },
 ];
 
 export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEditorDialogProps) {

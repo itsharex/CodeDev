@@ -1,4 +1,4 @@
-export type ShellType = 'auto' | 'cmd' | 'powershell' | 'bash' | 'zsh';
+export type ShellType = 'auto' | 'cmd' | 'powershell' | 'bash' | 'zsh' | 'python';
 
 export interface Prompt {
   id: string;

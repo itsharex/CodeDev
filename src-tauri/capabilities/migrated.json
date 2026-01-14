@@ -56,7 +56,9 @@
         { "name": "cmd", "cmd": "cmd", "args": true },
         { "name": "powershell", "cmd": "powershell", "args": true },
         { "name": "osascript", "cmd": "osascript", "args": true },
-        { "name": "x-terminal-emulator", "cmd": "x-terminal-emulator", "args": true }
+        { "name": "x-terminal-emulator", "cmd": "x-terminal-emulator", "args": true },
+        { "name": "python", "cmd": "python", "args": true },
+        { "name": "python3", "cmd": "python3", "args": true }
       ]
     },
     "core:app:allow-identifier",
