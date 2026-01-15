@@ -6,7 +6,12 @@
 use std::fs;
 use std::process::Command;
 use std::sync::{Arc, Mutex};
+#[cfg(target_os = "windows")]
+use std::os::windows::process::CommandExt;
+
 use sysinfo::{System, RefreshKind, CpuRefreshKind, MemoryRefreshKind};
+#[cfg(target_os = "windows")]
+use windows::Win32::System::Threading::CREATE_NO_WINDOW;
 use tauri::{
     menu::{Menu, MenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
@@ -71,27 +76,32 @@ fn get_system_info(
 }
 
 #[tauri::command]
-fn check_python_env() -> Result<String, String> {
-    #[cfg(target_os = "windows")]
-    let bin = "python";
-    #[cfg(not(target_os = "windows"))]
-    let bin = "python3";
+async fn check_python_env() -> Result<String, String> {
+    tauri::async_runtime::spawn_blocking(move || {
+        #[cfg(target_os = "windows")]
+        let bin = "python";
+        #[cfg(not(target_os = "windows"))]
+        let bin = "python3";
 
-    let output = Command::new(bin)
-        .arg("--version")
-        .output()
-        .map_err(|_| "Not Found".to_string())?;
+        let mut cmd = Command::new(bin);
+        cmd.arg("--version");
+        #[cfg(target_os = "windows")]
+        cmd.creation_flags(CREATE_NO_WINDOW.0);
+        let output = cmd.output().map_err(|_| "Not Found".to_string())?;
 
-    if output.status.success() {
-        let version = String::from_utf8_lossy(&output.stdout).trim().to_string();
-        if version.is_empty() {
-            Ok(String::from_utf8_lossy(&output.stderr).trim().to_string())
+        if output.status.success() {
+            let version = String::from_utf8_lossy(&output.stdout).trim().to_string();
+            if version.is_empty() {
+                Ok(String::from_utf8_lossy(&output.stderr).trim().to_string())
+            } else {
+                Ok(version)
+            }
         } else {
-            Ok(version)
+            Err("Not Installed".to_string())
         }
-    } else {
-        Err("Not Installed".to_string())
-    }
+    })
+    .await
+    .map_err(|e| e.to_string())?
 }
 
 #[tauri::command]
@@ -191,7 +201,8 @@ fn main() {
                     println!("[Database] SQLite initialized successfully.");
                 }
                 Err(e) => {
-                    eprintln!("[Database] Initialization failed: {}", e);
+                    // DB 初始化失败时直接 panic，避免运行时隐性崩溃
+                    panic!("[Database] Critical Error: Failed to initialize database: {}", e);
                 }
             }
             
@@ -200,7 +211,11 @@ fn main() {
             let menu = Menu::with_items(app, &[&quit_i])?;
 
             let _tray = TrayIconBuilder::new()
-                .icon(app.default_window_icon().unwrap().clone())
+                .icon(if let Some(icon) = app.default_window_icon() {
+                    icon.clone()
+                } else {
+                    return Err(Box::new(std::io::Error::new(std::io::ErrorKind::NotFound, "No default icon found")));
+                })
                 .menu(&menu)
                 .show_menu_on_left_click(false)
                 .on_menu_event(|app, event| match event.id().as_ref() {
