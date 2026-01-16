@@ -1,5 +1,5 @@
 [package]
-name = "code-forge-ai"
+name = "ctxrun"
 version = "1.2.5"
 description = "A Tauri App"
 authors = ["you"]

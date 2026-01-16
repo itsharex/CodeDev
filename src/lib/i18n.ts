@@ -75,7 +75,7 @@ const translations = {
       securityFilterTooltip: "Scan for secrets before copying",
       securityAlert: "Security Alert",
       issuesFound: "{count} Issues Found",
-      securityMsg: "CodeForge detected potential sensitive information. Please review and uncheck any false positives (items you want to keep as-is).",
+      securityMsg: "CtxRun detected potential sensitive information. Please review and uncheck any false positives (items you want to keep as-is).",
       willRedact: "Will Redact",
       keepRaw: "Keep Raw",
       originalKept: "Original Value Kept",

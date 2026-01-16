@@ -39,10 +39,10 @@
       }
     }
   },
-  "productName": "CodeForge AI",
-  "mainBinaryName": "CodeForge AI",
+  "productName": "CtxRun",
+  "mainBinaryName": "CtxRun",
   "version": "1.2.5",
-  "identifier": "com.codeforge.ai",
+  "identifier": "com.ctxrun",
   "plugins": {},
   "app": {
     "windows": [
@@ -51,7 +51,7 @@
         "fullscreen": false,
         "height": 600,
         "resizable": true,
-        "title": "CodeForge AI",
+        "title": "CtxRun",
         "width": 800,
         "decorations": false,
         "center": true,
