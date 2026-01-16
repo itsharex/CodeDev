@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { fileStorage } from '@/lib/storage';
 import { IgnoreConfig, DEFAULT_PROJECT_IGNORE, FileNode } from '@/types/context';
+import { invoke } from '@tauri-apps/api/core';
 
 const setAllChildren = (node: FileNode, isSelected: boolean): FileNode => {
   const newNode = { ...node, isSelected };
@@ -74,7 +75,7 @@ interface ContextState {
   isScanning: boolean;
   detectSecrets: boolean;
 
-  setProjectRoot: (path: string) => void;
+  setProjectRoot: (path: string) => Promise<void>;
   setFileTree: (tree: FileNode[]) => void;
   setIsScanning: (status: boolean) => void;
 
@@ -97,7 +98,20 @@ export const useContextStore = create<ContextState>()(
       fileTree: [],
       isScanning: false,
 
-      setProjectRoot: (path) => set({ projectRoot: path }),
+      setProjectRoot: async (path) => {
+        set({ projectRoot: path });
+        try {
+          const savedConfig = await invoke<IgnoreConfig | null>('get_project_config', { path });
+          if (savedConfig) {
+            set({ projectIgnore: savedConfig });
+          } else {
+            set({ projectIgnore: DEFAULT_PROJECT_IGNORE });
+          }
+        } catch (e) {
+          console.error('Failed to load project config from DB:', e);
+          set({ projectIgnore: DEFAULT_PROJECT_IGNORE });
+        }
+      },
       setFileTree: (tree) => set({ fileTree: tree }),
       setIsScanning: (status) => set({ isScanning: status }),
 
@@ -110,14 +124,25 @@ export const useContextStore = create<ContextState>()(
           } else if (action === 'remove') {
             newList = currentList.filter(item => item !== value);
           }
-          
+
           const newProjectIgnore = { ...state.projectIgnore, [type]: newList };
-          
+
+          if (state.projectRoot) {
+            invoke('save_project_config', { path: state.projectRoot, config: newProjectIgnore })
+              .catch(err => console.error('Failed to save config to DB:', err));
+          }
+
           return { projectIgnore: newProjectIgnore };
         });
       },
-      
-      resetProjectIgnore: () => set({ projectIgnore: DEFAULT_PROJECT_IGNORE }),
+
+      resetProjectIgnore: () => set((state) => {
+        if (state.projectRoot) {
+          invoke('save_project_config', { path: state.projectRoot, config: DEFAULT_PROJECT_IGNORE })
+            .catch(err => console.error('Failed to save config to DB:', err));
+        }
+        return { projectIgnore: DEFAULT_PROJECT_IGNORE };
+      }),
 
       refreshTreeStatus: (globalConfig) => set((state) => {
         const effectiveConfig = {
@@ -145,7 +170,7 @@ export const useContextStore = create<ContextState>()(
       name: 'context-config',
       storage: createJSONStorage(() => fileStorage),
       partialize: (state) => ({
-        projectIgnore: state.projectIgnore,
+        projectRoot: state.projectRoot,
         removeComments: state.removeComments,
         detectSecrets: state.detectSecrets
       }),

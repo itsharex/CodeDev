@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Monitor, Moon, Sun, Languages, Check, Filter, DownloadCloud, Bot, Bell, Database, Upload, Download, FileSpreadsheet, AlertTriangle } from 'lucide-react';
+import { X, Monitor, Moon, Sun, Languages, Check, Filter, DownloadCloud, Bot, Bell, Database, Upload, Download, FileSpreadsheet, AlertTriangle, FolderCog } from 'lucide-react';
 import { save, open } from '@tauri-apps/plugin-dialog';
 import { invoke } from '@tauri-apps/api/core';
 import { useAppStore } from '@/store/useAppStore';
@@ -71,6 +71,50 @@ export function SettingsModal() {
       await refreshGroups();
       await refreshCounts();
 
+    } catch (e) {
+      console.error(e);
+      setImportStatus(`Import failed: ${e}`);
+    }
+  };
+
+  // 导出项目配置
+  const handleExportProjectConfigs = async () => {
+    try {
+      const filePath = await save({
+        filters: [{ name: 'JSON Config', extensions: ['json'] }],
+        defaultPath: `ctxrun_project_configs_${new Date().toISOString().split('T')[0]}.json`
+      });
+
+      if (!filePath) return;
+
+      const count = await invoke<number>('export_project_configs', { savePath: filePath });
+      setImportStatus(`${getText('settings', 'exportSuccess', language)}: ${count} projects`);
+    } catch (e) {
+      console.error(e);
+      setImportStatus(`Export failed: ${e}`);
+    }
+  };
+
+  // 导入项目配置
+  const handleImportProjectConfigs = async () => {
+    try {
+      const filePath = await open({
+        filters: [{ name: 'JSON Config', extensions: ['json'] }],
+        multiple: false
+      });
+
+      if (!filePath || typeof filePath !== 'string') return;
+
+      const isOverwrite = confirm(getText('settings', 'importProjectConfigMsg', language));
+      const mode = isOverwrite ? 'overwrite' : 'merge';
+
+      setImportStatus(getText('settings', 'loading', language));
+      const count = await invoke<number>('import_project_configs', {
+        filePath,
+        mode
+      });
+
+      setImportStatus(`${getText('settings', 'importSuccess', language)}: ${count} projects`);
     } catch (e) {
       console.error(e);
       setImportStatus(`Import failed: ${e}`);
@@ -432,6 +476,48 @@ export function SettingsModal() {
                         <div className="p-3 bg-yellow-500/5 border border-yellow-500/20 rounded-lg flex gap-2 items-start text-xs text-yellow-600/80">
                             <AlertTriangle size={14} className="shrink-0 mt-0.5" />
                             <p>{getText('settings', 'csvTip', language)}</p>
+                        </div>
+
+                        <div className="w-full h-px bg-border/50 my-2" />
+
+                        {/* 项目配置管理 */}
+                        <div>
+                            <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
+                                <FolderCog size={18} className="text-blue-600"/>
+                                {getText('settings', 'projectConfigTitle', language)}
+                            </h3>
+                            <p className="text-xs text-muted-foreground mt-1">
+                                {getText('settings', 'projectConfigDesc', language)}
+                            </p>
+                        </div>
+
+                        <div className="bg-secondary/20 border border-border rounded-lg p-4 flex flex-col gap-3">
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-blue-500/10 text-blue-500 rounded-md">
+                                    <Database size={20} />
+                                </div>
+                                <div>
+                                    <h4 className="text-sm font-medium">{getText('settings', 'configBackup', language)}</h4>
+                                    <p className="text-xs text-muted-foreground">JSON Format</p>
+                                </div>
+                            </div>
+
+                            <div className="grid grid-cols-2 gap-3">
+                                <button
+                                    onClick={handleExportProjectConfigs}
+                                    className="flex items-center justify-center gap-2 py-2 bg-background border border-border hover:border-primary/50 hover:text-primary rounded-md text-xs font-medium transition-all shadow-sm"
+                                >
+                                    <Download size={14} />
+                                    {getText('settings', 'btnExportJson', language)}
+                                </button>
+                                <button
+                                    onClick={handleImportProjectConfigs}
+                                    className="flex items-center justify-center gap-2 py-2 bg-background border border-border hover:border-primary/50 hover:text-primary rounded-md text-xs font-medium transition-all shadow-sm"
+                                >
+                                    <Upload size={14} />
+                                    {getText('settings', 'btnImportJson', language)}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 )}

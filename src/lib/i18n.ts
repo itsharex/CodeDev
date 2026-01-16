@@ -238,7 +238,14 @@ const translations = {
       importModeMsg: "Do you want to overwrite all existing local prompts?",
       btnOverwrite: "Overwrite All",
       btnMerge: "Merge (Keep Existing)",
-      csvTip: "Tip: The exported CSV includes a BOM header for Excel compatibility. When importing, missing IDs will be treated as new items."
+      csvTip: "Tip: The exported CSV includes a BOM header for Excel compatibility. When importing, missing IDs will be treated as new items.",
+      projectConfigTitle: "Project Configs",
+      projectConfigDesc: "Backup or restore filter rules for all your projects.",
+      configBackup: "Config Backup",
+      btnExportJson: "Export JSON",
+      btnImportJson: "Import JSON",
+      importProjectConfigTitle: "Import Project Configs",
+      importProjectConfigMsg: "Do you want to overwrite existing project configs with the same path?"
     },
     library: {
       title: "Official Library",
@@ -687,7 +694,14 @@ const translations = {
       importModeMsg: "是否覆盖所有现有的本地指令？",
       btnOverwrite: "覆盖全部",
       btnMerge: "合并 (保留现有)",
-      csvTip: "提示：导出的 CSV 包含 BOM 头以支持 Excel 打开。导入时，缺失的 ID 将被视为新项目。"
+      csvTip: "提示：导出的 CSV 包含 BOM 头以支持 Excel 打开。导入时，缺失的 ID 将被视为新项目。",
+      projectConfigTitle: "项目配置管理",
+      projectConfigDesc: "备份或恢复您所有项目的过滤规则设置。",
+      configBackup: "配置备份",
+      btnExportJson: "导出 JSON",
+      btnImportJson: "导入 JSON",
+      importProjectConfigTitle: "导入项目配置",
+      importProjectConfigMsg: "是否覆盖路径相同的现有项目配置？"
     },
     library: {
       title: "官方指令库",
