@@ -213,7 +213,7 @@
     "id": "tldr-en-linux-virt-sparsify-0",
     "type": "command",
     "title": "virt-sparsify - Create a sparsified compressed image without snapshots from an unsparsified one",
-    "content": "virt-sparsify --compress {{path/to/image.qcow2}} {{path/to/image_new.qcow2}}",
+    "content": "virt-sparsify --compress {{path/to/image.qcow2}} {{path/to/new_image.qcow2}}",
     "group": "Linux Ops",
     "description": "virt-sparsify: Make virtual machine drive images thin-provisioned. Note: Use only for offline machines to avoid data corruption. (Create a sparsified compressed image without snapshots from an unsparsified one)",
     "tags": [
@@ -231,6 +231,21 @@
     "content": "virt-sparsify --in-place {{path/to/image.img}}",
     "group": "Linux Ops",
     "description": "virt-sparsify: Make virtual machine drive images thin-provisioned. Note: Use only for offline machines to avoid data corruption. (Sparsify an image in-place)",
+    "tags": [
+      "linux",
+      "virt-sparsify",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-virt-sparsify-2",
+    "type": "command",
+    "title": "virt-sparsify - Convert from one image format to another",
+    "content": "virt-sparsify {{path/to/image}} --convert {{qcow2|raw|vdi|...}} {{path/to/new_image}}",
+    "group": "Linux Ops",
+    "description": "virt-sparsify: Make virtual machine drive images thin-provisioned. Note: Use only for offline machines to avoid data corruption. (Convert from one image format to another)",
     "tags": [
       "linux",
       "virt-sparsify",
