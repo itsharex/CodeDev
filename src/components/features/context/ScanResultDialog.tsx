@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { ShieldAlert, AlertTriangle, ShieldCheck, X, CheckSquare, Square, ArrowRight } from 'lucide-react';
+import { invoke } from '@tauri-apps/api/core';
+import { ShieldAlert, AlertTriangle, ShieldCheck, X, CheckSquare, Square, ArrowRight, ArrowRightLeft, MinusCircle } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/store/useAppStore';
 import { getText } from '@/lib/i18n';
@@ -24,13 +25,15 @@ interface ScanResultDialogProps {
 
 export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanResultDialogProps) {
   const { language } = useAppStore();
-  
+
   const [selectedIndices, setSelectedIndices] = useState<Set<number>>(new Set());
+  const [ignorePermanently, setIgnorePermanently] = useState(false);
 
   useEffect(() => {
     if (isOpen && results.length > 0) {
       const allIndices = new Set(results.map(r => r.index));
       setSelectedIndices(allIndices);
+      setIgnorePermanently(false);
     }
   }, [isOpen, results]);
 
@@ -43,6 +46,24 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
     setSelectedIndices(newSet);
   };
 
+  const handleSelectAll = () => {
+    setSelectedIndices(new Set(results.map(r => r.index)));
+  };
+
+  const handleDeselectAll = () => {
+    setSelectedIndices(new Set());
+  };
+
+  const handleInvert = () => {
+    const newSet = new Set<number>();
+    results.forEach(r => {
+      if (!selectedIndices.has(r.index)) {
+        newSet.add(r.index);
+      }
+    });
+    setSelectedIndices(newSet);
+  };
+
   const getMaskedValue = (val: String) => {
     const s = val.toString();
     if (s.length <= 8) return '*'.repeat(s.length);
@@ -51,7 +72,23 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
     return `${visiblePart}${maskedPart}${s.length > 32 ? '...' : ''}`;
   };
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
+    if (ignorePermanently) {
+        const toIgnore = results.filter(r => !selectedIndices.has(r.index));
+        if (toIgnore.length > 0) {
+            try {
+                const secrets = toIgnore.map(r => ({
+                    id: '',
+                    value: r.value.toString(),
+                    rule_id: r.kind.toString(),
+                    created_at: 0
+                }));
+                await invoke('add_ignored_secrets', { secrets });
+            } catch (e) {
+                console.error("Failed to add ignored secrets:", e);
+            }
+        }
+    }
     onConfirm(selectedIndices);
   };
 
@@ -117,6 +154,36 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
             </div>
         </div>
 
+        {/* 批量操作工具栏 */}
+        <div className="px-4 py-2 bg-secondary/20 border-b border-border flex items-center gap-2 shrink-0">
+          <button
+            onClick={handleSelectAll}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded hover:bg-secondary text-muted-foreground hover:text-primary transition-colors"
+            title={getText('context', 'selectAll', language)}
+          >
+            <CheckSquare size={14} />
+            {getText('context', 'selectAll', language)}
+          </button>
+          <div className="w-px h-4 bg-border/50" />
+          <button
+            onClick={handleDeselectAll}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+            title={getText('context', 'deselectAll', language)}
+          >
+            <MinusCircle size={14} />
+            {getText('context', 'deselectAll', language)}
+          </button>
+          <div className="w-px h-4 bg-border/50" />
+          <button
+            onClick={handleInvert}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded hover:bg-secondary text-muted-foreground hover:text-foreground transition-colors"
+            title={getText('context', 'invertSel', language)}
+          >
+            <ArrowRightLeft size={14} />
+            {getText('context', 'invertSel', language)}
+          </button>
+        </div>
+
         {/* List */}
         <div className="flex-1 overflow-y-auto p-4 custom-scrollbar bg-secondary/5 space-y-3 min-h-0">
             {results.map((item) => {
@@ -176,34 +243,50 @@ export function ScanResultDialog({ isOpen, results, onConfirm, onCancel }: ScanR
             })}
         </div>
 
-        {/* Footer */}
-        <div className="p-4 bg-background border-t border-border flex justify-between items-center gap-3 shrink-0">
-            <div className="text-xs text-muted-foreground flex gap-1">
-                <span dangerouslySetInnerHTML={{
-                    __html: getText('context', 'itemsSelected', language, { count: `<strong>${selectedIndices.size}</strong>` })
-                }} />
-                <span className="opacity-50">|</span>
-                <span dangerouslySetInnerHTML={{
-                    __html: getText('context', 'itemsIgnored', language, { count: `<strong>${results.length - selectedIndices.size}</strong>` })
-                }} />
-            </div>
-            
-            <div className="flex gap-2">
-                <button 
-                    onClick={() => onConfirm(new Set())}
-                    className="px-4 py-2 text-sm font-medium rounded-lg border border-destructive/30 text-destructive hover:bg-destructive/10 transition-colors"
-                >
-                    {getText('context', 'ignoreAll', language)}
-                </button>
-                <button 
-                    onClick={handleConfirm}
-                    className="px-4 py-2 text-sm font-medium rounded-lg bg-green-600 text-white hover:bg-green-700 shadow-sm transition-colors flex items-center gap-2"
-                >
-                    <ShieldCheck size={16} />
-                    {selectedIndices.size === results.length 
-                        ? getText('context', 'redactAll', language) 
-                        : getText('context', 'redactSelected', language)}
-                </button>
+        {/* Footer with Checkbox */}
+        <div className="bg-background border-t border-border shrink-0 flex flex-col">
+
+            {/* 复选框区域 */}
+            <label className="flex items-center gap-2 px-4 py-2 bg-secondary/10 cursor-pointer hover:bg-secondary/20 transition-colors">
+                <input
+                    type="checkbox"
+                    checked={ignorePermanently}
+                    onChange={(e) => setIgnorePermanently(e.target.checked)}
+                    className="w-3.5 h-3.5 rounded border-slate-600 bg-transparent text-primary focus:ring-0 cursor-pointer accent-primary"
+                />
+                <span className="text-xs text-muted-foreground font-medium select-none">
+                    {getText('context', 'ignoreForever', language)}
+                </span>
+            </label>
+
+            <div className="p-4 flex justify-between items-center gap-3">
+                <div className="text-xs text-muted-foreground flex gap-1">
+                    <span dangerouslySetInnerHTML={{
+                        __html: getText('context', 'itemsSelected', language, { count: `<strong>${selectedIndices.size}</strong>` })
+                    }} />
+                    <span className="opacity-50">|</span>
+                    <span dangerouslySetInnerHTML={{
+                        __html: getText('context', 'itemsIgnored', language, { count: `<strong>${results.length - selectedIndices.size}</strong>` })
+                    }} />
+                </div>
+
+                <div className="flex gap-2">
+                    <button
+                        onClick={() => onConfirm(new Set())}
+                        className="px-4 py-2 text-sm font-medium rounded-lg border border-destructive/30 text-destructive hover:bg-destructive/10 transition-colors"
+                    >
+                        {getText('context', 'ignoreAll', language)}
+                    </button>
+                    <button
+                        onClick={handleConfirm}
+                        className="px-4 py-2 text-sm font-medium rounded-lg bg-green-600 text-white hover:bg-green-700 shadow-sm transition-colors flex items-center gap-2"
+                    >
+                        <ShieldCheck size={16} />
+                        {selectedIndices.size === results.length
+                            ? getText('context', 'redactAll', language)
+                            : getText('context', 'redactSelected', language)}
+                    </button>
+                </div>
             </div>
         </div>
       </div>

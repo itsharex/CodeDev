@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Monitor, Moon, Sun, Languages, Check, Filter, DownloadCloud, Bot, Bell, Database, Upload, Download, FileSpreadsheet, AlertTriangle, FolderCog } from 'lucide-react';
+import { X, Monitor, Moon, Sun, Languages, Check, Filter, DownloadCloud, Bot, Bell, Database, Upload, Download, FileSpreadsheet, AlertTriangle, FolderCog, Shield } from 'lucide-react';
 import { save, open } from '@tauri-apps/plugin-dialog';
 import { invoke } from '@tauri-apps/api/core';
 import { useAppStore } from '@/store/useAppStore';
@@ -8,6 +8,7 @@ import { getText } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 import { FilterManager } from '../features/context/FilterManager';
 import { PromptLibraryManager } from './PromptLibraryManager';
+import { IgnoredSecretsManager } from './IgnoredSecretsManager';
 import { ShortcutInput } from '@/components/ui/ShortcutInput';
 
 export function SettingsModal() {
@@ -24,7 +25,7 @@ export function SettingsModal() {
 
   const { loadPrompts, refreshGroups, refreshCounts } = usePromptStore();
 
-  const [activeSection, setActiveSection] = useState<'appearance' | 'language' | 'filters' | 'library' | 'ai' | 'data'>('appearance');
+  const [activeSection, setActiveSection] = useState<'appearance' | 'language' | 'filters' | 'library' | 'ai' | 'data' | 'security'>('appearance');
   const [importStatus, setImportStatus] = useState<string>('');
 
   // 导出处理函数
@@ -148,9 +149,11 @@ export function SettingsModal() {
             <div className="w-40 bg-secondary/5 border-r border-border p-2 space-y-1 overflow-y-auto custom-scrollbar shrink-0">
                 <NavBtn active={activeSection === 'appearance'} onClick={() => setActiveSection('appearance')} icon={<Monitor size={14} />} label={getText('settings', 'navAppearance', language)}  />
                 <NavBtn active={activeSection === 'language'} onClick={() => setActiveSection('language')} icon={<Languages size={14} />} label={getText('settings', 'navLanguage', language)} />
+                <NavBtn active={activeSection === 'ai'} onClick={() => setActiveSection('ai')} icon={<Bot size={14} />} label={getText('settings', 'navAI', language)} />
+                <NavBtn active={activeSection === 'security'} onClick={() => setActiveSection('security')} icon={<Shield size={14} />} label={getText('settings', 'navSecurity', language)} />
+                <div className="my-2 h-px bg-border/50 mx-2" />
                 <NavBtn active={activeSection === 'filters'} onClick={() => setActiveSection('filters')} icon={<Filter size={14} />} label={getText('settings', 'navFilters', language)} />
                 <NavBtn active={activeSection === 'library'} onClick={() => setActiveSection('library')} icon={<DownloadCloud size={14} />} label={getText('settings', 'navLibrary', language)} />
-                <NavBtn active={activeSection === 'ai'} onClick={() => setActiveSection('ai')} icon={<Bot size={14} />} label={getText('settings', 'navAI', language)} />
                 <NavBtn active={activeSection === 'data'} onClick={() => setActiveSection('data')} icon={<Database size={14} />} label={getText('settings', 'navData', language)} />
             </div>
 
@@ -524,6 +527,11 @@ export function SettingsModal() {
                             <p>{getText('settings', 'csvTip', language)}</p>
                         </div>
                     </div>
+                )}
+
+                {/* Security & Whitelist Section */}
+                {activeSection === 'security' && (
+                    <IgnoredSecretsManager />
                 )}
             </div>
         </div>

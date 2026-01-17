@@ -105,12 +105,31 @@ async fn check_python_env() -> Result<String, String> {
 }
 
 #[tauri::command]
-async fn scan_for_secrets(content: String) -> Vec<gitleaks::SecretMatch> {
+async fn scan_for_secrets(
+    state: State<'_, db::DbState>,
+    content: String
+) -> Result<Vec<gitleaks::SecretMatch>, String> {
+    // 1. 先从数据库获取白名单 (在主线程/异步线程做，避免阻塞 rayon 线程池)
+    let ignored_set = {
+        let conn = state.conn.lock().map_err(|e| e.to_string())?;
+        db::get_all_ignored_values_internal(&conn).map_err(|e| e.to_string())?
+    };
+
+    // 2. 执行扫描 (CPU 密集型，放入 blocking 线程)
     let matches = tauri::async_runtime::spawn_blocking(move || {
-        gitleaks::scan_text(&content)
-    }).await.unwrap_or_default();
-    
-    matches
+        let raw_matches = gitleaks::scan_text(&content);
+
+        // 3. 内存过滤：移除在白名单中的项
+        if ignored_set.is_empty() {
+            raw_matches
+        } else {
+            raw_matches.into_iter()
+                .filter(|m| !ignored_set.contains(&m.value))
+                .collect()
+        }
+    }).await.map_err(|e| e.to_string())?;
+
+    Ok(matches)
 }
 
 #[tauri::command]
@@ -186,6 +205,11 @@ fn main() {
             db::save_project_config,
             db::export_project_configs,
             db::import_project_configs,
+            // --- 新注册的命令 ---
+            db::add_ignored_secrets,
+            db::get_ignored_secrets,
+            db::delete_ignored_secret,
+            // -------------------
             monitor::get_system_metrics,
             monitor::get_top_processes,
             monitor::get_active_ports,

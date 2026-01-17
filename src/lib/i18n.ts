@@ -73,6 +73,9 @@ const translations = {
       removeComments: "Remove Comments",
       securityFilter: "Security Filter",
       securityFilterTooltip: "Scan for secrets before copying",
+      selectAll: "Select All",
+      deselectAll: "None",
+      invertSel: "Invert",
       securityAlert: "Security Alert",
       issuesFound: "{count} Issues Found",
       securityMsg: "CtxRun detected potential sensitive information. Please review and uncheck any false positives (items you want to keep as-is).",
@@ -84,6 +87,7 @@ const translations = {
       ignoreAll: "Ignore All (Unsafe)",
       redactAll: "Redact All & Copy",
       redactSelected: "Redact Selected & Copy",
+      ignoreForever: "Ignore unselected items permanently (Whitelist)",
     },
     patch: {
       loadFile: "Load Source File...",
@@ -246,7 +250,15 @@ const translations = {
       btnExportJson: "Export JSON",
       btnImportJson: "Import JSON",
       importProjectConfigTitle: "Import Project Configs",
-      importProjectConfigMsg: "Do you want to overwrite existing project configs with the same path?"
+      importProjectConfigMsg: "Do you want to overwrite existing project configs with the same path?",
+      navSecurity: "Security & Whitelist",
+      securityTitle: "Ignored Secrets (Whitelist)",
+      securityDesc: "These strings will be ignored in future security scans.",
+      value: "Value",
+      rule: "Rule ID",
+      addedAt: "Added At",
+      noIgnored: "No ignored secrets yet.",
+      confirmDeleteSecret: "Remove from whitelist? It will be detected again in future scans."
     },
     library: {
       title: "Official Library",
@@ -539,8 +551,12 @@ const translations = {
       ignoreAll: "全部忽略 (不安全)",
       redactAll: "全部脱敏并复制",
       redactSelected: "脱敏选中项并复制",
+      ignoreForever: "永久忽略未选中的项目 (加入白名单)",
       securityFilter: "安全检测",
       securityFilterTooltip: "复制前检测敏感信息 (API Key 等)",
+      selectAll: "全选",
+      deselectAll: "全不选",
+      invertSel: "反选",
     },
     patch: {
       loadFile: "加载源文件...",
@@ -703,7 +719,15 @@ const translations = {
       btnExportJson: "导出 JSON",
       btnImportJson: "导入 JSON",
       importProjectConfigTitle: "导入项目配置",
-      importProjectConfigMsg: "是否覆盖路径相同的现有项目配置？"
+      importProjectConfigMsg: "是否覆盖路径相同的现有项目配置？",
+      navSecurity: "安全与白名单",
+      securityTitle: "已忽略的敏感词 (白名单)",
+      securityDesc: "以下字符串将在未来的安全扫描中被自动忽略。",
+      value: "内容",
+      rule: "规则 ID",
+      addedAt: "添加时间",
+      noIgnored: "暂无忽略记录。",
+      confirmDeleteSecret: "确定从白名单移除？移除后下次扫描将再次报警。"
     },
     library: {
       title: "官方指令库",
