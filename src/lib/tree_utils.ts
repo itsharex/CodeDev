@@ -33,3 +33,42 @@ export function calculateIdealTreeWidth(nodes: FileNode[]): number {
 
   return Math.max(MIN_WIDTH, Math.min(maxPixelWidth, MAX_AUTO_WIDTH));
 }
+
+// 扁平化节点接口
+export interface FlatNode {
+  node: FileNode;
+  depth: number;
+  hasChildren: boolean;
+  isExpanded: boolean;
+}
+
+// 高性能扁平化函数
+export function flattenTree(
+  nodes: FileNode[],
+  expandedIds: string[],
+  depth = 0
+): FlatNode[] {
+  const expandedSet = new Set(expandedIds);
+  let flatList: FlatNode[] = [];
+
+  const traverse = (list: FileNode[], currentDepth: number) => {
+    for (const node of list) {
+      const isExpanded = expandedSet.has(node.id);
+      const hasChildren = !!(node.children && node.children.length > 0);
+
+      flatList.push({
+        node,
+        depth: currentDepth,
+        hasChildren,
+        isExpanded
+      });
+
+      if (hasChildren && isExpanded && node.children) {
+        traverse(node.children, currentDepth + 1);
+      }
+    }
+  };
+
+  traverse(nodes, depth);
+  return flatList;
+}

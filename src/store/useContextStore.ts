@@ -66,6 +66,18 @@ const invertTreeSelection = (nodes: FileNode[]): FileNode[] => {
   });
 };
 
+// 收集所有目录ID
+const collectDirIds = (nodes: FileNode[]): string[] => {
+  let ids: string[] = [];
+  for (const node of nodes) {
+    if (node.kind === 'dir') {
+      ids.push(node.id);
+      if (node.children) ids = ids.concat(collectDirIds(node.children));
+    }
+  }
+  return ids;
+};
+
 interface ContextState {
   projectIgnore: IgnoreConfig;
   removeComments: boolean;
@@ -74,6 +86,11 @@ interface ContextState {
   fileTree: FileNode[];
   isScanning: boolean;
   detectSecrets: boolean;
+
+  // 展开状态管理
+  expandedIds: string[];
+  toggleExpand: (id: string) => void;
+  setAllExpanded: (expanded: boolean) => void;
 
   setProjectRoot: (path: string) => Promise<void>;
   setFileTree: (tree: FileNode[]) => void;
@@ -97,6 +114,26 @@ export const useContextStore = create<ContextState>()(
       projectRoot: null,
       fileTree: [],
       isScanning: false,
+
+      expandedIds: [],
+
+      // 展开/折叠逻辑
+      toggleExpand: (id) => set((state) => {
+        const exists = state.expandedIds.includes(id);
+        if (exists) {
+          return { expandedIds: state.expandedIds.filter(i => i !== id) };
+        } else {
+          return { expandedIds: [...state.expandedIds, id] };
+        }
+      }),
+
+      setAllExpanded: (expanded) => {
+        if (!expanded) {
+          set({ expandedIds: [] });
+          return;
+        }
+        set((state) => ({ expandedIds: collectDirIds(state.fileTree) }));
+      },
 
       setProjectRoot: async (path) => {
         set({ projectRoot: path });
@@ -172,7 +209,8 @@ export const useContextStore = create<ContextState>()(
       partialize: (state) => ({
         projectRoot: state.projectRoot,
         removeComments: state.removeComments,
-        detectSecrets: state.detectSecrets
+        detectSecrets: state.detectSecrets,
+        expandedIds: state.expandedIds,
       }),
     }
   )

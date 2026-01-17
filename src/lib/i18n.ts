@@ -683,7 +683,7 @@ const translations = {
       navData: "数据管理",
       dataTitle: "数据备份与迁移",
       dataDesc: "通过 CSV 文件管理您的指令，支持 Excel 兼容",
-      promptsBackup: "指令数据备份", // 无句号
+      promptsBackup: "指令数据备份",
       exportTitle: "导出数据",
       exportDesc: "将所有指令导出为 .csv 文件。",
       btnExportCsv: "导出为 CSV",

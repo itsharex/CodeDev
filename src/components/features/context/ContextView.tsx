@@ -3,15 +3,15 @@ import { open, save } from '@tauri-apps/plugin-dialog';
 import { writeTextFile } from '@tauri-apps/plugin-fs';
 import { writeText as writeClipboard } from '@tauri-apps/plugin-clipboard-manager';
 import { invoke } from '@tauri-apps/api/core';
-import { 
-  FolderOpen, RefreshCw, Loader2, FileJson, 
+import {
+  FolderOpen, RefreshCw, Loader2, FileJson,
   PanelLeft, Search, ArrowRight, SlidersHorizontal, ChevronUp,
   LayoutDashboard, FileText, ArrowRightLeft
 } from 'lucide-react';
 import { useContextStore } from '@/store/useContextStore';
-import { useAppStore, DEFAULT_MODELS } from '@/store/useAppStore'; 
+import { useAppStore, DEFAULT_MODELS } from '@/store/useAppStore';
 import { scanProject } from '@/lib/fs_helper';
-import { calculateIdealTreeWidth } from '@/lib/tree_utils';
+import { calculateIdealTreeWidth, flattenTree } from '@/lib/tree_utils';
 import { calculateStats, generateContext } from '@/lib/context_assembler';
 import { FileTreeNode } from './FileTreeNode';
 import { TokenDashboard } from './TokenDashboard';
@@ -21,14 +21,17 @@ import { ScanResultDialog, SecretMatch } from './ScanResultDialog';
 import { cn } from '@/lib/utils';
 import { getText } from '@/lib/i18n';
 import { Toast, ToastType } from '@/components/ui/Toast';
+import { FixedSizeList as List } from 'react-window';
+import AutoSizer from 'react-virtualized-auto-sizer';
 
 export function ContextView() {
-  const { 
-    projectRoot, fileTree, isScanning, 
-    projectIgnore, updateProjectIgnore, 
-    refreshTreeStatus, 
-    setProjectRoot, setFileTree, setIsScanning, toggleSelect, 
-    removeComments, detectSecrets, invertSelection 
+  const {
+    projectRoot, fileTree, isScanning,
+    projectIgnore, updateProjectIgnore,
+    refreshTreeStatus,
+    setProjectRoot, setFileTree, setIsScanning, toggleSelect,
+    removeComments, detectSecrets, invertSelection,
+    expandedIds, toggleExpand
   } = useContextStore();
 
   const { 
@@ -76,6 +79,11 @@ export function ContextView() {
   const stats = useMemo(() => {
     return calculateStats(fileTree);
   }, [fileTree]);
+
+  // 计算扁平化列表
+  const flatData = useMemo(() => {
+    return flattenTree(fileTree, expandedIds);
+  }, [fileTree, expandedIds]);
 
   const triggerToast = (msg: string, type: ToastType = 'success') => {
     setToastState({ show: true, msg, type });
@@ -305,15 +313,41 @@ export function ContextView() {
              </div>
           </div>
           
-          <div className="flex-1 overflow-y-auto custom-scrollbar p-2">
+          <div className="flex-1 overflow-hidden relative">
             {!projectRoot ? (
-              <div className="mt-10 flex flex-col items-center justify-center text-muted-foreground opacity-50 gap-2 text-center px-4"><p className="text-sm">{getText('context', 'enterPath', language)}</p></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center text-muted-foreground opacity-50 gap-2 text-center px-4"><p className="text-sm">{getText('context', 'enterPath', language)}</p></div>
             ) : isScanning ? (
-              <div className="flex flex-col items-center justify-center mt-10 gap-3 text-sm text-muted-foreground animate-pulse"><Loader2 size={20} className="animate-spin text-primary" /><span>{getText('context', 'scanning', language)}</span></div>
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 text-sm text-muted-foreground animate-pulse"><Loader2 size={20} className="animate-spin text-primary" /><span>{getText('context', 'scanning', language)}</span></div>
             ) : fileTree.length === 0 ? (
-              <div className="mt-10 text-center text-sm text-muted-foreground">{getText('context', 'emptyDir', language)}</div>
+              <div className="absolute inset-0 flex items-center justify-center text-sm text-muted-foreground">{getText('context', 'emptyDir', language)}</div>
             ) : (
-              fileTree.map(node => <FileTreeNode key={node.id} node={node} onToggleSelect={toggleSelect} />)
+              <AutoSizer>
+                {({ height, width }) => (
+                  <List
+                    height={height}
+                    itemCount={flatData.length}
+                    itemSize={28}
+                    width={width}
+                    className="custom-scrollbar"
+                    overscanCount={10}
+                  >
+                    {({ index, style }) => {
+                      const item = flatData[index];
+                      return (
+                        <FileTreeNode
+                          node={item.node}
+                          depth={item.depth}
+                          isExpanded={item.isExpanded}
+                          hasChildren={item.hasChildren}
+                          style={style}
+                          onToggleSelect={toggleSelect}
+                          onToggleExpand={toggleExpand}
+                        />
+                      );
+                    }}
+                  </List>
+                )}
+              </AutoSizer>
             )}
           </div>
 
