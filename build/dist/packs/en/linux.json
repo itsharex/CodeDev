@@ -72120,6 +72120,96 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-hyprsunset-0",
+    "type": "command",
+    "title": "hyprsunset - Start the hyprsunset service",
+    "content": "hyprsunset",
+    "group": "Linux Ops",
+    "description": "hyprsunset: A blue light filter for Hyprland. Optionally configured via `~/.config/hypr/hyprsunset.conf`. (Start the hyprsunset service)",
+    "tags": [
+      "linux",
+      "hyprsunset",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-hyprsunset-1",
+    "type": "command",
+    "title": "hyprsunset - Start the hyprsunset service with a specified color temperature and gamma percentage",
+    "content": "hyprsunset {{[-t|--temperature]}} {{temperature}} {{[-g|--gamma]}} {{gamma}}",
+    "group": "Linux Ops",
+    "description": "hyprsunset: A blue light filter for Hyprland. Optionally configured via `~/.config/hypr/hyprsunset.conf`. (Start the hyprsunset service with a specified color temperature and gamma percentage)",
+    "tags": [
+      "linux",
+      "hyprsunset",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-hyprsunset-2",
+    "type": "command",
+    "title": "hyprsunset - Adjust the color temperature while the hyprsunset service is running",
+    "content": "hyprctl hyprsunset temperature {{temperature}}",
+    "group": "Linux Ops",
+    "description": "hyprsunset: A blue light filter for Hyprland. Optionally configured via `~/.config/hypr/hyprsunset.conf`. (Adjust the color temperature while the hyprsunset service is running)",
+    "tags": [
+      "linux",
+      "hyprsunset",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-hyprsunset-3",
+    "type": "command",
+    "title": "hyprsunset - Adjust the gamma while the hyprsunset service is running",
+    "content": "hyprctl hyprsunset gamma {{gamma}}",
+    "group": "Linux Ops",
+    "description": "hyprsunset: A blue light filter for Hyprland. Optionally configured via `~/.config/hypr/hyprsunset.conf`. (Adjust the gamma while the hyprsunset service is running)",
+    "tags": [
+      "linux",
+      "hyprsunset",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-hyprsunset-4",
+    "type": "command",
+    "title": "hyprsunset - Reset the color temperature to 6000K",
+    "content": "hyprctl hyprsunset reset temperature",
+    "group": "Linux Ops",
+    "description": "hyprsunset: A blue light filter for Hyprland. Optionally configured via `~/.config/hypr/hyprsunset.conf`. (Reset the color temperature to 6000K)",
+    "tags": [
+      "linux",
+      "hyprsunset",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-hyprsunset-5",
+    "type": "command",
+    "title": "hyprsunset - Reset the gamma to 100%",
+    "content": "hyprctl hyprsunset reset gamma",
+    "group": "Linux Ops",
+    "description": "hyprsunset: A blue light filter for Hyprland. Optionally configured via `~/.config/hypr/hyprsunset.conf`. (Reset the gamma to 100%)",
+    "tags": [
+      "linux",
+      "hyprsunset",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-systemctl-log-level-0",
     "type": "command",
     "title": "systemctl-log-level - Show the current log level of the systemd manager",
@@ -88458,7 +88548,7 @@
     "id": "tldr-en-linux-kill-3",
     "type": "command",
     "title": "kill - Terminate a program using the SIGHUP (hang up) signal. Many daemons will reload instead of terminating",
-    "content": "kill -{{1|HUP}} {{process_id}}",
+    "content": "kill {{[-1|-HUP]}} {{process_id}}",
     "group": "Linux Ops",
     "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Terminate a program using the SIGHUP (hang up) signal. Many daemons will reload instead of terminating)",
     "tags": [
@@ -88473,7 +88563,7 @@
     "id": "tldr-en-linux-kill-4",
     "type": "command",
     "title": "kill - Terminate a program using the SIGINT (interrupt) signal. This is typically initiated by the user pressing `<Ctrl c>`",
-    "content": "kill -{{2|INT}} {{process_id}}",
+    "content": "kill {{[-2|-INT]}} {{process_id}}",
     "group": "Linux Ops",
     "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Terminate a program using the SIGINT (interrupt) signal. This is typically initiated by the user pressing `<Ctrl c>`)",
     "tags": [
@@ -88488,7 +88578,7 @@
     "id": "tldr-en-linux-kill-5",
     "type": "command",
     "title": "kill - Signal the operating system to immediately terminate a program (which gets no chance to capture the signal)",
-    "content": "kill -{{9|KILL}} {{process_id}}",
+    "content": "kill {{[-9|-KILL]}} {{process_id}}",
     "group": "Linux Ops",
     "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Signal the operating system to immediately terminate a program (which gets no chance to capture the signal))",
     "tags": [
@@ -88503,7 +88593,7 @@
     "id": "tldr-en-linux-kill-6",
     "type": "command",
     "title": "kill - Signal the operating system to pause a program until a SIGCONT (\"continue\") signal is received",
-    "content": "kill -{{17|STOP}} {{process_id}}",
+    "content": "kill {{[-19|-STOP]}} {{process_id}}",
     "group": "Linux Ops",
     "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Signal the operating system to pause a program until a SIGCONT (\"continue\") signal is received)",
     "tags": [
@@ -88518,7 +88608,7 @@
     "id": "tldr-en-linux-kill-7",
     "type": "command",
     "title": "kill - Send a `SIGUSR1` signal to all processes with the given GID (group id)",
-    "content": "kill -{{SIGUSR1}} -{{group_id}}",
+    "content": "kill -SIGUSR1 -{{group_id}}",
     "group": "Linux Ops",
     "description": "kill: Send a signal to a process, usually related to stopping the process. All signals except for SIGKILL and SIGSTOP can be intercepted by the process to perform a clean exit. (Send a `SIGUSR1` signal to all processes with the given GID (group id))",
     "tags": [
@@ -93482,10 +93572,10 @@
   {
     "id": "tldr-en-linux-systemctl-edit-1",
     "type": "command",
-    "title": "systemctl-edit - Edit an unit file",
+    "title": "systemctl-edit - Edit a unit file",
     "content": "sudo systemctl edit {{unit_file}} {{[-l|--full]}}",
     "group": "Linux Ops",
-    "description": "systemctl-edit: Edit systemd unit files. (Edit an unit file)",
+    "description": "systemctl-edit: Edit systemd unit files. (Edit a unit file)",
     "tags": [
       "linux",
       "systemctl-edit",
