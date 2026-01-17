@@ -2,6 +2,7 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { fileStorage } from '@/lib/storage';
 import { IgnoreConfig, DEFAULT_PROJECT_IGNORE, FileNode } from '@/types/context';
+import { invoke } from '@tauri-apps/api/core';
 
 const setAllChildren = (node: FileNode, isSelected: boolean): FileNode => {
   const newNode = { ...node, isSelected };
@@ -65,6 +66,18 @@ const invertTreeSelection = (nodes: FileNode[]): FileNode[] => {
   });
 };
 
+// 收集所有目录ID
+const collectDirIds = (nodes: FileNode[]): string[] => {
+  let ids: string[] = [];
+  for (const node of nodes) {
+    if (node.kind === 'dir') {
+      ids.push(node.id);
+      if (node.children) ids = ids.concat(collectDirIds(node.children));
+    }
+  }
+  return ids;
+};
+
 interface ContextState {
   projectIgnore: IgnoreConfig;
   removeComments: boolean;
@@ -74,7 +87,12 @@ interface ContextState {
   isScanning: boolean;
   detectSecrets: boolean;
 
-  setProjectRoot: (path: string) => void;
+  // 展开状态管理
+  expandedIds: string[];
+  toggleExpand: (id: string) => void;
+  setAllExpanded: (expanded: boolean) => void;
+
+  setProjectRoot: (path: string) => Promise<void>;
   setFileTree: (tree: FileNode[]) => void;
   setIsScanning: (status: boolean) => void;
 
@@ -97,7 +115,40 @@ export const useContextStore = create<ContextState>()(
       fileTree: [],
       isScanning: false,
 
-      setProjectRoot: (path) => set({ projectRoot: path }),
+      expandedIds: [],
+
+      // 展开/折叠逻辑
+      toggleExpand: (id) => set((state) => {
+        const exists = state.expandedIds.includes(id);
+        if (exists) {
+          return { expandedIds: state.expandedIds.filter(i => i !== id) };
+        } else {
+          return { expandedIds: [...state.expandedIds, id] };
+        }
+      }),
+
+      setAllExpanded: (expanded) => {
+        if (!expanded) {
+          set({ expandedIds: [] });
+          return;
+        }
+        set((state) => ({ expandedIds: collectDirIds(state.fileTree) }));
+      },
+
+      setProjectRoot: async (path) => {
+        set({ projectRoot: path });
+        try {
+          const savedConfig = await invoke<IgnoreConfig | null>('get_project_config', { path });
+          if (savedConfig) {
+            set({ projectIgnore: savedConfig });
+          } else {
+            set({ projectIgnore: DEFAULT_PROJECT_IGNORE });
+          }
+        } catch (e) {
+          console.error('Failed to load project config from DB:', e);
+          set({ projectIgnore: DEFAULT_PROJECT_IGNORE });
+        }
+      },
       setFileTree: (tree) => set({ fileTree: tree }),
       setIsScanning: (status) => set({ isScanning: status }),
 
@@ -110,14 +161,25 @@ export const useContextStore = create<ContextState>()(
           } else if (action === 'remove') {
             newList = currentList.filter(item => item !== value);
           }
-          
+
           const newProjectIgnore = { ...state.projectIgnore, [type]: newList };
-          
+
+          if (state.projectRoot) {
+            invoke('save_project_config', { path: state.projectRoot, config: newProjectIgnore })
+              .catch(err => console.error('Failed to save config to DB:', err));
+          }
+
           return { projectIgnore: newProjectIgnore };
         });
       },
-      
-      resetProjectIgnore: () => set({ projectIgnore: DEFAULT_PROJECT_IGNORE }),
+
+      resetProjectIgnore: () => set((state) => {
+        if (state.projectRoot) {
+          invoke('save_project_config', { path: state.projectRoot, config: DEFAULT_PROJECT_IGNORE })
+            .catch(err => console.error('Failed to save config to DB:', err));
+        }
+        return { projectIgnore: DEFAULT_PROJECT_IGNORE };
+      }),
 
       refreshTreeStatus: (globalConfig) => set((state) => {
         const effectiveConfig = {
@@ -145,9 +207,10 @@ export const useContextStore = create<ContextState>()(
       name: 'context-config',
       storage: createJSONStorage(() => fileStorage),
       partialize: (state) => ({
-        projectIgnore: state.projectIgnore,
+        projectRoot: state.projectRoot,
         removeComments: state.removeComments,
-        detectSecrets: state.detectSecrets
+        detectSecrets: state.detectSecrets,
+        expandedIds: state.expandedIds,
       }),
     }
   )

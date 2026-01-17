@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { X, Monitor, Moon, Sun, Languages, Check, Filter, DownloadCloud, Bot, Bell, Database, Upload, Download, FileSpreadsheet, AlertTriangle } from 'lucide-react';
+import { X, Monitor, Moon, Sun, Languages, Check, Filter, DownloadCloud, Bot, Bell, Database, Upload, Download, FileSpreadsheet, AlertTriangle, FolderCog, Shield } from 'lucide-react';
 import { save, open } from '@tauri-apps/plugin-dialog';
 import { invoke } from '@tauri-apps/api/core';
 import { useAppStore } from '@/store/useAppStore';
@@ -8,6 +8,7 @@ import { getText } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
 import { FilterManager } from '../features/context/FilterManager';
 import { PromptLibraryManager } from './PromptLibraryManager';
+import { IgnoredSecretsManager } from './IgnoredSecretsManager';
 import { ShortcutInput } from '@/components/ui/ShortcutInput';
 
 export function SettingsModal() {
@@ -24,7 +25,7 @@ export function SettingsModal() {
 
   const { loadPrompts, refreshGroups, refreshCounts } = usePromptStore();
 
-  const [activeSection, setActiveSection] = useState<'appearance' | 'language' | 'filters' | 'library' | 'ai' | 'data'>('appearance');
+  const [activeSection, setActiveSection] = useState<'appearance' | 'language' | 'filters' | 'library' | 'ai' | 'data' | 'security'>('appearance');
   const [importStatus, setImportStatus] = useState<string>('');
 
   // 导出处理函数
@@ -77,6 +78,50 @@ export function SettingsModal() {
     }
   };
 
+  // 导出项目配置
+  const handleExportProjectConfigs = async () => {
+    try {
+      const filePath = await save({
+        filters: [{ name: 'JSON Config', extensions: ['json'] }],
+        defaultPath: `ctxrun_project_configs_${new Date().toISOString().split('T')[0]}.json`
+      });
+
+      if (!filePath) return;
+
+      const count = await invoke<number>('export_project_configs', { savePath: filePath });
+      setImportStatus(`${getText('settings', 'exportSuccess', language)}: ${count} projects`);
+    } catch (e) {
+      console.error(e);
+      setImportStatus(`Export failed: ${e}`);
+    }
+  };
+
+  // 导入项目配置
+  const handleImportProjectConfigs = async () => {
+    try {
+      const filePath = await open({
+        filters: [{ name: 'JSON Config', extensions: ['json'] }],
+        multiple: false
+      });
+
+      if (!filePath || typeof filePath !== 'string') return;
+
+      const isOverwrite = confirm(getText('settings', 'importProjectConfigMsg', language));
+      const mode = isOverwrite ? 'overwrite' : 'merge';
+
+      setImportStatus(getText('settings', 'loading', language));
+      const count = await invoke<number>('import_project_configs', {
+        filePath,
+        mode
+      });
+
+      setImportStatus(`${getText('settings', 'importSuccess', language)}: ${count} projects`);
+    } catch (e) {
+      console.error(e);
+      setImportStatus(`Import failed: ${e}`);
+    }
+  };
+
   if (!isSettingsOpen) return null;
 
   return (
@@ -104,9 +149,11 @@ export function SettingsModal() {
             <div className="w-40 bg-secondary/5 border-r border-border p-2 space-y-1 overflow-y-auto custom-scrollbar shrink-0">
                 <NavBtn active={activeSection === 'appearance'} onClick={() => setActiveSection('appearance')} icon={<Monitor size={14} />} label={getText('settings', 'navAppearance', language)}  />
                 <NavBtn active={activeSection === 'language'} onClick={() => setActiveSection('language')} icon={<Languages size={14} />} label={getText('settings', 'navLanguage', language)} />
+                <NavBtn active={activeSection === 'ai'} onClick={() => setActiveSection('ai')} icon={<Bot size={14} />} label={getText('settings', 'navAI', language)} />
+                <NavBtn active={activeSection === 'security'} onClick={() => setActiveSection('security')} icon={<Shield size={14} />} label={getText('settings', 'navSecurity', language)} />
+                <div className="my-2 h-px bg-border/50 mx-2" />
                 <NavBtn active={activeSection === 'filters'} onClick={() => setActiveSection('filters')} icon={<Filter size={14} />} label={getText('settings', 'navFilters', language)} />
                 <NavBtn active={activeSection === 'library'} onClick={() => setActiveSection('library')} icon={<DownloadCloud size={14} />} label={getText('settings', 'navLibrary', language)} />
-                <NavBtn active={activeSection === 'ai'} onClick={() => setActiveSection('ai')} icon={<Bot size={14} />} label={getText('settings', 'navAI', language)} />
                 <NavBtn active={activeSection === 'data'} onClick={() => setActiveSection('data')} icon={<Database size={14} />} label={getText('settings', 'navData', language)} />
             </div>
 
@@ -376,6 +423,8 @@ export function SettingsModal() {
                 {/* Data Management */}
                 {activeSection === 'data' && (
                     <div className="space-y-6 animate-in fade-in slide-in-from-right-4 duration-200">
+
+                        {/* 顶部标题区 */}
                         <div>
                             <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
                                 <FileSpreadsheet size={18} className="text-green-600"/>
@@ -386,54 +435,103 @@ export function SettingsModal() {
                             </p>
                         </div>
 
-                        {/* 导出卡片 */}
+                        {/* 1. Prompt 数据管理卡片 (改造成横向) */}
                         <div className="bg-secondary/20 border border-border rounded-lg p-4 flex flex-col gap-3">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 bg-blue-500/10 text-blue-500 rounded-md">
-                                    <Download size={20} />
-                                </div>
-                                <div>
-                                    <h4 className="text-sm font-medium">{getText('settings', 'exportTitle', language)}</h4>
-                                    <p className="text-xs text-muted-foreground">{getText('settings', 'exportDesc', language)}</p>
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="p-2 bg-green-500/10 text-green-600 rounded-md">
+                                        <Database size={20} />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-sm font-medium">{getText('settings', 'promptsBackup', language)}</h4>
+                                        <p className="text-xs text-muted-foreground">CSV Format</p>
+                                    </div>
                                 </div>
                             </div>
-                            <button
-                                onClick={handleExport}
-                                className="w-full py-2 bg-background border border-border hover:border-primary/50 hover:text-primary rounded-md text-sm font-medium transition-all shadow-sm"
-                            >
-                                {getText('settings', 'btnExportCsv', language)}
-                            </button>
-                        </div>
 
-                        {/* 导入卡片 */}
-                        <div className="bg-secondary/20 border border-border rounded-lg p-4 flex flex-col gap-3">
-                            <div className="flex items-center gap-3">
-                                <div className="p-2 bg-orange-500/10 text-orange-500 rounded-md">
-                                    <Upload size={20} />
-                                </div>
-                                <div>
-                                    <h4 className="text-sm font-medium">{getText('settings', 'importTitle', language)}</h4>
-                                    <p className="text-xs text-muted-foreground">{getText('settings', 'importDesc', language)}</p>
-                                </div>
+                            {/* 双按钮并排 */}
+                            <div className="grid grid-cols-2 gap-3">
+                                <button
+                                    onClick={handleExport}
+                                    className="flex items-center justify-center gap-2 py-2 bg-background border border-border hover:border-primary/50 hover:text-primary rounded-md text-xs font-medium transition-all shadow-sm"
+                                >
+                                    <Download size={14} />
+                                    {getText('settings', 'btnExportCsv', language)}
+                                </button>
+                                <button
+                                    onClick={handleImport}
+                                    className="flex items-center justify-center gap-2 py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md text-xs font-medium transition-all shadow-sm"
+                                >
+                                    <Upload size={14} />
+                                    {getText('settings', 'btnImportCsv', language)}
+                                </button>
                             </div>
-                            <button
-                                onClick={handleImport}
-                                className="w-full py-2 bg-primary text-primary-foreground hover:bg-primary/90 rounded-md text-sm font-medium transition-all shadow-sm"
-                            >
-                                {getText('settings', 'btnImportCsv', language)}
-                            </button>
+
+                            {/* 导入状态提示 */}
                             {importStatus && (
-                                <div className="text-[10px] text-muted-foreground text-center flex items-center justify-center gap-1.5 pt-1">
+                                <div className="text-[10px] text-muted-foreground text-center flex items-center justify-center gap-1.5 pt-1 border-t border-border/30 mt-1">
                                     <Check size={10} /> {importStatus}
                                 </div>
                             )}
                         </div>
 
+                        {/* 分割线 */}
+                        <div className="w-full h-px bg-border/50 my-2" />
+
+                        {/* 2. 项目配置管理卡片 (保持横向，风格统一) */}
+                        <div>
+                            <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
+                                <FolderCog size={18} className="text-blue-600"/>
+                                {getText('settings', 'projectConfigTitle', language)}
+                            </h3>
+                            <p className="text-xs text-muted-foreground mt-1">
+                                {getText('settings', 'projectConfigDesc', language)}
+                            </p>
+                        </div>
+
+                        <div className="bg-secondary/20 border border-border rounded-lg p-4 flex flex-col gap-3">
+                            <div className="flex items-center justify-between">
+                                <div className="flex items-center gap-3">
+                                    <div className="p-2 bg-blue-500/10 text-blue-500 rounded-md">
+                                        <Database size={20} />
+                                    </div>
+                                    <div>
+                                        <h4 className="text-sm font-medium">{getText('settings', 'configBackup', language)}</h4>
+                                        <p className="text-xs text-muted-foreground">JSON Format</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* 双按钮并排 */}
+                            <div className="grid grid-cols-2 gap-3">
+                                <button
+                                    onClick={handleExportProjectConfigs}
+                                    className="flex items-center justify-center gap-2 py-2 bg-background border border-border hover:border-primary/50 hover:text-primary rounded-md text-xs font-medium transition-all shadow-sm"
+                                >
+                                    <Download size={14} />
+                                    {getText('settings', 'btnExportJson', language)}
+                                </button>
+                                <button
+                                    onClick={handleImportProjectConfigs}
+                                    className="flex items-center justify-center gap-2 py-2 bg-background border border-border hover:border-primary/50 hover:text-primary rounded-md text-xs font-medium transition-all shadow-sm"
+                                >
+                                    <Upload size={14} />
+                                    {getText('settings', 'btnImportJson', language)}
+                                </button>
+                            </div>
+                        </div>
+
+                        {/* 底部提示 */}
                         <div className="p-3 bg-yellow-500/5 border border-yellow-500/20 rounded-lg flex gap-2 items-start text-xs text-yellow-600/80">
                             <AlertTriangle size={14} className="shrink-0 mt-0.5" />
                             <p>{getText('settings', 'csvTip', language)}</p>
                         </div>
                     </div>
+                )}
+
+                {/* Security & Whitelist Section */}
+                {activeSection === 'security' && (
+                    <IgnoredSecretsManager />
                 )}
             </div>
         </div>
