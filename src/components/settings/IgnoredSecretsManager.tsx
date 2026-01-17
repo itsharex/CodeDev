@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-import { Trash2, ShieldCheck, AlertCircle, RefreshCw } from 'lucide-react';
+import { writeText } from '@tauri-apps/plugin-clipboard-manager';
+import {
+  Trash2, ShieldCheck, AlertCircle, RefreshCw,
+  Copy, Check
+} from 'lucide-react';
 import { useAppStore } from '@/store/useAppStore';
 import { getText } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
@@ -16,6 +20,7 @@ export function IgnoredSecretsManager() {
   const { language } = useAppStore();
   const [secrets, setSecrets] = useState<IgnoredSecret[]>([]);
   const [loading, setLoading] = useState(false);
+  const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const fetchSecrets = async () => {
     setLoading(true);
@@ -43,12 +48,13 @@ export function IgnoredSecretsManager() {
     }
   };
 
-  const maskValue = (val: string) => {
-    if (val.length <= 8) return '********';
-    return `${val.substring(0, 4)}...${val.substring(val.length - 4)}`;
+  const handleCopy = async (id: string, text: string) => {
+      await writeText(text);
+      setCopiedId(id);
+      setTimeout(() => setCopiedId(null), 2000);
   };
 
-  const formatDate = (ts: number) => new Date(ts).toLocaleDateString() + ' ' + new Date(ts).toLocaleTimeString();
+  const formatDate = (ts: number) => new Date(ts).toLocaleDateString();
 
   return (
     <div className="flex flex-col h-full animate-in fade-in slide-in-from-right-4 duration-200">
@@ -67,6 +73,7 @@ export function IgnoredSecretsManager() {
            onClick={fetchSecrets}
            disabled={loading}
            className="p-2 hover:bg-secondary rounded-full transition-colors"
+           title={getText('library', 'refresh', language)}
          >
             <RefreshCw size={16} className={cn(loading && "animate-spin")} />
          </button>
@@ -74,8 +81,8 @@ export function IgnoredSecretsManager() {
 
       <div className="flex-1 bg-secondary/5 border border-border rounded-lg overflow-hidden flex flex-col min-h-0">
           <div className="grid grid-cols-12 gap-4 px-4 py-2 bg-secondary/20 border-b border-border text-xs font-bold text-muted-foreground uppercase tracking-wider shrink-0">
-             <div className="col-span-5">{getText('settings', 'value', language)}</div>
-             <div className="col-span-4">{getText('settings', 'rule', language)}</div>
+             {/* 调整列宽：内容占9列，时间占3列 */}
+             <div className="col-span-9">{getText('settings', 'value', language)}</div>
              <div className="col-span-3 text-right">{getText('settings', 'addedAt', language)}</div>
           </div>
 
@@ -88,25 +95,38 @@ export function IgnoredSecretsManager() {
              )}
 
              {secrets.map(item => (
-                 <div key={item.id} className="grid grid-cols-12 gap-4 px-3 py-2.5 items-center hover:bg-secondary/40 rounded-md transition-colors text-xs group">
-                     <div className="col-span-5 font-mono text-muted-foreground truncate" title={getText('context', 'keepRaw', language)}>
-                        {maskValue(item.value)}
-                     </div>
-                     <div className="col-span-4 flex items-center gap-2 min-w-0">
-                        <span className="truncate bg-secondary/50 px-1.5 py-0.5 rounded text-[10px] border border-border/50">
-                            {item.rule_id || 'Generic'}
-                        </span>
-                     </div>
-                     <div className="col-span-3 flex items-center justify-end gap-3">
-                        <span className="text-[10px] text-muted-foreground/60 truncate">{formatDate(item.created_at)}</span>
+                <div key={item.id} className="grid grid-cols-12 gap-4 px-3 py-2.5 items-start hover:bg-secondary/40 rounded-md transition-colors text-xs group border-b border-border/30 last:border-0">
+
+                    {/* 值显示区域：占9列 */}
+                    <div className="col-span-9 flex gap-2 min-w-0">
+                        <div className="font-mono text-foreground break-all select-text leading-relaxed">
+                            {item.value}
+                        </div>
+                        {/* 复制按钮 */}
+                        <button
+                            onClick={() => handleCopy(item.id, item.value)}
+                            className={cn(
+                                "h-5 w-5 flex items-center justify-center rounded transition-all shrink-0 mt-0.5",
+                                copiedId === item.id ? "text-green-500 bg-green-500/10" : "text-muted-foreground hover:text-foreground hover:bg-secondary opacity-0 group-hover:opacity-100"
+                            )}
+                            title={getText('actions', 'copy', language)}
+                        >
+                            {copiedId === item.id ? <Check size={12} /> : <Copy size={12} />}
+                        </button>
+                    </div>
+
+                    {/* 时间与操作：占3列 */}
+                    <div className="col-span-3 flex items-center justify-end gap-2 mt-0.5">
+                        <span className="text-[10px] text-muted-foreground/60">{formatDate(item.created_at)}</span>
                         <button
                             onClick={() => handleDelete(item.id)}
-                            className="text-muted-foreground hover:text-destructive transition-colors opacity-0 group-hover:opacity-100 p-1"
+                            className="text-muted-foreground hover:text-destructive transition-colors opacity-0 group-hover:opacity-100 p-1 hover:bg-destructive/10 rounded"
+                            title={getText('actions', 'delete', language)}
                         >
                             <Trash2 size={14} />
                         </button>
-                     </div>
-                 </div>
+                    </div>
+                </div>
              ))}
           </div>
       </div>
