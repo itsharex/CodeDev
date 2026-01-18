@@ -29,7 +29,14 @@ export function evaluateMath(input: string): string | null {
 
     if (typeof result === 'number' && !isNaN(result) && isFinite(result)) {
       // 处理精度问题，例如 0.1 + 0.2
-      return parseFloat(result.toPrecision(12)).toString();
+      const rounded = parseFloat(result.toPrecision(12));
+
+      // 阈值清洗：极小值视为 0（解决 sin(pi) ≈ 1.22e-16 的问题）
+      if (Math.abs(rounded) < 1e-10) {
+        return '0';
+      }
+
+      return rounded.toString();
     }
   } catch (e) {
     return null;
