@@ -1,5 +1,6 @@
 use chrono::{DateTime, Local};
 use git2::{Delta, DiffFormat, DiffOptions, Oid, Repository};
+use rayon::prelude::*;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 
@@ -20,6 +21,15 @@ pub struct GitDiffFile {
     pub modified_content: String,
     pub is_binary: bool,
     pub is_large: bool,
+}
+
+struct DiffItem {
+    path: String,
+    status: String,
+    old_path: Option<String>,
+    old_oid: Oid,
+    new_oid: Oid,
+    delta_status: Delta,
 }
 
 #[tauri::command]
@@ -89,19 +99,31 @@ fn read_blob_content(repo: &Repository, id: git2::Oid, max_size: usize) -> (Stri
 }
 
 fn read_file_content(full_path: &Path, max_size: usize) -> (String, bool, bool) {
+    if let Ok(meta) = std::fs::metadata(full_path) {
+        if meta.len() > max_size as u64 {
+            return (
+                format!("[File Too Large: {} bytes]", meta.len()),
+                false,
+                true,
+            );
+        }
+    }
+
     match std::fs::read(full_path) {
         Ok(bytes) => {
-            let is_large = bytes.len() > max_size;
             let is_binary = bytes.iter().take(8000).any(|&b| b == 0);
+            if is_binary {
+                return ("[Binary File in Workdir]".to_string(), true, false);
+            }
 
-            let content = if is_binary {
-                "[Binary File in Workdir]".to_string()
-            } else if is_large {
-                format!("[File Too Large: {} bytes]", bytes.len())
+            let content_cow = String::from_utf8_lossy(&bytes);
+            let content = if content_cow.contains('\r') {
+                content_cow.replace("\r\n", "\n")
             } else {
-                String::from_utf8_lossy(&bytes).replace("\r\n", "\n")
+                content_cow.into_owned()
             };
-            (content, is_binary, is_large)
+
+            (content, false, false)
         }
         Err(_) => ("Error reading file from disk".to_string(), false, false),
     }
@@ -134,54 +156,76 @@ pub fn get_git_diff(
             .map_err(|e| format!("Tree diff failed: {}", e))?
     };
 
-    let mut files: Vec<GitDiffFile> = Vec::new();
-    const MAX_SIZE: usize = 2 * 1024 * 1024;
+    let diff_items: Vec<DiffItem> = diff
+        .deltas()
+        .map(|delta| {
+            let old_file = delta.old_file();
+            let new_file = delta.new_file();
+            let file_path_rel = new_file.path().or(old_file.path()).unwrap();
 
-    for delta in diff.deltas() {
-        let old_file = delta.old_file();
-        let new_file = delta.new_file();
+            let status = match delta.status() {
+                Delta::Added => "Added",
+                Delta::Deleted => "Deleted",
+                Delta::Modified => "Modified",
+                Delta::Renamed => "Renamed",
+                _ => "Modified",
+            };
 
-        let file_path_rel = new_file.path().or(old_file.path()).unwrap();
-        let path_str = file_path_rel.to_string_lossy().to_string();
-
-        let status = match delta.status() {
-            Delta::Added => "Added",
-            Delta::Deleted => "Deleted",
-            Delta::Modified => "Modified",
-            Delta::Renamed => "Renamed",
-            _ => "Modified",
-        };
-
-        let (original_content, old_binary, old_large) = read_blob_content(&repo, old_file.id(), MAX_SIZE);
-
-        let (modified_content, new_binary, new_large) = if new_hash == "__WORK_DIR__" {
-            if delta.status() == Delta::Deleted {
-                (String::new(), false, false)
-            } else {
-                let full_path = Path::new(&project_path).join(file_path_rel);
-                read_file_content(&full_path, MAX_SIZE)
+            DiffItem {
+                path: file_path_rel.to_string_lossy().to_string(),
+                status: status.to_string(),
+                old_path: if delta.status() == Delta::Renamed {
+                    Some(old_file.path().unwrap().to_string_lossy().to_string())
+                } else {
+                    None
+                },
+                old_oid: old_file.id(),
+                new_oid: new_file.id(),
+                delta_status: delta.status(),
             }
-        } else {
-            read_blob_content(&repo, new_file.id(), MAX_SIZE)
-        };
+        })
+        .collect();
 
-        let is_binary = old_binary || new_binary;
-        let is_large = old_large || new_large;
+    const MAX_SIZE: usize = 2 * 1024 * 1024;
+    let is_workdir_mode = new_hash == "__WORK_DIR__";
 
-        files.push(GitDiffFile {
-            path: path_str,
-            status: status.to_string(),
-            old_path: if delta.status() == Delta::Renamed {
-                Some(old_file.path().unwrap().to_string_lossy().to_string())
+    let files: Vec<GitDiffFile> = diff_items
+        .into_par_iter()
+        .map(|item| {
+            let local_repo = Repository::open(&project_path).ok();
+
+            let (original_content, old_binary, old_large) = if let Some(r) = &local_repo {
+                read_blob_content(r, item.old_oid, MAX_SIZE)
             } else {
-                None
-            },
-            original_content,
-            modified_content,
-            is_binary,
-            is_large,
-        });
-    }
+                (String::new(), false, false)
+            };
+
+            let (modified_content, new_binary, new_large) = if is_workdir_mode {
+                if item.delta_status == Delta::Deleted {
+                    (String::new(), false, false)
+                } else {
+                    let full_path = Path::new(&project_path).join(&item.path);
+                    read_file_content(&full_path, MAX_SIZE)
+                }
+            } else {
+                if let Some(r) = &local_repo {
+                    read_blob_content(r, item.new_oid, MAX_SIZE)
+                } else {
+                    (String::new(), false, false)
+                }
+            };
+
+            GitDiffFile {
+                path: item.path,
+                status: item.status,
+                old_path: item.old_path,
+                original_content,
+                modified_content,
+                is_binary: old_binary || new_binary,
+                is_large: old_large || new_large,
+            }
+        })
+        .collect();
 
     Ok(files)
 }
