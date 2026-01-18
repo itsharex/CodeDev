@@ -66,6 +66,18 @@ function SpotlightContent() {
   const handleItemSelect = async (item: SpotlightItem) => {
     if (!item) return;
 
+    if (item.type === 'app' && item.appPath) {
+        try {
+            await invoke('open_app', { path: item.appPath });
+            await appWindow.hide();
+            setQuery('');
+        } catch (e) {
+            console.error("Failed to launch app:", e);
+            await message(`Failed to launch: ${e}`, { kind: 'error' });
+        }
+        return;
+    }
+
     if (item.type === 'url' && item.url) {
         try {
             await open(item.url);

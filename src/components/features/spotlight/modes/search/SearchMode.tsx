@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react';
-import { Command, Sparkles, Terminal, CornerDownLeft, Check, Zap, Globe } from 'lucide-react';
+import { Command, Sparkles, Terminal, CornerDownLeft, Check, Zap, Globe, AppWindow } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/store/useAppStore';
 import { SpotlightItem } from '@/types/spotlight';
@@ -44,11 +44,13 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
         const isCopied = copiedId === item.id;
         const isExecutable = !!item.isExecutable;
         const isUrl = item.type === 'url';
+        const isApp = item.type === 'app';
         const hasDesc = !!item.description;
 
         // 图标渲染逻辑
         let Icon = Sparkles;
         if (isUrl) Icon = Globe;
+        else if (isApp) Icon = AppWindow;
         else if (isExecutable) Icon = Zap;
         else if (isCommand(item)) Icon = Terminal;
 
@@ -59,10 +61,11 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
             onMouseEnter={() => setSelectedIndex(index)}
             className={cn(
               "relative px-4 py-3 rounded-lg flex items-start gap-4 cursor-pointer transition-all duration-150 group",
-              isActive 
-                ? (isExecutable ? "bg-indigo-600 text-white shadow-sm scale-[0.99]" : 
-                   isUrl ? "bg-blue-600 text-white shadow-sm scale-[0.99]" : 
-                   "bg-primary text-primary-foreground shadow-sm scale-[0.99]") 
+              isActive
+                ? (isExecutable ? "bg-indigo-600 text-white shadow-sm scale-[0.99]" :
+                   isUrl ? "bg-blue-600 text-white shadow-sm scale-[0.99]" :
+                   isApp ? "bg-cyan-600 text-white shadow-sm scale-[0.99]" :
+                   "bg-primary text-primary-foreground shadow-sm scale-[0.99]")
                 : "text-foreground hover:bg-secondary/40",
               isCopied && "bg-green-500 text-white"
             )}
@@ -89,7 +92,7 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
                 {isActive && !isCopied && (
                   <span className="text-[10px] opacity-70 flex items-center gap-1 font-medium bg-black/10 px-1.5 rounded whitespace-nowrap">
                     <CornerDownLeft size={10} />
-                    {isUrl ? getText('spotlight', 'openLink', language) : (isExecutable ? getText('actions', 'run', language) : getText('spotlight', 'copy', language))}
+                    {isUrl ? getText('spotlight', 'openLink', language) : (isApp ? (language === 'zh' ? '打开' : 'Open') : (isExecutable ? getText('actions', 'run', language) : getText('spotlight', 'copy', language)))}
                   </span>
                 )}
               </div>
@@ -100,7 +103,7 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
                 </div>
               )}
               
-              <div className={cn("text-xs font-mono transition-all duration-200", isActive ? "mt-1 bg-black/20 rounded p-2 text-white/95 whitespace-pre-wrap break-all line-clamp-6" : (hasDesc ? "hidden" : "text-muted-foreground opacity-50 truncate"))}>
+              <div className={cn("text-xs transition-all duration-200", isActive ? (isApp ? "opacity-80 text-white/80 truncate" : "mt-1 bg-black/20 rounded p-2 text-white/95 whitespace-pre-wrap break-all line-clamp-6") : (hasDesc ? "hidden" : "text-muted-foreground opacity-50 truncate"))}>
                 {item.content}
               </div>
             </div>

@@ -14,11 +14,13 @@ export interface SpotlightItem {
 
   originalData?: Prompt;
 
-  type: 'prompt' | 'command' | 'action' | 'url';
+  type: 'prompt' | 'command' | 'action' | 'url' | 'app';
 
   isExecutable?: boolean;
   shellType?: string;
   url?: string;
+
+  appPath?: string;
 }
 
 export interface SpotlightState {

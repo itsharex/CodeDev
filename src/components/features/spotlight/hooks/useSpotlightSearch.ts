@@ -5,6 +5,13 @@ import { SpotlightItem } from '@/types/spotlight';
 import { useSpotlight } from '../core/SpotlightContext';
 import { getText } from '@/lib/i18n';
 
+interface AppEntry {
+  name: string;
+  path: string;
+  icon: string | null;
+  usage_count: number;
+}
+
 const URL_REGEX = /^(https?:\/\/)?(([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}|localhost|(\d{1,3}\.){3}\d{1,3})(:\d+)?(\/.*)?$/;
 
 function isValidUrl(str: string): boolean {
@@ -65,23 +72,35 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
                 url: url
             };
         }
-        const [promptsData, urlHistoryData] = await Promise.all([
+        const [promptsData, urlHistoryData, appsData] = await Promise.all([
             // 查询 Prompts
-            q ? invoke<Prompt[]>('search_prompts', { 
-                query: q, 
-                page: 1, 
-                pageSize: 10, 
-                category: null 
-            }) : invoke<Prompt[]>('get_prompts', { 
-                page: 1, 
-                pageSize: 10, 
-                group: 'all', 
-                category: null 
+            q ? invoke<Prompt[]>('search_prompts', {
+                query: q,
+                page: 1,
+                pageSize: 10,
+                category: null
+            }) : invoke<Prompt[]>('get_prompts', {
+                page: 1,
+                pageSize: 10,
+                group: 'all',
+                category: null
             }),
 
             // 查询 URL 历史 (Rust 端已实现 FTS5 和 Title 搜索)
-            invoke<UrlHistoryRecord[]>('search_url_history', { query: q })
+            invoke<UrlHistoryRecord[]>('search_url_history', { query: q }),
+
+            // 查询应用
+            q ? invoke<AppEntry[]>('search_apps_in_db', { query: q }) : []
         ]);
+
+        const appItems: SpotlightItem[] = appsData.map(app => ({
+            id: `app-${app.path}`,
+            title: app.name,
+            description: language === 'zh' ? '应用程序' : 'Application',
+            content: app.path,
+            type: 'app',
+            appPath: app.path
+        }));
 
         const historyItems: SpotlightItem[] = urlHistoryData.map(h => {
             if (dynamicUrlItem && normalizeUrl(h.url) === dynamicUrlItem.url) {
@@ -111,7 +130,7 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
 
         let finalResults: SpotlightItem[] = [];
         if (dynamicUrlItem) finalResults.push(dynamicUrlItem);
-        finalResults = [...finalResults, ...historyItems, ...promptItems];
+        finalResults = [...finalResults, ...appItems, ...historyItems, ...promptItems];
 
         setResults(finalResults);
         setSelectedIndex(0);
