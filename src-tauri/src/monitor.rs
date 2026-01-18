@@ -11,6 +11,8 @@ use sysinfo::{
 use tauri::State;
 use listeners::{get_all, Protocol};
 use rayon::prelude::*;
+
+#[cfg(target_os = "windows")]
 use walkdir::WalkDir;
 use crate::env_probe::{self, EnvReport, AiContextReport};
 

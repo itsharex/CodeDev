@@ -1,6 +1,8 @@
 use crate::db::{AppEntry, DbState};
 use tauri::State;
 use std::path::Path;
+
+#[cfg(target_os = "windows")]
 use walkdir::WalkDir;
 
 #[cfg(target_os = "windows")]
@@ -169,9 +171,9 @@ fn scan_system() -> Vec<AppEntry> {
         let dirs = vec!["/usr/share/applications", "/usr/local/share/applications"];
         let home_desktop = std::env::var("HOME").ok().map(|h| format!("{}/.local/share/applications", h));
 
-        let mut all_dirs = dirs.iter().collect::<Vec<_>>();
+        let mut all_dirs = dirs.clone();
         if let Some(ref hd) = home_desktop {
-            all_dirs.push(&hd.as_str());
+            all_dirs.push(hd.as_str());
         }
 
         for dir in all_dirs {
