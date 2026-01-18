@@ -1,6 +1,7 @@
 use chrono::{DateTime, Local};
 use git2::{Delta, DiffFormat, DiffOptions, Oid, Repository};
 use serde::{Deserialize, Serialize};
+use std::path::Path;
 
 #[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct GitCommit {
@@ -63,6 +64,52 @@ pub fn get_git_commits(project_path: String) -> Result<Vec<GitCommit>, String> {
     Ok(commits)
 }
 
+// 辅助函数：从 Blob 读取内容
+fn read_blob_content(repo: &Repository, id: git2::Oid, max_size: usize) -> (String, bool, bool) {
+    if id.is_zero() {
+        return (String::new(), false, false);
+    }
+
+    match repo.find_blob(id) {
+        Ok(blob) => {
+            let is_binary = blob.is_binary();
+            let is_large = blob.size() > max_size;
+
+            let content = if is_binary {
+                "[Binary File Omitted]".to_string()
+            } else if is_large {
+                format!("[File Too Large: {} bytes]", blob.size())
+            } else {
+                String::from_utf8_lossy(blob.content()).to_string()
+            };
+
+            (content, is_binary, is_large)
+        }
+        Err(_) => (String::new(), false, false),
+    }
+}
+
+// 辅助函数：从磁盘读取内容
+fn read_file_content(full_path: &Path, max_size: usize) -> (String, bool, bool) {
+    match std::fs::read(full_path) {
+        Ok(bytes) => {
+            let is_large = bytes.len() > max_size;
+            // 简单检查前 8000 字节是否有 null 字符来判断二进制
+            let is_binary = bytes.iter().take(8000).any(|&b| b == 0);
+
+            let content = if is_binary {
+                "[Binary File in Workdir]".to_string()
+            } else if is_large {
+                format!("[File Too Large: {} bytes]", bytes.len())
+            } else {
+                String::from_utf8_lossy(&bytes).to_string()
+            };
+            (content, is_binary, is_large)
+        }
+        Err(_) => ("Error reading file from disk".to_string(), false, false),
+    }
+}
+
 #[tauri::command]
 pub fn get_git_diff(
     project_path: String,
@@ -72,18 +119,26 @@ pub fn get_git_diff(
     let repo = Repository::open(&project_path).map_err(|e| format!("Failed to open repo: {}", e))?;
 
     let old_oid = Oid::from_str(&old_hash).map_err(|e| format!("Invalid old hash: {}", e))?;
-    let new_oid = Oid::from_str(&new_hash).map_err(|e| format!("Invalid new hash: {}", e))?;
-
     let old_commit = repo.find_commit(old_oid).map_err(|e| e.to_string())?;
-    let new_commit = repo.find_commit(new_oid).map_err(|e| e.to_string())?;
-
     let old_tree = old_commit.tree().map_err(|e| e.to_string())?;
-    let new_tree = new_commit.tree().map_err(|e| e.to_string())?;
 
     let mut diff_opts = DiffOptions::new();
-    let diff = repo
-        .diff_tree_to_tree(Some(&old_tree), Some(&new_tree), Some(&mut diff_opts))
-        .map_err(|e| format!("Diff generation failed: {}", e))?;
+    diff_opts.include_untracked(true); // 可选：包含未追踪文件
+
+    // 核心分支逻辑
+    let diff = if new_hash == "__WORK_DIR__" {
+        // 模式 A: 历史 Commit <-> 工作区
+        repo.diff_tree_to_workdir_with_index(Some(&old_tree), Some(&mut diff_opts))
+            .map_err(|e| format!("Workdir diff failed: {}", e))?
+    } else {
+        // 模式 B: 历史 Commit <-> 历史 Commit
+        let new_oid = Oid::from_str(&new_hash).map_err(|e| format!("Invalid new hash: {}", e))?;
+        let new_commit = repo.find_commit(new_oid).map_err(|e| e.to_string())?;
+        let new_tree = new_commit.tree().map_err(|e| e.to_string())?;
+
+        repo.diff_tree_to_tree(Some(&old_tree), Some(&new_tree), Some(&mut diff_opts))
+            .map_err(|e| format!("Tree diff failed: {}", e))?
+    };
 
     let mut files: Vec<GitDiffFile> = Vec::new();
     const MAX_SIZE: usize = 2 * 1024 * 1024;
@@ -92,8 +147,8 @@ pub fn get_git_diff(
         let old_file = delta.old_file();
         let new_file = delta.new_file();
 
-        let file_path = new_file.path().or(old_file.path()).unwrap();
-        let path_str = file_path.to_string_lossy().to_string();
+        let file_path_rel = new_file.path().or(old_file.path()).unwrap();
+        let path_str = file_path_rel.to_string_lossy().to_string();
 
         let status = match delta.status() {
             Delta::Added => "Added",
@@ -103,33 +158,20 @@ pub fn get_git_diff(
             _ => "Modified",
         };
 
-        // 辅助闭包：读取 Blob 并判断属性
-        let read_blob_content = |id: git2::Oid| -> (String, bool, bool) {
-            if id.is_zero() {
-                return (String::new(), false, false);
+        // 1. 读取原始内容 (始终来自 Git Blob)
+        let (original_content, old_binary, old_large) = read_blob_content(&repo, old_file.id(), MAX_SIZE);
+
+        // 2. 读取修改后的内容
+        let (modified_content, new_binary, new_large) = if new_hash == "__WORK_DIR__" {
+            if delta.status() == Delta::Deleted {
+                (String::new(), false, false)
+            } else {
+                let full_path = Path::new(&project_path).join(file_path_rel);
+                read_file_content(&full_path, MAX_SIZE)
             }
-
-            match repo.find_blob(id) {
-                Ok(blob) => {
-                    let is_binary = blob.is_binary();
-                    let is_large = blob.size() > MAX_SIZE;
-
-                    let content = if is_binary {
-                        "[Binary File Omitted]".to_string()
-                    } else if is_large {
-                        format!("[File Too Large: {} bytes]", blob.size())
-                    } else {
-                        String::from_utf8_lossy(blob.content()).to_string()
-                    };
-
-                    (content, is_binary, is_large)
-                }
-                Err(_) => (String::new(), false, false),
-            }
+        } else {
+            read_blob_content(&repo, new_file.id(), MAX_SIZE)
         };
-
-        let (original_content, old_binary, old_large) = read_blob_content(old_file.id());
-        let (modified_content, new_binary, new_large) = read_blob_content(new_file.id());
 
         let is_binary = old_binary || new_binary;
         let is_large = old_large || new_large;
@@ -138,13 +180,7 @@ pub fn get_git_diff(
             path: path_str,
             status: status.to_string(),
             old_path: if delta.status() == Delta::Renamed {
-                Some(
-                    old_file
-                        .path()
-                        .unwrap()
-                        .to_string_lossy()
-                        .to_string(),
-                )
+                Some(old_file.path().unwrap().to_string_lossy().to_string())
             } else {
                 None
             },

@@ -221,12 +221,11 @@ export function PatchView() {
         try {
           const result = await invoke<GitCommit[]>('get_git_commits', { projectPath: selected });
           setCommits(result);
-          if (result.length >= 2) {
-            setCompareHash(result[0].hash);
-            setBaseHash(result[1].hash);
-          } else if (result.length > 0) {
-            setCompareHash(result[0].hash);
-            setBaseHash(result[0].hash);
+
+          // 修改此处逻辑：默认对比 Working Directory 和 HEAD
+          if (result.length > 0) {
+            setBaseHash(result[0].hash); // HEAD
+            setCompareHash("__WORK_DIR__"); // Working Directory
           }
         } catch (err: any) {
           showNotification(`Error loading commits: ${err.toString()}`, 'error');

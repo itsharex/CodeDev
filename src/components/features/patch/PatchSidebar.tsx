@@ -42,6 +42,14 @@ export function add(a: number, b: number): number {
 
 My request as input is:`;
 
+// 定义工作区的虚拟 Commit 对象
+const WORK_DIR_OPTION: GitCommit = {
+  hash: "__WORK_DIR__",
+  author: "You",
+  date: "Now",
+  message: "Working Directory (Unsaved Changes)"
+};
+
 interface GitCommit {
   hash: string;
   author: string;
@@ -118,6 +126,9 @@ export function PatchSidebar({
   const gitFiles = files.filter(f => f.gitStatus);
   const manualFile = files.find(f => f.isManual);
   const aiPatchFiles = files.filter(f => !f.isManual && !f.gitStatus);
+
+  // 将 WorkDir 选项合并到 commit 列表头部
+  const compareCommits = [WORK_DIR_OPTION, ...commits];
 
   return (
     <div className="w-[350px] flex flex-col border-r border-border bg-secondary/10 h-full select-none">
@@ -202,7 +213,8 @@ export function PatchSidebar({
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] font-medium text-muted-foreground">{getText('patch', 'compareVersion', language)}</label>
-                      <CommitSelector commits={commits} selectedValue={compareHash} onSelect={setCompareHash} disabled={isGitLoading} />
+                      {/* 这里使用新的 compareCommits 列表 */}
+                      <CommitSelector commits={compareCommits} selectedValue={compareHash} onSelect={setCompareHash} disabled={isGitLoading} />
                     </div>
                     <button onClick={onCompare} disabled={isGitLoading || !baseHash || !compareHash} className="w-full flex items-center justify-center gap-2 py-2 rounded-md text-xs font-bold bg-primary text-primary-foreground hover:bg-primary/90 transition-all disabled:opacity-50 active:scale-95 shadow-sm shadow-primary/20">
                       {isGitLoading ? <Loader2 size={14} className="animate-spin"/> : <GitMerge size={14}/>}
