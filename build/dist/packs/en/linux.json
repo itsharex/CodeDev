@@ -19787,10 +19787,10 @@
   {
     "id": "tldr-en-linux-zenity-1",
     "type": "command",
-    "title": "zenity - Display an info dialog displaying the text \"Hello!\"",
-    "content": "zenity --info --text=\"{{Hello!}}\"",
+    "title": "zenity - Display an info dialog displaying a message",
+    "content": "zenity --info --text \"{{message}}\"",
     "group": "Linux Ops",
-    "description": "zenity: Display dialogs from the command-line/shell scripts. Return user-inserted values or 1 if error. (Display an info dialog displaying the text \"Hello!\")",
+    "description": "zenity: Display dialogs from the command-line/shell scripts. Return user-inserted values or 1 if error. (Display an info dialog displaying a message)",
     "tags": [
       "linux",
       "zenity",
@@ -19802,10 +19802,10 @@
   {
     "id": "tldr-en-linux-zenity-2",
     "type": "command",
-    "title": "zenity - Display a name/password form and output the data separated by \";\"",
-    "content": "zenity --forms --add-entry=\"{{Name}}\" --add-password=\"{{Password}}\" --separator=\"{{;}}\"",
+    "title": "zenity - Display a name/password form and output the data separated by \";\" (\"|\" by default)",
+    "content": "zenity --forms --add-entry \"{{name_label}}\" --add-password \"{{password_label}}\" --separator \";\"",
     "group": "Linux Ops",
-    "description": "zenity: Display dialogs from the command-line/shell scripts. Return user-inserted values or 1 if error. (Display a name/password form and output the data separated by \";\")",
+    "description": "zenity: Display dialogs from the command-line/shell scripts. Return user-inserted values or 1 if error. (Display a name/password form and output the data separated by \";\" (\"|\" by default))",
     "tags": [
       "linux",
       "zenity",
@@ -36558,7 +36558,7 @@
     "id": "tldr-en-linux-kscreen-doctor-1",
     "type": "command",
     "title": "kscreen-doctor - Set the rotation of a display output with an ID of 1 to the right",
-    "content": "kscreen-doctor {{output.1.rotation.right}}",
+    "content": "kscreen-doctor output.1.rotation.right",
     "group": "Linux Ops",
     "description": "kscreen-doctor: Change and manipulate the screen setup. (Set the rotation of a display output with an ID of 1 to the right)",
     "tags": [
@@ -36573,9 +36573,54 @@
     "id": "tldr-en-linux-kscreen-doctor-2",
     "type": "command",
     "title": "kscreen-doctor - Set the scale of a display output with an ID of `HDMI-2` to 2 (200%)",
-    "content": "kscreen-doctor {{output.HDMI-2.scale.2}}",
+    "content": "kscreen-doctor output.HDMI-2.scale.2",
     "group": "Linux Ops",
     "description": "kscreen-doctor: Change and manipulate the screen setup. (Set the scale of a display output with an ID of `HDMI-2` to 2 (200%))",
+    "tags": [
+      "linux",
+      "kscreen-doctor",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-kscreen-doctor-3",
+    "type": "command",
+    "title": "kscreen-doctor - Enable a specific HDMI display",
+    "content": "kscreen-doctor output.{{HDMI-A-1}}.enable",
+    "group": "Linux Ops",
+    "description": "kscreen-doctor: Change and manipulate the screen setup. (Enable a specific HDMI display)",
+    "tags": [
+      "linux",
+      "kscreen-doctor",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-kscreen-doctor-4",
+    "type": "command",
+    "title": "kscreen-doctor - Disable a specific DisplayPort display",
+    "content": "kscreen-doctor output.{{DP-2}}.disable",
+    "group": "Linux Ops",
+    "description": "kscreen-doctor: Change and manipulate the screen setup. (Disable a specific DisplayPort display)",
+    "tags": [
+      "linux",
+      "kscreen-doctor",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-kscreen-doctor-5",
+    "type": "command",
+    "title": "kscreen-doctor - Set a display as primary display",
+    "content": "kscreen-doctor output.{{HDMI-A-1}}.primary",
+    "group": "Linux Ops",
+    "description": "kscreen-doctor: Change and manipulate the screen setup. (Set a display as primary display)",
     "tags": [
       "linux",
       "kscreen-doctor",
