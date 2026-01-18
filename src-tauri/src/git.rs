@@ -64,7 +64,6 @@ pub fn get_git_commits(project_path: String) -> Result<Vec<GitCommit>, String> {
     Ok(commits)
 }
 
-// 辅助函数：从 Blob 读取内容
 fn read_blob_content(repo: &Repository, id: git2::Oid, max_size: usize) -> (String, bool, bool) {
     if id.is_zero() {
         return (String::new(), false, false);
@@ -89,12 +88,10 @@ fn read_blob_content(repo: &Repository, id: git2::Oid, max_size: usize) -> (Stri
     }
 }
 
-// 辅助函数：从磁盘读取内容
 fn read_file_content(full_path: &Path, max_size: usize) -> (String, bool, bool) {
     match std::fs::read(full_path) {
         Ok(bytes) => {
             let is_large = bytes.len() > max_size;
-            // 简单检查前 8000 字节是否有 null 字符来判断二进制
             let is_binary = bytes.iter().take(8000).any(|&b| b == 0);
 
             let content = if is_binary {
@@ -102,7 +99,7 @@ fn read_file_content(full_path: &Path, max_size: usize) -> (String, bool, bool) 
             } else if is_large {
                 format!("[File Too Large: {} bytes]", bytes.len())
             } else {
-                String::from_utf8_lossy(&bytes).to_string()
+                String::from_utf8_lossy(&bytes).replace("\r\n", "\n")
             };
             (content, is_binary, is_large)
         }
@@ -123,15 +120,12 @@ pub fn get_git_diff(
     let old_tree = old_commit.tree().map_err(|e| e.to_string())?;
 
     let mut diff_opts = DiffOptions::new();
-    diff_opts.include_untracked(true); // 可选：包含未追踪文件
+    diff_opts.include_untracked(true);
 
-    // 核心分支逻辑
     let diff = if new_hash == "__WORK_DIR__" {
-        // 模式 A: 历史 Commit <-> 工作区
         repo.diff_tree_to_workdir_with_index(Some(&old_tree), Some(&mut diff_opts))
             .map_err(|e| format!("Workdir diff failed: {}", e))?
     } else {
-        // 模式 B: 历史 Commit <-> 历史 Commit
         let new_oid = Oid::from_str(&new_hash).map_err(|e| format!("Invalid new hash: {}", e))?;
         let new_commit = repo.find_commit(new_oid).map_err(|e| e.to_string())?;
         let new_tree = new_commit.tree().map_err(|e| e.to_string())?;
@@ -158,10 +152,8 @@ pub fn get_git_diff(
             _ => "Modified",
         };
 
-        // 1. 读取原始内容 (始终来自 Git Blob)
         let (original_content, old_binary, old_large) = read_blob_content(&repo, old_file.id(), MAX_SIZE);
 
-        // 2. 读取修改后的内容
         let (modified_content, new_binary, new_large) = if new_hash == "__WORK_DIR__" {
             if delta.status() == Delta::Deleted {
                 (String::new(), false, false)
