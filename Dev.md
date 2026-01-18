@@ -17,6 +17,50 @@
 
 ## 版本历史
 
+### v1.3.2 (2026-01-18)
+
+| 提交哈希 | 变更内容 | 详细说明 |
+|---------|---------|---------|
+| `xxxxxx` | 发布 1.3.2 | 版本发布 |
+| `xxxxxx` | **Spotlight 增强** | 新增计算器、Shell 命令、范围搜索功能 |
+| `xxxxxx` | **国际化完善** | 统一所有硬编码文案为 getText 调用 |
+| `xxxxxx` | **性能优化** | 正则静态化、loading 短路优化 |
+
+**v1.3.2 Spotlight 增强文件变更**:
+```
+src/types/spotlight.ts              | +12 新增 SearchScope 和 math/shell 类型
+src/lib/calculator.ts               | +45 数学表达式计算工具
+src/components/features/spotlight/core/SpotlightContext.tsx | +8 searchScope 状态
+src/components/features/spotlight/core/SearchBar.tsx        | +120 前缀识别和 Tag UI
+src/components/features/spotlight/hooks/useSpotlightSearch.ts | +85 搜索逻辑重构
+src/components/features/spotlight/modes/search/SearchMode.tsx | +45 UI 适配
+src/lib/i18n.ts                     | +24 新增国际化词条
+src/SpotlightApp.tsx                | +12 点击处理逻辑
+```
+
+**v1.3.2 国际化优化文件变更**:
+```
+src/App.tsx                          | +2 getText 导入
+src/components/settings/SettingsModal.tsx | +6 getText 调用
+src/components/features/monitor/tabs/EnvFingerprint.tsx | +2 getText 调用
+```
+
+**v1.3.2 性能优化**:
+```
+src/lib/calculator.ts                | 正则静态化、超长浮点数限制
+src/components/features/spotlight/hooks/useSpotlightSearch.ts | 计算/Shel 模式短路
+```
+
+**主要更新**:
+- 🧮 **计算器模式**: 输入 `=1+1`、`=sin(pi)` 即可快速计算
+- 💻 **Shell 命令**: 输入 `>ls`、`>dir` 直接执行命令
+- 📂 **范围搜索**: `/app` 搜索应用、`/cmd` 搜索命令、`/pmt` 搜索提示词
+- 🏷️ **Tag 交互**: 类似 VSCode 的搜索范围标签 UI
+- 🌍 **国际化统一**: 全部硬编码文案迁移至 i18n 系统
+- ⚡ **性能优化**: 正则复用、loading 状态短路避免闪烁
+
+---
+
 ### v1.3.1 (2026-01-18)
 
 | 提交哈希 | 变更内容 | 详细说明 |
@@ -357,6 +401,10 @@ src/lib/i18n.ts                   | +-44 国际化支持
 | 初始 | 全局快捷键唤起 (`Alt+S`) |
 | v1.1.2 | 自定义快捷键配置 |
 | v1.1.3 | 通知系统集成 |
+| v1.3.2 | 计算器模式 (`=`) |
+| v1.3.2 | Shell 命令执行 (`>`) |
+| v1.3.2 | 范围搜索 (`/app`, `/cmd`, `/pmt`) |
+| v1.3.2 | Tag 交互 UI |
 
 ### 3. Prompt Verse (提示词库)
 | 版本 | 功能 |
