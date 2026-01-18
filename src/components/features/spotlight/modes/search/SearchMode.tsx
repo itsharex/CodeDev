@@ -39,7 +39,7 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
 
   const getActionLabel = (item: SpotlightItem) => {
     if (item.type === 'url') return getText('spotlight', 'openLink', language);
-    if (item.type === 'app') return language === 'zh' ? '打开' : 'Open';
+    if (item.type === 'app') return getText('spotlight', 'openApp', language);
     if (item.type === 'shell' || item.isExecutable) return getText('actions', 'run', language);
     if (item.type === 'math') return getText('spotlight', 'copyResult', language) || "Copy";
     return getText('spotlight', 'copy', language);

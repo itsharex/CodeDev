@@ -74,6 +74,7 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
                     mathResult: mathResult
                 }]);
                 setSelectedIndex(0);
+                setIsLoading(false); // 短路：确保 loading 关闭
                 return;
             }
         }
@@ -85,7 +86,7 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
                 setResults([{
                     id: 'shell-exec',
                     title: `${getText('spotlight', 'executeCommand', language) || 'Execute'}: ${cmd}`,
-                    description: language === 'zh' ? '在终端中运行' : 'Run in terminal',
+                    description: getText('spotlight', 'runInTerminal', language),
                     content: cmd,
                     type: 'shell',
                     shellCmd: cmd,
@@ -93,6 +94,7 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
                     shellType: 'auto'
                 }]);
                 setSelectedIndex(0);
+                setIsLoading(false); // 短路：确保 loading 关闭
                 return;
             }
         }
@@ -165,7 +167,7 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
         const appItems: SpotlightItem[] = (appsData as AppEntry[]).map(app => ({
             id: `app-${app.path}`,
             title: app.name,
-            description: language === 'zh' ? '应用程序' : 'Application',
+            description: getText('spotlight', 'application', language),
             content: app.path,
             type: 'app',
             appPath: app.path

@@ -549,16 +549,16 @@ export function SettingsModal() {
                         <div>
                             <h3 className="text-sm font-medium text-foreground flex items-center gap-2">
                                 <AppWindow size={18} className="text-cyan-600"/>
-                                {language === 'zh' ? '应用索引' : 'Application Index'}
+                                {getText('spotlight', 'appIndex', language)}
                             </h3>
                             <p className="text-xs text-muted-foreground mt-1">
-                                {language === 'zh' ? '重建 Spotlight 的应用程序启动索引（建议安装新软件后刷新）。' : 'Rebuild the application launch index for Spotlight (Recommended after installing new apps).'}
+                                {getText('spotlight', 'rebuildAppIndex', language)}
                             </p>
                         </div>
 
                         <div className="bg-secondary/20 border border-border rounded-lg p-4 flex items-center justify-between">
                             <div className="text-xs text-muted-foreground">
-                                {language === 'zh' ? '索引存储在本地数据库中。' : 'Index is stored in local database.'}
+                                {getText('spotlight', 'appIndexStored', language)}
                             </div>
                             <button
                                 onClick={handleRefreshApps}
@@ -566,7 +566,7 @@ export function SettingsModal() {
                                 className="flex items-center gap-2 px-3 py-1.5 bg-background border border-border hover:border-primary/50 hover:text-primary rounded-md text-xs font-medium transition-all shadow-sm disabled:opacity-50"
                             >
                                 <RefreshCw size={14} className={cn(isScanningApps && "animate-spin")} />
-                                {language === 'zh' ? '立即刷新索引' : 'Refresh Index Now'}
+                                {getText('spotlight', 'refreshIndexNow', language)}
                             </button>
                         </div>
                     </div>
