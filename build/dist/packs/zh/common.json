@@ -9978,7 +9978,7 @@
     "id": "tldr-zh-common-banner-1",
     "type": "command",
     "title": "banner - 将文字信息打印为横幅，宽度为 50 个字",
-    "content": "banner -w 50 \"{{Hello World}}\"",
+    "content": "banner {{[-w|--width]}} 50 \"{{Hello World}}\"",
     "group": "通用工具 (Common)",
     "description": "banner: 将给定参数输出为大型 ASCII 文字。 (将文字信息打印为横幅，宽度为 50 个字)",
     "tags": [
