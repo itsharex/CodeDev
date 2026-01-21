@@ -1340,7 +1340,7 @@
     "title": "virt-sysprep - List all supported operations (default enabled operations are indicated with asterisks)",
     "content": "virt-sysprep --list-operations",
     "group": "Linux Ops",
-    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or setup the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (List all supported operations (default enabled operations are indicated with asterisks))",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (List all supported operations (default enabled operations are indicated with asterisks))",
     "tags": [
       "linux",
       "virt-sysprep",
@@ -1355,7 +1355,7 @@
     "title": "virt-sysprep - Run only the specified operations",
     "content": "sudo virt-sysprep {{[-d|--domain]}} {{vm_name}} --operations {{operation1,operation2,...}}",
     "group": "Linux Ops",
-    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or setup the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Run only the specified operations)",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Run only the specified operations)",
     "tags": [
       "linux",
       "virt-sysprep",
@@ -1370,7 +1370,7 @@
     "title": "virt-sysprep - Remove sensitive system data from a virtual machine image (operations marked as default)",
     "content": "sudo virt-sysprep {{[-a|--add]}} {{path/to/image.qcow2}}",
     "group": "Linux Ops",
-    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or setup the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Remove sensitive system data from a virtual machine image (operations marked as default))",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Remove sensitive system data from a virtual machine image (operations marked as default))",
     "tags": [
       "linux",
       "virt-sysprep",
@@ -1385,7 +1385,7 @@
     "title": "virt-sysprep - Specify a virtual machine by its name and run all enabled operations but don't actually apply the changes",
     "content": "sudo virt-sysprep {{[-d|--domain]}} {{vm_name}} {{[-n|--dry-run]}}",
     "group": "Linux Ops",
-    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or setup the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Specify a virtual machine by its name and run all enabled operations but don't actually apply the changes)",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Specify a virtual machine by its name and run all enabled operations but don't actually apply the changes)",
     "tags": [
       "linux",
       "virt-sysprep",
@@ -1400,7 +1400,7 @@
     "title": "virt-sysprep - Reset NetworkManager network configurations, persistent MAC mappings, and the hostname to avoid network conflicts",
     "content": "sudo virt-sysprep {{[-d|--domain]}} {{vm_name}} --operations machine-id,net-hwaddr,net-hostname,net-nmconn,customize --hostname {{new_hostname}}",
     "group": "Linux Ops",
-    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or setup the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Reset NetworkManager network configurations, persistent MAC mappings, and the hostname to avoid network conflicts)",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Reset NetworkManager network configurations, persistent MAC mappings, and the hostname to avoid network conflicts)",
     "tags": [
       "linux",
       "virt-sysprep",
@@ -1415,7 +1415,7 @@
     "title": "virt-sysprep - Set the root password for a disk image",
     "content": "sudo virt-sysprep {{[-a|--add]}} {{path/to/image.qcow2}} --operations customize --root-password password:{{new_password}}",
     "group": "Linux Ops",
-    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or setup the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Set the root password for a disk image)",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Set the root password for a disk image)",
     "tags": [
       "linux",
       "virt-sysprep",
@@ -1430,7 +1430,7 @@
     "title": "virt-sysprep - Inject a new user with a defined password and add them to the sudo group",
     "content": "sudo virt-sysprep {{[-a|--add]}} {{path/to/image.qcow2}} --run-command 'useradd -m {{username}} && echo {{username}}:{{password}} | chpasswd && usermod -aG sudo {{username}}'",
     "group": "Linux Ops",
-    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or setup the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Inject a new user with a defined password and add them to the sudo group)",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Inject a new user with a defined password and add them to the sudo group)",
     "tags": [
       "linux",
       "virt-sysprep",
@@ -1445,7 +1445,7 @@
     "title": "virt-sysprep - Install specific package(s) on a disk image (use `--update` to upgrade all installed packages to latest)",
     "content": "sudo virt-sysprep {{[-a|--add]}} {{path/to/image.qcow2}} --operations customize --network --install {{package_name1,package_name2,...}}",
     "group": "Linux Ops",
-    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or setup the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Install specific package(s) on a disk image (use `--update` to upgrade all installed packages to latest))",
+    "description": "virt-sysprep: Reset, unconfigure, or customize a virtual machine image. This command can be used on a virtual machine or directly on a virtual machine disk image. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Install specific package(s) on a disk image (use `--update` to upgrade all installed packages to latest))",
     "tags": [
       "linux",
       "virt-sysprep",
@@ -6770,7 +6770,7 @@
     "title": "virt-install - Create a virtual machine with 1 GB RAM and 12 GB storage and start a Debian installation",
     "content": "virt-install {{[-n|--name]}} {{vm_name}} --memory {{1024}} --disk path={{path/to/image.qcow2}},size={{12}} {{[-c|--cdrom]}} {{path/to/debian.iso}}",
     "group": "Linux Ops",
-    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. (Create a virtual machine with 1 GB RAM and 12 GB storage and start a Debian installation)",
+    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Create a virtual machine with 1 GB RAM and 12 GB storage and start a Debian installation)",
     "tags": [
       "linux",
       "virt-install",
@@ -6785,7 +6785,7 @@
     "title": "virt-install - Create a x86-64, KVM-accelerated, UEFI-based virtual machine with the Q35 chipset, 4 GiB RAM, 16 GiB RAW storage, and start a Fedora installation",
     "content": "virt-install {{[-n|--name]}} {{vm_name}} --arch {{x86_64}} --virt-type {{kvm}} --machine {{q35}} --boot {{uefi}} --memory {{4096}} --disk path={{path/to/image.raw}},size={{16}} {{[-c|--cdrom]}} {{path/to/fedora.iso}}",
     "group": "Linux Ops",
-    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. (Create a x86-64, KVM-accelerated, UEFI-based virtual machine with the Q35 chipset, 4 GiB RAM, 16 GiB RAW storage, and start a Fedora installation)",
+    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Create a x86-64, KVM-accelerated, UEFI-based virtual machine with the Q35 chipset, 4 GiB RAM, 16 GiB RAW storage, and start a Fedora installation)",
     "tags": [
       "linux",
       "virt-install",
@@ -6800,7 +6800,7 @@
     "title": "virt-install - Create a diskless live virtual machine without an emulated sound device or a USB controller. Don't start an installation and don't autoconnect to console but attach a cdrom to it (might be useful for when using a live CD like tails)",
     "content": "virt-install {{[-n|--name]}} {{vm_name}} --memory {{512}} --disk {{none}} --controller {{type=usb,model=none}} --sound {{none}} --autoconsole {{none}} --install {{no_install=yes}} {{[-c|--cdrom]}} {{path/to/tails.iso}}",
     "group": "Linux Ops",
-    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. (Create a diskless live virtual machine without an emulated sound device or a USB controller. Don't start an installation and don't autoconnect to console but attach a cdrom to it (might be useful for when using a live CD like tails))",
+    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Create a diskless live virtual machine without an emulated sound device or a USB controller. Don't start an installation and don't autoconnect to console but attach a cdrom to it (might be useful for when using a live CD like tails))",
     "tags": [
       "linux",
       "virt-install",
@@ -6815,7 +6815,7 @@
     "title": "virt-install - Create a virtual machine with 16 GiB RAM, 250 GiB storage, 8 cores with hyperthreading, a specific CPU topology, and a CPU model that shares most features with the host CPU",
     "content": "virt-install {{[-n|--name]}} {{vm_name}} --cpu {{host-model}},topology.sockets={{1}},topology.cores={{4}},topology.threads={{2}} --memory {{16384}} --disk path={{path/to/image.qcow2}},size={{250}} {{[-c|--cdrom]}} {{path/to/debian.iso}}",
     "group": "Linux Ops",
-    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. (Create a virtual machine with 16 GiB RAM, 250 GiB storage, 8 cores with hyperthreading, a specific CPU topology, and a CPU model that shares most features with the host CPU)",
+    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Create a virtual machine with 16 GiB RAM, 250 GiB storage, 8 cores with hyperthreading, a specific CPU topology, and a CPU model that shares most features with the host CPU)",
     "tags": [
       "linux",
       "virt-install",
@@ -6827,10 +6827,10 @@
   {
     "id": "tldr-en-linux-virt-install-4",
     "type": "command",
-    "title": "virt-install - Create a virtual machine and kickstart an automated deployment based on Fedora 35 using only remote resources (no ISO required)",
-    "content": "virt-install {{[-n|--name]}} {{vm_name}} --memory {{2048}} --disk path={{path/to/image.qcow2}},size={{20}} {{[-l|--location]}} {{https://download.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/}} {{[-x|--extra-args]}} \"{{inst.ks=https://path/to/valid_kickstart.org}}\"",
+    "title": "virt-install - Create a virtual machine and kickstart an automated deployment based on Fedora 43 using only remote resources (no ISO required)",
+    "content": "virt-install {{[-n|--name]}} {{vm_name}} --memory {{2048}} --disk path={{path/to/image.qcow2}},size={{20}} {{[-l|--location]}} {{https://download.fedoraproject.org/pub/fedora/linux/releases/43/Everything/x86_64/os/}} {{[-x|--extra-args]}} \"{{inst.ks=https://example.com/path/to/kickstart.ks}}\"",
     "group": "Linux Ops",
-    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. (Create a virtual machine and kickstart an automated deployment based on Fedora 35 using only remote resources (no ISO required))",
+    "description": "virt-install: Create virtual machines with libvirt and begin OS installation. Note: You may need to pass `--connect URI` to the commands or set up the URI in `$XDG_CONFIG_HOME/libvirt/libvirt.conf`. (Create a virtual machine and kickstart an automated deployment based on Fedora 43 using only remote resources (no ISO required))",
     "tags": [
       "linux",
       "virt-install",
