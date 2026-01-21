@@ -32,7 +32,6 @@ pub struct Prompt {
     pub type_: Option<String>,
     pub is_executable: Option<bool>,
     pub shell_type: Option<String>,
-    // [New] 新增字段
     pub use_as_chat_template: Option<bool>,
 }
 
@@ -110,7 +109,7 @@ pub fn init_db(app_handle: &AppHandle) -> Result<Connection> {
     let _ = conn.execute("ALTER TABLE prompts ADD COLUMN is_executable INTEGER DEFAULT 0", []);
     let _ = conn.execute("ALTER TABLE prompts ADD COLUMN shell_type TEXT", []);
 
-    // [重要] 尝试添加 use_as_chat_template 列
+    // 尝试添加 use_as_chat_template 列
     match conn.execute("ALTER TABLE prompts ADD COLUMN use_as_chat_template INTEGER DEFAULT 0", []) {
         Ok(_) => println!("[Database] Migration: Added 'use_as_chat_template' column."),
         Err(_) => println!("[Database] Column 'use_as_chat_template' likely exists, skipping."),
@@ -299,7 +298,6 @@ pub fn get_prompts(
             type_: row.get("type")?,
             is_executable: row.get("is_executable").unwrap_or(Some(false)),
             shell_type: row.get("shell_type").unwrap_or(None),
-            // [New] 读取新字段 (注意处理 NULL)
             use_as_chat_template: row.get("use_as_chat_template").unwrap_or(Some(false)),
         })
     }).map_err(|e| e.to_string())?;
@@ -396,7 +394,6 @@ pub fn search_prompts(
             type_: row.get("type")?,
             is_executable: row.get("is_executable").unwrap_or(Some(false)),
             shell_type: row.get("shell_type").unwrap_or(None),
-            // [New] 读取新字段
             use_as_chat_template: row.get("use_as_chat_template").unwrap_or(Some(false)),
         })
     }).map_err(|e| e.to_string())?;
@@ -417,7 +414,6 @@ pub fn save_prompt(
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
     let tags_json = serde_json::to_string(&prompt.tags).unwrap_or("[]".to_string());
 
-    // [New] 更新 SQL：增加 ?16 占位符和对应的列名
     conn.execute(
         "INSERT OR REPLACE INTO prompts (
             id, title, content, group_name, description, tags,
@@ -440,7 +436,6 @@ pub fn save_prompt(
             prompt.type_,
             prompt.is_executable,
             prompt.shell_type,
-            // [New] 插入新字段
             prompt.use_as_chat_template
         ],
     ).map_err(|e| e.to_string())?;
@@ -1203,13 +1198,10 @@ pub fn sync_scanned_apps(conn: &Connection, scanned_apps: Vec<AppEntry>) -> Resu
     Ok(scanned_apps.len())
 }
 
-// --- 聊天快捷指令专用查询 ---
-
 #[tauri::command]
 pub fn get_chat_templates(state: State<DbState>) -> Result<Vec<Prompt>, String> {
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
 
-    // 只查询开启了 use_as_chat_template 的条目，且按标题排序方便查找
     let mut stmt = conn.prepare(
         "SELECT * FROM prompts
          WHERE use_as_chat_template = 1

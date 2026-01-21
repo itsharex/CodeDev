@@ -206,17 +206,13 @@ fn main() {
             db::save_project_config,
             db::export_project_configs,
             db::import_project_configs,
-            // --- 新注册的命令 ---
             db::add_ignored_secrets,
             db::get_ignored_secrets,
             db::delete_ignored_secret,
-            // --- Apps 相关命令 ---
             db::search_apps_in_db,
             apps::refresh_apps,
             apps::open_app,
-            // --- 聊天快捷指令命令 ---
             db::get_chat_templates,
-            // -------------------
             monitor::get_system_metrics,
             monitor::get_top_processes,
             monitor::get_active_ports,
@@ -238,7 +234,6 @@ fn main() {
                     println!("[Database] SQLite initialized successfully.");
                 }
                 Err(e) => {
-                    // DB 初始化失败时直接 panic，避免运行时隐性崩溃
                     panic!("[Database] Critical Error: Failed to initialize database: {}", e);
                 }
             }

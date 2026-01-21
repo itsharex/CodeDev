@@ -2,24 +2,19 @@ import { useState, useRef, useCallback } from 'react';
 import { ChatMessage, streamChatCompletion } from '@/lib/llm';
 import { useAppStore } from '@/store/useAppStore';
 import { useSpotlight } from '../core/SpotlightContext';
-// [New] 引入组装函数
 import { assembleChatPrompt } from '@/lib/template';
 
 export function useSpotlightChat() {
-  const { chatInput, setChatInput, activeTemplate, setActiveTemplate } = useSpotlight(); // [New] 获取模板状态
+  const { chatInput, setChatInput, activeTemplate, setActiveTemplate } = useSpotlight();
   const { aiConfig: uiAiConfig, setAIConfig } = useAppStore();
 
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [isStreaming, setIsStreaming] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // 发送消息
   const sendMessage = useCallback(async () => {
-    // [New] 智能组装逻辑
-    // 如果有激活的模板，使用 assembleChatPrompt；否则使用原始输入
     let finalContent = chatInput.trim();
 
-    // 如果是模板模式，允许空输入(直发模式)，否则必须非空
     if (activeTemplate) {
         finalContent = assembleChatPrompt(activeTemplate.content, chatInput);
     } else {
@@ -27,7 +22,7 @@ export function useSpotlightChat() {
     }
 
     if (isStreaming) return;
-    if (!finalContent) return; // 双重检查
+    if (!finalContent) return;
 
     const freshConfig = useAppStore.getState().aiConfig;
 
@@ -40,7 +35,6 @@ export function useSpotlightChat() {
        return;
     }
 
-    // [New] 重置状态：清空输入框 + 清除激活的模板
     setChatInput('');
     setActiveTemplate(null);
 
@@ -81,13 +75,13 @@ export function useSpotlightChat() {
       },
       () => setIsStreaming(false)
     );
-  }, [chatInput, isStreaming, messages, activeTemplate, setActiveTemplate, setChatInput]); // [New] 添加依赖
+  }, [chatInput, isStreaming, messages, activeTemplate, setActiveTemplate, setChatInput]);
 
   const clearChat = useCallback(() => {
     if (isStreaming) return;
     setMessages([]);
     setChatInput('');
-    setActiveTemplate(null); // [New] 清空时也重置模板
+    setActiveTemplate(null);
   }, [isStreaming, setChatInput, setActiveTemplate]);
 
   const cycleProvider = useCallback(() => {

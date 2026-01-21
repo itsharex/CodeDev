@@ -17,13 +17,11 @@ export function ChatCommandMenu({ inputValue, selectedIndex, onSelect }: ChatCom
   const { language } = useAppStore();
   const menuRef = useRef<HTMLDivElement>(null);
 
-  // 过滤逻辑
   const filtered = chatTemplates.filter(p =>
     inputValue === '' ||
     p.title.toLowerCase().includes(inputValue.toLowerCase())
   ).slice(0, 5);
 
-  // 自动滚动
   useEffect(() => {
     if (menuRef.current && filtered.length > 0) {
       const activeEl = menuRef.current.children[selectedIndex] as HTMLElement;
@@ -36,11 +34,10 @@ export function ChatCommandMenu({ inputValue, selectedIndex, onSelect }: ChatCom
   if (filtered.length === 0) return null;
 
   return (
-    // [UI] 调整 top 位置和阴影，使其更有悬浮感
     <div className="absolute top-[calc(100%+8px)] left-2 right-2 z-50 animate-in fade-in slide-in-from-top-1 duration-200">
       <div className="bg-popover/95 backdrop-blur-xl border border-border/60 rounded-xl shadow-2xl overflow-hidden ring-1 ring-black/5 dark:ring-white/10 flex flex-col">
 
-        {/* Header Tip */}
+        {/* Header */}
         <div className="px-3 py-2 bg-secondary/30 border-b border-border/40 flex justify-between items-center text-[10px] text-muted-foreground/70 select-none">
             <span className="font-medium flex items-center gap-1.5 uppercase tracking-wider">
                 <Command size={10} />
@@ -49,7 +46,7 @@ export function ChatCommandMenu({ inputValue, selectedIndex, onSelect }: ChatCom
             <span className="font-mono opacity-50">TAB / ↑↓ to navigate</span>
         </div>
 
-        {/* List Area */}
+        {/* List */}
         <div ref={menuRef} className="max-h-[300px] overflow-y-auto custom-scrollbar p-1.5 space-y-0.5">
             {filtered.map((item, idx) => {
                 const isActive = idx === selectedIndex;
@@ -59,7 +56,6 @@ export function ChatCommandMenu({ inputValue, selectedIndex, onSelect }: ChatCom
                         onClick={() => onSelect(item)}
                         className={cn(
                             "relative flex flex-col gap-1 px-3 py-2.5 rounded-lg cursor-pointer transition-all duration-150 group",
-                            // [UI] 选中态：不再是大蓝块，而是轻微背景 + 左侧边框指示
                             isActive
                                 ? "bg-accent text-accent-foreground"
                                 : "text-foreground/80 hover:bg-secondary/40"
@@ -72,7 +68,6 @@ export function ChatCommandMenu({ inputValue, selectedIndex, onSelect }: ChatCom
 
                         <div className="flex items-center justify-between pl-2">
                             <div className="flex items-center gap-2.5 min-w-0">
-                                {/* Icon */}
                                 <div className={cn(
                                     "flex items-center justify-center w-5 h-5 rounded-md shrink-0 transition-colors",
                                     isActive ? "bg-primary/10 text-primary" : "bg-secondary text-muted-foreground"
@@ -80,12 +75,10 @@ export function ChatCommandMenu({ inputValue, selectedIndex, onSelect }: ChatCom
                                     <Sparkles size={12} />
                                 </div>
 
-                                {/* Title */}
                                 <span className={cn("font-medium text-sm truncate", isActive && "text-primary")}>
                                     {item.title}
                                 </span>
 
-                                {/* Group Badge (Subtle) */}
                                 <span className="text-[10px] text-muted-foreground/50 bg-secondary/50 px-1.5 py-0.5 rounded border border-transparent group-hover:border-border/50 transition-colors">
                                     {item.group}
                                 </span>

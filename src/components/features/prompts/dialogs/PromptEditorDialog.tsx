@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
 import { invoke } from '@tauri-apps/api/core';
-// [New] 引入 MessageSquare 图标
 import { X, Save, Tag, FileText, Folder, ChevronDown, Check, Plus, Sparkles, Terminal, Loader2, AlertTriangle, RefreshCw, MessageSquare } from 'lucide-react';
 import { usePromptStore } from '@/store/usePromptStore';
 import { useAppStore } from '@/store/useAppStore';
@@ -33,8 +32,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
   const [type, setType] = useState<'command' | 'prompt'>('prompt');
   const [isExecutable, setIsExecutable] = useState(false);
   const [shellType, setShellType] = useState<ShellType>('auto');
-
-  // [New] 新增状态
   const [useAsChatTemplate, setUseAsChatTemplate] = useState(false);
 
   const [newGroupMode, setNewGroupMode] = useState(false);
@@ -60,7 +57,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
         setType(initialData.type || 'prompt');
         setIsExecutable(initialData.type === 'command' && (initialData.isExecutable || false));
         setShellType(initialData.shellType || 'auto');
-        // [New] 初始化状态
         setUseAsChatTemplate(initialData.useAsChatTemplate || false);
       } else {
         setTitle('');
@@ -69,7 +65,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
         setType('prompt');
         setIsExecutable(false);
         setShellType('auto');
-        // [New] 初始化状态
         setUseAsChatTemplate(false);
       }
       setNewGroupMode(false);
@@ -85,7 +80,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
     if (type === 'prompt') {
       setIsExecutable(false);
     } else {
-      // 切换到 Command 时关闭 Chat Template
       setUseAsChatTemplate(false);
     }
   }, [type]);
@@ -137,7 +131,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
             type: type,
             isExecutable: isExecutable,
             shellType: shellType,
-            // [New] 保存字段
             useAsChatTemplate: type === 'prompt' ? useAsChatTemplate : false,
         };
 
@@ -189,7 +182,7 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
              </button>
           </div>
 
-          {/* [New] Chat Slash Command 配置区 (仅在 Prompt 模式显示) */}
+          {/* Chat Slash Command 配置区 */}
           {type === 'prompt' && (
             <div className={cn(
               "rounded-xl border border-border/60 p-3 transition-all duration-300 animate-in fade-in slide-in-from-top-1",
@@ -215,7 +208,6 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
                     </div>
                  </div>
 
-                 {/* 开关组件 */}
                  <div className={cn(
                     "w-10 h-5 rounded-full relative transition-colors duration-300",
                     useAsChatTemplate ? "bg-primary" : "bg-slate-300 dark:bg-slate-600"
@@ -227,7 +219,7 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
                  </div>
               </div>
 
-              {/* 展开的详细说明 - 智能提示 */}
+              {/* 智能提示 */}
               {useAsChatTemplate && (
                   <div className="mt-3 pt-3 border-t border-border/50 flex gap-2 animate-in fade-in">
                       <div className="shrink-0 mt-0.5 text-primary"><Sparkles size={12} /></div>
@@ -251,11 +243,10 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
             </div>
           )}
 
-          {/* Title Input */}
+          {/* Title */}
           <div className="space-y-2">
             <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5"> <Tag size={14} /> {getText('editor', 'labelTitle', language)} </label>
             <input autoFocus className="w-full bg-secondary/20 border border-border rounded-lg px-3 py-2.5 text-sm focus:ring-2 focus:ring-primary/50 focus:border-primary/50 outline-none transition-all placeholder:text-muted-foreground/40" placeholder={getText('editor', 'placeholderTitle', language)} value={title} onChange={e => setTitle(e.target.value)} />
-            {/* 提示用户标题将作为指令名 */}
             {useAsChatTemplate && title && (
                 <p className="text-[10px] text-primary/80 animate-in fade-in flex items-center gap-1">
                     <Terminal size={10} />
@@ -265,7 +256,7 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
             )}
           </div>
 
-          {/* Group Selector */}
+          {/* Group */}
           <div className="space-y-2 relative">
             <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5"> <Folder size={14} /> {getText('editor', 'labelGroup', language)} </label>
             {!newGroupMode ? ( 

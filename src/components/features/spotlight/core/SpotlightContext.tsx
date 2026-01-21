@@ -8,8 +8,6 @@ interface SpotlightContextType {
   query: string;
   chatInput: string;
   searchScope: SearchScope;
-
-  // [New] 当前激活的聊天模板 (例如选中的 "翻译")
   activeTemplate: Prompt | null;
 
   // 动作
@@ -17,8 +15,6 @@ interface SpotlightContextType {
   setQuery: (query: string) => void;
   setChatInput: (input: string) => void;
   setSearchScope: (scope: SearchScope) => void;
-
-  // [New] 设置激活模板
   setActiveTemplate: (prompt: Prompt | null) => void;
 
   toggleMode: () => void;
@@ -35,8 +31,6 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
   const [query, setQuery] = useState('');
   const [chatInput, setChatInput] = useState('');
   const [searchScope, setSearchScope] = useState<SearchScope>('global');
-
-  // [New] 初始化状态
   const [activeTemplate, setActiveTemplate] = useState<Prompt | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -49,14 +43,12 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
 
   const setMode = useCallback((newMode: SpotlightMode) => {
     setModeState(newMode);
-    // [New] 切换模式时清除模板状态
     setActiveTemplate(null);
     focusInput();
   }, [focusInput]);
 
   const toggleMode = useCallback(() => {
     setModeState(prev => {
-        // [New] 切换模式时清除模板状态
         setActiveTemplate(null);
         return prev === 'search' ? 'chat' : 'search';
     });
@@ -69,12 +61,12 @@ export function SpotlightProvider({ children }: { children: ReactNode }) {
       query,
       chatInput,
       searchScope,
-      activeTemplate, // [New]
+      activeTemplate,
       setMode,
       setQuery,
       setChatInput,
       setSearchScope,
-      setActiveTemplate, // [New]
+      setActiveTemplate,
       toggleMode,
       inputRef,
       focusInput

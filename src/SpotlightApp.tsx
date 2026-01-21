@@ -210,7 +210,6 @@ function SpotlightContent() {
 
 export default function SpotlightApp() {
   const { setTheme, theme } = useAppStore();
-  // [Fix] 获取 fetchChatTemplates
   const { fetchChatTemplates } = usePromptStore();
 
   useEffect(() => {
@@ -222,7 +221,6 @@ export default function SpotlightApp() {
       if (isFocused) {
         await useAppStore.persist.rehydrate();
         await useContextStore.persist.rehydrate();
-        // [Fix] 唤醒时只同步快捷指令，非常快，无性能压力
         fetchChatTemplates();
         appWindow.setFocus();
       } 

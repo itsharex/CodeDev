@@ -32,7 +32,6 @@ interface PromptState {
   installedPackIds: string[];
   migrationVersion: number;
   counts: { prompt: number; command: number };
-  // [New] 专门存放聊天快捷指令的列表
   chatTemplates: Prompt[];
 
   initStore: () => Promise<void>;
@@ -49,7 +48,6 @@ interface PromptState {
   refreshCounts: () => Promise<void>;
   deleteGroup: (name: string) => Promise<void>;
   fetchManifest: () => Promise<void>;
-  // [New] 专用同步函数：轻量、快速
   fetchChatTemplates: () => Promise<void>;
   installPack: (pack: PackManifestItem) => Promise<void>;
   uninstallPack: (packId: string) => Promise<void>;
@@ -72,7 +70,7 @@ export const usePromptStore = create<PromptState>()(
       installedPackIds: [],
       migrationVersion: 0,
       counts: { prompt: 0, command: 0 },
-      chatTemplates: [], // [New]
+      chatTemplates: [],
 
       initStore: async () => {
         await get().migrateLegacyData();
@@ -89,7 +87,6 @@ export const usePromptStore = create<PromptState>()(
         }
       },
 
-      // [New] 专用同步函数：轻量、快速
       fetchChatTemplates: async () => {
           try {
               const templates = await invoke<Prompt[]>('get_chat_templates');

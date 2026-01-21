@@ -20,21 +20,15 @@ export function SearchBar({ onKeyDown }: SearchBarProps) {
   } = useSpotlight();
 
   const { language, aiConfig, setAIConfig, savedProviderSettings } = useAppStore();
-  // [Fix] 从 store 获取 chatTemplates 而不是 prompts
   const { chatTemplates } = usePromptStore();
 
-  // [New] 菜单控制状态
   const [menuSelectedIndex, setMenuSelectedIndex] = useState(0);
 
-  // 判断是否应该显示菜单
-  // 条件：Chat模式 + 没有激活模板 + 输入以/开头
+  // Chat模式 + 没有激活模板 + 输入以/开头
   const showCommandMenu = mode === 'chat' && !activeTemplate && chatInput.startsWith('/');
-
-  // 提取用于过滤的关键字 (去掉开头的 /)
   const commandKeyword = showCommandMenu ? chatInput.slice(1) : '';
 
-  // 计算过滤列表 (用于键盘导航)
-  // [Fix] 使用 chatTemplates 进行过滤
+  // 过滤列表 (用于键盘导航)
   const filteredPrompts = showCommandMenu
       ? chatTemplates.filter((p: Prompt) =>
           commandKeyword === '' ||
@@ -113,16 +107,14 @@ export function SearchBar({ onKeyDown }: SearchBarProps) {
     }
   };
 
-  // [New] 处理模板选择
   const handleTemplateSelect = (prompt: Prompt) => {
       setActiveTemplate(prompt);
-      setChatInput(''); // 清空输入框，准备接收参数
+      setChatInput('');
       setMenuSelectedIndex(0);
   };
 
-  // [Fix] 真正的 KeyDown 处理 (包含 Enter)
   const handleKeyDown = (e: React.KeyboardEvent) => {
-      // 1. 特殊情况：Backspace 退出指令模式 (保持不变)
+      // Backspace 退出指令模式
       if (mode === 'chat' && activeTemplate && chatInput === '' && e.key === 'Backspace') {
           e.preventDefault();
           setActiveTemplate(null);
@@ -130,7 +122,7 @@ export function SearchBar({ onKeyDown }: SearchBarProps) {
           return;
       }
 
-      // 2. 菜单交互逻辑 (核心修复点)
+      // 菜单交互逻辑
       if (showCommandMenu && filteredPrompts.length > 0) {
           if (e.key === 'ArrowDown') {
               e.preventDefault();
@@ -143,33 +135,29 @@ export function SearchBar({ onKeyDown }: SearchBarProps) {
               return;
           }
           if (e.key === 'Enter') {
-              // [Critical Fix]
-              // 1. 阻止默认回车换行
               e.preventDefault();
-              // 2. 阻止冒泡！防止被外层 ChatMode 捕获导致发送
               e.stopPropagation();
 
               if (!e.shiftKey) {
                   handleTemplateSelect(filteredPrompts[menuSelectedIndex]);
               }
-              return; // [Critical] 直接返回，绝对不要执行下面的 onKeyDown
+              return;
           }
       }
 
-      // 3. 原有的 Search Backspace 逻辑
+      // Search Backspace 逻辑
       if (mode === 'search' && searchScope !== 'global' && e.key === 'Backspace' && query === '') {
         e.preventDefault();
         setSearchScope('global');
         return;
       }
 
-      // 4. 只有没命中菜单逻辑时，才传递给父组件(发送消息)
       onKeyDown?.(e);
   };
 
   // 渲染搜索范围或模板标签
   const renderLeftTag = () => {
-    // 1. Chat Mode: Active Template Tag
+    // Chat Mode: Active Template Tag
     if (mode === 'chat' && activeTemplate) {
         return (
             <div className="flex items-center gap-1.5 pl-2 pr-3 py-1 bg-blue-600 text-white rounded-md text-xs font-bold transition-all duration-300 animate-in zoom-in-95 group relative z-10 shrink-0 select-none shadow-sm shadow-blue-500/20">
@@ -185,7 +173,7 @@ export function SearchBar({ onKeyDown }: SearchBarProps) {
         );
     }
 
-    // 2. Search Mode Scope Tag
+    // Search Mode Scope Tag
     if (mode === 'search' && searchScope !== 'global') {
         let IconComponent;
         let labelKey;
@@ -248,7 +236,7 @@ export function SearchBar({ onKeyDown }: SearchBarProps) {
             spellCheck={false}
           />
 
-          {/* [New] 挂载菜单 */}
+          {/* 挂载菜单 */}
           {showCommandMenu && (
               <ChatCommandMenu
                   inputValue={commandKeyword}
