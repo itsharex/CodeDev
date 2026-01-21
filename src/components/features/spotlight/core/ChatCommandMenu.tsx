@@ -4,7 +4,6 @@ import { usePromptStore } from '@/store/usePromptStore';
 import { useAppStore } from '@/store/useAppStore';
 import { Sparkles, Command, ArrowRight } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getText } from '@/lib/i18n';
 
 interface ChatCommandMenuProps {
   inputValue: string;
