@@ -1,128 +1,41 @@
-import { readTextFile } from '@tauri-apps/plugin-fs';
 import { FileNode } from '@/types/context';
-import { countTokens } from './tokenizer';
 import { generateAsciiTree } from './tree_generator';
-import { stripSourceComments } from './comment_stripper';
 
-// 二进制/非文本后缀黑名单
-const BINARY_EXTENSIONS = new Set([
-  'png', 'jpg', 'jpeg', 'gif', 'bmp', 'ico', 'webp', 'svg',
-  'mp3', 'mp4', 'wav', 'ogg', 'mov', 'avi',
-  'zip', 'tar', 'gz', '7z', 'rar', 'jar',
-  'exe', 'dll', 'so', 'dylib', 'bin', 'obj', 'o', 'a', 'lib',
-  'pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx',
-  'ttf', 'otf', 'woff', 'woff2', 'eot',
-  'db', 'sqlite', 'sqlite3', 'class', 'pyc', 'DS_Store'
-]);
-
-export interface ContextStats {
-  fileCount: number;
-  totalSize: number;
-  estimatedTokens: number;
-}
-
-export function getSelectedFiles(nodes: FileNode[]): FileNode[] {
-  let files: FileNode[] = [];
+export function getSelectedPaths(nodes: FileNode[]): string[] {
+  let paths: string[] = [];
   for (const node of nodes) {
     if (node.kind === 'file' && node.isSelected) {
-      files.push(node);
+      paths.push(node.path);
     }
     if (node.children) {
-      files = files.concat(getSelectedFiles(node.children));
+      paths = paths.concat(getSelectedPaths(node.children));
     }
   }
-  return files;
+  return paths;
 }
 
-export function calculateStats(nodes: FileNode[]): ContextStats {
-  const files = getSelectedFiles(nodes);
-  let totalSize = 0;
-  for (const f of files) {
-    totalSize += f.size || 0;
-  }
-  return {
-    fileCount: files.length,
-    totalSize: totalSize,
-    estimatedTokens: Math.ceil(totalSize / 4)
-  };
-}
-
-interface GenerateOptions {
-  removeComments: boolean;
-}
-
-export async function generateContext(
-  nodes: FileNode[],
-  options: GenerateOptions = { removeComments: false }
-): Promise<{ text: string, tokenCount: number }> {
-  
-  const files = getSelectedFiles(nodes);
+export function generateHeader(nodes: FileNode[], removeComments: boolean): string {
+  const selectedPaths = getSelectedPaths(nodes);
   const treeString = generateAsciiTree(nodes);
-  
-  const parts: string[] = [];
 
+  const parts: string[] = [];
   parts.push(`<project_context>`);
   parts.push(`This is a source code context provided by Code Forge AI.`);
-  parts.push(`Total Files: ${files.length}`);
-  if (options.removeComments) {
+  parts.push(`Total Files: ${selectedPaths.length}`);
+  if (removeComments) {
       parts.push(`Note: Comments have been stripped to save tokens.`);
   }
   parts.push(``);
-
   parts.push(`<project_structure>`);
   parts.push(treeString);
   parts.push(`</project_structure>`);
   parts.push(``);
 
-  parts.push(`<source_files>`);
-  
-  const filePromises = files.map(async (file) => {
-    try {
-      const ext = file.name.split('.').pop()?.toLowerCase();
-      if (ext && BINARY_EXTENSIONS.has(ext)) {
-          return `
-<file path="${file.path}">
-[Binary file omitted: ${file.name}]
-</file>`;
-      }
+  return parts.join('\n');
+}
 
-      if (file.size && file.size > 1024 * 1024) { 
-           return `
-<file path="${file.path}">
-[File too large to include: ${(file.size / 1024 / 1024).toFixed(2)} MB]
-</file>`;
-      }
-
-      let content = await readTextFile(file.path);
-
-      if (options.removeComments) {
-          content = stripSourceComments(content, file.name);
-      }
-
-      return `
-<file path="${file.path}">
-${content}
-</file>`;
-    } catch (err) {
-      console.warn(`Failed to read file: ${file.path}`, err);
-      return `
-<file path="${file.path}">
-[Error: Unable to read file content]
-</file>`;
-    }
-  });
-
-  const fileContents = await Promise.all(filePromises);
-  parts.push(...fileContents);
-  
-  parts.push(`</source_files>`);
-  parts.push(`</project_context>`);
-
-  const fullText = parts.join('\n');
-  const finalTokens = countTokens(fullText);
-
-  return {
-    text: fullText,
-    tokenCount: finalTokens
-  };
+export interface ContextStats {
+  file_count: number;
+  total_size: number;
+  total_tokens: number;
 }

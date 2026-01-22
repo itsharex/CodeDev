@@ -1,9 +1,10 @@
-import { useMemo } from 'react';
-import { 
-  CheckCircle2, AlertCircle, FileText, Database, Cpu, Save, 
-  DollarSign, PieChart, TrendingUp, AlertTriangle, Eraser, X, ShieldCheck 
+import { useMemo, useState, useEffect } from 'react';
+import { invoke } from '@tauri-apps/api/core';
+import {
+  CheckCircle2, AlertCircle, FileText, Database, Cpu, Save,
+  DollarSign, PieChart, TrendingUp, AlertTriangle, Eraser, X, ShieldCheck
 } from 'lucide-react';
-import { ContextStats } from '@/lib/context_assembler';
+import { ContextStats, getSelectedPaths } from '@/lib/context_assembler';
 import { analyzeContext } from '@/lib/context_analytics';
 import { FileNode } from '@/types/context';
 import { AIModelConfig } from '@/types/model';
@@ -13,7 +14,7 @@ import { useContextStore } from '@/store/useContextStore';
 import { getText } from '@/lib/i18n';
 
 interface TokenDashboardProps {
-  stats: ContextStats;
+  stats?: any;
   fileTree: FileNode[];
   models: AIModelConfig[];
   onCopy: () => void;
@@ -21,20 +22,54 @@ interface TokenDashboardProps {
   isGenerating: boolean;
 }
 
-export function TokenDashboard({ 
-  stats, 
-  fileTree, 
+export function TokenDashboard({
+  fileTree,
   models,
-  onCopy, 
-  onSave, 
-  isGenerating 
+  onCopy,
+  onSave,
+  isGenerating
 }: TokenDashboardProps) {
   const { language } = useAppStore();
   const { removeComments, setRemoveComments, toggleSelect, detectSecrets, setDetectSecrets } = useContextStore();
 
+  const [stats, setStats] = useState<ContextStats>({ file_count: 0, total_size: 0, total_tokens: 0 });
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchStats = async () => {
+      const paths = getSelectedPaths(fileTree);
+      if (paths.length === 0) {
+        if (isMounted) setStats({ file_count: 0, total_size: 0, total_tokens: 0 });
+        return;
+      }
+
+      setIsLoading(true);
+      try {
+        const res = await invoke<ContextStats>('calculate_context_stats', {
+          paths: paths,
+          removeComments: removeComments
+        });
+
+        if (isMounted) setStats(res);
+      } catch (err) {
+        console.error("Stats calculation failed:", err);
+      } finally {
+        if (isMounted) setIsLoading(false);
+      }
+    };
+
+    const timer = setTimeout(fetchStats, 200);
+    return () => {
+      isMounted = false;
+      clearTimeout(timer);
+    };
+  }, [fileTree, removeComments]);
+
   const analytics = useMemo(() => {
-    return analyzeContext(fileTree, stats.estimatedTokens, models);
-  }, [fileTree, stats.estimatedTokens, models]);
+    return analyzeContext(fileTree, stats.total_tokens, models);
+  }, [fileTree, stats.total_tokens, models]);
 
   const formatSize = (bytes: number) => {
     if (bytes === 0) return '0 B';
@@ -46,28 +81,28 @@ export function TokenDashboard({
 
   const formatCost = (val: number) => {
     if (val < 0.0001 && val > 0) return '< $0.0001';
-    return `$${val.toFixed(4)}`; 
+    return `$${val.toFixed(4)}`;
   };
 
   return (
     <div className="flex flex-col min-h-full max-w-6xl w-full mx-auto p-4 md:p-6 gap-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
-      
+
       {/* 1. 核心统计 */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard icon={<FileText className="text-blue-500" />} label={getText('context', 'statSelected', language)} value={stats.fileCount} />
-        <StatCard icon={<Database className="text-purple-500" />} label={getText('context', 'statSize', language)} value={formatSize(stats.totalSize)} />
-        <StatCard icon={<Cpu className="text-orange-500" />} label={getText('context', 'statTokens', language)} value={stats.estimatedTokens.toLocaleString()} highlight />
+        <StatCard icon={<FileText className="text-blue-500" />} label={getText('context', 'statSelected', language)} value={stats.file_count} loading={isLoading} />
+        <StatCard icon={<Database className="text-purple-500" />} label={getText('context', 'statSize', language)} value={formatSize(stats.total_size)} loading={isLoading} />
+        <StatCard icon={<Cpu className="text-orange-500" />} label={getText('context', 'statTokens', language)} value={stats.total_tokens.toLocaleString()} highlight loading={isLoading} />
       </div>
 
       {/* 功能开关区 */}
       <div className="flex items-center justify-end px-2 gap-3">
          {/* 安全检测开关 */}
-         <button 
+         <button
            onClick={() => setDetectSecrets(!detectSecrets)}
            className={cn(
              "flex items-center gap-3 px-4 py-2 rounded-lg border transition-all duration-200 shadow-sm",
-             detectSecrets 
-               ? "bg-orange-500/10 border-orange-500/30 text-orange-600" 
+             detectSecrets
+               ? "bg-orange-500/10 border-orange-500/30 text-orange-600"
                : "bg-card border-border text-muted-foreground hover:bg-secondary/50"
            )}
            title={getText('context', 'securityFilterTooltip', language)}
@@ -88,12 +123,12 @@ export function TokenDashboard({
          </button>
 
          {/* 移除注释开关 */}
-         <button 
+         <button
            onClick={() => setRemoveComments(!removeComments)}
            className={cn(
              "flex items-center gap-3 px-4 py-2 rounded-lg border transition-all duration-200 shadow-sm",
-             removeComments 
-               ? "bg-primary/10 border-primary/30 text-primary" 
+             removeComments
+               ? "bg-primary/10 border-primary/30 text-primary"
                : "bg-card border-border text-muted-foreground hover:bg-secondary/50"
            )}
          >
@@ -162,8 +197,8 @@ export function TokenDashboard({
                <h3 className="text-sm font-semibold flex items-center gap-2"><TrendingUp size={16} /> {getText('context', 'contextUsage', language)}</h3>
                <div className="space-y-3">
                 {analytics.modelCosts.map(model => {
-                    const percent = Math.min(100, (stats.estimatedTokens / model.limit) * 100);
-                    const isOver = stats.estimatedTokens > model.limit;
+                    const percent = Math.min(100, (stats.total_tokens / model.limit) * 100);
+                    const isOver = stats.total_tokens > model.limit;
                     return (
                         <div key={model.modelId} className="space-y-1.5">
                             <div className="flex justify-between text-xs text-muted-foreground">
@@ -190,15 +225,15 @@ export function TokenDashboard({
               <div className="space-y-1">
                  {analytics.topFiles.length === 0 && <span className="text-xs text-muted-foreground px-1">No files selected</span>}
                  {analytics.topFiles.map((f, i) => (
-                   <div 
-                     key={f.id} 
+                   <div
+                     key={f.id}
                      className="group/item relative flex items-center justify-between text-xs p-1.5 -mx-1.5 rounded-md hover:bg-secondary/50 transition-colors cursor-default"
                    >
                       <div className="flex items-center gap-2 truncate max-w-[70%]">
                          <span className="font-mono text-muted-foreground w-4 opacity-70">{i+1}.</span>
                          <span className="truncate text-foreground font-medium" title={f.path}>{f.name}</span>
                       </div>
-                      
+
                       <span className="font-mono text-muted-foreground transition-opacity duration-200 group-hover/item:opacity-0">
                           {formatSize(f.size || 0)}
                       </span>
@@ -223,7 +258,7 @@ export function TokenDashboard({
 
       {/* 底部按钮 */}
       <div className="flex flex-col items-center gap-4 mt-auto">
-         {stats.fileCount === 0 ? (
+         {stats.file_count === 0 ? (
            <div className="text-muted-foreground flex items-center gap-2 bg-secondary/50 px-4 py-2 rounded-full text-sm">
              <AlertCircle size={16} /> {getText('context', 'tipSelect', language)}
            </div>
@@ -242,12 +277,16 @@ export function TokenDashboard({
   );
 }
 
-function StatCard({ icon, label, value, highlight, className }: any) {
+function StatCard({ icon, label, value, highlight, className, loading }: any) {
     return (
       <div className={cn("bg-card border border-border rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 shadow-sm transition-all hover:shadow-md hover:border-primary/20", highlight && "bg-primary/5 border-primary/20 ring-1 ring-primary/10", className)}>
         <div className="p-2 bg-background rounded-full shadow-sm border border-border/50">{icon}</div>
-        <div className="space-y-0.5 w-full">
-          <div className="text-xl md:text-2xl font-bold tracking-tight text-foreground truncate w-full px-2" title={String(value)}>{value}</div>
+        <div className="space-y-0.5 w-full flex flex-col items-center">
+          {loading ? (
+             <div className="h-7 w-20 bg-secondary/50 rounded animate-pulse my-0.5" />
+          ) : (
+             <div className="text-xl md:text-2xl font-bold tracking-tight text-foreground truncate w-full px-2" title={String(value)}>{value}</div>
+          )}
           <div className="text-xs font-medium text-muted-foreground uppercase truncate">{label}</div>
         </div>
       </div>

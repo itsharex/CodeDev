@@ -25,6 +25,7 @@ mod db;
 mod monitor;
 mod env_probe;
 mod apps;
+mod context;
 
 #[derive(serde::Serialize)]
 struct SystemInfo {
@@ -220,7 +221,11 @@ fn main() {
             monitor::check_file_locks,
             monitor::get_env_info,
             monitor::diagnose_network,
-            monitor::get_ai_context
+            monitor::get_ai_context,
+            context::commands::calculate_context_stats,
+            context::commands::get_context_content,
+            context::commands::copy_context_to_clipboard,
+            context::commands::save_context_to_file,
         ])
         .setup(|app| {
             let system = System::new();

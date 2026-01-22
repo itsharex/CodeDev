@@ -13,7 +13,7 @@ import { useContextStore } from '@/store/useContextStore';
 import { useAppStore, DEFAULT_MODELS } from '@/store/useAppStore';
 import { scanProject } from '@/lib/fs_helper';
 import { calculateIdealTreeWidth, flattenTree } from '@/lib/tree_utils';
-import { calculateStats, generateContext } from '@/lib/context_assembler';
+import { getSelectedPaths, generateHeader } from '@/lib/context_assembler';
 import { FileTreeNode } from './FileTreeNode';
 import { TokenDashboard } from './TokenDashboard';
 import { FilterManager } from './FilterManager';
@@ -112,8 +112,17 @@ export function ContextView() {
     }
   }, [globalIgnore, projectIgnore, refreshTreeStatus]);
 
-  const stats = useMemo(() => {
-    return calculateStats(fileTree);
+  // 计算选中的文件数量
+  const selectedFileCount = useMemo(() => {
+    let count = 0;
+    const traverse = (nodes: typeof fileTree) => {
+      for (const node of nodes) {
+        if (node.kind === 'file' && node.isSelected) count++;
+        if (node.children) traverse(node.children);
+      }
+    };
+    traverse(fileTree);
+    return count;
   }, [fileTree]);
 
   // 计算扁平化列表
@@ -219,11 +228,21 @@ export function ContextView() {
     if (isGenerating) return;
     setIsGenerating(true);
     try {
-      const { text } = await generateContext(fileTree, { removeComments });
-      await processWithSecurityCheck(text, 'copy');
+      const paths = getSelectedPaths(fileTree);
+      if (paths.length === 0) return;
+
+      const header = generateHeader(fileTree, removeComments);
+
+      if (detectSecrets) {
+        const text = await invoke<string>('get_context_content', { paths, header, removeComments });
+        await processWithSecurityCheck(text, 'copy');
+      } else {
+        await invoke('copy_context_to_clipboard', { paths, header, removeComments });
+        triggerToast(getText('context', 'toastCopied', language), 'success');
+      }
     } catch (err) {
-      console.error("Failed to generate:", err);
-      triggerToast("Generation failed", 'error');
+      console.error("Failed to copy:", err);
+      triggerToast("Copy failed", 'error');
     } finally {
       setIsGenerating(false);
     }
@@ -233,8 +252,34 @@ export function ContextView() {
     if (isGenerating) return;
     setIsGenerating(true);
     try {
-      const { text } = await generateContext(fileTree, { removeComments });
-      await processWithSecurityCheck(text, 'save');
+      const paths = getSelectedPaths(fileTree);
+      const header = generateHeader(fileTree, removeComments);
+
+      // 1. 先弹出保存对话框拿到路径
+      const filePath = await save({
+        filters: [{ name: 'Text File', extensions: ['txt', 'md', 'json'] }],
+        defaultPath: 'context.txt'
+      });
+
+      if (!filePath) {
+        setIsGenerating(false);
+        return;
+      }
+
+      if (detectSecrets) {
+        // 有安全检测：必须把内容拿回前端扫描
+        const text = await invoke<string>('get_context_content', { paths, header, removeComments });
+        await processWithSecurityCheck(text, 'save');
+      } else {
+        // [优化] 无安全检测时，直接后端写文件，内存占用为 0
+        await invoke('save_context_to_file', {
+          paths,
+          header,
+          removeComments,
+          savePath: filePath
+        });
+        triggerToast(getText('context', 'toastSaved', language), 'success');
+      }
     } catch (err) {
       console.error("Failed to generate:", err);
       triggerToast("Generation failed", 'error');
@@ -351,7 +396,7 @@ export function ContextView() {
                    <ArrowRightLeft size={12} />
                 </button>
                 <span className="bg-secondary/50 px-1.5 py-0.5 rounded text-[10px] tabular-nums">
-                  {getText('context', 'selectedCount', language, { count: stats.fileCount.toString() })}
+                  {getText('context', 'selectedCount', language, { count: selectedFileCount.toString() })}
                 </span>
              </div>
           </div>
@@ -429,8 +474,7 @@ export function ContextView() {
             {/* 内容区域 */}
             <div className="flex-1 overflow-y-auto custom-scrollbar pb-10 h-full"> 
                 {rightViewMode === 'dashboard' ? (
-                   <TokenDashboard 
-                     stats={stats}
+                   <TokenDashboard
                      fileTree={fileTree}
                      models={activeModels}
                      onCopy={handleCopyContext}

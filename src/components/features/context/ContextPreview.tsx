@@ -2,12 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { Editor, OnMount } from '@monaco-editor/react';
 import { Copy, FileText, Loader2, AlertCircle, Search } from 'lucide-react';
 import { FileNode } from '@/types/context';
-import { generateContext } from '@/lib/context_assembler';
+import { getSelectedPaths, generateHeader } from '@/lib/context_assembler';
 import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { useAppStore } from '@/store/useAppStore';
 import { useContextStore } from '@/store/useContextStore';
 import { getText } from '@/lib/i18n';
 import { cn } from '@/lib/utils';
+import { invoke } from '@tauri-apps/api/core';
 
 interface ContextPreviewProps {
   fileTree: FileNode[];
@@ -19,17 +20,32 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
   const [isCopied, setIsCopied] = useState(false);
   const { language, theme } = useAppStore();
   const { removeComments } = useContextStore();
-  
+
   const editorRef = useRef<any>(null);
   const monacoRef = useRef<any>(null);
 
   useEffect(() => {
     let isMounted = true;
-    
+
     const loadPreview = async () => {
+      const paths = getSelectedPaths(fileTree);
+      if (paths.length === 0) {
+          if (isMounted) {
+              setContent('');
+              setIsLoading(false);
+          }
+          return;
+      }
+
       setIsLoading(true);
       try {
-        const { text } = await generateContext(fileTree, { removeComments });
+        const header = generateHeader(fileTree, removeComments);
+        const text = await invoke<string>('get_context_content', {
+            paths,
+            header,
+            removeComments
+        });
+
         if (isMounted) setContent(text);
       } catch (err) {
         console.error("Preview generation failed", err);
@@ -39,10 +55,11 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
       }
     };
 
-    const timer = setTimeout(loadPreview, 300);
+    const timer = setTimeout(loadPreview, 100);
     return () => {
       isMounted = false;
       clearTimeout(timer);
+      setContent('');
     };
   }, [fileTree, removeComments]);
 
@@ -67,13 +84,13 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
       inherit: true,
       rules: [],
       colors: {
-        'editor.background': '#020817', 
+        'editor.background': '#020817',
         'editor.lineHighlightBackground': '#1e293b20',
         'scrollbarSlider.background': '#33415550',
         'scrollbarSlider.hoverBackground': '#33415580',
         'editor.selectionBackground': '#3b82f640',
         'editorGutter.background': '#020817',
-        'editorWidget.background': '#0f172a', 
+        'editorWidget.background': '#0f172a',
         'editorWidget.border': '#1e293b',
       }
     });
@@ -174,7 +191,7 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
             {removeComments && <span className="ml-2 px-1.5 py-0.5 bg-green-500/10 text-green-600 text-[10px] rounded border border-green-500/20">{getText('common', 'noComments', language)}</span>}
           </span>
         </div>
-        
+
         <div className="flex items-center gap-2">
           <button
             onClick={triggerSearch}
@@ -216,7 +233,7 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
           options={{
             readOnly: true,
             domReadOnly: true,
-            minimap: { 
+            minimap: {
               enabled: true,
               scale: 0.75,
               renderCharacters: false
@@ -227,15 +244,15 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
             lineHeight: 1.6,
             wordWrap: 'on',
             padding: { top: 12, bottom: 12 },
-            
+
             guides: {
               indentation: false,
             },
 
-            folding: false, 
+            folding: false,
 
             find: {
-               addExtraSpaceOnTop: false, 
+               addExtraSpaceOnTop: false,
                autoFindInSelection: "multiline",
                seedSearchStringFromSelection: 'always'
             },
