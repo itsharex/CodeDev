@@ -2,7 +2,7 @@ import { useMemo, useState, useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import {
   CheckCircle2, AlertCircle, FileText, Database, Cpu, Save,
-  DollarSign, PieChart, TrendingUp, AlertTriangle, Eraser, X, ShieldCheck
+  DollarSign, PieChart, TrendingUp, AlertTriangle, Eraser, X, ShieldCheck, Loader2
 } from 'lucide-react';
 import { ContextStats, getSelectedPaths } from '@/lib/context_assembler';
 import { analyzeContext } from '@/lib/context_analytics';
@@ -12,6 +12,7 @@ import { cn } from '@/lib/utils';
 import { useAppStore } from '@/store/useAppStore';
 import { useContextStore } from '@/store/useContextStore';
 import { getText } from '@/lib/i18n';
+import { NumberTicker } from '@/components/ui/NumberTicker';
 
 interface TokenDashboardProps {
   stats?: any;
@@ -33,19 +34,36 @@ export function TokenDashboard({
   const { removeComments, setRemoveComments, toggleSelect, detectSecrets, setDetectSecrets } = useContextStore();
 
   const [stats, setStats] = useState<ContextStats>({ file_count: 0, total_size: 0, total_tokens: 0 });
-  const [isLoading, setIsLoading] = useState(false);
+  const [isCalculating, setIsCalculating] = useState(false);
+
+  // 乐观更新：文件数量不需要问 Rust，前端直接算，实现 0 延迟响应
+  const instantFileCount = useMemo(() => {
+    let count = 0;
+    const traverse = (nodes: FileNode[]) => {
+      for (const node of nodes) {
+        if (node.kind === 'file' && node.isSelected) count++;
+        if (node.children) traverse(node.children);
+      }
+    };
+    traverse(fileTree);
+    return count;
+  }, [fileTree]);
 
   useEffect(() => {
     let isMounted = true;
 
     const fetchStats = async () => {
       const paths = getSelectedPaths(fileTree);
+
+      // 如果没有文件，直接归零
       if (paths.length === 0) {
         if (isMounted) setStats({ file_count: 0, total_size: 0, total_tokens: 0 });
         return;
       }
 
-      setIsLoading(true);
+      // 不要在这里清空 stats！保留旧数据展示
+      setIsCalculating(true);
+
       try {
         const res = await invoke<ContextStats>('calculate_context_stats', {
           paths: paths,
@@ -56,7 +74,7 @@ export function TokenDashboard({
       } catch (err) {
         console.error("Stats calculation failed:", err);
       } finally {
-        if (isMounted) setIsLoading(false);
+        if (isMounted) setIsCalculating(false);
       }
     };
 
@@ -89,9 +107,29 @@ export function TokenDashboard({
 
       {/* 1. 核心统计 */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard icon={<FileText className="text-blue-500" />} label={getText('context', 'statSelected', language)} value={stats.file_count} loading={isLoading} />
-        <StatCard icon={<Database className="text-purple-500" />} label={getText('context', 'statSize', language)} value={formatSize(stats.total_size)} loading={isLoading} />
-        <StatCard icon={<Cpu className="text-orange-500" />} label={getText('context', 'statTokens', language)} value={stats.total_tokens.toLocaleString()} highlight loading={isLoading} />
+        {/* 文件数：直接使用 instantFileCount，永远不会 loading */}
+        <StatCard
+            icon={<FileText className="text-blue-500" />}
+            label={getText('context', 'statSelected', language)}
+            value={instantFileCount}
+            rawValue={instantFileCount}
+            loading={false}
+        />
+        {/* 大小和 Token：传入 isCalculating */}
+        <StatCard
+            icon={<Database className="text-purple-500" />}
+            label={getText('context', 'statSize', language)}
+            value={formatSize(stats.total_size)}
+            loading={isCalculating}
+        />
+        <StatCard
+            icon={<Cpu className="text-orange-500" />}
+            label={getText('context', 'statTokens', language)}
+            value={stats.total_tokens.toLocaleString()}
+            rawValue={stats.total_tokens}
+            highlight
+            loading={isCalculating}
+        />
       </div>
 
       {/* 功能开关区 */}
@@ -258,7 +296,7 @@ export function TokenDashboard({
 
       {/* 底部按钮 */}
       <div className="flex flex-col items-center gap-4 mt-auto">
-         {stats.file_count === 0 ? (
+         {instantFileCount === 0 ? (
            <div className="text-muted-foreground flex items-center gap-2 bg-secondary/50 px-4 py-2 rounded-full text-sm">
              <AlertCircle size={16} /> {getText('context', 'tipSelect', language)}
            </div>
@@ -277,16 +315,28 @@ export function TokenDashboard({
   );
 }
 
-function StatCard({ icon, label, value, highlight, className, loading }: any) {
+function StatCard({ icon, label, value, rawValue, highlight, className, loading }: any) {
     return (
       <div className={cn("bg-card border border-border rounded-xl p-4 flex flex-col items-center justify-center text-center gap-2 shadow-sm transition-all hover:shadow-md hover:border-primary/20", highlight && "bg-primary/5 border-primary/20 ring-1 ring-primary/10", className)}>
         <div className="p-2 bg-background rounded-full shadow-sm border border-border/50">{icon}</div>
-        <div className="space-y-0.5 w-full flex flex-col items-center">
-          {loading ? (
-             <div className="h-7 w-20 bg-secondary/50 rounded animate-pulse my-0.5" />
-          ) : (
-             <div className="text-xl md:text-2xl font-bold tracking-tight text-foreground truncate w-full px-2" title={String(value)}>{value}</div>
-          )}
+        <div className="space-y-0.5 w-full flex flex-col items-center min-h-[3rem] justify-center">
+          {/* loading 状态下，让 value 变半透明，而不是消失 */}
+          <div className="flex items-center gap-2">
+             <div className={cn(
+                 "text-xl md:text-2xl font-bold tracking-tight text-foreground truncate transition-opacity duration-300",
+                 loading && "opacity-50"
+             )} title={String(value)}>
+                 {typeof rawValue === 'number' ? (
+                    <NumberTicker value={rawValue} />
+                 ) : (
+                    value || "0"
+                 )}
+             </div>
+
+             {/* 如果正在加载，显示一个小转圈 */}
+             {loading && <Loader2 size={14} className="animate-spin text-muted-foreground" />}
+          </div>
+
           <div className="text-xs font-medium text-muted-foreground uppercase truncate">{label}</div>
         </div>
       </div>
