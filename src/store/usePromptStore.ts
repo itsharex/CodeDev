@@ -7,11 +7,11 @@ import { fetch } from '@tauri-apps/plugin-http';
 import { invoke } from '@tauri-apps/api/core';
 import { exists, readTextFile, BaseDirectory } from '@tauri-apps/plugin-fs';
 
-// 镜像源优先级：jsDelivr (CDN) -> Gitee (国内) -> GitHub (源站)
+// 镜像源优先级：Gitee (国内) -> GitHub Raw -> jsDelivr CDN
 const MIRROR_BASES = [
-    'https://cdn.jsdelivr.net/gh/WinriseF/CtxRun@main/build/dist/',
     'https://gitee.com/winriseF/models/raw/master/build/dist/',
-    'https://raw.githubusercontent.com/WinriseF/CtxRun/main/build/dist/'
+    'https://raw.githubusercontent.com/WinriseF/CtxRun/main/build/dist/',
+    'https://cdn.jsdelivr.net/gh/WinriseF/CtxRun@main/build/dist/'
 ];
 
 const PAGE_SIZE = 20;
@@ -253,65 +253,56 @@ export const usePromptStore = create<PromptState>()(
         }
       },
 
-      // 商店逻辑：自动切换镜像
+      // 商店逻辑：获取 Manifest
       fetchManifest: async () => {
         set({ isStoreLoading: true });
-
-        let manifestData: PackManifest | null = null;
-        let successUrl = '';
-
-        // 遍历尝试所有镜像源
-        for (const baseUrl of MIRROR_BASES) {
-            const url = `${baseUrl}manifest.json`;
-            try {
-                const res = await fetch(url, { method: 'GET' });
-                if (res.ok) {
-                    manifestData = await res.json() as PackManifest;
-                    successUrl = baseUrl;
-                    break;
-                }
-            } catch (e) {
-                console.warn(`[Store] Mirror failed: ${baseUrl}`, e);
+        // 构建 Promise 数组
+        const promises = MIRROR_BASES.map(async (baseUrl) => {
+            const url = `${baseUrl}manifest.json?t=${Date.now()}`;
+            const res = await fetch(url, { method: 'GET' });
+            if (res.ok) {
+                const data = await res.json() as PackManifest;
+                return { baseUrl, data };
             }
-        }
+            throw new Error(`HTTP ${res.status}`);
+        });
 
-        if (manifestData && successUrl) {
+        try {
+            // Promise.any 返回第一个成功的 Promise，不用等所有
+            const winner = await Promise.any(promises);
             set({
-                manifest: manifestData,
-                activeManifestUrl: successUrl,
+                manifest: winner.data,
+                activeManifestUrl: winner.baseUrl,
                 isStoreLoading: false
             });
-        } else {
-            console.error("All mirrors failed to fetch manifest");
+        } catch (errors) {
+            console.error("All mirrors failed to fetch manifest:", errors);
             set({ isStoreLoading: false });
         }
       },
 
+      // 下载逻辑：安装指令包
       installPack: async (pack) => {
         set({ isStoreLoading: true });
         try {
-            let rawData: any = null;
-
-            // 下载逻辑：自动轮询镜像
-            for (const baseUrl of MIRROR_BASES) {
+            const downloadPromises = MIRROR_BASES.map(async (baseUrl) => {
                 const url = `${baseUrl}${pack.url}`;
-                try {
-                    const response = await fetch(url);
-
-                    if (response.ok) {
-                        const json = await response.json();
-                        if (Array.isArray(json) && json.length > 0) {
-                            rawData = json;
-                            break;
-                        }
+                const res = await fetch(url);
+                if (res.ok) {
+                    const json = await res.json();
+                    if (Array.isArray(json) && json.length > 0) {
+                        return json;
                     }
-                } catch (e) {
-                    console.warn(`[Store] Download error from ${baseUrl}:`, e);
                 }
-            }
+                throw new Error(`HTTP ${res.status}`);
+            });
 
-            if (!rawData) {
-                throw new Error(`Download failed: All mirrors unavailable (451/404/Network). Check your connection.`);
+            let rawData: any;
+            try {
+                rawData = await Promise.any(downloadPromises);
+            } catch (e) {
+                console.error("Install failed: All mirrors failed.", e);
+                throw new Error("Download failed: Network error or file not found on any mirror.");
             }
 
             // 数据清洗
@@ -347,7 +338,6 @@ export const usePromptStore = create<PromptState>()(
             get().loadPrompts(true);
             get().refreshGroups();
             get().refreshCounts();
-
         } catch (e: any) {
             console.error("Install failed:", e);
             throw e;
