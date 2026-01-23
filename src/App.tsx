@@ -151,9 +151,7 @@ function App() {
     const showRestNotification = async () => {
       try {
         const title = getText('spotlight', 'restReminder', language);
-        const body = language === 'zh'
-          ? `您已经工作了 ${restReminder.intervalMinutes} 分钟，建议休息一下！`
-          : `You've been working for ${restReminder.intervalMinutes} minutes. Time to take a break!`;
+        const body = getText('common', 'restReminderBody', language, { minutes: restReminder.intervalMinutes.toString() });
 
         await sendNotification({
           title,
@@ -190,7 +188,7 @@ function App() {
           <Suspense fallback={
             <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-2 animate-in fade-in">
                 <Loader2 className="animate-spin text-primary" size={32} />
-                <span className="text-sm">Loading module...</span>
+                <span className="text-sm">{getText('common', 'loadingModule', language)}</span>
             </div>
           }>
             {currentView === 'prompts' && <PromptView />}

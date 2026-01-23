@@ -134,7 +134,7 @@ export function PromptDetailTooltip({ prompt, anchorRect, isOpen, onMouseEnter, 
                         {uniqueTags.map(t => <span key={t} className="hover:text-foreground transition-colors">#{t}</span>)}
                     </div>
                 ) : (
-                    <span className="opacity-50">No tags</span>
+                    <span className="opacity-50">{getText('common', 'noTags', language)}</span>
                 )}
             </div>
             <div className="flex items-center gap-1.5 opacity-70">

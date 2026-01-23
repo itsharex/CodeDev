@@ -198,12 +198,10 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
                     </div>
                     <div>
                         <h3 className="text-sm font-medium text-foreground">
-                            {language === 'zh' ? "设为聊天快捷指令" : "Chat Slash Command"}
+                            {getText('common', 'chatSlashCommand', language)}
                         </h3>
                         <p className="text-[10px] text-muted-foreground mt-0.5">
-                            {language === 'zh'
-                                ? "在 AI 聊天中输入 '/' + 标题 快速调用"
-                                : "Type '/' + Title in chat to invoke"}
+                            {getText('common', 'chatSlashCommandDesc', language)}
                         </p>
                     </div>
                  </div>
@@ -250,7 +248,7 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
             {useAsChatTemplate && title && (
                 <p className="text-[10px] text-primary/80 animate-in fade-in flex items-center gap-1">
                     <Terminal size={10} />
-                    {language === 'zh' ? "调用指令：" : "Trigger:"}
+                    {getText('common', 'triggerLabel', language)}
                     <span className="font-mono font-bold">/{title.replace(/\s+/g, '')}</span>
                 </p>
             )}

@@ -228,7 +228,7 @@ export function PatchView() {
             setCompareHash("__WORK_DIR__"); // Working Directory
           }
         } catch (err: any) {
-          showNotification(`Error loading commits: ${err.toString()}`, 'error');
+          showNotification(getText('common', 'errorMsg', language, { msg: err.toString() }), 'error');
           setCommits([]);
         } finally {
           setIsGitLoading(false);
@@ -277,7 +277,7 @@ export function PatchView() {
          showNotification(getText('patch', 'noDiff', language), 'info');
       }
     } catch (err: any) {
-      showNotification(`Error generating diff: ${err.toString()}`, 'error');
+      showNotification(getText('common', 'errorMsg', language, { msg: err.toString() }), 'error');
     } finally {
       setIsGitLoading(false);
     }
@@ -336,7 +336,7 @@ export function PatchView() {
             showNotification(getText('patch', 'exportSuccess', language), "success");
         }
     } catch (err: any) {
-        showNotification(`Export failed: ${err.toString()}`, 'error');
+        showNotification(getText('common', 'exportFailed', language, { msg: err.toString() }), 'error');
     } finally {
         setIsExporting(false);
     }
@@ -401,7 +401,7 @@ export function PatchView() {
                           </div>
                           <div>
                               <h3 className="font-semibold text-lg text-foreground">{getText('patch', 'saveConfirmTitle', language)}</h3>
-                              <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{confirmDialog.file.status === 'error' ? "This file has errors. Saving might break code." : getText('patch', 'saveConfirmMessage', language, { path: '' }).replace('"{path}"', '')}</p>
+                              <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{confirmDialog.file.status === 'error' ? getText('common', 'fileHasErrors', language) : getText('patch', 'saveConfirmMessage', language, { path: '' }).replace('"{path}"', '')}</p>
                           </div>
                       </div>
                       <div className="mt-5 bg-secondary/30 border border-border rounded-lg p-3 flex items-start gap-3">

@@ -74,7 +74,7 @@ function SpotlightContent() {
             setQuery('');
         } catch (e) {
             console.error("Failed to launch app:", e);
-            await message(`Failed to launch: ${e}`, { kind: 'error' });
+            await message(getText('common', 'failedToLaunch', language, { error: String(e) }), { kind: 'error' });
         }
         return;
     }
@@ -84,10 +84,10 @@ function SpotlightContent() {
             await open(item.url);
             invoke('record_url_visit', { url: item.url }).catch(console.error);
             await appWindow.hide();
-            setQuery(''); 
+            setQuery('');
         } catch (e) {
             console.error("Failed to open URL:", e);
-            await message(`Failed to open URL: ${e}`, { kind: 'error' });
+            await message(getText('common', 'failedToOpenUrl', language, { error: String(e) }), { kind: 'error' });
         }
         return;
     }

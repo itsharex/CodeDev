@@ -261,7 +261,7 @@ export function TokenDashboard({
                  <span className="text-xs text-muted-foreground">{getText('context', 'largestFiles', language)}</span>
               </div>
               <div className="space-y-1">
-                 {analytics.topFiles.length === 0 && <span className="text-xs text-muted-foreground px-1">No files selected</span>}
+                 {analytics.topFiles.length === 0 && <span className="text-xs text-muted-foreground px-1">{getText('common', 'noFilesSelected', language)}</span>}
                  {analytics.topFiles.map((f, i) => (
                    <div
                      key={f.id}
@@ -283,7 +283,7 @@ export function TokenDashboard({
                             toggleSelect(f.id, false);
                         }}
                         className="absolute right-1.5 opacity-0 group-hover/item:opacity-100 transition-all duration-200 p-1 hover:bg-destructive/10 hover:text-destructive text-muted-foreground rounded-sm scale-90 group-hover/item:scale-100"
-                        title="Remove from context"
+                        title={getText('common', 'removeFromContext', language)}
                       >
                         <X size={14} />
                       </button>

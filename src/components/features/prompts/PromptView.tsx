@@ -318,7 +318,7 @@ export function PromptView() {
           {isLoading && prompts.length > 0 && (
              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-background/80 backdrop-blur px-4 py-2 rounded-full border border-border shadow-lg flex items-center gap-2 text-sm text-muted-foreground animate-in slide-in-from-bottom-2 z-10">
                  <Loader2 className="animate-spin text-primary" size={16} />
-                 Loading more...
+                 {getText('common', 'loadingMore', language)}
              </div>
           )}
         </div>
@@ -326,12 +326,12 @@ export function PromptView() {
         {/* Dialogs */}
         <PromptEditorDialog isOpen={isEditorOpen} onClose={() => setIsEditorOpen(false)} initialData={editingPrompt} />
         
-        <VariableFillerDialog 
-            isOpen={isFillerOpen} 
-            onClose={() => setIsFillerOpen(false)} 
-            prompt={fillPrompt} 
+        <VariableFillerDialog
+            isOpen={isFillerOpen}
+            onClose={() => setIsFillerOpen(false)}
+            prompt={fillPrompt}
             variables={fillVars}
-            confirmText={fillPrompt?.isExecutable ? "Run Command" : "Copy Result"}
+            confirmText={fillPrompt?.isExecutable ? getText('common', 'runCommand', language) : getText('common', 'copyResult', language)}
             onConfirm={async (filledContent) => {
                 if (fillPrompt?.isExecutable) {
                     await executeCommand(filledContent, fillPrompt.shellType, projectRoot);

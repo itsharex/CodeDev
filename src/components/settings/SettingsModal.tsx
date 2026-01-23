@@ -439,7 +439,7 @@ export function SettingsModal() {
                                                             setIsRenaming(true);
                                                         }}
                                                         className="opacity-50 hover:opacity-100 hover:bg-background/50 p-0.5 rounded transition-all cursor-pointer"
-                                                        title="Rename"
+                                                        title={getText('common', 'rename', language)}
                                                     >
                                                         <Edit3 size={12} />
                                                     </span>
@@ -449,7 +449,7 @@ export function SettingsModal() {
                                     })}
                                 </div>
                                 <p className="text-[10px] text-muted-foreground/60 text-right pt-1">
-                                    Double-click or use the icon to rename.
+                                    {getText('common', 'renameHelp', language)}
                                 </p>
                             </div>
 
