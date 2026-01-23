@@ -4,7 +4,7 @@ This document contains attributions and license information for third-party comp
 
 ## Project License
 
-CtxRun is distributed under the **MIT License**. See [LICENSE](LICENSE) for full details.
+CtxRun is distributed under the **GNU General Public License v3.0 (GPL-3.0)**. See [LICENSE](LICENSE) for full details.
 
 ---
 
