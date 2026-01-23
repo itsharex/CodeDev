@@ -37,7 +37,7 @@ export function PatchView() {
   const { language, aiConfig } = useAppStore();
   const [isExportDialogOpen, setIsExportDialogOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [mode, setMode] = useState<PatchMode>('patch');
+  const [mode, setMode] = useState<PatchMode>('diff');
 
   const [patchProjectRoot, setPatchProjectRoot] = useState<string | null>(null);
   const [yamlInput, setYamlInput] = useState('');

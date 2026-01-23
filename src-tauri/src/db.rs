@@ -8,8 +8,104 @@ use tauri::{AppHandle, Manager};
 use regex::Regex;
 use uuid::Uuid;
 
+// 引入 Refinery 迁移宏
+use refinery::embed_migrations;
+
+// 编译时嵌入 migrations 文件夹中的 SQL 文件
+embed_migrations!("./migrations");
+
 pub struct DbState {
     pub conn: Mutex<Connection>,
+}
+
+// 辅助函数：检查列是否存在
+fn column_exists(conn: &Connection, table: &str, column: &str) -> bool {
+    let query = format!("PRAGMA table_info({})", table);
+    let mut stmt = match conn.prepare(&query) {
+        Ok(s) => s,
+        Err(_) => return false,
+    };
+
+    let exists = stmt.query_map([], |row| {
+        let name: String = row.get(1)?;
+        Ok(name)
+    }).map(|iter| {
+        iter.flatten().any(|name| name == column)
+    }).unwrap_or(false);
+
+    exists
+}
+
+// 核心：处理遗留数据库（Patch Legacy）
+// 在 Refinery 运行前，先把老用户的数据库补齐成 V1 的样子
+fn patch_legacy_database(conn: &Connection) -> Result<()> {
+    // 检查是否是老用户：有 prompts 表，但没有 refinery 表
+    let has_prompts = conn.query_row(
+        "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='prompts'",
+        [],
+        |r| r.get::<_, i32>(0)
+    ).unwrap_or(0) > 0;
+
+    let has_refinery = conn.query_row(
+        "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='refinery_schema_history'",
+        [],
+        |r| r.get::<_, i32>(0)
+    ).unwrap_or(0) > 0;
+
+    // 如果不是老用户环境（要么是全新的，要么已经是 Refinery 管理的），直接返回
+    if !has_prompts || has_refinery {
+        return Ok(());
+    }
+
+    println!("[Database] Legacy database detected. Applying patches to match V1 baseline...");
+
+    // 逐个检查 V1 中包含但老用户可能没有的字段
+    if !column_exists(conn, "prompts", "is_executable") {
+        println!("[Database] Patching: adding is_executable");
+        conn.execute("ALTER TABLE prompts ADD COLUMN is_executable INTEGER DEFAULT 0", [])?;
+    }
+
+    if !column_exists(conn, "prompts", "shell_type") {
+        println!("[Database] Patching: adding shell_type");
+        conn.execute("ALTER TABLE prompts ADD COLUMN shell_type TEXT", [])?;
+    }
+
+    if !column_exists(conn, "prompts", "use_as_chat_template") {
+        println!("[Database] Patching: adding use_as_chat_template");
+        conn.execute("ALTER TABLE prompts ADD COLUMN use_as_chat_template INTEGER DEFAULT 0", [])?;
+    }
+
+    // 确保其他表也存在
+    conn.execute_batch("
+        CREATE TABLE IF NOT EXISTS url_history (
+            url TEXT PRIMARY KEY,
+            title TEXT,
+            visit_count INTEGER DEFAULT 1,
+            last_visit INTEGER
+        );
+        CREATE TABLE IF NOT EXISTS project_configs (
+            path TEXT PRIMARY KEY,
+            config TEXT NOT NULL,
+            updated_at INTEGER
+        );
+        CREATE TABLE IF NOT EXISTS ignored_secrets (
+            id TEXT PRIMARY KEY,
+            value TEXT NOT NULL UNIQUE,
+            rule_id TEXT,
+            created_at INTEGER
+        );
+        CREATE TABLE IF NOT EXISTS apps (
+            path TEXT PRIMARY KEY,
+            name TEXT NOT NULL,
+            keywords TEXT,
+            icon TEXT,
+            usage_count INTEGER DEFAULT 0,
+            last_used_at INTEGER DEFAULT 0
+        );
+    ")?;
+
+    println!("[Database] Legacy database patched successfully.");
+    Ok(())
 }
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
@@ -69,177 +165,44 @@ pub struct AppEntry {
     pub usage_count: i64,
 }
 
-pub fn init_db(app_handle: &AppHandle) -> Result<Connection> {
+pub fn init_db(app_handle: &AppHandle) -> Result<Connection, Box<dyn std::error::Error>> {
     let app_dir = app_handle.path().app_local_data_dir().unwrap();
     if !app_dir.exists() {
         std::fs::create_dir_all(&app_dir).unwrap();
     }
     let db_path = app_dir.join("prompts.db");
 
-    let conn = Connection::open(db_path)?;
+    let mut conn = Connection::open(db_path)?;
 
+    // 基础优化
     conn.execute_batch("
         PRAGMA journal_mode = WAL;
         PRAGMA synchronous = NORMAL;
     ")?;
 
-    conn.execute(
-        "CREATE TABLE IF NOT EXISTS prompts (
-            id TEXT PRIMARY KEY,
-            title TEXT NOT NULL,
-            content TEXT NOT NULL,
-            group_name TEXT NOT NULL,
-            description TEXT,
-            tags TEXT,
-            is_favorite INTEGER DEFAULT 0,
-            created_at INTEGER,
-            updated_at INTEGER,
-            source TEXT DEFAULT 'local',
-            pack_id TEXT,
-            original_id TEXT,
-            type TEXT,
-            is_executable INTEGER DEFAULT 0,
-            shell_type TEXT,
-            use_as_chat_template INTEGER DEFAULT 0
-        )",
-        [],
-    )?;
-
-    // Migrations for Prompts
-    let _ = conn.execute("ALTER TABLE prompts ADD COLUMN is_executable INTEGER DEFAULT 0", []);
-    let _ = conn.execute("ALTER TABLE prompts ADD COLUMN shell_type TEXT", []);
-
-    // 尝试添加 use_as_chat_template 列
-    match conn.execute("ALTER TABLE prompts ADD COLUMN use_as_chat_template INTEGER DEFAULT 0", []) {
-        Ok(_) => println!("[Database] Migration: Added 'use_as_chat_template' column."),
-        Err(_) => println!("[Database] Column 'use_as_chat_template' likely exists, skipping."),
+    // --- 关键步骤：先手动补齐老数据 ---
+    if let Err(e) = patch_legacy_database(&conn) {
+        eprintln!("[Database] Failed to patch legacy database: {}", e);
     }
 
-    // Prompts FTS
-    conn.execute_batch("
-        DROP TRIGGER IF EXISTS prompts_ai;
-        DROP TRIGGER IF EXISTS prompts_ad;
-        DROP TRIGGER IF EXISTS prompts_au;
-        DROP TABLE IF EXISTS prompts_fts;
-    ")?;
-    conn.execute(
-        "CREATE VIRTUAL TABLE prompts_fts USING fts5(
-            id, title, content, description, tags, group_name,
-            tokenize = 'unicode61 remove_diacritics 2'
-        )",
-        [],
-    )?;
-    conn.execute(
-        "INSERT INTO prompts_fts(id, title, content, description, tags, group_name)
-         SELECT id, title, content, description, tags, group_name FROM prompts",
-        [],
-    )?;
-
-    conn.execute(
-        "CREATE TRIGGER prompts_ai AFTER INSERT ON prompts BEGIN
-            INSERT INTO prompts_fts(id, title, content, description, tags, group_name)
-            VALUES (new.id, new.title, new.content, new.description, new.tags, new.group_name);
-        END;",
-        [],
-    )?;
-    conn.execute(
-        "CREATE TRIGGER prompts_ad AFTER DELETE ON prompts BEGIN
-            DELETE FROM prompts_fts WHERE id = old.id;
-        END;",
-        [],
-    )?;
-    conn.execute(
-        "CREATE TRIGGER prompts_au AFTER UPDATE ON prompts BEGIN
-            DELETE FROM prompts_fts WHERE id = old.id;
-            INSERT INTO prompts_fts(id, title, content, description, tags, group_name)
-            VALUES (new.id, new.title, new.content, new.description, new.tags, new.group_name);
-        END;",
-        [],
-    )?;
-
-    conn.execute("CREATE INDEX IF NOT EXISTS idx_prompts_group_created ON prompts (group_name, created_at DESC)", [])?;
-    conn.execute("CREATE INDEX IF NOT EXISTS idx_prompts_type ON prompts (type)", [])?;
-    conn.execute("CREATE INDEX IF NOT EXISTS idx_prompts_favorite ON prompts (is_favorite)", [])?;
-    conn.execute("CREATE INDEX IF NOT EXISTS idx_prompts_pack_id ON prompts (pack_id)", [])?;
-
-    // URL History Table
-    conn.execute(
-        "CREATE TABLE IF NOT EXISTS url_history (
-            url TEXT PRIMARY KEY,
-            title TEXT,
-            visit_count INTEGER DEFAULT 1,
-            last_visit INTEGER
-        )",
-        [],
-    )?;
-
-    // Project Configs Table (for Project Memory Feature)
-    conn.execute(
-        "CREATE TABLE IF NOT EXISTS project_configs (
-            path TEXT PRIMARY KEY,
-            config TEXT NOT NULL,
-            updated_at INTEGER
-        )",
-        [],
-    )?;
-
-    // --- 新增：创建 ignored_secrets 表 ---
-    conn.execute(
-        "CREATE TABLE IF NOT EXISTS ignored_secrets (
-            id TEXT PRIMARY KEY,
-            value TEXT NOT NULL UNIQUE,
-            rule_id TEXT,
-            created_at INTEGER
-        )",
-        [],
-    )?;
-
-    // 创建索引以加速查询
-    conn.execute("CREATE INDEX IF NOT EXISTS idx_ignored_value ON ignored_secrets (value)", [])?;
-
-    // --- 新增：创建 apps 表 ---
-    conn.execute(
-        "CREATE TABLE IF NOT EXISTS apps (
-            path TEXT PRIMARY KEY,
-            name TEXT NOT NULL,
-            keywords TEXT,
-            icon TEXT,
-            usage_count INTEGER DEFAULT 0,
-            last_used_at INTEGER DEFAULT 0
-        )",
-        [],
-    )?;
-
-    // apps 索引
-    conn.execute("CREATE INDEX IF NOT EXISTS idx_apps_name ON apps (name)", [])?;
-    conn.execute("CREATE INDEX IF NOT EXISTS idx_apps_usage ON apps (usage_count DESC)", [])?;
-
-    // URL History FTS
-    conn.execute(
-        "CREATE VIRTUAL TABLE IF NOT EXISTS url_history_fts USING fts5(
-            url, title,
-            tokenize = 'unicode61 remove_diacritics 2'
-        )",
-        [],
-    )?;
-
-    // Re-create triggers
-    conn.execute_batch("
-        DROP TRIGGER IF EXISTS url_history_ai;
-        DROP TRIGGER IF EXISTS url_history_ad;
-        DROP TRIGGER IF EXISTS url_history_au;
-
-        CREATE TRIGGER url_history_ai AFTER INSERT ON url_history BEGIN
-            INSERT INTO url_history_fts(url, title) VALUES (new.url, new.title);
-        END;
-        CREATE TRIGGER url_history_ad AFTER DELETE ON url_history BEGIN
-            DELETE FROM url_history_fts WHERE url = old.url;
-        END;
-        CREATE TRIGGER url_history_au AFTER UPDATE ON url_history BEGIN
-            DELETE FROM url_history_fts WHERE url = old.url;
-            INSERT INTO url_history_fts(url, title) VALUES (new.url, new.title);
-        END;
-    ")?;
+    // --- 运行 Refinery ---
+    // 逻辑分析：
+    // 1. 新用户：patch_legacy 跳过 -> Refinery 运行 V1 -> 建表 -> 完成。
+    // 2. 老用户：patch_legacy 补齐字段 -> Refinery 运行 V1 ->
+    //    由于 V1 里全是 CREATE TABLE IF NOT EXISTS，SQLite 发现表都存在，直接跳过 ->
+    //    Refinery 记录 V1 已完成 -> 完成。
+    match migrations::runner().run(&mut conn) {
+        Ok(report) => {
+            let applied = report.applied_migrations();
+            if !applied.is_empty() {
+                println!("[Database] Applied {} migrations.", applied.len());
+                for m in applied {
+                    println!("[Database] - {}", m.name());
+                }
+            }
+        },
+        Err(e) => return Err(Box::new(e)),
+    }
 
     Ok(conn)
 }
