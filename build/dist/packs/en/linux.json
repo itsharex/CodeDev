@@ -82848,7 +82848,7 @@
     "id": "tldr-en-linux-ddcutil-0",
     "type": "command",
     "title": "ddcutil - List all compatible displays",
-    "content": "ddcutil detect",
+    "content": "ddcutil {{[det|detect]}}",
     "group": "Linux Ops",
     "description": "ddcutil: Control the settings of connected displays via DDC/CI. This command requires the kernel module `i2c-dev` to be loaded. (List all compatible displays)",
     "tags": [
@@ -82862,10 +82862,10 @@
   {
     "id": "tldr-en-linux-ddcutil-1",
     "type": "command",
-    "title": "ddcutil - Change the brightness (option 0x10) of display 1 to 50%",
-    "content": "ddcutil {{[-d|--display]}} {{1}} setvcp {{10}} {{50}}",
+    "title": "ddcutil - Query the first compatible display for capabilities",
+    "content": "ddcutil {{[cap|capabilities]}}",
     "group": "Linux Ops",
-    "description": "ddcutil: Control the settings of connected displays via DDC/CI. This command requires the kernel module `i2c-dev` to be loaded. (Change the brightness (option 0x10) of display 1 to 50%)",
+    "description": "ddcutil: Control the settings of connected displays via DDC/CI. This command requires the kernel module `i2c-dev` to be loaded. (Query the first compatible display for capabilities)",
     "tags": [
       "linux",
       "ddcutil",
@@ -82877,10 +82877,10 @@
   {
     "id": "tldr-en-linux-ddcutil-2",
     "type": "command",
-    "title": "ddcutil - Increase the contrast (option 0x12) of display 1 by 5%",
-    "content": "ddcutil {{[-d|--display]}} {{1}} setvcp {{12}} {{+}} {{5}}",
+    "title": "ddcutil - Change the brightness (option `10`) of display 1 to 50%",
+    "content": "ddcutil {{[-d|--display]}} 1 {{[set|setvcp]}} 10 50",
     "group": "Linux Ops",
-    "description": "ddcutil: Control the settings of connected displays via DDC/CI. This command requires the kernel module `i2c-dev` to be loaded. (Increase the contrast (option 0x12) of display 1 by 5%)",
+    "description": "ddcutil: Control the settings of connected displays via DDC/CI. This command requires the kernel module `i2c-dev` to be loaded. (Change the brightness (option `10`) of display 1 to 50%)",
     "tags": [
       "linux",
       "ddcutil",
@@ -82892,8 +82892,38 @@
   {
     "id": "tldr-en-linux-ddcutil-3",
     "type": "command",
+    "title": "ddcutil - Increase the contrast (option `12`) of display 1 by 5%",
+    "content": "ddcutil {{[-d|--display]}} 1 {{[set|setvcp]}} 12 + 5",
+    "group": "Linux Ops",
+    "description": "ddcutil: Control the settings of connected displays via DDC/CI. This command requires the kernel module `i2c-dev` to be loaded. (Increase the contrast (option `12`) of display 1 by 5%)",
+    "tags": [
+      "linux",
+      "ddcutil",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-ddcutil-4",
+    "type": "command",
+    "title": "ddcutil - Change the display source (option `60`) of a display",
+    "content": "ddcutil {{[-d|--display]}} {{1}} {{[set|setvcp]}} 60 0x{{0f}}",
+    "group": "Linux Ops",
+    "description": "ddcutil: Control the settings of connected displays via DDC/CI. This command requires the kernel module `i2c-dev` to be loaded. (Change the display source (option `60`) of a display)",
+    "tags": [
+      "linux",
+      "ddcutil",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-ddcutil-5",
+    "type": "command",
     "title": "ddcutil - Read the settings of display 1",
-    "content": "ddcutil {{[-d|--display]}} {{1}} getvcp {{ALL}}",
+    "content": "ddcutil {{[-d|--display]}} 1 {{[get|getvcp]}} ALL",
     "group": "Linux Ops",
     "description": "ddcutil: Control the settings of connected displays via DDC/CI. This command requires the kernel module `i2c-dev` to be loaded. (Read the settings of display 1)",
     "tags": [

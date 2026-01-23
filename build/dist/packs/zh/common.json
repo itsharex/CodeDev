@@ -10968,7 +10968,7 @@
     "id": "tldr-zh-common-make-2",
     "type": "command",
     "title": "make - 调用一个指定的目标，一次并行执行 4 个作业",
-    "content": "make -j{{4}} {{目标}}",
+    "content": "make {{[-j|--jobs]}} 4 {{目标}}",
     "group": "通用工具 (Common)",
     "description": "make: Makefile 文件描述目标的任务运行器。 通常用于控制源代码中可执行文件的编译。 (调用一个指定的目标，一次并行执行 4 个作业)",
     "tags": [
@@ -10983,7 +10983,7 @@
     "id": "tldr-zh-common-make-3",
     "type": "command",
     "title": "make - 使用指定的 Makefile 文件",
-    "content": "make --file {{文件}}",
+    "content": "make {{[-f|--file]}} {{文件}}",
     "group": "通用工具 (Common)",
     "description": "make: Makefile 文件描述目标的任务运行器。 通常用于控制源代码中可执行文件的编译。 (使用指定的 Makefile 文件)",
     "tags": [
@@ -10998,7 +10998,7 @@
     "id": "tldr-zh-common-make-4",
     "type": "command",
     "title": "make - 从另一个目录执行 make",
-    "content": "make --directory {{文件夹}}",
+    "content": "make {{[-C|--directory]}} {{文件夹}}",
     "group": "通用工具 (Common)",
     "description": "make: Makefile 文件描述目标的任务运行器。 通常用于控制源代码中可执行文件的编译。 (从另一个目录执行 make)",
     "tags": [
@@ -11013,7 +11013,7 @@
     "id": "tldr-zh-common-make-5",
     "type": "command",
     "title": "make - 即使源文件未更改，也强制执行目标",
-    "content": "make --always-make {{目标}}",
+    "content": "make {{[-B|--always-make]}} {{目标}}",
     "group": "通用工具 (Common)",
     "description": "make: Makefile 文件描述目标的任务运行器。 通常用于控制源代码中可执行文件的编译。 (即使源文件未更改，也强制执行目标)",
     "tags": [
@@ -11043,7 +11043,7 @@
     "id": "tldr-zh-common-make-7",
     "type": "command",
     "title": "make - 通过环境变量覆盖 Makefile 中定义的变量",
-    "content": "make --environment-overrides {{目标}}",
+    "content": "make {{[-e|--environment-overrides]}} {{目标}}",
     "group": "通用工具 (Common)",
     "description": "make: Makefile 文件描述目标的任务运行器。 通常用于控制源代码中可执行文件的编译。 (通过环境变量覆盖 Makefile 中定义的变量)",
     "tags": [
@@ -21138,7 +21138,7 @@
     "id": "tldr-zh-common-mvn-2",
     "type": "command",
     "title": "mvn - 编译和打包，跳过单元测试",
-    "content": "mvn package -DskipTests",
+    "content": "mvn package {{[-D|--define]}} skipTests",
     "group": "通用工具 (Common)",
     "description": "mvn: Apache Maven：构建和管理基于 Java 的项目。 (编译和打包，跳过单元测试)",
     "tags": [
@@ -21198,7 +21198,7 @@
     "id": "tldr-zh-common-mvn-6",
     "type": "command",
     "title": "mvn - 清理然后使用给定的构建配置文件打包代码",
-    "content": "mvn clean -P {{构建配置文件}} package",
+    "content": "mvn clean {{[-P|--activate-profiles]}} {{构建配置文件}} package",
     "group": "通用工具 (Common)",
     "description": "mvn: Apache Maven：构建和管理基于 Java 的项目。 (清理然后使用给定的构建配置文件打包代码)",
     "tags": [
@@ -21213,7 +21213,7 @@
     "id": "tldr-zh-common-mvn-7",
     "type": "command",
     "title": "mvn - 使用 main 方法运行一个类",
-    "content": "mvn exec:java -Dexec.mainClass=\"{{com.example.Main}}\" -Dexec.args=\"{{参数1 参数2 ...}}\"",
+    "content": "mvn exec:java {{[-D|--define]}} exec.mainClass=\"{{com.example.Main}}\" {{[-D|--define]}} exec.args=\"{{参数1 参数2 ...}}\"",
     "group": "通用工具 (Common)",
     "description": "mvn: Apache Maven：构建和管理基于 Java 的项目。 (使用 main 方法运行一个类)",
     "tags": [
