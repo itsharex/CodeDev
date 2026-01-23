@@ -92,6 +92,10 @@
 > 🔒 **安全承诺**：本项目完全开源，构建过程由 GitHub Actions 自动化完成，绝不包含任何恶意代码。如果您仍有顾虑，欢迎审查源码自行构建。
 ![alt text](images/ScreenShot_2025-11-28_205723_002.png)
 
+## 📜 开源许可 (License)
+
+CtxRun 基于 **GPL-3.0 License** 开源，详见 [LICENSE](LICENSE) 文件。
+
 ## 致谢与开源声明 (Credits)
 
 特别感谢以下项目提供的数据支持与灵感：
