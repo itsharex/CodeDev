@@ -93,7 +93,7 @@ export function PromptLibraryManager() {
         <div className="mb-4 p-3 rounded-lg bg-destructive/10 border border-destructive/20 flex gap-3 items-start animate-in fade-in slide-in-from-top-2">
             <AlertCircle size={16} className="text-destructive shrink-0 mt-0.5" />
             <div className="flex-1 min-w-0">
-                <h4 className="text-xs font-bold text-destructive mb-0.5">Error</h4>
+                <h4 className="text-xs font-bold text-destructive mb-0.5">{getText('common', 'error', language)}</h4>
                 <p className="text-xs text-destructive/80 break-all whitespace-pre-wrap">{errorMsg}</p>
             </div>
             <button onClick={() => setErrorMsg(null)} className="text-destructive/60 hover:text-destructive text-xs">✕</button>
@@ -102,17 +102,17 @@ export function PromptLibraryManager() {
 
       {/* Tabs */}
       <div className="flex gap-2 mb-4 border-b border-border/50">
-          <button 
+          <button
               onClick={() => setActiveTab('prompt')}
               className={cn("px-4 py-2 text-xs font-bold border-b-2 transition-colors flex items-center gap-2", activeTab === 'prompt' ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground")}
           >
-              <Sparkles size={14} /> Prompts
+              <Sparkles size={14} /> {getText('common', 'prompts', language)}
           </button>
-          <button 
+          <button
               onClick={() => setActiveTab('command')}
               className={cn("px-4 py-2 text-xs font-bold border-b-2 transition-colors flex items-center gap-2", activeTab === 'command' ? "border-primary text-primary" : "border-transparent text-muted-foreground hover:text-foreground")}
           >
-              <Terminal size={14} /> Commands
+              <Terminal size={14} /> {getText('common', 'commands', language)}
           </button>
       </div>
 

@@ -4,6 +4,8 @@ import { writeText } from '@tauri-apps/plugin-clipboard-manager';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { cn } from '@/lib/utils';
+import { useAppStore } from '@/store/useAppStore';
+import { getText } from '@/lib/i18n';
 
 interface CodeBlockProps {
   language: string;
@@ -13,6 +15,7 @@ interface CodeBlockProps {
 
 export function CodeBlock({ language, children, className }: CodeBlockProps) {
   const [isCopied, setIsCopied] = useState(false);
+  const { language: appLang } = useAppStore();
 
   const handleCopy = async () => {
     try {
@@ -64,12 +67,12 @@ export function CodeBlock({ language, children, className }: CodeBlockProps) {
             {isCopied ? (
                 <>
                     <Check size={12} />
-                    <span>Copied</span>
+                    <span>{getText('common', 'copied', appLang)}</span>
                 </>
             ) : (
                 <>
                     <Copy size={12} />
-                    <span className="opacity-0 group-hover:opacity-100 transition-opacity">Copy</span>
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity">{getText('common', 'copy', appLang)}</span>
                 </>
             )}
         </button>

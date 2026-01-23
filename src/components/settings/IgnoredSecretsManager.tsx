@@ -133,11 +133,7 @@ export function IgnoredSecretsManager() {
 
       <div className="mt-4 p-3 bg-yellow-500/5 border border-yellow-500/20 rounded-lg flex gap-2 items-start text-xs text-yellow-600/80 shrink-0">
           <AlertCircle size={14} className="shrink-0 mt-0.5" />
-          <p>
-            {language === 'zh'
-              ? "注意：此处移除的项目将在下一次扫描中重新触发警告。白名单基于内容精确匹配。"
-              : "Note: Removed items will trigger alerts again in the next scan. Whitelist is based on exact content matching."}
-          </p>
+          <p>{getText('common', 'whitelistNote', language)}</p>
       </div>
     </div>
   );

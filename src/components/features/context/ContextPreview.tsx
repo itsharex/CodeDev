@@ -49,7 +49,7 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
         if (isMounted) setContent(text);
       } catch (err) {
         console.error("Preview generation failed", err);
-        if (isMounted) setContent("Error generating preview.");
+        if (isMounted) setContent(getText('common', 'previewError', language));
       } finally {
         if (isMounted) setIsLoading(false);
       }
@@ -227,7 +227,7 @@ export function ContextPreview({ fileTree }: ContextPreviewProps) {
           loading={
              <div className="flex flex-col items-center justify-center h-full text-muted-foreground gap-2">
                 <Loader2 size={20} className="animate-spin" />
-                <span className="text-xs">Loading Editor...</span>
+                <span className="text-xs">{getText('common', 'loadingEditor', language)}</span>
              </div>
           }
           options={{

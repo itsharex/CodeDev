@@ -353,7 +353,17 @@ const translations = {
       noComments: "No Comments",
       unsaved: "Unsaved Draft",
       split: "Split",
-      unified: "Unified"
+      unified: "Unified",
+      copied: "Copied",
+      copy: "Copy",
+      error: "Error",
+      loadingEditor: "Loading Editor...",
+      previewError: "Preview generation failed",
+      slashCommands: "SLASH COMMANDS",
+      navHint: "TAB / ↑↓ to navigate",
+      prompts: "Prompts",
+      commands: "Commands",
+      whitelistNote: "Note: Removed items will trigger alerts again in the next scan. Whitelist is based on exact content matching."
     },
     export: {
       title: "Export Changes",
@@ -839,7 +849,17 @@ const translations = {
       noComments: "无注释",
       unsaved: "未保存草稿",
       split: "分栏",
-      unified: "合并"
+      unified: "合并",
+      copied: "已复制",
+      copy: "复制",
+      error: "错误",
+      loadingEditor: "加载编辑器中...",
+      previewError: "预览生成失败",
+      slashCommands: "快捷指令",
+      navHint: "TAB / ↑↓ 切换",
+      prompts: "提示词",
+      commands: "命令",
+      whitelistNote: "注意：此处移除的项目将在下一次扫描中重新触发警告。白名单基于内容精确匹配。"
     },
     export: {
       title: "导出变更",
