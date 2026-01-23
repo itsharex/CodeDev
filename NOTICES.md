@@ -40,7 +40,7 @@ CtxRun is distributed under the **GNU General Public License v3.0 (GPL-3.0)**. S
 | **tokio** | MIT | Async runtime |
 | **serde** | MIT OR Apache-2.0 | Serialization |
 | **refinery** | MIT OR Apache-2.0 | Database migrations |
-| **gitleaks** | MIT | Secrets detection |
+| **gitleaks** | MIT | Secrets detection (inspiration for security scanning) |
 | **regex** | MIT OR Apache-2.0 | Regular expressions |
 
 ---

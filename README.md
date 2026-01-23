@@ -8,7 +8,7 @@
   <p align="center">
     <strong>Run with context, AI at your fingertips.</strong>
     <br />
-    为开发者打造的 AI 辅助生产力工具：上下文组装 · 提示词管理 · 全局 AI 对话 · 代码对比
+    AI-Powered Productivity Tool for Developers: Context Assembly · Prompt Management · Global AI Chat · Code Diff
   </p>
 
   <p align="center">
@@ -32,7 +32,7 @@
 
 <br />
 
-**CtxRun** 是一款专为开发者打造的 AI 辅助生产力工具。它集成了代码上下文组装、代码对比、提示词管理以及一个随时待命的全局 AI 终端，旨在无缝连接你的 IDE 与大语言模型（LLM）。
+**CtxRun** is an AI-powered productivity tool designed for developers. It integrates code context assembly, code diff, prompt management, and a always-ready global AI terminal, seamlessly connecting your IDE with Large Language Models (LLMs).
 
 ![alt text](images/ScreenShot_2025-11-28_185818_533.png)
 ![alt text](images/ScreenShot_2025-11-28_185842_701.png)
@@ -40,68 +40,65 @@
 ![alt text](images/ScreenShot_2025-11-28_185940_974.png)
 ![alt text](images/ScreenShot_2025-11-28_185955_998.png)
 
-## ✨ 核心功能 (Core Features)
+## ✨ Core Features
 
-*   **🚀 Context Forge (文件整合)**: 智能地将你的项目文件打包成 LLM 易于理解的格式，支持自动移除注释、过滤二进制文件，并实时预估 Token 消耗。支持配置自动保存和项目记忆。
-*   **💡 Spotlight (全局 AI 终端)**: 通过全局快捷键 (`Alt+S`) 随时唤出。在任何应用中快速搜索和执行命令，或与 AI 进行流式对话。
-    *   **计算器**: 输入 `=1+1`、`=sin(pi)` 快速计算数学表达式
-    *   **Shell 命令**: 输入 `>ls`、`>dir` 直接执行终端命令
-    *   **范围搜索**: `/app` 搜索应用、`/cmd` 搜索命令、`/pmt` 搜索提示词
-    *   **模板 AI**: 配置提示词为聊天模板，AI 对话时自动应用
-    *   **应用启动**: 快速搜索并打开已安装的应用程序
-*   **📚 Prompt Verse (提示词库)**: 高效管理你的常用指令和 AI 提示词。支持创建变量模板、分组管理，并可从官方库下载离线指令包。支持可执行命令和聊天模板配置。
-*   **🔄 Patch Weaver (AI 补全器 & Git 对比)**: 应用 AI 生成的代码补丁，通过智能模糊匹配精确定位修改。同时也是一个强大的 Git Diff 可视化工具，支持 Working Directory 对比、版本对比和多样化导出。
-*   **🛡️ 隐私安全扫描**: 内置敏感信息检测引擎，支持白名单管理，防止 API 密钥等机密信息泄露。
+*   **🚀 Context Forge (File Assembly)**: Intelligently package your project files into LLM-friendly formats with automatic comment removal, binary file filtering, and real-time token estimation. Supports configuration persistence and project memory.
+*   **💡 Spotlight (Global AI Terminal)**: Summon anytime with global hotkey (`Alt+S`). Quickly search and execute commands, or have streaming AI conversations from any application.
+    *   **Calculator**: Type `=1+1`, `=sin(pi)` for quick math
+    *   **Shell Commands**: Type `>ls`, `>dir` to execute terminal commands
+    *   **Scope Search**: `/app` for apps, `/cmd` for commands, `/pmt` for prompts
+    *   **Template AI**: Configure prompts as chat templates for auto-application
+    *   **App Launcher**: Search and launch installed applications quickly
+*   **📚 Prompt Verse (Prompt Library)**: Efficiently manage your common commands and AI prompts. Supports variable templates, group management, and downloading offline prompt packs from the official library. Supports executable commands and chat template configuration.
+*   **🔄 Patch Weaver (AI Completer & Git Diff)**: Apply AI-generated code patches with smart fuzzy matching for precise modification location. Also a powerful Git Diff visualizer with Working Directory comparison, version comparison, and diverse export formats.
+*   **🛡️ Privacy Security Scan**: Built-in sensitive information detection engine with whitelist management to prevent API key and other secrets leakage.
 
-> ### 🚀 想要了解如何使用？(Want to learn how to use it?)
+> ### 🚀 Want to learn how to use it?
 >
-> 👉 **[查看详细使用指南 (Check out the Detailed Usage Guide)](./USAGE.md)**
+> 👉 **[Check out the Detailed Usage Guide](./USAGE_EN.md)**
 
-## 🛠️ 技术栈 (Tech Stack)
+## 🛠️ Tech Stack
 
-本项目采用现代化的**高性能桌面应用架构**构建，兼顾了极小的资源占用与流畅的用户体验，整体大小为10MB左右，运行内存占用约30MB：
+Built with a modern **high-performance desktop application architecture**, balancing minimal resource usage with smooth user experience (~10MB install size, ~30MB memory footprint):
 
-*   **Core**: [Tauri 2](https://tauri.app/) (Rust + WebView2) - 提供原生级的性能与超小的安装包体积，支持多窗口。
-*   **Frontend**: React 18 + TypeScript + Vite 6 - 现代化的前端开发体验。
-*   **State Management**: Zustand - 轻量且强大的状态管理。
-*   **Styling**: Tailwind CSS + tailwindcss-animate - 快速构建美观的 UI。
+*   **Core**: [Tauri 2](https://tauri.app/) (Rust + WebView2) - Native-level performance with minimal install size, multi-window support.
+*   **Frontend**: React 18 + TypeScript + Vite 6 - Modern frontend development experience.
+*   **State Management**: Zustand - Lightweight yet powerful state management.
+*   **Styling**: Tailwind CSS + tailwindcss-animate - Beautiful UIs built fast.
 *   **Icons**: Lucide React.
-*   **Database**: SQLite (rusqlite) + Refinery - 本地数据持久化与迁移管理。
-*   **Editor**: Monaco Editor - VSCode 级别的代码编辑体验。
+*   **Database**: SQLite (rusqlite) + Refinery - Local data persistence and migration management.
+*   **Editor**: Monaco Editor - VSCode-level code editing experience.
 
 ---
 
-## 📥 下载与安装 (Download & Installation)
+## 📥 Download & Installation
 
-请前往 [Releases](../../releases) 页面下载适合您操作系统的安装包，或者直接下载运行版本(**CtxRun.exe**)，无需安装点击即用（数据存储在`C:\Users\<name>\AppData\Local\com.ctxrun`内，即`%localappdata%\com.ctxrun`）：
+Download installers for your OS from the [Releases](../../releases) page, or download the portable version (**CtxRun.exe**) - no installation required, click to run (data stored in `%localappdata%\com.ctxrun`):
 
-*   **Windows**: `.msi` 或 `.exe`
+*   **Windows**: `.msi` or `.exe`
 
 ---
 
-## ⚠️ 关于报毒 (About Virus Alert)
+## ⚠️ About Virus Alerts
 
-启动应用时，你可能会看到 **“Windows 已保护你的电脑” (Microsoft Defender SmartScreen)** 的蓝色拦截窗口。
+When launching the app, you may see a **"Windows has protected your computer" (Microsoft Defender SmartScreen)** blue warning window.
 
-**这是正常现象**。因为 CtxRun 是一个由个人维护的开源项目，没有购买微软数字签名证书 (EV Code Signing Certificate)，所以会被系统标记为"未知发布者"。
+**This is normal.** Since CtxRun is an open-source project maintained by an individual without an EV Code Signing Certificate, it will be flagged as "unknown publisher".
 
-**如何运行：**
-1. 在蓝色拦截窗口中，点击 **<u>更多信息 (More info)</u>**。
-2. 点击下方出现的 **仍要运行 (Run anyway)** 按钮。
+**How to run:**
+1. In the blue warning window, click **<u>More info</u>**.
+2. Click the **Run anyway** button that appears below.
 
-> 🔒 **安全承诺**：本项目完全开源，构建过程由 GitHub Actions 自动化完成，绝不包含任何恶意代码。如果您仍有顾虑，欢迎审查源码自行构建。
+> 🔒 **Security Commitment**: This project is fully open-source, built automatically by GitHub Actions, and contains no malicious code. If you have concerns, feel free to review the source and build it yourself.
 ![alt text](images/ScreenShot_2025-11-28_205723_002.png)
 
-## 📜 开源许可 (License)
+## Credits & Open Source Notice
 
-CtxRun 基于 **GPL-3.0 License** 开源，详见 [LICENSE](LICENSE) 文件。
+Special thanks to the following projects for data support and inspiration:
 
-## 致谢与开源声明 (Credits)
-
-特别感谢以下项目提供的数据支持与灵感：
-
-*   **[tldr-pages](https://github.com/tldr-pages/tldr)**: 本项目的命令库数据（Command Packs）部分来源于此，感谢他们为繁杂的 man pages 提供了简洁实用的替代方案。
-*   **[Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts)**: 本项目的提示词库数据（Prompt Packs）部分来源于此。
+*   **[tldr-pages](https://github.com/tldr-pages/tldr)**: Command pack data partially sourced from this project.
+*   **[Awesome ChatGPT Prompts](https://github.com/f/awesome-chatgpt-prompts)**: Prompt pack data partially sourced from this project.
+*   **[gitleaks](https://github.com/gitleaks/gitleaks)**: Sensitive information detection logic and rules partially inspired by this project.
 
 ---
 
