@@ -24570,6 +24570,96 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-apptainer-test-0",
+    "type": "command",
+    "title": "apptainer-test - Run the testscript of a container",
+    "content": "apptainer test {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-test: Run the testscript defined in an Apptainer container image. The testscript is defined in the `%test` section of the container's definition file. (Run the testscript of a container)",
+    "tags": [
+      "linux",
+      "apptainer-test",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-test-1",
+    "type": "command",
+    "title": "apptainer-test - Run the testscript with a bind mount from host to container",
+    "content": "apptainer test {{[-B|--bind]}} {{path/to/source}}:{{path/to/destination}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-test: Run the testscript defined in an Apptainer container image. The testscript is defined in the `%test` section of the container's definition file. (Run the testscript with a bind mount from host to container)",
+    "tags": [
+      "linux",
+      "apptainer-test",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-test-2",
+    "type": "command",
+    "title": "apptainer-test - Run the testscript in fully isolated mode (contained filesystem, PID, IPC, and clean environment)",
+    "content": "apptainer test {{[-C|--containall]}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-test: Run the testscript defined in an Apptainer container image. The testscript is defined in the `%test` section of the container's definition file. (Run the testscript in fully isolated mode (contained filesystem, PID, IPC, and clean environment))",
+    "tags": [
+      "linux",
+      "apptainer-test",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-test-3",
+    "type": "command",
+    "title": "apptainer-test - Run the testscript with a writable temporary filesystem overlay",
+    "content": "apptainer test --writable-tmpfs {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-test: Run the testscript defined in an Apptainer container image. The testscript is defined in the `%test` section of the container's definition file. (Run the testscript with a writable temporary filesystem overlay)",
+    "tags": [
+      "linux",
+      "apptainer-test",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-test-4",
+    "type": "command",
+    "title": "apptainer-test - Run the testscript for a specific app within a container",
+    "content": "apptainer test --app {{app_name}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-test: Run the testscript defined in an Apptainer container image. The testscript is defined in the `%test` section of the container's definition file. (Run the testscript for a specific app within a container)",
+    "tags": [
+      "linux",
+      "apptainer-test",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-test-5",
+    "type": "command",
+    "title": "apptainer-test - Display help",
+    "content": "apptainer test {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "apptainer-test: Run the testscript defined in an Apptainer container image. The testscript is defined in the `%test` section of the container's definition file. (Display help)",
+    "tags": [
+      "linux",
+      "apptainer-test",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-kmod-0",
     "type": "command",
     "title": "kmod - List currently loaded kernel modules",
@@ -37599,6 +37689,126 @@
     "tags": [
       "linux",
       "run-mailcap",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-shell-0",
+    "type": "command",
+    "title": "apptainer-shell - Start an interactive shell inside a container",
+    "content": "apptainer shell {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-shell: Start an interactive shell within an Apptainer container. (Start an interactive shell inside a container)",
+    "tags": [
+      "linux",
+      "apptainer-shell",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-shell-1",
+    "type": "command",
+    "title": "apptainer-shell - Start a shell with a bind mount from host to container",
+    "content": "apptainer shell {{[-B|--bind]}} {{path/to/source}}:{{path/to/destination}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-shell: Start an interactive shell within an Apptainer container. (Start a shell with a bind mount from host to container)",
+    "tags": [
+      "linux",
+      "apptainer-shell",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-shell-2",
+    "type": "command",
+    "title": "apptainer-shell - Start a shell with environment variables",
+    "content": "apptainer shell --env {{variable}}={{value}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-shell: Start an interactive shell within an Apptainer container. (Start a shell with environment variables)",
+    "tags": [
+      "linux",
+      "apptainer-shell",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-shell-3",
+    "type": "command",
+    "title": "apptainer-shell - Start a shell in fully isolated mode (contained filesystem, PID, IPC, and clean environment)",
+    "content": "apptainer shell {{[-C|--containall]}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-shell: Start an interactive shell within an Apptainer container. (Start a shell in fully isolated mode (contained filesystem, PID, IPC, and clean environment))",
+    "tags": [
+      "linux",
+      "apptainer-shell",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-shell-4",
+    "type": "command",
+    "title": "apptainer-shell - Start a shell with a writable temporary filesystem overlay",
+    "content": "apptainer shell --writable-tmpfs {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-shell: Start an interactive shell within an Apptainer container. (Start a shell with a writable temporary filesystem overlay)",
+    "tags": [
+      "linux",
+      "apptainer-shell",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-shell-5",
+    "type": "command",
+    "title": "apptainer-shell - Start a shell with NVIDIA GPU support",
+    "content": "apptainer shell --nv {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-shell: Start an interactive shell within an Apptainer container. (Start a shell with NVIDIA GPU support)",
+    "tags": [
+      "linux",
+      "apptainer-shell",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-shell-6",
+    "type": "command",
+    "title": "apptainer-shell - Start a shell using a specific shell program",
+    "content": "apptainer shell {{[-s|--shell]}} {{path/to/shell}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-shell: Start an interactive shell within an Apptainer container. (Start a shell using a specific shell program)",
+    "tags": [
+      "linux",
+      "apptainer-shell",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-shell-7",
+    "type": "command",
+    "title": "apptainer-shell - Display help",
+    "content": "apptainer shell {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "apptainer-shell: Start an interactive shell within an Apptainer container. (Display help)",
+    "tags": [
+      "linux",
+      "apptainer-shell",
       "tldr",
       "en"
     ],
@@ -86625,6 +86835,126 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-apptainer-run-0",
+    "type": "command",
+    "title": "apptainer-run - Run the default runscript of a container",
+    "content": "apptainer run {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run: Run the default runscript of an Apptainer container. The runscript is defined in the `%runscript` section of the container's definition file. (Run the default runscript of a container)",
+    "tags": [
+      "linux",
+      "apptainer-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-run-1",
+    "type": "command",
+    "title": "apptainer-run - Run with arguments passed to the runscript",
+    "content": "apptainer run {{path/to/image.sif}} {{arg1 arg2 ...}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run: Run the default runscript of an Apptainer container. The runscript is defined in the `%runscript` section of the container's definition file. (Run with arguments passed to the runscript)",
+    "tags": [
+      "linux",
+      "apptainer-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-run-2",
+    "type": "command",
+    "title": "apptainer-run - Run with a bind mount from host to container",
+    "content": "apptainer run {{[-B|--bind]}} {{path/to/source}}:{{path/to/destination}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run: Run the default runscript of an Apptainer container. The runscript is defined in the `%runscript` section of the container's definition file. (Run with a bind mount from host to container)",
+    "tags": [
+      "linux",
+      "apptainer-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-run-3",
+    "type": "command",
+    "title": "apptainer-run - Run with environment variables",
+    "content": "apptainer run --env {{variable}}={{value}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run: Run the default runscript of an Apptainer container. The runscript is defined in the `%runscript` section of the container's definition file. (Run with environment variables)",
+    "tags": [
+      "linux",
+      "apptainer-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-run-4",
+    "type": "command",
+    "title": "apptainer-run - Run in fully isolated mode (contained filesystem, PID, IPC, and clean environment)",
+    "content": "apptainer run {{[-C|--containall]}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run: Run the default runscript of an Apptainer container. The runscript is defined in the `%runscript` section of the container's definition file. (Run in fully isolated mode (contained filesystem, PID, IPC, and clean environment))",
+    "tags": [
+      "linux",
+      "apptainer-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-run-5",
+    "type": "command",
+    "title": "apptainer-run - Run with a writable temporary filesystem overlay",
+    "content": "apptainer run --writable-tmpfs {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run: Run the default runscript of an Apptainer container. The runscript is defined in the `%runscript` section of the container's definition file. (Run with a writable temporary filesystem overlay)",
+    "tags": [
+      "linux",
+      "apptainer-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-run-6",
+    "type": "command",
+    "title": "apptainer-run - Run with NVIDIA GPU support",
+    "content": "apptainer run --nv {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run: Run the default runscript of an Apptainer container. The runscript is defined in the `%runscript` section of the container's definition file. (Run with NVIDIA GPU support)",
+    "tags": [
+      "linux",
+      "apptainer-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-run-7",
+    "type": "command",
+    "title": "apptainer-run - Display help",
+    "content": "apptainer run {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run: Run the default runscript of an Apptainer container. The runscript is defined in the `%runscript` section of the container's definition file. (Display help)",
+    "tags": [
+      "linux",
+      "apptainer-run",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-koji-tag-build-0",
     "type": "command",
     "title": "koji-tag-build - Apply a tag to one or more builds",
@@ -87241,6 +87571,21 @@
   },
   {
     "id": "tldr-en-linux-lxc-attach-1",
+    "type": "command",
+    "title": "lxc-attach - Attach to a container without passing host environment variables to it",
+    "content": "sudo lxc-attach {{container_name}} --clear-env",
+    "group": "Linux Ops",
+    "description": "lxc-attach: Attach to a container. (Attach to a container without passing host environment variables to it)",
+    "tags": [
+      "linux",
+      "lxc-attach",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-lxc-attach-2",
     "type": "command",
     "title": "lxc-attach - Display help",
     "content": "lxc-attach {{[-?|--help]}}",
@@ -94530,6 +94875,51 @@
     "source": "official"
   },
   {
+    "id": "tldr-en-linux-apptainer-run-help-0",
+    "type": "command",
+    "title": "apptainer-run-help - Display help for a container",
+    "content": "apptainer run-help {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run-help: Display user-defined help for an Apptainer container image. Help text is defined in the `%help` section of the container's definition file. (Display help for a container)",
+    "tags": [
+      "linux",
+      "apptainer-run-help",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-run-help-1",
+    "type": "command",
+    "title": "apptainer-run-help - Display help for a specific app within a container",
+    "content": "apptainer run-help --app {{app_name}} {{path/to/image.sif}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run-help: Display user-defined help for an Apptainer container image. Help text is defined in the `%help` section of the container's definition file. (Display help for a specific app within a container)",
+    "tags": [
+      "linux",
+      "apptainer-run-help",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-run-help-2",
+    "type": "command",
+    "title": "apptainer-run-help - Display help",
+    "content": "apptainer run-help {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "apptainer-run-help: Display user-defined help for an Apptainer container image. Help text is defined in the `%help` section of the container's definition file. (Display help)",
+    "tags": [
+      "linux",
+      "apptainer-run-help",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
     "id": "tldr-en-linux-rnm-0",
     "type": "command",
     "title": "rnm - Replace a search string with a replacement string in filenames",
@@ -95199,6 +95589,126 @@
     "tags": [
       "linux",
       "pacman-sync",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-exec-0",
+    "type": "command",
+    "title": "apptainer-exec - Execute a command inside a container",
+    "content": "apptainer exec {{path/to/image.sif}} {{command}}",
+    "group": "Linux Ops",
+    "description": "apptainer-exec: Execute a command within an Apptainer container. (Execute a command inside a container)",
+    "tags": [
+      "linux",
+      "apptainer-exec",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-exec-1",
+    "type": "command",
+    "title": "apptainer-exec - Execute a command with arguments",
+    "content": "apptainer exec {{path/to/image.sif}} {{command}} {{arg1 arg2 ...}}",
+    "group": "Linux Ops",
+    "description": "apptainer-exec: Execute a command within an Apptainer container. (Execute a command with arguments)",
+    "tags": [
+      "linux",
+      "apptainer-exec",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-exec-2",
+    "type": "command",
+    "title": "apptainer-exec - Execute a command with a bind mount from host to container",
+    "content": "apptainer exec {{[-B|--bind]}} {{path/to/source}}:{{path/to/destination}} {{path/to/image.sif}} {{command}}",
+    "group": "Linux Ops",
+    "description": "apptainer-exec: Execute a command within an Apptainer container. (Execute a command with a bind mount from host to container)",
+    "tags": [
+      "linux",
+      "apptainer-exec",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-exec-3",
+    "type": "command",
+    "title": "apptainer-exec - Execute a command with environment variables",
+    "content": "apptainer exec --env {{variable}}={{value}} {{path/to/image.sif}} {{command}}",
+    "group": "Linux Ops",
+    "description": "apptainer-exec: Execute a command within an Apptainer container. (Execute a command with environment variables)",
+    "tags": [
+      "linux",
+      "apptainer-exec",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-exec-4",
+    "type": "command",
+    "title": "apptainer-exec - Execute a command in fully isolated mode (contained filesystem, PID, IPC, and clean environment)",
+    "content": "apptainer exec {{[-C|--containall]}} {{path/to/image.sif}} {{command}}",
+    "group": "Linux Ops",
+    "description": "apptainer-exec: Execute a command within an Apptainer container. (Execute a command in fully isolated mode (contained filesystem, PID, IPC, and clean environment))",
+    "tags": [
+      "linux",
+      "apptainer-exec",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-exec-5",
+    "type": "command",
+    "title": "apptainer-exec - Execute a command with a writable temporary filesystem overlay",
+    "content": "apptainer exec --writable-tmpfs {{path/to/image.sif}} {{command}}",
+    "group": "Linux Ops",
+    "description": "apptainer-exec: Execute a command within an Apptainer container. (Execute a command with a writable temporary filesystem overlay)",
+    "tags": [
+      "linux",
+      "apptainer-exec",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-exec-6",
+    "type": "command",
+    "title": "apptainer-exec - Execute a command with NVIDIA GPU support",
+    "content": "apptainer exec --nv {{path/to/image.sif}} {{command}}",
+    "group": "Linux Ops",
+    "description": "apptainer-exec: Execute a command within an Apptainer container. (Execute a command with NVIDIA GPU support)",
+    "tags": [
+      "linux",
+      "apptainer-exec",
+      "tldr",
+      "en"
+    ],
+    "source": "official"
+  },
+  {
+    "id": "tldr-en-linux-apptainer-exec-7",
+    "type": "command",
+    "title": "apptainer-exec - Display help",
+    "content": "apptainer exec {{[-h|--help]}}",
+    "group": "Linux Ops",
+    "description": "apptainer-exec: Execute a command within an Apptainer container. (Display help)",
+    "tags": [
+      "linux",
+      "apptainer-exec",
       "tldr",
       "en"
     ],

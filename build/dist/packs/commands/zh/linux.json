@@ -303,7 +303,7 @@
     "id": "tldr-zh-linux-ark-0",
     "type": "command",
     "title": "ark - 将存档解压缩到当前目录",
-    "content": "ark --batch {{路径/到/存档名}}",
+    "content": "ark {{[-b|--batch]}} {{路径/到/存档名}}",
     "group": "Linux 运维",
     "description": "ark: KDE 归档工具。 (将存档解压缩到当前目录)",
     "tags": [
@@ -318,7 +318,7 @@
     "id": "tldr-zh-linux-ark-1",
     "type": "command",
     "title": "ark - 改变解压缩目录",
-    "content": "ark --batch --destination {{路径/到/目录}} {{路径/到/存档名}}",
+    "content": "ark {{[-b|--batch]}} {{[-o|--destination]}} {{路径/到/目录}} {{路径/到/存档名}}",
     "group": "Linux 运维",
     "description": "ark: KDE 归档工具。 (改变解压缩目录)",
     "tags": [
@@ -333,7 +333,7 @@
     "id": "tldr-zh-linux-ark-2",
     "type": "command",
     "title": "ark - 创建一个原本不存在的存档并向它添加文件",
-    "content": "ark --add-to {{路径/到/存档名}} {{路径/到/文件1 路径/到/文件2 ...}}",
+    "content": "ark {{[-t|--add-to]}} {{路径/到/存档名}} {{路径/到/文件1 路径/到/文件2 ...}}",
     "group": "Linux 运维",
     "description": "ark: KDE 归档工具。 (创建一个原本不存在的存档并向它添加文件)",
     "tags": [
@@ -1488,7 +1488,7 @@
     "id": "tldr-zh-linux-btrfs-scrub-0",
     "type": "command",
     "title": "btrfs-scrub - 开始 scrub",
-    "content": "sudo btrfs scrub start {{指向挂载点的路径}}",
+    "content": "sudo btrfs {{[sc|scrub]}} start {{指向挂载点的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-scrub: 清理 btrfs 文件系统以验证数据完整性。 建议每月运行一次 scrub。 (开始 scrub)",
     "tags": [
@@ -1503,7 +1503,7 @@
     "id": "tldr-zh-linux-btrfs-scrub-1",
     "type": "command",
     "title": "btrfs-scrub - 显示正在进行或上次完成的 scrub 的状态",
-    "content": "sudo btrfs scrub status {{指向挂载点的路径}}",
+    "content": "sudo btrfs {{[sc|scrub]}} status {{指向挂载点的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-scrub: 清理 btrfs 文件系统以验证数据完整性。 建议每月运行一次 scrub。 (显示正在进行或上次完成的 scrub 的状态)",
     "tags": [
@@ -1518,7 +1518,7 @@
     "id": "tldr-zh-linux-btrfs-scrub-2",
     "type": "command",
     "title": "btrfs-scrub - 取消正在进行的 scrub",
-    "content": "sudo btrfs scrub cancel {{指向挂载点的路径}}",
+    "content": "sudo btrfs {{[sc|scrub]}} {{[c|cancel]}} {{指向挂载点的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-scrub: 清理 btrfs 文件系统以验证数据完整性。 建议每月运行一次 scrub。 (取消正在进行的 scrub)",
     "tags": [
@@ -1533,7 +1533,7 @@
     "id": "tldr-zh-linux-btrfs-scrub-3",
     "type": "command",
     "title": "btrfs-scrub - 恢复先前取消的 scrub",
-    "content": "sudo btrfs scrub resume {{指向挂载点的路径}}",
+    "content": "sudo btrfs {{[sc|scrub]}} {{[r|resume]}} {{指向挂载点的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-scrub: 清理 btrfs 文件系统以验证数据完整性。 建议每月运行一次 scrub。 (恢复先前取消的 scrub)",
     "tags": [
@@ -1548,7 +1548,7 @@
     "id": "tldr-zh-linux-btrfs-scrub-4",
     "type": "command",
     "title": "btrfs-scrub - 开始擦洗，但要等到 scrub 完成后才能退出",
-    "content": "sudo btrfs scrub start -B {{指向挂载点的路径}}",
+    "content": "sudo btrfs {{[sc|scrub]}} start -B {{指向挂载点的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-scrub: 清理 btrfs 文件系统以验证数据完整性。 建议每月运行一次 scrub。 (开始擦洗，但要等到 scrub 完成后才能退出)",
     "tags": [
@@ -1563,7 +1563,7 @@
     "id": "tldr-zh-linux-btrfs-scrub-5",
     "type": "command",
     "title": "btrfs-scrub - 在安静模式下启动 scrub（不打印错误或统计信息）",
-    "content": "sudo btrfs scrub start -q {{指向挂载点的路径}}",
+    "content": "sudo btrfs {{[sc|scrub]}} start {{[-q|--quiet]}} {{指向挂载点的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-scrub: 清理 btrfs 文件系统以验证数据完整性。 建议每月运行一次 scrub。 (在安静模式下启动 scrub（不打印错误或统计信息）)",
     "tags": [
@@ -6258,7 +6258,7 @@
     "id": "tldr-zh-linux-btrfs-subvolume-0",
     "type": "command",
     "title": "btrfs-subvolume - 创建一个新的空子卷",
-    "content": "sudo btrfs subvolume create {{指向新子卷的路径}}",
+    "content": "sudo btrfs {{[su|subvolume]}} {{[c|create]}} {{指向新子卷的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-subvolume: 管理 btrfs 子卷和快照。 (创建一个新的空子卷)",
     "tags": [
@@ -6273,7 +6273,7 @@
     "id": "tldr-zh-linux-btrfs-subvolume-1",
     "type": "command",
     "title": "btrfs-subvolume - 列出指定文件系统中的所有子卷和快照",
-    "content": "sudo btrfs subvolume list {{指向 btrfs 文件系统的路径}}",
+    "content": "sudo btrfs {{[su|subvolume]}} {{[l|list]}} {{指向 btrfs 文件系统的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-subvolume: 管理 btrfs 子卷和快照。 (列出指定文件系统中的所有子卷和快照)",
     "tags": [
@@ -6288,7 +6288,7 @@
     "id": "tldr-zh-linux-btrfs-subvolume-2",
     "type": "command",
     "title": "btrfs-subvolume - 删除一个子卷",
-    "content": "sudo btrfs subvolume delete {{指向子卷的路径}}",
+    "content": "sudo btrfs {{[su|subvolume]}} {{[d|delete]}} {{指向子卷的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-subvolume: 管理 btrfs 子卷和快照。 (删除一个子卷)",
     "tags": [
@@ -6303,7 +6303,7 @@
     "id": "tldr-zh-linux-btrfs-subvolume-3",
     "type": "command",
     "title": "btrfs-subvolume - 创建现有子卷的只读快照",
-    "content": "sudo btrfs subvolume snapshot -r {{指向源子卷的路径}} {{指向目标的路径}}",
+    "content": "sudo btrfs {{[su|subvolume]}} {{[sn|snapshot]}} -r {{指向源子卷的路径}} {{指向目标的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-subvolume: 管理 btrfs 子卷和快照。 (创建现有子卷的只读快照)",
     "tags": [
@@ -6318,7 +6318,7 @@
     "id": "tldr-zh-linux-btrfs-subvolume-4",
     "type": "command",
     "title": "btrfs-subvolume - 创建现有子卷的读写快照",
-    "content": "sudo btrfs subvolume snapshot {{指向源子卷的路径}} {{指向目标的路径}}",
+    "content": "sudo btrfs {{[su|subvolume]}} {{[sn|snapshot]}} {{指向源子卷的路径}} {{指向目标的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-subvolume: 管理 btrfs 子卷和快照。 (创建现有子卷的读写快照)",
     "tags": [
@@ -6333,7 +6333,7 @@
     "id": "tldr-zh-linux-btrfs-subvolume-5",
     "type": "command",
     "title": "btrfs-subvolume - 显示有关子卷的详细信息",
-    "content": "sudo btrfs subvolume show {{指向子卷的路径}}",
+    "content": "sudo btrfs {{[su|subvolume]}} {{[sh|show]}} {{指向子卷的路径}}",
     "group": "Linux 运维",
     "description": "btrfs-subvolume: 管理 btrfs 子卷和快照。 (显示有关子卷的详细信息)",
     "tags": [
