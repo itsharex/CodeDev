@@ -19308,7 +19308,7 @@
     "id": "tldr-zh-common-netstat-0",
     "type": "command",
     "title": "netstat - 列出所有端口",
-    "content": "netstat --all",
+    "content": "netstat {{[-a|--all]}}",
     "group": "通用工具 (Common)",
     "description": "netstat: 显示与网络相关的信息，如打开的连接、打开的套接字端口等。 另请参阅：`ss`。 (列出所有端口)",
     "tags": [
@@ -19323,7 +19323,7 @@
     "id": "tldr-zh-common-netstat-1",
     "type": "command",
     "title": "netstat - 列出所有被监听端口",
-    "content": "netstat --listening",
+    "content": "netstat {{[-l|--listening]}}",
     "group": "通用工具 (Common)",
     "description": "netstat: 显示与网络相关的信息，如打开的连接、打开的套接字端口等。 另请参阅：`ss`。 (列出所有被监听端口)",
     "tags": [
@@ -19338,7 +19338,7 @@
     "id": "tldr-zh-common-netstat-2",
     "type": "command",
     "title": "netstat - 列出监听的 TCP 端口",
-    "content": "netstat --tcp",
+    "content": "netstat {{[-t|--tcp]}}",
     "group": "通用工具 (Common)",
     "description": "netstat: 显示与网络相关的信息，如打开的连接、打开的套接字端口等。 另请参阅：`ss`。 (列出监听的 TCP 端口)",
     "tags": [
@@ -19353,7 +19353,7 @@
     "id": "tldr-zh-common-netstat-3",
     "type": "command",
     "title": "netstat - 显示 PID 和程序名",
-    "content": "netstat --program",
+    "content": "netstat {{[-p|--program]}}",
     "group": "通用工具 (Common)",
     "description": "netstat: 显示与网络相关的信息，如打开的连接、打开的套接字端口等。 另请参阅：`ss`。 (显示 PID 和程序名)",
     "tags": [
@@ -19368,7 +19368,7 @@
     "id": "tldr-zh-common-netstat-4",
     "type": "command",
     "title": "netstat - 持续列出信息",
-    "content": "netstat --continuous",
+    "content": "netstat {{[-c|--continuous]}}",
     "group": "通用工具 (Common)",
     "description": "netstat: 显示与网络相关的信息，如打开的连接、打开的套接字端口等。 另请参阅：`ss`。 (持续列出信息)",
     "tags": [
@@ -19383,7 +19383,7 @@
     "id": "tldr-zh-common-netstat-5",
     "type": "command",
     "title": "netstat - 列出路由并且不解析 IP 到主机名",
-    "content": "netstat --route --numeric",
+    "content": "netstat {{[-rn|--route --numeric]}}",
     "group": "通用工具 (Common)",
     "description": "netstat: 显示与网络相关的信息，如打开的连接、打开的套接字端口等。 另请参阅：`ss`。 (列出路由并且不解析 IP 到主机名)",
     "tags": [
@@ -19398,7 +19398,7 @@
     "id": "tldr-zh-common-netstat-6",
     "type": "command",
     "title": "netstat - 列出正在监听的 TCP 和 UDP 端口（如果你是 root 用户，还会显示用户和进程）",
-    "content": "netstat --listening --program --numeric --tcp --udp --extend",
+    "content": "netstat {{[-tulpne|--tcp --udp --listening --program --numeric --extend]}}",
     "group": "通用工具 (Common)",
     "description": "netstat: 显示与网络相关的信息，如打开的连接、打开的套接字端口等。 另请参阅：`ss`。 (列出正在监听的 TCP 和 UDP 端口（如果你是 root 用户，还会显示用户和进程）)",
     "tags": [
