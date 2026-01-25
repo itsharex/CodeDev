@@ -17,6 +17,42 @@
 
 ## Version History
 
+### v1.3.7 (2026-01-25)
+
+| Commit Hash | Change | Description |
+|-------------|--------|-------------|
+| `4964586` | **Optimize Mirror Download** | Adjust mirror priority, use Promise.any parallel requests |
+| `560171d` | **Auto-sync Prompts Library** | Add daily auto-update prompts library workflow |
+| `4964586` | **Optimize Save Filename** | Context save uses project_name_date format as default |
+| `ef6267d` | Release 1.3.7 | Version release |
+
+**v1.3.7 Mirror Download Optimization File Changes**:
+```
+src/store/usePromptStore.ts | -15 +15 mirror priority adjustment, Promise.any parallel requests
+```
+
+**v1.3.7 Save Filename Optimization File Changes**:
+```
+src/components/features/context/ContextView.tsx | +25 default filename generation logic
+```
+
+**v1.3.7 Prompts Auto-Sync File Changes**:
+```
+.github/workflows/update-prompts.yml | +105 daily auto-sync workflow
+build/dist/packs/                   | renamed to commands/
+build/dist/packs/commands/*.json    | restructured prompt data pack
+```
+
+**Key Updates**:
+- 🚀 **Promise.any Parallel Requests**: Store download and Manifest fetch use parallel requests, first success returns
+- 🌍 **Mirror Priority Optimization**: Gitee (China) -> GitHub Raw -> jsDelivr CDN
+- 📁 **Smart Default Filename**: Context save auto-uses `{project_name}_{date}.txt` format
+- 🔄 **Prompts Auto-Sync**: GitHub Actions daily auto-update awesome-chatgpt-prompts and tldr-pages
+- 📦 **Data Pack Restructure**: `packs` directory renamed to `commands`, clearer classification
+- 📄 **License Update**: Added NOTICES.md license declaration
+
+---
+
 ### v1.3.6 (2026-01-22)
 
 | Commit Hash | Change | Description |
@@ -591,5 +627,5 @@ ctxrun/
 
 ---
 
-*Document last updated: 2026-01-23*
+*Document last updated: 2026-01-25*
 *Compiled based on git commit history and code diff analysis*
