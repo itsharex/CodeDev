@@ -18,7 +18,7 @@ pub async fn refresh_apps(state: State<'_, DbState>) -> Result<String, String> {
 
     // 同步到数据库
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
-    crate::db::sync_scanned_apps(&conn, items).map_err(|e| e.to_string())?;
+    crate::db::apps::sync_scanned_apps(&conn, items).map_err(|e| e.to_string())?;
 
     Ok(format!("Scanned {} applications", count))
 }
@@ -53,7 +53,7 @@ pub async fn open_app(path: String, state: State<'_, DbState>) -> Result<(), Str
     }
 
     // 2. 异步更新使用计数
-    let _ = crate::db::record_app_usage(state, path);
+    let _ = crate::db::apps::record_app_usage(state, path);
 
     Ok(())
 }
