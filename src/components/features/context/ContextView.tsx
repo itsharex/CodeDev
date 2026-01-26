@@ -94,6 +94,7 @@ export function ContextView() {
     results: SecretMatch[];
     pendingText: string;
     pendingAction: 'copy' | 'save' | null;
+    pendingSavePath?: string;
   }>({
     isOpen: false,
     results: [],
@@ -159,7 +160,7 @@ export function ContextView() {
     return `${namePart}_${timeStr}.txt`;
   };
 
-  const executeFinalAction = async (text: string, action: 'copy' | 'save') => {
+  const executeFinalAction = async (text: string, action: 'copy' | 'save', savePath?: string) => {
       try {
           if (action === 'copy') {
               await writeClipboard(text);
@@ -167,11 +168,15 @@ export function ContextView() {
               console.log(`Context copied! Approx tokens: ${actualTokens}`);
               triggerToast(getText('context', 'toastCopied', language), 'success');
           } else if (action === 'save') {
-              const defaultPath = await getDefaultSavePath();
-              const filePath = await save({
-                  filters: [{ name: 'Text File', extensions: ['txt', 'md', 'json'] }],
-                  defaultPath: defaultPath
-              });
+              let filePath = savePath;
+              if (!filePath) {
+                  const defaultPath = await getDefaultSavePath();
+                  filePath = await save({
+                      filters: [{ name: 'Text File', extensions: ['txt', 'md', 'json'] }],
+                      defaultPath: defaultPath
+                  }) || undefined;
+              }
+
               if (!filePath) return;
 
               await writeTextFile(filePath, text);
@@ -183,9 +188,9 @@ export function ContextView() {
       }
   };
 
-  const processWithSecurityCheck = async (text: string, action: 'copy' | 'save') => {
+  const processWithSecurityCheck = async (text: string, action: 'copy' | 'save', savePath?: string) => {
       if (!detectSecrets) {
-          await executeFinalAction(text, action);
+          await executeFinalAction(text, action, savePath);
           return;
       }
 
@@ -197,32 +202,33 @@ export function ContextView() {
                   isOpen: true,
                   results,
                   pendingText: text,
-                  pendingAction: action
+                  pendingAction: action,
+                  pendingSavePath: savePath
               });
           } else {
-              await executeFinalAction(text, action);
+              await executeFinalAction(text, action, savePath);
           }
       } catch (e) {
           console.error("Security scan failed:", e);
           triggerToast("Security scan error, proceeding anyway.", 'warning');
-          await executeFinalAction(text, action);
+          await executeFinalAction(text, action, savePath);
       }
   };
 
   const handleScanConfirm = async (indicesToRedact: Set<number>) => {
-      const { pendingText, pendingAction, results } = scanState;
+      const { pendingText, pendingAction, results, pendingSavePath } = scanState;
       if (!pendingAction) return;
 
       let finalText = pendingText;
 
       if (indicesToRedact.size > 0) {
           const sortedResults = [...results].sort((a, b) => b.index - a.index);
-          
+
           for (const match of sortedResults) {
               if (!indicesToRedact.has(match.index)) {
                   continue;
               }
-              const jsIndex = match.utf16_index; 
+              const jsIndex = match.utf16_index;
               const val = match.value;
               let maskedValue = '';
               if (val.length <= 8) {
@@ -239,7 +245,7 @@ export function ContextView() {
       }
 
       setScanState(prev => ({ ...prev, isOpen: false }));
-      await executeFinalAction(finalText, pendingAction);
+      await executeFinalAction(finalText, pendingAction, pendingSavePath);
   };
 
   const handleCopyContext = async () => {
@@ -286,7 +292,7 @@ export function ContextView() {
 
       if (detectSecrets) {
         const text = await invoke<string>('get_context_content', { paths, header, removeComments });
-        await processWithSecurityCheck(text, 'save');
+        await processWithSecurityCheck(text, 'save', filePath);
       } else {
         await invoke('save_context_to_file', {
           paths,

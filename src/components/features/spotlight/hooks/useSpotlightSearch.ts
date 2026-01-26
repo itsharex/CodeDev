@@ -37,7 +37,6 @@ function useDebounce<T>(value: T, delay: number): T {
   return debouncedValue;
 }
 
-// 对应 Rust 端的 UrlHistoryItem 结构
 interface UrlHistoryRecord {
   url: string;
   title?: string;
@@ -45,7 +44,6 @@ interface UrlHistoryRecord {
   last_visit: number;
 }
 
-// 新增接口定义，对应 Rust 的结构体
 interface ShellHistoryEntry {
   id: number;
   command: string;
@@ -67,9 +65,7 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
     const performSearch = async () => {
       const q = debouncedQuery.trim();
 
-      // 1. 处理特殊模式 (仅在 Global 模式下生效)
       if (searchScope === 'global') {
-        // --- 计算器模式 ---
         if (q.startsWith('=')) {
             const mathResult = evaluateMath(q);
             if (mathResult) {
@@ -82,19 +78,16 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
                     mathResult: mathResult
                 }]);
                 setSelectedIndex(0);
-                setIsLoading(false); // 短路：确保 loading 关闭
+                setIsLoading(false);
                 return;
             }
         }
 
-        // --- Shell 命令模式 ---
         if (q.startsWith('>') || q.startsWith('》')) {
-          const cmd = q.substring(1).trim(); // 去掉前缀
+          const cmd = q.substring(1).trim();
 
           let shellResults: SpotlightItem[] = [];
 
-          // 1. 第一项永远是：直接执行当前输入
-          // 只有当用户输入了内容时才显示"执行"，否则显示提示
           const currentShellItem: SpotlightItem = {
             id: 'shell-exec-current',
             title: cmd
@@ -109,19 +102,13 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
           };
           shellResults.push(currentShellItem);
 
-          // 2. 后续项：从数据库加载历史记录
           try {
-            console.log('[Spotlight] Loading shell history, cmd:', cmd);
             let historyEntries: ShellHistoryEntry[] = [];
             if (cmd === '') {
-              // 输入为空时，显示最近的历史记录
               historyEntries = await invoke<ShellHistoryEntry[]>('get_recent_shell_history', { limit: 10 });
             } else {
-              // 有输入时，进行模糊搜索
               historyEntries = await invoke<ShellHistoryEntry[]>('search_shell_history', { query: cmd, limit: 10 });
             }
-
-            console.log('[Spotlight] Loaded history entries:', historyEntries);
 
             const historyItems: SpotlightItem[] = historyEntries.map(entry => ({
               id: `shell-history-${entry.id}`,
@@ -129,8 +116,8 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
               description: `History • Used ${entry.execution_count} times`,
               content: entry.command,
               type: 'shell_history',
-              historyCommand: entry.command, // 关键字段用于补全
-              isExecutable: false, // 历史记录本身不直接执行，而是补全
+              historyCommand: entry.command,
+              isExecutable: false,
             }));
 
             shellResults = [...shellResults, ...historyItems];
@@ -139,13 +126,12 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
           }
 
           setResults(shellResults);
-          setSelectedIndex(0); // 重置选中项到第一项
+          setSelectedIndex(0);
           setIsLoading(false);
-          return; // 结束，不再执行后续的常规搜索
+          return;
         }
       }
 
-      // 2. 常规搜索逻辑
       setIsLoading(true);
       try {
         let finalResults: SpotlightItem[] = [];

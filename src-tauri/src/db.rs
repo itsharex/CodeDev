@@ -185,13 +185,6 @@ pub fn init_db(app_handle: &AppHandle) -> Result<Connection, Box<dyn std::error:
         eprintln!("[Database] Failed to patch legacy database: {}", e);
     }
 
-    // --- 运行 Refinery ---
-    // 逻辑分析：
-    // 1. 新用户：patch_legacy 跳过 -> Refinery 运行 V1 -> 建表 -> 完成。
-    // 2. 老用户：patch_legacy 补齐字段 -> Refinery 运行 V1 ->
-    //    由于 V1 里全是 CREATE TABLE IF NOT EXISTS，SQLite 发现表都存在，直接跳过 ->
-    //    Refinery 记录 V1 已完成 -> 完成。
-    println!("[Database] Running migrations...");
     match migrations::runner().run(&mut conn) {
         Ok(report) => {
             let applied = report.applied_migrations();
@@ -200,33 +193,9 @@ pub fn init_db(app_handle: &AppHandle) -> Result<Connection, Box<dyn std::error:
                 for m in applied {
                     println!("[Database] - {}", m.name());
                 }
-            } else {
-                println!("[Database] No new migrations to apply.");
             }
         },
-        Err(e) => {
-            eprintln!("[Database] Migration failed: {}", e);
-            return Err(Box::new(e));
-        }
-    }
-
-    // 验证 shell_history 表是否存在
-    let table_exists: Result<bool, _> = conn.query_row(
-        "SELECT EXISTS(SELECT 1 FROM sqlite_master WHERE type='table' AND name='shell_history')",
-        [],
-        |row| row.get(0)
-    );
-    match table_exists {
-        Ok(exists) => {
-            if exists {
-                println!("[Database] shell_history table verified.");
-            } else {
-                eprintln!("[Database] WARNING: shell_history table does not exist!");
-            }
-        },
-        Err(e) => {
-            eprintln!("[Database] ERROR checking shell_history table: {}", e);
-        }
+        Err(e) => return Err(Box::new(e)),
     }
 
     Ok(conn)
@@ -1236,41 +1205,28 @@ pub struct ShellHistoryEntry {
 
 #[tauri::command]
 pub fn record_shell_command(state: State<'_, DbState>, command: String) -> Result<(), String> {
-    println!("[record_shell_command] Called with command: {}", command);
     let trimmed = command.trim();
     if trimmed.is_empty() {
-        println!("[record_shell_command] Empty command, skipping");
         return Ok(());
     }
 
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
     let now = chrono::Utc::now().timestamp();
 
-    println!("[record_shell_command] Recording: {} at {}", trimmed, now);
-
-    // 使用 UPSERT 逻辑：如果存在则更新时间戳和计数，不存在则插入
-    match conn.execute(
+    conn.execute(
         "INSERT INTO shell_history (command, timestamp, execution_count)
          VALUES (?1, ?2, 1)
          ON CONFLICT(command) DO UPDATE SET
            execution_count = execution_count + 1,
            timestamp = ?2",
         params![trimmed, now],
-    ) {
-        Ok(_) => {
-            println!("[record_shell_command] Successfully recorded: {}", trimmed);
-            Ok(())
-        },
-        Err(e) => {
-            eprintln!("[record_shell_command] Failed to record: {}, error: {}", trimmed, e);
-            Err(e.to_string())
-        }
-    }
+    ).map_err(|e| e.to_string())?;
+
+    Ok(())
 }
 
 #[tauri::command]
 pub fn get_recent_shell_history(state: State<'_, DbState>, limit: u32) -> Result<Vec<ShellHistoryEntry>, String> {
-    println!("[get_recent_shell_history] Called with limit: {}", limit);
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
 
     let mut stmt = conn.prepare(
@@ -1278,10 +1234,7 @@ pub fn get_recent_shell_history(state: State<'_, DbState>, limit: u32) -> Result
          FROM shell_history
          ORDER BY timestamp DESC
          LIMIT ?1"
-    ).map_err(|e| {
-        eprintln!("[get_recent_shell_history] Failed to prepare statement: {}", e);
-        e.to_string()
-    })?;
+    ).map_err(|e| e.to_string())?;
 
     let rows = stmt.query_map(params![limit], |row| {
         Ok(ShellHistoryEntry {
@@ -1290,17 +1243,13 @@ pub fn get_recent_shell_history(state: State<'_, DbState>, limit: u32) -> Result
             timestamp: row.get(2)?,
             execution_count: row.get(3)?,
         })
-    }).map_err(|e| {
-        eprintln!("[get_recent_shell_history] Failed to query: {}", e);
-        e.to_string()
-    })?;
+    }).map_err(|e| e.to_string())?;
 
     let mut entries = Vec::new();
     for entry in rows {
         entries.push(entry.map_err(|e| e.to_string())?);
     }
 
-    println!("[get_recent_shell_history] Returning {} entries", entries.len());
     Ok(entries)
 }
 
@@ -1312,7 +1261,6 @@ pub fn search_shell_history(state: State<'_, DbState>, query: String, limit: u32
     }
 
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
-    // 使用模糊匹配
     let like_pattern = format!("%{}%", trimmed);
 
     let mut stmt = conn.prepare(

@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-// 引入 History 图标
 import { Command, Sparkles, Terminal, CornerDownLeft, Check, Zap, Globe, AppWindow, Calculator, History } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/store/useAppStore';
@@ -7,7 +6,6 @@ import { SpotlightItem } from '@/types/spotlight';
 import { getText } from '@/lib/i18n';
 import { useSpotlight } from '../../core/SpotlightContext';
 import { invoke } from '@tauri-apps/api/core';
-// 引入命令执行器和 Context Store
 import { executeCommand } from '@/lib/command_executor';
 import { useContextStore } from '@/store/useContextStore';
 
@@ -21,7 +19,7 @@ interface SearchModeProps {
 
 export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect, copiedId }: SearchModeProps) {
   const { language } = useAppStore();
-  const { setQuery, inputRef } = useSpotlight(); // 获取 inputRef 用于聚焦
+  const { setQuery, inputRef } = useSpotlight();
   const { projectRoot } = useContextStore();
   const listRef = useRef<HTMLDivElement>(null);
 
@@ -37,55 +35,42 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
   const isCommand = (item: SpotlightItem) => item.type === 'command' || (item.content && item.content.length < 50);
 
   const handleSelect = async (item: SpotlightItem) => {
-
-    // >>> 逻辑 A: 历史记录补全 <<<
     if (item.type === 'shell_history') {
       const command = item.historyCommand?.trim() || '';
       if (command) {
-        // 1. 将命令填入搜索框，保持前缀
         setQuery(`> ${command}`);
 
-        // 2. 聚焦输入框并将光标移到末尾
         setTimeout(() => {
           const input = inputRef.current;
           if (input) {
             input.focus();
-            const pos = command.length + 2; // +2 是因为 "> "
+            const pos = command.length + 2;
             input.setSelectionRange(pos, pos);
           }
         }, 0);
 
-        // 3. 核心需求：重新定位到第一行（即"执行"选项）
         setSelectedIndex(0);
       }
-      return; // 结束，不执行
+      return;
     }
 
-    // >>> 逻辑 B: 执行命令 <<<
     if (item.type === 'shell') {
       const commandToExecute = (item.shellCmd || '').trim();
 
-      console.log('[Spotlight] Executing shell command:', commandToExecute);
-
       if (!commandToExecute) return;
 
-      // 1. 立即清空输入框
       setQuery('');
 
-      // 2. 并行执行：执行命令 + 记录历史
       const executionTask = executeCommand(commandToExecute, 'auto', projectRoot)
         .catch(err => console.error('[Spotlight] Execution failed:', err));
 
-      console.log('[Spotlight] Recording command to history:', commandToExecute);
       const recordTask = invoke('record_shell_command', { command: commandToExecute })
-        .then(() => console.log('[Spotlight] Command recorded successfully'))
         .catch(err => console.error('[Spotlight] History record failed:', err));
 
       await Promise.all([executionTask, recordTask]);
       return;
     }
 
-    // 其他类型保持原有逻辑
     onSelect(item);
   };
 
@@ -102,7 +87,7 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
     if (item.type === 'url') return getText('spotlight', 'openLink', language);
     if (item.type === 'app') return getText('spotlight', 'openApp', language);
     if (item.type === 'shell' || item.isExecutable) return getText('actions', 'run', language);
-    if (item.type === 'shell_history') return getText('actions', 'run', language); // 或 "Autocomplete"
+    if (item.type === 'shell_history') return getText('actions', 'run', language);
     if (item.type === 'math') return getText('spotlight', 'copyResult', language) || "Copy";
     return getText('spotlight', 'copy', language);
   };
@@ -116,9 +101,8 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
         const hasDesc = !!item.description;
 
         let Icon = Sparkles;
-        // ... (图标选择逻辑)
-        if (item.type === 'shell_history') Icon = History; // 历史记录用 History 图标
-        if (item.type === 'shell') Icon = Zap;     // 当前执行用 Zap 图标
+        if (item.type === 'shell_history') Icon = History;
+        if (item.type === 'shell') Icon = Zap;
         else if (item.type === 'math') Icon = Calculator;
         else if (item.type === 'url') Icon = Globe;
         else if (item.type === 'app') Icon = AppWindow;
@@ -133,8 +117,8 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
             className={cn(
               "relative px-4 py-3 rounded-lg flex items-start gap-4 cursor-pointer transition-all duration-150 group",
               isActive
-                ? (item.type === 'shell' ? "bg-orange-600 text-white shadow-sm scale-[0.99]" : // 区分颜色：橙色强调执行
-                   item.type === 'shell_history' ? "bg-indigo-600 text-white shadow-sm scale-[0.99]" : // 区分颜色：靛青色表示历史
+                ? (item.type === 'shell' ? "bg-orange-600 text-white shadow-sm scale-[0.99]" :
+                   item.type === 'shell_history' ? "bg-indigo-600 text-white shadow-sm scale-[0.99]" :
                    isExecutable ? "bg-indigo-600 text-white shadow-sm scale-[0.99]" :
                    item.type === 'url' ? "bg-blue-600 text-white shadow-sm scale-[0.99]" :
                    item.type === 'app' ? "bg-cyan-600 text-white shadow-sm scale-[0.99]" :
@@ -159,7 +143,7 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
                 <span className={cn(
                   "font-semibold truncate text-sm tracking-tight",
                   isActive ? "text-white" : "text-foreground",
-                  item.type === 'shell' && "font-bold text-base" // 当前执行项字体加大
+                  item.type === 'shell' && "font-bold text-base"
                 )}>
                   {item.title}
                 </span>

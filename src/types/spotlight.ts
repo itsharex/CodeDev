@@ -3,7 +3,6 @@ import { Prompt } from './prompt';
 
 export type SpotlightMode = 'search' | 'chat';
 
-// 新增：搜索范围类型定义
 export type SearchScope = 'global' | 'app' | 'command' | 'prompt';
 
 export interface SpotlightItem {
@@ -17,7 +16,6 @@ export interface SpotlightItem {
 
   originalData?: Prompt;
 
-  // >>> 修改：新增 'shell' 和 'shell_history' 类型
   type: 'prompt' | 'command' | 'action' | 'url' | 'app' | 'math' | 'shell' | 'shell_history';
 
   isExecutable?: boolean;
@@ -26,12 +24,9 @@ export interface SpotlightItem {
 
   appPath?: string;
 
-  // 新增：特定类型的字段
   mathResult?: string;
   shellCmd?: string;
-
-  // >>> 新增：Shell 相关字段
-  historyCommand?: string; // 用于历史记录
+  historyCommand?: string;
 }
 
 export interface SpotlightState {
