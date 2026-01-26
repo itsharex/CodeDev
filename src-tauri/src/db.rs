@@ -276,62 +276,81 @@ pub fn search_prompts(
 ) -> Result<Vec<Prompt>, String> {
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
     let offset = (page - 1) * page_size;
+    let trimmed_query = query.trim();
 
-    let clean_query = query.replace("\"", "");
-    let char_count = clean_query.chars().count();
-
-    if clean_query.trim().is_empty() {
+    if trimmed_query.is_empty() {
         return Ok(Vec::new());
     }
 
-    let mut params: Vec<Box<dyn rusqlite::ToSql>> = Vec::new();
-    let mut sql = String::new();
-
-    // If char count < 3, use LIKE query
-    if char_count < 3 {
-        // LIKE query
-        let like_query = format!("%{}%", clean_query);
-        params.push(Box::new(like_query));
-
-        sql.push_str(
-            "SELECT * FROM prompts
-             WHERE (title LIKE ?1 OR content LIKE ?1 OR description LIKE ?1)"
-        );
-    } else {
-        // If char count >= 3, use FTS5 Trigram index
-        let parts: Vec<&str> = clean_query.split_whitespace().collect();
-        let fts_query = parts.iter()
-            .map(|part| format!("\"{}\"", part))
-            .collect::<Vec<String>>()
-            .join(" AND ");
-
-        params.push(Box::new(fts_query));
-
-        sql.push_str(
-            "SELECT p.* FROM prompts p
-             JOIN prompts_fts f ON p.id = f.id
-             WHERE prompts_fts MATCH ?1"
-        );
+    // 1. 分词处理：支持 "adb help" 这种组合搜索
+    let keywords: Vec<&str> = trimmed_query.split_whitespace().collect();
+    if keywords.is_empty() {
+        return Ok(Vec::new());
     }
 
-    // Common filter conditions
-    if let Some(cat) = category {
+    // 2. 构建动态 SQL
+    // 我们计算一个 score 字段，用于排序
+    let mut sql = String::from(
+        "SELECT *,
+        (
+            -- 权重 1: 标题完全匹配 (100分)
+            (CASE WHEN title LIKE ?1 THEN 100 ELSE 0 END) +
+            -- 权重 2: 标题以查询词开头 (80分)
+            (CASE WHEN title LIKE ?2 THEN 80 ELSE 0 END) +
+            -- 权重 3: 标题中包含 ' 查询词' (单词边界匹配) (60分)
+            (CASE WHEN title LIKE ?3 THEN 60 ELSE 0 END) +
+            -- 权重 4: 标题包含查询词 (40分)
+            (CASE WHEN title LIKE ?4 THEN 40 ELSE 0 END) +
+            -- 权重 5: 内容包含查询词 (20分)
+            (CASE WHEN content LIKE ?4 THEN 20 ELSE 0 END) +
+            -- 额外加分: 收藏的项目 (+10分)
+            (is_favorite * 10)
+        ) as score
+        FROM prompts
+        WHERE "
+    );
+
+    let mut where_clauses = Vec::new();
+    for _ in 0..keywords.len() {
+        where_clauses.push("(title LIKE ? OR content LIKE ? OR description LIKE ?)");
+    }
+    sql.push_str(&where_clauses.join(" AND "));
+
+    // 4. 加上分类过滤
+    if let Some(cat) = &category {
         if cat == "prompt" {
             sql.push_str(" AND (type = 'prompt' OR type IS NULL)");
         } else {
-            sql.push_str(" AND type = ?2");
-            params.push(Box::new(cat));
+            sql.push_str(&format!(" AND type = '{}'", cat));
         }
-        sql.push_str(" ORDER BY updated_at DESC LIMIT ?3 OFFSET ?4");
-        params.push(Box::new(page_size));
-        params.push(Box::new(offset));
-    } else {
-        sql.push_str(" ORDER BY updated_at DESC LIMIT ?2 OFFSET ?3");
-        params.push(Box::new(page_size));
-        params.push(Box::new(offset));
     }
 
+    // 5. 排序：先按分数高低，再按更新时间
+    sql.push_str(" ORDER BY score DESC, updated_at DESC LIMIT ? OFFSET ?");
+
+    // 6. 准备参数
     let mut stmt = conn.prepare(&sql).map_err(|e| e.to_string())?;
+    let mut params: Vec<Box<dyn rusqlite::ToSql>> = Vec::new();
+
+    // 评分参数 (基于完整查询词)
+    params.push(Box::new(trimmed_query.to_string()));             // ?1: exact
+    params.push(Box::new(format!("{}%", trimmed_query)));         // ?2: starts with
+    params.push(Box::new(format!("% {}%", trimmed_query)));       // ?3: word boundary
+    params.push(Box::new(format!("%{}%", trimmed_query)));        // ?4: contains
+
+    // 过滤参数 (基于每个分词)
+    for kw in keywords {
+        let pattern = format!("%{}%", kw);
+        params.push(Box::new(pattern.clone())); // title
+        params.push(Box::new(pattern.clone())); // content
+        params.push(Box::new(pattern.clone())); // description
+    }
+
+    // 分页参数
+    params.push(Box::new(page_size));
+    params.push(Box::new(offset));
+
+    // 7. 执行查询
     let param_refs: Vec<&dyn rusqlite::ToSql> = params.iter().map(|p| p.as_ref()).collect();
 
     let prompt_iter = stmt.query_map(param_refs.as_slice(), |row| {
@@ -1255,28 +1274,58 @@ pub fn get_recent_shell_history(state: State<'_, DbState>, limit: u32) -> Result
 
 #[tauri::command]
 pub fn search_shell_history(state: State<'_, DbState>, query: String, limit: u32) -> Result<Vec<ShellHistoryEntry>, String> {
-    let trimmed = query.trim();
-    if trimmed.is_empty() {
+    let trimmed_query = query.trim();
+    if trimmed_query.is_empty() {
         return get_recent_shell_history(state, limit);
     }
 
     let conn = state.conn.lock().map_err(|e| e.to_string())?;
-    let like_pattern = format!("%{}%", trimmed);
+    let keywords: Vec<&str> = trimmed_query.split_whitespace().collect();
+    let now = chrono::Utc::now().timestamp();
 
-    let mut stmt = conn.prepare(
-        "SELECT id, command, timestamp, execution_count
-         FROM shell_history
-         WHERE command LIKE ?1
-         ORDER BY timestamp DESC
-         LIMIT ?2"
-    ).map_err(|e| e.to_string())?;
+    let mut sql = String::from(
+        "SELECT *,
+        (
+            (CASE WHEN command LIKE ?1 THEN 100 ELSE 0 END) +
+            (CASE WHEN command LIKE ?2 THEN 80 ELSE 0 END) +
+            (CASE WHEN command LIKE ?3 THEN 60 ELSE 0 END) +
+            (CASE WHEN command LIKE ?4 THEN 40 ELSE 0 END) +
+            (execution_count * 5) +
+            (CASE WHEN (?5 - timestamp) < 86400 THEN 50 ELSE 0 END)
+        ) as score
+        FROM shell_history WHERE "
+    );
 
-    let rows = stmt.query_map(params![like_pattern, limit], |row| {
+    let mut where_clauses = Vec::new();
+    for _ in 0..keywords.len() {
+        where_clauses.push("command LIKE ?");
+    }
+    sql.push_str(&where_clauses.join(" AND "));
+    sql.push_str(" ORDER BY score DESC, timestamp DESC LIMIT ?");
+
+    let mut stmt = conn.prepare(&sql).map_err(|e| e.to_string())?;
+    let mut params: Vec<Box<dyn rusqlite::ToSql>> = Vec::new();
+
+    params.push(Box::new(trimmed_query.to_string()));
+    params.push(Box::new(format!("{}%", trimmed_query)));
+    params.push(Box::new(format!("% {}%", trimmed_query)));
+    params.push(Box::new(format!("%{}%", trimmed_query)));
+    params.push(Box::new(now));
+
+    for kw in &keywords {
+        params.push(Box::new(format!("%{}%", kw)));
+    }
+
+    params.push(Box::new(limit as i64));
+
+    let param_refs: Vec<&dyn rusqlite::ToSql> = params.iter().map(|p| p.as_ref()).collect();
+
+    let rows = stmt.query_map(param_refs.as_slice(), |row| {
         Ok(ShellHistoryEntry {
-            id: row.get(0)?,
-            command: row.get(1)?,
-            timestamp: row.get(2)?,
-            execution_count: row.get(3)?,
+            id: row.get("id")?,
+            command: row.get("command")?,
+            timestamp: row.get("timestamp")?,
+            execution_count: row.get("execution_count")?,
         })
     }).map_err(|e| e.to_string())?;
 
