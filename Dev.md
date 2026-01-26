@@ -17,6 +17,37 @@
 
 ## 版本历史
 
+### v1.3.8 (2026-01-26)
+
+| 提交哈希 | 变更内容 | 详细说明 |
+|---------|---------|---------|
+| `22036bb` | **Shell 命令历史** | 新增 Shell 历史数据库和自动补全 UI |
+| `f3ed5a4` | **优化查询** | 完善模糊搜索和分页逻辑 |
+| `e0fb4be` | **代码优化** | 简化搜索流程，移除冗余代码 |
+| `727c8ea` | **体验优化** | 改进 Spotlight 搜索体验 |
+| `00922e4` | **自动同步提示词** | 每日自动更新提示词库 (GitHub Actions) |
+| `bdad9c1` | 发布 1.3.8 | 版本发布 |
+
+**v1.3.8 Shell 历史功能文件变更**:
+```
+src-tauri/migrations/V2__shell_history.sql              | +12  新增迁移脚本
+src-tauri/src/db.rs                                      | +234 数据库重构
+src-tauri/src/main.rs                                    | +3   历史记录 API
+src/components/features/spotlight/hooks/useSpotlightSearch.ts | +75 历史搜索逻辑
+src/components/features/spotlight/modes/search/SearchMode.tsx | +74 UI 交互
+src/types/spotlight.ts                                   | +6  类型定义
+```
+
+**主要更新**:
+- 📜 **Shell 历史数据库**: 新增 `shell_history` 表，记录命令、时间戳、执行次数
+- 🔍 **智能自动补全**: 模糊搜索 Shell 历史，实时建议命令
+- ⚡ **快速执行**: Tab/Enter 自动补全，确认后立即执行
+- 🎨 **视觉区分**: 橙色表示执行，靛青色表示历史记录
+- 📊 **使用追踪**: 自动记录命令执行次数
+- 🚀 **性能优化**: 查询防抖 100ms，并行搜索
+
+---
+
 ### v1.3.7 (2026-01-25)
 
 | 提交哈希 | 变更内容 | 详细说明 |

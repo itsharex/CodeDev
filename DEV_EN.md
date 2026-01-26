@@ -17,6 +17,37 @@
 
 ## Version History
 
+### v1.3.8 (2026-01-26)
+
+| Commit Hash | Change | Description |
+|-------------|--------|-------------|
+| `22036bb` | **Shell Command History** | Add shell history database and autocomplete UI |
+| `f3ed5a4` | **Optimize Query** | Refine fuzzy search and pagination logic |
+| `e0fb4be` | **Code Optimization** | Simplify search flow and remove redundant code |
+| `727c8ea` | **UX Enhancement** | Improve Spotlight search experience |
+| `00922e4` | **Auto-sync Prompts** | Daily prompts library update (GitHub Actions) |
+| `bdad9c1` | Release 1.3.8 | Version release |
+
+**v1.3.8 Shell History File Changes**:
+```
+src-tauri/migrations/V2__shell_history.sql              | +12  new migration
+src-tauri/src/db.rs                                      | +234 database refactoring
+src-tauri/src/main.rs                                    | +3   history API
+src/components/features/spotlight/hooks/useSpotlightSearch.ts | +75 history search
+src/components/features/spotlight/modes/search/SearchMode.tsx | +74 UI interaction
+src/types/spotlight.ts                                   | +6  type definitions
+```
+
+**Key Updates**:
+- 📜 **Shell History Database**: New `shell_history` table with command, timestamp, execution_count
+- 🔍 **Smart Autocomplete**: Fuzzy search shell history with real-time suggestions
+- ⚡ **Quick Execution**: Tab/Enter to autocomplete, immediate execution on confirm
+- 🎨 **Visual Distinction**: Orange for execute, Indigo for history items
+- 📊 **Usage Tracking**: Automatic command execution count tracking
+- 🚀 **Performance**: Parallel search with query debouncing (100ms)
+
+---
+
 ### v1.3.7 (2026-01-25)
 
 | Commit Hash | Change | Description |
