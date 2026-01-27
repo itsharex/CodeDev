@@ -304,108 +304,123 @@ export function PromptEditorDialog({ isOpen, onClose, initialData }: PromptEdito
           </div>
           
           {/* Command Options */}
-          {type === 'command' && (
-            <div className="space-y-4 pt-4 border-t border-border/50 animate-in fade-in duration-300">
-              <div className="flex items-center justify-between">
-                  <label htmlFor="executable-toggle" className="flex items-center gap-2 cursor-pointer select-none">
-                      <Terminal size={14} className="text-muted-foreground" />
-                      <div className="flex flex-col">
-                          <span className="font-medium text-sm text-foreground">{getText('editor', 'executable', language)}</span>
-                          <span className="text-xs text-muted-foreground">{getText('editor', 'executableDesc', language)}</span>
+          <AnimatePresence mode="wait">
+             {type === 'command' && (
+                <motion.div
+                   key="command-tab"
+                   variants={tabVariants}
+                   initial="initial"
+                   animate="animate"
+                   exit="exit"
+                   className="space-y-4 pt-4 border-t border-border/50"
+                >
+                   <div className="flex items-center justify-between">
+                      <label htmlFor="executable-toggle" className="flex items-center gap-2 cursor-pointer select-none">
+                         <Terminal size={14} className="text-muted-foreground" />
+                         <div className="flex flex-col">
+                            <span className="font-medium text-sm text-foreground">{getText('editor', 'executable', language)}</span>
+                            <span className="text-xs text-muted-foreground">{getText('editor', 'executableDesc', language)}</span>
+                         </div>
+                      </label>
+                      <div onClick={() => setIsExecutable(!isExecutable)} id="executable-toggle" className={cn( "w-10 h-5 rounded-full relative transition-colors duration-300 cursor-pointer", isExecutable ? "bg-primary" : "bg-slate-300 dark:bg-slate-600" )}>
+                         <div className={cn( "absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 shadow", isExecutable ? "translate-x-5" : "translate-x-0.5" )} />
                       </div>
-                  </label>
-                  <div onClick={() => setIsExecutable(!isExecutable)} id="executable-toggle" className={cn( "w-10 h-5 rounded-full relative transition-colors duration-300 cursor-pointer", isExecutable ? "bg-primary" : "bg-slate-300 dark:bg-slate-600" )}>
-                      <div className={cn( "absolute top-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-300 shadow", isExecutable ? "translate-x-5" : "translate-x-0.5" )} />
-                  </div>
-              </div>
-              
-              {isExecutable && (
-                  <div className="space-y-2 pl-6 animate-in fade-in slide-in-from-top-2 duration-300">
-                      <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{getText('editor', 'execShell', language)}</label>
-                      
-                      <div className="relative">
-                          <button
-                              type="button"
-                              onClick={() => setIsShellOpen(!isShellOpen)}
-                              className={cn(
+                   </div>
+
+                   {isExecutable && (
+                      <motion.div
+                         initial={{ opacity: 0, height: 0 }}
+                         animate={{ opacity: 1, height: "auto" }}
+                         exit={{ opacity: 0, height: 0 }}
+                         transition={{ duration: 0.2 }}
+                         className="space-y-2 pl-6 overflow-hidden"
+                      >
+                         <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{getText('editor', 'execShell', language)}</label>
+
+                         <div className="relative">
+                            <button
+                               type="button"
+                               onClick={() => setIsShellOpen(!isShellOpen)}
+                               className={cn(
                                   "w-full flex items-center justify-between bg-secondary/20 border border-border rounded-lg px-3 py-2.5 text-sm text-left outline-none transition-all",
                                   isShellOpen ? "ring-2 ring-primary/50 border-primary/50" : "hover:border-primary/30"
-                              )}
-                          >
-                              <span>{currentShellLabel}</span>
-                              <ChevronDown size={16} className={cn("text-muted-foreground transition-transform duration-200", isShellOpen && "rotate-180")} />
-                          </button>
+                               )}
+                            >
+                               <span>{currentShellLabel}</span>
+                               <ChevronDown size={16} className={cn("text-muted-foreground transition-transform duration-200", isShellOpen && "rotate-180")} />
+                            </button>
 
-                          {isShellOpen && (
-                              <>
+                            {isShellOpen && (
+                               <>
                                   <div className="fixed inset-0 z-10" onClick={() => setIsShellOpen(false)} />
                                   <div className="absolute top-full left-0 right-0 mt-1.5 bg-popover border border-border rounded-lg shadow-xl z-20 py-1 overflow-hidden animate-in fade-in zoom-in-95 duration-100">
-                                      {SHELL_OPTIONS.map(opt => (
-                                          <button
-                                              key={opt.value}
-                                              type="button"
-                                              onClick={() => {
-                                                  setShellType(opt.value);
-                                                  setIsShellOpen(false);
-                                              }}
-                                              className={cn(
-                                                  "w-full flex items-center justify-between px-3 py-2 text-sm transition-colors text-left",
-                                                  shellType === opt.value 
-                                                      ? "bg-primary/10 text-primary font-medium" 
-                                                      : "text-foreground hover:bg-secondary/50"
-                                              )}
-                                          >
-                                              <span>{opt.value === 'auto' ? getText('editor', 'autoDetect', language) : opt.label}</span>
-                                              {shellType === opt.value && <Check size={14} />}
-                                          </button>
-                                      ))}
+                                     {SHELL_OPTIONS.map(opt => (
+                                        <button
+                                           key={opt.value}
+                                           type="button"
+                                           onClick={() => {
+                                              setShellType(opt.value);
+                                              setIsShellOpen(false);
+                                           }}
+                                           className={cn(
+                                              "w-full flex items-center justify-between px-3 py-2 text-sm transition-colors text-left",
+                                              shellType === opt.value
+                                                 ? "bg-primary/10 text-primary font-medium"
+                                                 : "text-foreground hover:bg-secondary/50"
+                                           )}
+                                        >
+                                           <span>{opt.value === 'auto' ? getText('editor', 'autoDetect', language) : opt.label}</span>
+                                           {shellType === opt.value && <Check size={14} />}
+                                        </button>
+                                     ))}
                                   </div>
-                              </>
-                          )}
-                      </div>
+                               </>
+                            )}
+                         </div>
 
-                      {shellType === 'python' && (
-                          <div className={cn(
-                              "flex items-center gap-2 text-xs px-3 py-2 rounded-lg border transition-all",
-                              pythonStatus.loading ? "bg-secondary/20 border-border text-muted-foreground" :
-                              pythonStatus.available ? "bg-green-500/10 border-green-500/20 text-green-600" :
-                              "bg-red-500/10 border-red-500/20 text-red-500"
-                          )}>
-                              {pythonStatus.loading ? (
+                         {shellType === 'python' && (
+                            <div className={cn(
+                               "flex items-center gap-2 text-xs px-3 py-2 rounded-lg border transition-all",
+                               pythonStatus.loading ? "bg-secondary/20 border-border text-muted-foreground" :
+                                  pythonStatus.available ? "bg-green-500/10 border-green-500/20 text-green-600" :
+                                     "bg-red-500/10 border-red-500/20 text-red-500"
+                            )}>
+                               {pythonStatus.loading ? (
                                   <>
-                                      <Loader2 size={14} className="animate-spin" />
-                                      <span>{getText('common', 'checking', language)}</span>
+                                     <Loader2 size={14} className="animate-spin" />
+                                     <span>{getText('common', 'checking', language)}</span>
                                   </>
-                              ) : pythonStatus.available ? (
+                               ) : pythonStatus.available ? (
                                   <>
-                                      <Check size={14} />
-                                      <span className="font-mono font-medium">{pythonStatus.version}</span>
+                                     <Check size={14} />
+                                     <span className="font-mono font-medium">{pythonStatus.version}</span>
                                   </>
-                              ) : (
+                               ) : (
                                   <>
-                                      <AlertTriangle size={14} />
-                                      <span>Python Not Found</span>
-                                      <button
-                                          onClick={checkPythonEnv}
-                                          className="ml-auto p-1 hover:bg-red-500/10 rounded transition-colors"
-                                          title={getText('monitor', 'refresh', language)}
-                                      >
-                                          <RefreshCw size={12} />
-                                      </button>
+                                     <AlertTriangle size={14} />
+                                     <span>Python Not Found</span>
+                                     <button
+                                        onClick={checkPythonEnv}
+                                        className="ml-auto p-1 hover:bg-red-500/10 rounded transition-colors"
+                                        title={getText('monitor', 'refresh', language)}
+                                     >
+                                        <RefreshCw size={12} />
+                                     </button>
                                   </>
-                              )}
-                          </div>
-                      )}
+                               )}
+                            </div>
+                         )}
 
-                      <p className="text-[10px] text-muted-foreground/70">
-                          {shellType === 'python'
-                              ? "Runs code in an isolated .py file with UTF-8 encoding."
-                              : getText('patch', 'autoRecommended', language)}
-                      </p>
-                  </div>
-              )}
-            </div>
-          )}
+                         <p className="text-[10px] text-muted-foreground/70">
+                            {shellType === 'python'
+                               ? "Runs code in an isolated .py file with UTF-8 encoding."
+                               : getText('patch', 'autoRecommended', language)}
+                         </p>
+                      </motion.div>
+                   )}
+                </motion.div>
+             )}
+          </AnimatePresence>
 
           <div className="space-y-2 pt-4 border-t border-border/50">
             <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider flex items-center gap-1.5"> <FileText size={14} /> {getText('editor', 'labelContent', language)} </label>
