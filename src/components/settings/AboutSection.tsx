@@ -8,7 +8,7 @@ import { useAppStore } from '@/store/useAppStore';
 import { getText } from '@/lib/i18n';
 import { useUsageGuide } from './hooks/useUsageGuide';
 import { CodeBlock } from '@/components/ui/CodeBlock';
-import iconUrl from '../../../src-tauri/icons/64x64.png';
+import iconUrl from '../../../src-tauri/icons/128x128.png';
 
 const REPO_URL = "https://github.com/WinriseF/CtxRun";
 
