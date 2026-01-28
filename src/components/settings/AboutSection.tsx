@@ -7,7 +7,7 @@ import { Github, Loader2, FileText, AlertCircle, ExternalLink } from 'lucide-rea
 import { useAppStore } from '@/store/useAppStore';
 import { getText } from '@/lib/i18n';
 import { useUsageGuide } from './hooks/useUsageGuide';
-import iconUrl from '../../../images/logo.png';
+import iconUrl from '../../../src-tauri/icons/64x64.png';
 
 const REPO_URL = "https://github.com/WinriseF/CtxRun";
 
