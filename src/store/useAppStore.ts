@@ -9,6 +9,7 @@ import { fetchFromMirrors, MODEL_MIRROR_BASES } from '@/lib/network';
 export type AppView = 'prompts' | 'context' | 'patch';
 export type AppTheme = 'dark' | 'light';
 export type AppLang = 'en' | 'zh';
+export type SearchEngineType = 'google' | 'bing' | 'baidu' | 'custom';
 
 export const DEFAULT_MODELS: AIModelConfig[] = [
   {
@@ -77,6 +78,11 @@ interface AppState {
   aiConfig: AIProviderConfig;
   savedProviderSettings: Record<string, AIProviderSetting>;
 
+  searchSettings: {
+    defaultEngine: SearchEngineType;
+    customUrl: string;
+  };
+
   setView: (view: AppView) => void;
   toggleSidebar: () => void;
   setSettingsOpen: (open: boolean) => void;
@@ -90,6 +96,7 @@ interface AppState {
   setAIConfig: (config: Partial<AIProviderConfig>) => void;
   setSpotlightShortcut: (shortcut: string) => void;
   setRestReminder: (config: Partial<RestReminderConfig>) => void;
+  setSearchSettings: (config: Partial<AppState['searchSettings']>) => void;
   syncModels: () => Promise<void>;
   resetModels: () => void;
   setSpotlightAppearance: (config: Partial<SpotlightAppearance>) => void;
@@ -121,6 +128,10 @@ export const useAppStore = create<AppState>()(
       lastUpdated: 0,
 
       spotlightAppearance: { width: 640, defaultHeight: 400, maxChatHeight: 600 },
+      searchSettings: {
+        defaultEngine: 'google',
+        customUrl: 'https://search.bilibili.com/all?keyword=%s'
+      },
       setSpotlightAppearance: (config) => set((state) => ({
         spotlightAppearance: { ...state.spotlightAppearance, ...config }
       })),
@@ -182,6 +193,9 @@ export const useAppStore = create<AppState>()(
           savedProviderSettings: newSavedSettings
         };
       }),
+      setSearchSettings: (config) => set((state) => ({
+        searchSettings: { ...state.searchSettings, ...config }
+      })),
       setLanguage: (language) => set({ language }),
       updateGlobalIgnore: (type, action, value) => set((state) => {
         const currentList = state.globalIgnore[type];
@@ -264,7 +278,8 @@ export const useAppStore = create<AppState>()(
         aiConfig: state.aiConfig,
         savedProviderSettings: state.savedProviderSettings,
         spotlightAppearance: state.spotlightAppearance,
-        restReminder: state.restReminder
+        restReminder: state.restReminder,
+        searchSettings: state.searchSettings
       }),
     }
   )

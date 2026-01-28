@@ -265,7 +265,17 @@ const translations = {
       rule: "Rule ID",
       addedAt: "Added At",
       noIgnored: "No ignored secrets yet.",
-      confirmDeleteSecret: "Remove from whitelist? It will be detected again in future scans."
+      confirmDeleteSecret: "Remove from whitelist? It will be detected again in future scans.",
+      navSearch: "Search",
+      searchTitle: "Search Engine Settings",
+      searchDesc: "Configure the engines for Spotlight Web Search (triggered by ?).",
+      defaultEngine: "Default Engine",
+      customUrlLabel: "Custom Search URL",
+      customUrlTip: "Use %s as a placeholder for your query. Example: https://search.bilibili.com/all?keyword=%s",
+      engineGoogle: "Google",
+      engineBing: "Bing",
+      engineBaidu: "Baidu",
+      engineCustom: "Custom"
     },
     library: {
       title: "Official Library",
@@ -787,7 +797,17 @@ const translations = {
       rule: "规则 ID",
       addedAt: "添加时间",
       noIgnored: "暂无忽略记录。",
-      confirmDeleteSecret: "确定从白名单移除？移除后下次扫描将再次报警。"
+      confirmDeleteSecret: "确定从白名单移除？移除后下次扫描将再次报警。",
+      navSearch: "搜索设置",
+      searchTitle: "搜索引擎配置",
+      searchDesc: "配置 Spotlight 网络搜索（使用 ? 触发）时使用的引擎。",
+      defaultEngine: "默认搜索引擎",
+      customUrlLabel: "自定义搜索地址",
+      customUrlTip: "使用 %s 作为关键词占位符。例如：https://search.bilibili.com/all?keyword=%s",
+      engineGoogle: "谷歌",
+      engineBing: "必应",
+      engineBaidu: "百度",
+      engineCustom: "自定义"
     },
     library: {
       title: "官方指令库",

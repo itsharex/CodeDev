@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { X, Monitor, Moon, Sun, Languages, Check, Filter, DownloadCloud, Bot, Bell, Database, Upload, Download, FileSpreadsheet, AlertTriangle, FolderCog, Shield, RefreshCw, AppWindow, Edit3, Info } from 'lucide-react';
+import { X, Monitor, Moon, Sun, Languages, Check, Filter, DownloadCloud, Bot, Bell, Database, Upload, Download, FileSpreadsheet, AlertTriangle, FolderCog, Shield, RefreshCw, AppWindow, Edit3, Info, Search as SearchIcon } from 'lucide-react';
 import { save, open } from '@tauri-apps/plugin-dialog';
 import { invoke } from '@tauri-apps/api/core';
 import { useAppStore } from '@/store/useAppStore';
@@ -23,12 +23,13 @@ export function SettingsModal() {
     renameAIProvider,
     spotlightShortcut, setSpotlightShortcut,
     restReminder, setRestReminder,
-    spotlightAppearance, setSpotlightAppearance
+    spotlightAppearance, setSpotlightAppearance,
+    searchSettings, setSearchSettings
   } = useAppStore();
 
   const { loadPrompts, refreshGroups, refreshCounts } = usePromptStore();
 
-  const [activeSection, setActiveSection] = useState<'appearance' | 'language' | 'filters' | 'library' | 'ai' | 'data' | 'security' | 'about'>('appearance');
+  const [activeSection, setActiveSection] = useState<'appearance' | 'language' | 'filters' | 'library' | 'ai' | 'data' | 'security' | 'about' | 'search'>('appearance');
   const [importStatus, setImportStatus] = useState<string>('');
   const [isScanningApps, setIsScanningApps] = useState(false);
 
@@ -193,6 +194,7 @@ export function SettingsModal() {
             <div className="w-40 bg-secondary/5 border-r border-border p-2 space-y-1 overflow-y-auto custom-scrollbar shrink-0">
                 <NavBtn active={activeSection === 'appearance'} onClick={() => setActiveSection('appearance')} icon={<Monitor size={14} />} label={getText('settings', 'navAppearance', language)}  />
                 <NavBtn active={activeSection === 'language'} onClick={() => setActiveSection('language')} icon={<Languages size={14} />} label={getText('settings', 'navLanguage', language)} />
+                <NavBtn active={activeSection === 'search'} onClick={() => setActiveSection('search')} icon={<SearchIcon size={14} />} label={getText('settings', 'navSearch', language)} />
                 <NavBtn active={activeSection === 'ai'} onClick={() => setActiveSection('ai')} icon={<Bot size={14} />} label={getText('settings', 'navAI', language)} />
                 <NavBtn active={activeSection === 'security'} onClick={() => setActiveSection('security')} icon={<Shield size={14} />} label={getText('settings', 'navSecurity', language)} />
                 <div className="my-2 h-px bg-border/50 mx-2" />
@@ -356,6 +358,59 @@ export function SettingsModal() {
                             <LangItem active={language === 'en'} onClick={() => setLanguage('en')} label={getText('settings', 'langEn', language)} subLabel={getText('settings', 'langSubLabelEn', language)} />
                         </div>
                      </div>
+                )}
+
+                {activeSection === 'search' && (
+                    <div className="p-6 space-y-6 animate-in fade-in slide-in-from-right-4 duration-200 overflow-y-auto custom-scrollbar">
+                        <div>
+                            <h3 className="text-sm font-medium text-foreground">{getText('settings', 'searchTitle', language)}</h3>
+                            <p className="text-xs text-muted-foreground mt-1">{getText('settings', 'searchDesc', language)}</p>
+                        </div>
+
+                        <div className="space-y-3">
+                            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{getText('settings', 'defaultEngine', language)}</label>
+                            <div className="grid grid-cols-2 gap-3">
+                                <ThemeCard
+                                    active={searchSettings.defaultEngine === 'google'}
+                                    onClick={() => setSearchSettings({ defaultEngine: 'google' })}
+                                    icon={<SearchIcon size={24} className="text-blue-500" />}
+                                    label={getText('settings', 'engineGoogle', language)}
+                                />
+                                <ThemeCard
+                                    active={searchSettings.defaultEngine === 'bing'}
+                                    onClick={() => setSearchSettings({ defaultEngine: 'bing' })}
+                                    icon={<SearchIcon size={24} className="text-cyan-500" />}
+                                    label={getText('settings', 'engineBing', language)}
+                                />
+                                <ThemeCard
+                                    active={searchSettings.defaultEngine === 'baidu'}
+                                    onClick={() => setSearchSettings({ defaultEngine: 'baidu' })}
+                                    icon={<SearchIcon size={24} className="text-blue-700" />}
+                                    label={getText('settings', 'engineBaidu', language)}
+                                />
+                                <ThemeCard
+                                    active={searchSettings.defaultEngine === 'custom'}
+                                    onClick={() => setSearchSettings({ defaultEngine: 'custom' })}
+                                    icon={<SearchIcon size={24} className="text-purple-500" />}
+                                    label={getText('settings', 'engineCustom', language)}
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2 pt-4 border-t border-border/50">
+                            <label className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{getText('settings', 'customUrlLabel', language)}</label>
+                            <input
+                                type="text"
+                                className="w-full bg-secondary/30 border border-border rounded-lg px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-primary/20 transition-all font-mono"
+                                placeholder="https://..."
+                                value={searchSettings.customUrl}
+                                onChange={e => setSearchSettings({ customUrl: e.target.value })}
+                            />
+                            <p className="text-[10px] text-muted-foreground leading-relaxed italic">
+                                {getText('settings', 'customUrlTip', language)}
+                            </p>
+                        </div>
+                    </div>
                 )}
 
                 {activeSection === 'filters' && (

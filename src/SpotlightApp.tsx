@@ -121,6 +121,7 @@ function SpotlightContent() {
     if (item.type === 'web_search' && item.url) {
         try {
             await open(item.url);
+            invoke('record_url_visit', { url: item.url }).catch(console.error);
             await appWindow.hide();
             setQuery('');
         } catch (e) {

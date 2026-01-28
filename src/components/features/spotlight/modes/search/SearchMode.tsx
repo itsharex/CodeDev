@@ -87,7 +87,7 @@ export function SearchMode({ results, selectedIndex, setSelectedIndex, onSelect,
   const getActionLabel = (item: SpotlightItem) => {
     if (item.type === 'url') return getText('spotlight', 'openLink', language);
     if (item.type === 'app') return getText('spotlight', 'openApp', language);
-    if (item.type === 'web_search') return "Search Google";
+    if (item.type === 'web_search') return "Search";
     if (item.type === 'shell' || item.isExecutable) return getText('actions', 'run', language);
     if (item.type === 'shell_history') return getText('actions', 'run', language);
     if (item.type === 'math') return getText('spotlight', 'copyResult', language) || "Copy";

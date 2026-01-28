@@ -5,6 +5,8 @@ import { SpotlightItem } from '@/types/spotlight';
 import { useSpotlight } from '../core/SpotlightContext';
 import { getText } from '@/lib/i18n';
 import { evaluateMath } from '@/lib/calculator';
+import { Search, Globe, Compass, Link } from 'lucide-react';
+import { useAppStore } from '@/store/useAppStore';
 
 interface AppEntry {
   name: string;
@@ -51,8 +53,16 @@ interface ShellHistoryEntry {
   execution_count: number;
 }
 
+const SEARCH_TEMPLATES: Record<string, { name: string; url: string; color: string }> = {
+  google: { name: 'Google', url: 'https://www.google.com/search?q=%s', color: 'bg-blue-600' },
+  bing: { name: 'Bing', url: 'https://www.bing.com/search?q=%s', color: 'bg-cyan-600' },
+  baidu: { name: 'Baidu', url: 'https://www.baidu.com/s?wd=%s', color: 'bg-blue-700' },
+  custom: { name: 'Custom', url: '', color: 'bg-purple-600' },
+};
+
 export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
   const { query, mode, searchScope } = useSpotlight();
+  const { searchSettings } = useAppStore();
   const debouncedQuery = useDebounce(query, 100);
 
   const [results, setResults] = useState<SpotlightItem[]>([]);
@@ -60,8 +70,6 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (mode !== 'search') return;
-
     const performSearch = async () => {
       const q = debouncedQuery.trim();
 
@@ -138,14 +146,43 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
               setResults([]);
               return;
           }
-          setResults([{
-              id: 'web-search-item',
-              title: `Search Google: ${q}`,
-              description: "Open in default browser",
-              content: q,
-              type: 'web_search',
-              url: `https://www.google.com/search?q=${encodeURIComponent(q)}`
-          }]);
+
+          const { defaultEngine, customUrl } = searchSettings;
+
+          const baseOrder: ('google' | 'bing' | 'custom' | 'baidu')[] = ['google', 'bing', 'custom', 'baidu'];
+
+          const sortedEngines = [
+              defaultEngine,
+              ...baseOrder.filter(e => e !== defaultEngine)
+          ];
+
+          const webItems: SpotlightItem[] = sortedEngines.map(key => {
+              const config = SEARCH_TEMPLATES[key];
+              const template = key === 'custom' ? customUrl : config.url;
+
+              const finalUrl = template.includes('%s')
+                ? template.replace('%s', encodeURIComponent(q))
+                : `${template}${encodeURIComponent(q)}`;
+
+              let Icon;
+              switch (key) {
+                  case 'google': Icon = Search; break;
+                  case 'bing': Icon = Compass; break;
+                  case 'baidu': Icon = Globe; break;
+                  default: Icon = Link;
+              }
+
+              return {
+                  id: `web-search-${key}`,
+                  title: `Search ${config.name}: ${q}`,
+                  description: key === 'custom' ? `Custom: ${template.substring(0, 30)}...` : `Open in default browser`,
+                  content: q,
+                  type: 'web_search',
+                  url: finalUrl
+              };
+          });
+
+          setResults(webItems);
           setSelectedIndex(0);
           setIsLoading(false);
           return;
@@ -254,7 +291,7 @@ export function useSpotlightSearch(language: 'zh' | 'en' = 'en') {
     };
 
     performSearch();
-  }, [debouncedQuery, mode, searchScope, language]);
+  }, [debouncedQuery, mode, searchScope, searchSettings, language]);
 
   const handleNavigation = useCallback((e: KeyboardEvent) => {
     if (mode !== 'search') return;
