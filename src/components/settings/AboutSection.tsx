@@ -7,6 +7,7 @@ import { Github, Loader2, FileText, AlertCircle, ExternalLink } from 'lucide-rea
 import { useAppStore } from '@/store/useAppStore';
 import { getText } from '@/lib/i18n';
 import { useUsageGuide } from './hooks/useUsageGuide';
+import iconUrl from '../../../images/logo.png';
 
 const REPO_URL = "https://github.com/WinriseF/CtxRun";
 
@@ -24,9 +25,7 @@ export function AboutSection() {
 
       {/* Header Info */}
       <div className="flex flex-col items-center justify-center py-6 shrink-0 border-b border-border/50 bg-secondary/5">
-        <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg mb-3">
-           <span className="text-white font-bold text-2xl tracking-tighter">CR</span>
-        </div>
+        <img src={iconUrl} alt="CtxRun" className="w-16 h-16 rounded-2xl shadow-lg mb-3" />
         <h2 className="text-xl font-bold text-foreground tracking-tight">CtxRun</h2>
         <div className="flex items-center gap-2 mt-1">
             <span className="text-xs font-mono text-muted-foreground bg-secondary px-2 py-0.5 rounded-full border border-border">
