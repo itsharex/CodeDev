@@ -17,6 +17,55 @@
 
 ## Version History
 
+### v1.3.9 (2026-01-28)
+
+| Commit Hash | Change | Description |
+|-------------|--------|-------------|
+| `5b053ac` | **Add HyperView Preview** | New file preview feature supporting multiple formats |
+| `d134c7c` | **Database Structure Optimization** | Split db.rs into modular structure |
+| `4c5575d` | **Style Optimization** | Markdown renderer style improvements |
+| `abb77f6` | **Code Cleanup** | Remove ContextView redundant code |
+| `3190d8c` | **Editor Optimization** | Prompt editor interaction improvements |
+| `5b71c4f` | **Animation Optimization** | Editor dialog animation smoothness enhancement |
+| `d500168` | Release 1.3.9 | Version release |
+
+**v1.3.9 HyperView Preview Feature File Changes**:
+```
+src-tauri/src/hyperview/mod.rs                    | +12  module entry
+src-tauri/src/hyperview/protocol.rs               | +75  protocol handling
+src-tauri/src/hyperview/sniffer.rs                | +99  file sniffer
+src/components/features/hyperview/PreviewModal.tsx | +91  preview modal
+src/components/features/hyperview/renderers/*.tsx | +196 multi-format renderers
+src/components/features/context/ContextView.tsx   | +63  context view integration
+src/components/features/context/FileTreeNode.tsx  | +33  file tree node
+src/store/usePreviewStore.ts                      | +37  preview state management
+src/types/hyperview.ts                            | +18  type definitions
+```
+
+**v1.3.9 Database Structure Optimization File Changes**:
+```
+src-tauri/src/db.rs              | -1338 split refactor
+src-tauri/src/db/mod.rs          | +17   module export
+src-tauri/src/db/init.rs         | +139  initialization logic
+src-tauri/src/db/models.rs       | +110  data models
+src-tauri/src/db/apps.rs         | +98   apps related
+src-tauri/src/db/prompts.rs      | +555  prompts related
+src-tauri/src/db/project_config.rs | +132 project config
+src-tauri/src/db/secrets.rs      | +78   secrets related
+src-tauri/src/db/shell_history.rs | +124  shell history
+src-tauri/src/db/url_history.rs  | +155  URL history
+```
+
+**Key Updates**:
+- 🖼️ **HyperView File Preview**: New file preview system supporting Markdown, code, images, binary, and more
+- 🔍 **Smart File Sniffing**: Auto-detect file types and select appropriate renderers
+- 📂 **Context Integration**: File tree nodes now have preview button for quick content viewing
+- 🗄️ **Database Modularization**: Split single-file db.rs into 9 module files, improving code maintainability
+- 🎨 **Style Optimization**: Markdown renderer improvements with better syntax highlighting and typography
+- ⚡ **Editor Enhancement**: Prompt editor animation and interaction experience optimization
+
+---
+
 ### v1.3.8 (2026-01-26)
 
 | Commit Hash | Change | Description |
@@ -658,5 +707,5 @@ ctxrun/
 
 ---
 
-*Document last updated: 2026-01-25*
+*Document last updated: 2026-01-28*
 *Compiled based on git commit history and code diff analysis*
