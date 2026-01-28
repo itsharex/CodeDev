@@ -8,8 +8,6 @@ const translations = {
       prompts: "Prompt Verse",
       context: "Context Forge",
       patch: "Patch Weaver",
-      memos: "Memos",
-      files: "File Transfer",
       settings: "Settings"
     },
     sidebar: {
@@ -525,8 +523,6 @@ const translations = {
       prompts: "提词库",
       context: "文件整合",
       patch: "代码对比",
-      memos: "备忘录",
-      files: "文件传输",
       settings: "设置"
     },
     sidebar: {
