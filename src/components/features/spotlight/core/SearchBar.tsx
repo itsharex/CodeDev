@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search as SearchIcon, Bot, Zap, AppWindow, Terminal, Sparkles, X, MessageSquare, CornerDownRight, Calculator, Globe } from 'lucide-react';
+import { Search as SearchIcon, Bot, Zap, AppWindow, Terminal, Sparkles, X, MessageSquare, CornerDownRight, Calculator } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/store/useAppStore';
 import { useSpotlight } from './SpotlightContext';
@@ -9,6 +9,7 @@ import { ChatCommandMenu } from './ChatCommandMenu';
 import { Prompt } from '@/types/prompt';
 import { usePromptStore } from '@/store/usePromptStore';
 import { SearchScope } from '@/types/spotlight';
+import { SearchEngineIcon } from '@/components/ui/SearchEngineIcon';
 
 interface SearchBarProps {
   onKeyDown?: (e: React.KeyboardEvent) => void;
@@ -20,7 +21,7 @@ export function SearchBar({ onKeyDown }: SearchBarProps) {
     setQuery, setChatInput, toggleMode, inputRef, setSearchScope, setActiveTemplate
   } = useSpotlight();
 
-  const { language, aiConfig, setAIConfig, savedProviderSettings } = useAppStore();
+  const { language, aiConfig, setAIConfig, savedProviderSettings, searchSettings } = useAppStore();
   const { chatTemplates } = usePromptStore();
 
   const [menuSelectedIndex, setMenuSelectedIndex] = useState(0);
@@ -37,12 +38,6 @@ export function SearchBar({ onKeyDown }: SearchBarProps) {
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
-
-    if (searchScope !== 'global' && inputValue === '' && e.nativeEvent instanceof InputEvent && e.nativeEvent.inputType === 'deleteContentBackward') {
-        setSearchScope('global');
-        setQuery('');
-        return;
-    }
 
     if (mode === 'search' && searchScope === 'global') {
       const match = inputValue.match(/^([=]|>|》|\?|？)/);
@@ -198,9 +193,11 @@ export function SearchBar({ onKeyDown }: SearchBarProps) {
                 bgColor = 'bg-slate-500/10'; textColor = 'text-foreground'; borderColor = 'border-slate-500/20';
                 break;
             case 'web':
-                IconComponent = Globe;
-                bgColor = 'bg-blue-500/10'; textColor = 'text-blue-500'; borderColor = 'border-blue-500/20';
-                break;
+                return (
+                    <div className="flex items-center justify-center w-8 h-8 rounded-md bg-blue-500/10 text-blue-500 border border-blue-500/20 animate-in zoom-in-95">
+                        <SearchEngineIcon engine={searchSettings.defaultEngine} size={18} />
+                    </div>
+                );
             default: return null;
         }
 
