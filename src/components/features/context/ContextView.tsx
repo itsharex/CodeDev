@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import { useContextStore } from '@/store/useContextStore';
 import { useAppStore, DEFAULT_MODELS } from '@/store/useAppStore';
+import { usePreviewStore } from '@/store/usePreviewStore';
 import { scanProject } from '@/lib/fs_helper';
 import { calculateIdealTreeWidth, flattenTree } from '@/lib/tree_utils';
 import { getSelectedPaths, generateHeader } from '@/lib/context_assembler';
@@ -41,11 +42,12 @@ interface RowProps {
     items: FlatNode[];
     onToggleSelect: (id: string, checked: boolean) => void;
     onToggleExpand: (id: string) => void;
+    onPreview?: (path: string) => void;
   };
 }
 
 const Row = memo(function Row({ index, style, data }: RowProps) {
-  const { items, onToggleSelect, onToggleExpand } = data;
+  const { items, onToggleSelect, onToggleExpand, onPreview } = data;
   const item = items[index];
 
   return (
@@ -57,6 +59,7 @@ const Row = memo(function Row({ index, style, data }: RowProps) {
       style={style}
       onToggleSelect={onToggleSelect}
       onToggleExpand={onToggleExpand}
+      onPreview={onPreview}
     />
   );
 });
@@ -71,12 +74,14 @@ export function ContextView() {
     expandedIds, toggleExpand
   } = useContextStore();
 
-  const { 
+  const {
     isContextSidebarOpen, setContextSidebarOpen,
     contextSidebarWidth, setContextSidebarWidth,
     globalIgnore,
     models, language
-  } = useAppStore(); 
+  } = useAppStore();
+
+  const { openPreview } = usePreviewStore();
 
   const [pathInput, setPathInput] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
@@ -133,8 +138,9 @@ export function ContextView() {
   const rowData = useMemo(() => ({
     items: flatData,
     onToggleSelect: toggleSelect,
-    onToggleExpand: toggleExpand
-  }), [flatData, toggleSelect, toggleExpand]);
+    onToggleExpand: toggleExpand,
+    onPreview: openPreview
+  }), [flatData, toggleSelect, toggleExpand, openPreview]);
 
   const triggerToast = (msg: string, type: ToastType = 'success') => {
     setToastState({ show: true, msg, type });
