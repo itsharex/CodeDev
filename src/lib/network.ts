@@ -12,6 +12,12 @@ export const MODEL_MIRROR_BASES = [
   'https://raw.githubusercontent.com/WinriseF/CtxRun/main/'
 ];
 
+export const REPOSITORY_MIRROR_BASES = [
+  'https://gitee.com/winriseF/models/raw/master/',
+  'https://cdn.jsdelivr.net/gh/WinriseF/CtxRun@main/',
+  'https://raw.githubusercontent.com/WinriseF/CtxRun/main/'
+];
+
 export interface MirrorOptions<T> {
   path: string;
   cacheBust?: boolean;
