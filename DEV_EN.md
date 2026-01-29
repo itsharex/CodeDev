@@ -17,6 +17,43 @@
 
 ## Version History
 
+### v1.4.1 (2026-01-29)
+
+| Commit Hash | Change | Description |
+|-------------|--------|-------------|
+| `f176194` | **Optimize Reminder** | Rest reminder logic migrated to Rust backend |
+| `6ecf718` | **Optimize Memory Usage** | Window lifecycle management, auto-destroy hidden windows |
+| `7108081` | **Data Update** | Auto-sync prompts library |
+
+**v1.4.1 Reminder System Optimization File Changes**:
+```
+src-tauri/src/scheduler.rs               | +98  new scheduler module
+src-tauri/src/main.rs                    | +6   state management integration
+src/App.tsx                              | -56 +3 frontend logic simplification
+src/components/settings/AboutSection.tsx | +-2  version update
+```
+
+**v1.4.1 Memory Optimization File Changes**:
+```
+src-tauri/src/main.rs                     | +118 -48 window lifecycle refactor
+src/App.tsx                               | -33    remove shortcut registration
+src/SpotlightApp.tsx                      | +35    shortcut registration migration
+src/components/layout/TitleBar.tsx        | +-9    close button optimization
+src/components/settings/SettingsModal.tsx | +65    add auto-destroy settings
+src/lib/i18n.ts                           | +8     new i18n entries
+src/store/useAppStore.ts                  | +7     new state fields
+```
+
+**Key Updates**:
+- ⏰ **Backend Scheduler**: New `scheduler.rs` module, rest reminder logic migrated from frontend to Rust backend
+- 🔔 **System-level Notifications**: Use `tauri-plugin-notification` for native system notifications
+- 💾 **Memory Optimization**: Hidden windows auto-destroy after delay, freeing memory resources
+- ⚙️ **Configurable Delay**: Support configurable window auto-destroy delay in settings (30s-30min)
+- 🎯 **Architecture Optimization**: Spotlight shortcut registration migrated from `App.tsx` to `SpotlightApp.tsx`
+- 🔒 **Exit Handling**: Improved app exit flow, prevent tray residue
+
+---
+
 ### v1.4.0 (2026-01-28)
 
 | Commit Hash | Change | Description |
@@ -736,5 +773,5 @@ ctxrun/
 
 ---
 
-*Document last updated: 2026-01-28*
+*Document last updated: 2026-01-29*
 *Compiled based on git commit history and code diff analysis*

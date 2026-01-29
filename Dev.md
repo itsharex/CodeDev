@@ -17,6 +17,43 @@
 
 ## 版本历史
 
+### v1.4.1 (2026-01-29)
+
+| 提交哈希 | 变更内容 | 详细说明 |
+|---------|---------|---------|
+| `f176194` | **优化提醒** | 休息提醒逻辑迁移至 Rust 后端 |
+| `6ecf718` | **优化内存占用** | 窗口生命周期管理，自动销毁隐藏窗口 |
+| `7108081` | **数据更新** | 自动同步提示词库 |
+
+**v1.4.1 提醒系统优化文件变更**:
+```
+src-tauri/src/scheduler.rs               | +98  新增调度器模块
+src-tauri/src/main.rs                    | +6   状态管理集成
+src/App.tsx                              | -56 +3 前端逻辑简化
+src/components/settings/AboutSection.tsx | +-2  版本号更新
+```
+
+**v1.4.1 内存优化文件变更**:
+```
+src-tauri/src/main.rs                     | +118 -48 窗口生命周期重构
+src/App.tsx                               | -33    移除快捷键注册逻辑
+src/SpotlightApp.tsx                      | +35    快捷键注册迁移
+src/components/layout/TitleBar.tsx        | +-9    关闭按钮优化
+src/components/settings/SettingsModal.tsx | +65    新增自动销毁设置
+src/lib/i18n.ts                           | +8     新增国际化词条
+src/store/useAppStore.ts                  | +7     新增状态字段
+```
+
+**主要更新**:
+- ⏰ **后端调度器**: 新增 `scheduler.rs` 模块，休息提醒逻辑从前端迁移至 Rust 后端
+- 🔔 **系统级通知**: 使用 `tauri-plugin-notification` 发送系统原生通知
+- 💾 **内存优化**: 隐藏的窗口在延迟后自动销毁，释放内存资源
+- ⚙️ **可配置延迟**: 支持在设置中配置窗口自动销毁延迟时间（30秒-30分钟）
+- 🎯 **架构优化**: Spotlight 快捷键注册从 `App.tsx` 迁移至 `SpotlightApp.tsx`
+- 🔒 **退出处理**: 改进应用退出流程，防止托盘残留
+
+---
+
 ### v1.4.0 (2026-01-28)
 
 | 提交哈希 | 变更内容 | 详细说明 |
@@ -736,5 +773,5 @@ ctxrun/
 
 ---
 
-*文档最后更新: 2026-01-28*
+*文档最后更新: 2026-01-29*
 *基于 git 提交历史和代码 diff 分析编写*
