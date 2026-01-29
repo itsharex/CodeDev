@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
+import { invoke } from '@tauri-apps/api/core';
 import { Minus, Square, X, Maximize2, Clock } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAppStore } from '@/store/useAppStore';
@@ -12,7 +13,7 @@ export function TitleBar() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [isClockPopoverOpen, setIsClockPopoverOpen] = useState(false);
   const clockTriggerRef = useRef<HTMLDivElement>(null);
-  const { language } = useAppStore();
+  const { language, windowDestroyDelay } = useAppStore();
 
   useEffect(() => {
     const checkMaximized = async () => { setIsMaximized(await appWindow.isMaximized()); };
@@ -42,6 +43,10 @@ export function TitleBar() {
       minute: '2-digit',
       hour12: false
     }).format(date);
+  };
+
+  const handleHide = () => {
+    invoke('hide_main_window', { delaySecs: windowDestroyDelay }).catch(console.error);
   };
 
   const btnClass = "h-full w-10 flex items-center justify-center text-muted-foreground hover:bg-secondary hover:text-foreground transition-colors";
@@ -78,7 +83,7 @@ export function TitleBar() {
       <div className="flex h-full">
         <button onClick={() => appWindow.minimize()} className={btnClass}><Minus size={14} /></button>
         <button onClick={toggleMaximize} className={btnClass}>{isMaximized ? <Maximize2 size={12} /> : <Square size={12} />}</button>
-        <button onClick={() => appWindow.hide()} className={cn(btnClass, "hover:bg-destructive hover:text-destructive-foreground")}><X size={14} /></button>
+        <button onClick={handleHide} className={cn(btnClass, "hover:bg-destructive hover:text-destructive-foreground")}><X size={14} /></button>
       </div>
     </div>
   );

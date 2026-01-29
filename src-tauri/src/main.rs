@@ -8,15 +8,18 @@ use std::process::Command;
 use std::sync::{Arc, Mutex};
 #[cfg(target_os = "windows")]
 use std::os::windows::process::CommandExt;
+use std::time::Duration;
 
 use sysinfo::{System, RefreshKind, CpuRefreshKind, MemoryRefreshKind};
 #[cfg(target_os = "windows")]
 use windows::Win32::System::Threading::CREATE_NO_WINDOW;
 use tauri::{
+    AppHandle, Manager, State, WebviewUrl, WebviewWindow, WebviewWindowBuilder,
     menu::{Menu, MenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
-    Manager, State, WindowEvent,
+    RunEvent, WindowEvent,
 };
+use tokio::time::sleep;
 
 mod git;
 mod export;
@@ -27,6 +30,59 @@ mod env_probe;
 mod apps;
 mod context;
 mod hyperview;
+
+const MAIN_WINDOW_LABEL: &str = "main";
+
+fn ensure_main_window(app: &AppHandle) {
+    if let Some(window) = app.get_webview_window(MAIN_WINDOW_LABEL) {
+        let _ = window.unminimize();
+        let _ = window.show();
+        let _ = window.set_focus();
+    } else {
+        let window_builder = WebviewWindowBuilder::new(
+            app,
+            MAIN_WINDOW_LABEL,
+            WebviewUrl::App("index.html".into())
+        )
+        .title("CtxRun")
+        .inner_size(800.0, 600.0)
+        .center()
+        .decorations(false)
+        .transparent(true)
+        .shadow(false)
+        .resizable(true)
+        .visible(true);
+
+        match window_builder.build() {
+            Ok(w) => {
+                let _ = w.set_focus();
+            }
+            Err(e) => eprintln!("Failed to recreate main window: {}", e),
+        }
+    }
+}
+
+#[tauri::command]
+async fn hide_main_window(app: AppHandle, window: WebviewWindow, delay_secs: u64) -> Result<(), String> {
+    window.hide().map_err(|e| e.to_string())?;
+
+    let app_handle = app.clone();
+    let window_label = window.label().to_string();
+
+    tauri::async_runtime::spawn(async move {
+        sleep(Duration::from_secs(delay_secs)).await;
+
+        if let Some(w) = app_handle.get_webview_window(&window_label) {
+            let is_visible = w.is_visible().unwrap_or(true);
+
+            if !is_visible {
+                let _ = w.close();
+            }
+        }
+    });
+
+    Ok(())
+}
 
 #[derive(serde::Serialize)]
 struct SystemInfo {
@@ -175,14 +231,11 @@ fn main() {
         .plugin(tauri_plugin_notification::init())
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_single_instance::init(|app, _argv, _cwd| {
-            if let Some(window) = app.get_webview_window("main") {
-                let _ = window.unminimize();
-                let _ = window.show();
-                let _ = window.set_focus();
-            }
+            ensure_main_window(app);
         }))
         .register_uri_scheme_protocol("preview", hyperview::protocol::preview_protocol_handler)
         .invoke_handler(tauri::generate_handler![
+            hide_main_window,
             greet,
             get_file_size,
             get_system_info,
@@ -261,22 +314,17 @@ fn main() {
                 })
                 .menu(&menu)
                 .show_menu_on_left_click(false)
-                .on_menu_event(|app, event| match event.id().as_ref() {
-                    "quit" => app.exit(0),
+                .on_menu_event(|_app, event| match event.id().as_ref() {
+                    "quit" => {
+                        std::process::exit(0);
+                    },
                     _ => {}
                 })
                 .on_tray_icon_event(|tray, event| match event {
                     TrayIconEvent::Click {
                         button: MouseButton::Left, ..
                     } => {
-                        let app = tray.app_handle();
-                        if let Some(window) = app.get_webview_window("main") {
-                            if window.is_minimized().unwrap_or(false) {
-                                let _ = window.unminimize();
-                            }
-                            let _ = window.show();
-                            let _ = window.set_focus();
-                        }
+                        ensure_main_window(tray.app_handle());
                     }
                     _ => {}
                 })
@@ -284,16 +332,40 @@ fn main() {
             Ok(())
         })
         .on_window_event(|window, event| match event {
-            WindowEvent::CloseRequested { api: _api, .. } => {
-                let _label = window.label();
-                #[cfg(not(dev))]
-                if _label == "main" || _label == "spotlight" {
-                    _api.prevent_close();
+            WindowEvent::CloseRequested { api, .. } => {
+                let label = window.label();
+
+                if label == "main" {
+                    if window.is_visible().unwrap_or(true) {
+                        api.prevent_close();
+                        let _ = window.hide();
+
+                        let app_handle = window.app_handle().clone();
+                        let win_label = label.to_string();
+                        tauri::async_runtime::spawn(async move {
+                            sleep(Duration::from_secs(30)).await;
+                            if let Some(w) = app_handle.get_webview_window(&win_label) {
+                                if !w.is_visible().unwrap_or(true) {
+                                    let _ = w.close();
+                                }
+                            }
+                        });
+                    }
+                } else if label == "spotlight" {
+                    api.prevent_close();
                     let _ = window.hide();
                 }
             }
             _ => {}
         })
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while running tauri application")
+        .run(|_app_handle, event| {
+            match event {
+                RunEvent::ExitRequested { api, .. } => {
+                    api.prevent_exit();
+                }
+                _ => {}
+            }
+        });
 }

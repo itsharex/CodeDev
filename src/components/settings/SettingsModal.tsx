@@ -24,6 +24,7 @@ export function SettingsModal() {
     renameAIProvider,
     spotlightShortcut, setSpotlightShortcut,
     restReminder, setRestReminder,
+    windowDestroyDelay, setWindowDestroyDelay,
     spotlightAppearance, setSpotlightAppearance,
     searchSettings, setSearchSettings
   } = useAppStore();
@@ -34,19 +35,27 @@ export function SettingsModal() {
   const [importStatus, setImportStatus] = useState<string>('');
   const [isScanningApps, setIsScanningApps] = useState(false);
 
-  // --- 新增：重命名相关的局部状态 ---
+  // 辅助函数：格式化时间显示 (秒 -> 分:秒)
+  const formatDuration = (seconds: number) => {
+    if (seconds < 60) return `${seconds} ${getText('settings', 'seconds', language)}`;
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    const minText = getText('settings', 'minutes', language);
+    const secText = getText('settings', 'seconds', language);
+    if (secs === 0) return `${mins} ${minText}`;
+    return `${mins} ${minText} ${secs} ${secText}`;
+  };
+
   const [isRenaming, setIsRenaming] = useState(false);
   const [renameValue, setRenameValue] = useState('');
   const renameInputRef = useRef<HTMLInputElement>(null);
 
-  // 当进入重命名模式时，自动聚焦输入框
   useEffect(() => {
     if (isRenaming && renameInputRef.current) {
         renameInputRef.current.focus();
     }
   }, [isRenaming]);
 
-  // 处理重命名提交
   const handleRenameSubmit = () => {
       if (renameValue.trim()) {
           renameAIProvider(aiConfig.providerId, renameValue.trim());
@@ -58,7 +67,6 @@ export function SettingsModal() {
       if (e.key === 'Enter') handleRenameSubmit();
       if (e.key === 'Escape') setIsRenaming(false);
   };
-  // --- 结束新增状态 ---
 
   // 导出处理函数
   const handleExport = async () => {
@@ -346,9 +354,56 @@ export function SettingsModal() {
                                 )}
                             </div>
                         </div>
+
+                        <div className="w-full h-px bg-border/50 my-4" />
+
+                        {/* 自动销毁设置 */}
+                        <div className="space-y-4">
+                            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider flex items-center gap-2">
+                                <X size={14} />
+                                {getText('settings', 'autoDestroy', language)}
+                            </h3>
+
+                            <div className="space-y-3">
+                                <div className="flex items-center justify-between p-3 rounded-lg bg-secondary/30 border border-border">
+                                    <div>
+                                        <div className="text-sm font-medium text-foreground">
+                                           {getText('settings', 'autoDestroy', language)}
+                                        </div>
+                                        <div className="text-xs text-muted-foreground mt-0.5">
+                                           {getText('settings', 'autoDestroyDesc', language)}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="space-y-3 p-3 rounded-lg bg-secondary/10 border border-border">
+                                    <div className="flex justify-between text-xs">
+                                        <span className="text-foreground">
+                                            {getText('settings', 'destroyDelay', language)}
+                                        </span>
+                                        <span className="font-mono text-muted-foreground">
+                                            {formatDuration(windowDestroyDelay)}
+                                        </span>
+                                    </div>
+                                    <input
+                                        type="range"
+                                        min="30"
+                                        max="1800"
+                                        step="30"
+                                        className="w-full h-1.5 bg-secondary rounded-lg appearance-none cursor-pointer accent-primary"
+                                        value={windowDestroyDelay}
+                                        onChange={(e) => setWindowDestroyDelay(parseInt(e.target.value))}
+                                    />
+                                    <div className="flex justify-between text-[10px] text-muted-foreground">
+                                        <span>30 {getText('settings', 'seconds', language)}</span>
+                                        <span>30 {getText('settings', 'minutes', language)}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 )}
-                
+
                 {activeSection === 'language' && (
                      <div className="space-y-4">
                         <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider">

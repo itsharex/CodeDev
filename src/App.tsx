@@ -1,8 +1,6 @@
 import { useEffect, useRef, Suspense, lazy } from 'react';
 import { getCurrentWebviewWindow } from '@tauri-apps/api/webviewWindow';
-import { getAllWebviewWindows } from '@tauri-apps/api/webviewWindow';
 import { listen } from '@tauri-apps/api/event';
-import { register, unregisterAll } from '@tauri-apps/plugin-global-shortcut';
 import { sendNotification } from '@tauri-apps/plugin-notification';
 import { Loader2 } from 'lucide-react';
 import { TitleBar } from "@/components/layout/TitleBar";
@@ -20,7 +18,7 @@ const SystemMonitorModal = lazy(() => import('@/components/features/monitor/Syst
 const appWindow = getCurrentWebviewWindow()
 
 function App() {
-  const { currentView, theme, setTheme, syncModels, lastUpdated, spotlightShortcut, restReminder, language } = useAppStore();
+  const { currentView, theme, setTheme, syncModels, lastUpdated, restReminder, language } = useAppStore();
   const restTimerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const lastRestTimeRef = useRef<number>(Date.now());
 
@@ -57,35 +55,6 @@ function App() {
       unlistenFocus.then(unlisten => unlisten());
     };
   }, []);
-
-  useEffect(() => {
-    if (appWindow.label !== 'main') return;
-    const setupShortcut = async () => {
-      try {
-        await unregisterAll();
-        if (!spotlightShortcut) return;
-        await register(spotlightShortcut, async (event) => {
-          if (event.state === 'Pressed') {
-            const windows = await getAllWebviewWindows();
-            const spotlight = windows.find(w => w.label === 'spotlight');
-            if (spotlight) {
-              const isVisible = await spotlight.isVisible();
-              if (isVisible) {
-                await spotlight.hide();
-              } else {
-                await spotlight.show();
-                await spotlight.setFocus();
-              }
-            }
-          }
-        });
-      } catch (err) {
-        console.error('[Shortcut] Registration failed:', err);
-      }
-    };
-
-    setupShortcut();
-  }, [spotlightShortcut]);
 
   useEffect(() => {
     const handleContextMenu = (e: MouseEvent) => {

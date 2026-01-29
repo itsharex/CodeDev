@@ -57,6 +57,8 @@ export interface RestReminderConfig {
   intervalMinutes: number;
 }
 
+export type WindowDestroyDelay = number;
+
 interface AppState {
   currentView: AppView;
   isSidebarOpen: boolean;
@@ -71,6 +73,7 @@ interface AppState {
   spotlightShortcut: string;
   globalIgnore: IgnoreConfig;
   restReminder: RestReminderConfig;
+  windowDestroyDelay: WindowDestroyDelay;
 
   models: AIModelConfig[];
   lastUpdated: number;
@@ -96,6 +99,7 @@ interface AppState {
   setAIConfig: (config: Partial<AIProviderConfig>) => void;
   setSpotlightShortcut: (shortcut: string) => void;
   setRestReminder: (config: Partial<RestReminderConfig>) => void;
+  setWindowDestroyDelay: (seconds: number) => void;
   setSearchSettings: (config: Partial<AppState['searchSettings']>) => void;
   syncModels: () => Promise<void>;
   resetModels: () => void;
@@ -123,6 +127,7 @@ export const useAppStore = create<AppState>()(
         enabled: false,
         intervalMinutes: 45
       },
+      windowDestroyDelay: 30,
 
       models: DEFAULT_MODELS,
       lastUpdated: 0,
@@ -155,6 +160,7 @@ export const useAppStore = create<AppState>()(
       setRestReminder: (config) => set((state) => ({
         restReminder: { ...state.restReminder, ...config }
       })),
+      setWindowDestroyDelay: (seconds) => set({ windowDestroyDelay: seconds }),
       setAIConfig: (config) => set((state) => {
         const newConfig = { ...state.aiConfig, ...config };
         const currentProviderId = newConfig.providerId;
@@ -279,6 +285,7 @@ export const useAppStore = create<AppState>()(
         savedProviderSettings: state.savedProviderSettings,
         spotlightAppearance: state.spotlightAppearance,
         restReminder: state.restReminder,
+        windowDestroyDelay: state.windowDestroyDelay,
         searchSettings: state.searchSettings
       }),
     }
